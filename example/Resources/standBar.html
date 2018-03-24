@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="C:\echarts.min.js"></script>
+</head>
+<body>
+    <div id="main">
+    </div>
+    <script type="text/javascript">
+        var myChart;
+        function init(h, w) {
+            document.getElementById('main').style.height = h;
+            document.getElementById('main').style.width = w;
+            myChart = echarts.init(document.getElementById('main'));
+            myChart.on('click', function (param) {
+                if (typeof param.seriesIndex == 'undefined') {
+                    return;
+                }
+
+                CWebJsCallback.SlotWebCallback(myChart.getOption().series[param.seriesIndex].data[param.dataIndex].value);
+            });
+        }
+
+        function setValue(currentValue1, currentValue2) {
+            var option = {
+                title: {
+                    text: '智能告警场景分类统计'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    x: 'right',
+                    data: ['历史统计','未确认统计']
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: false },
+                        magicType: { show: true, type: ['line', 'bar'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                calculable: true,
+                grid: {
+                    y: 80,
+                    y2: 20,
+                    x: 40,
+                    x2: 40
+                },
+                xAxis: [
+                            {
+                                type: 'category',
+                                data: ['开关分合状态校验', '开关分合时间校验', '保护动作智能告警', '遥信不一致监视', '遥测跳变监视']
+                            }
+                        ],
+                yAxis: [
+                            {
+                                type: 'value',
+                                name: '单位：个数'
+                            }
+                        ],
+                series: [
+                            {
+                                name: '历史统计',
+                                type: 'bar',
+                                data: currentValue1
+                            },
+                            {
+                                name: '未确认统计',
+                                type: 'bar',
+                                data: currentValue2
+                            }
+                        ]
+            };
+
+            myChart.setOption(option);
+        }
+    </script>
+</body>
+</html>

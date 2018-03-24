@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="GBK"?>
+<database>
+	<master type="mysql" hostaddr="localhost" port="3306" user="root" password="CEF814E144877AAD" dbname="uk9010_ia" />
+	<mdb hostaddr="127.0.0.1" port="1400" user="skt_mdb" password="0FD0C64D27E2EDF9FD8A31067247CE9D" dbname="ukdb" />
+</database>
+

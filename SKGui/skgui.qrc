@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="btn_cancel">Resources/btn_cancel.png</file>
+        <file alias="btn_close_down">Resources/btn_close_down.png</file>
+        <file alias="btn_close_hover">Resources/btn_close_hover.png</file>
+        <file alias="btn_close_normal">Resources/btn_close_normal.png</file>
+        <file alias="btn_login">Resources/btn_login.png</file>
+        <file alias="load">Resources/load.png</file>
+        <file alias="loading0">Resources/loading0.png</file>
+        <file alias="loading1">Resources/loading1.png</file>
+        <file alias="loading2">Resources/loading2.png</file>
+        <file alias="loading3">Resources/loading3.png</file>
+        <file alias="loading4">Resources/loading4.png</file>
+        <file alias="loading5">Resources/loading5.png</file>
+        <file alias="loading6">Resources/loading6.png</file>
+        <file alias="loading7">Resources/loading7.png</file>
+        <file alias="login">Resources/login.png</file>
+        <file alias="login_tip">Resources/login_tip.png</file>
+        <file alias="password">Resources/password.png</file>
+        <file alias="project_logo">Resources/project_logo.png</file>
+        <file alias="project_name">Resources/project_name.png</file>
+        <file alias="username">Resources/username.png</file>
+        <file alias="HmiLogo">Resources/HmiLogo.png</file>
+        <file alias="skin0">Resources/skin0.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="GBK"?>
+<sys_unitconfig>
+	<header version="1.0" />
+	<system soft_type="UK9010" hmi_style="blue_style"/>
+	<!--system soft_type="UK9010"/-->
+	<unit id="1" name="cu1" hw_type="21007/21008" desc="人机工作站1"
+         temp_monitor="true/false" temp_alert="60" temp_warn="80"
+		 humi_monitor="true/false" humi_alert="60" humi_warn="80"
+		 pwr1_monitor="true/false" pwr1_val="15" pwr1_alert="60" pwr1_warn="80"
+		 pwr2_monitor="true/false" pwr2_val="12" pwr2_alert="60" pwr2_warn="80"
+		 pwr3_monitor="true/false" pwr3_val="5" pwr3_alert="60" pwr3_warn="80"
+		 pwr4_monitor="true/false" pwr4_val="3.3" pwr4_alert="60" pwr4_warn="80"
+ />
+	<unit-list>
+		<unit id="1" ip="172.16.16.64" name="cu1" desc="采集单元1" />
+		<unit id="2" ip="172.18.162.168" name="cu2" desc="采集单元1" />
+		<!--unit id="3" ip="172.18.162.208" name="cu3" desc="采集单元1" /-->
+		<!--unit id="4" ip="172.18.162.165" name="cu3" desc="采集单元1" /--> 
+	</unit-list>
+	<network>
+		<interface name="eth0" desc="内部通讯口" monitor="true/false"
+is_optical="true/false" opt_pwr_monitor="true/false"
+opt_pwr_alert="10" C="15">
+			<addr ip="193.100.100.1" netmask="255.255.255.0" />
+			<addr ip="194.100.100.1" netmask="255.255.255.0" />
+			<gateway netip="default/193.100.100.0/…" gwip="193.100.100.254"/>
+		</interface>
+		<interface name="eth1" desc="站控层通讯口" monitor="true/false">
+			<addr ip="193.100.101.1" netmask="255.255.255.0" />
+			<gateway netip="default/193.100.101.0/…" gwip="193.100.101.254"/>
+		</interface>
+	</network>
+	<storage monitor="true/false" desc="总告警，综合所有受控分区得出"
+free_alert="20%" free_warn="10%">
+		<disk name="sda" desc="系统Flash">
+			<partition name="sda1" desc="系统分区" fs_type="ext4/ukfs1"
+monitor="true/false" free_alert="20%" free_warn="10%" />
+		</disk>
+		<disk name="sdb" desc="硬盘1">
+			<partition name="sdb1" desc="数据分区1" fs_type="ext4/ukfs"
+monitor="true/false" free_alert="20%" free_warn="10%" />
+			<partition name="sdb2" desc="数据分区2" fs_type="ext4/ukfs1" 
+monitor="true/false" free_alert="20%" free_warn="10%" />
+		</disk>
+		<disk name="sbc" desc="硬盘2">
+			<partition name="sdc1" desc="数据分区1" fs_type="ext4/ukfs1"
+monitor="true/false" free_alert="20%" free_warn="10%" />
+			<partition name="sdc2" desc="数据分区2" fs_type="ext4/ukfs1"
+monitor="true/false" free_alert="20%" free_warn="10%" />
+		</disk>
+		<nas name="nas1" desc="网络存储器" >
+			<partition name="nfs1" desc="数据分区1" fs_type=" nfs/ftp/…"
+					extattr="" 
+monitor="true/false" free_alert="20%" free_warn="10%" />
+		</nas>
+		<usbdisk start_dev="sdd" />
+	</storage>
+	<autorun>
+		<cmd >xxxx</cmd>
+		<cmd>yyyy</cmd>
+	</autorun>
+</sys_unitconfig>

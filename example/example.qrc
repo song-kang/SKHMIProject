@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/example">
+        <file>Resources/test.png</file>
+        <file>Resources/skin6.png</file>
+        <file>Resources/standBar.html</file>
+        <file>Resources/standLine.html</file>
+        <file>Resources/standPie.html</file>
+        <file>Resources/dynaLine.html</file>
+    </qresource>
+</RCC>

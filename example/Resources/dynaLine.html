@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="C:\echarts.min.js"></script>
+</head>
+<body>
+    <div id="main">
+    </div>
+    <script type="text/javascript">
+        var myChart;
+        var data1 = [];
+        var data2 = [];
+        var data3 = [];
+        var data4 = [];
+        var data5 = [];
+        var now = +new Date();
+        function randomData(now,currentValue) {
+            value = currentValue;
+            return {
+                name: now.toString(),
+                value: [now,value]
+            }
+        }
+
+        function init(h, w) {
+            document.getElementById('main').style.height = h;
+            document.getElementById('main').style.width = w;
+            myChart = echarts.init(document.getElementById('main'));
+            for (var i = 0; i < 100; i++) {
+                var old = new Date(now - 1000*(100-i));
+                data1.push(randomData(old, "330"));
+                data2.push(randomData(old, "220"));
+                data3.push(randomData(old, "110"));
+                data4.push(randomData(old, "35"));
+                data5.push(randomData(old, "10"));
+            }
+        }
+
+        function setValue(currentValue1, currentValue2, currentValue3, currentValue4, currentValue5) {
+            if (currentValue1 == 0 && currentValue2 == 0 && currentValue3 == 0 && currentValue4 == 0 && currentValue5 == 0) {
+                return;
+            }
+            if (data1.length > 100) {
+                data1.shift();
+                data2.shift();
+                data3.shift();
+                data4.shift();
+                data5.shift();
+            }
+            now = new Date(+now + 1000);
+            data1.push(randomData(now, currentValue1));
+            data2.push(randomData(now, currentValue2));
+            data3.push(randomData(now, currentValue3));
+            data4.push(randomData(now, currentValue4));
+            data5.push(randomData(now, currentValue5));
+
+            var option = {
+                title: {
+                    text: '母线电压数据'
+                },
+                legend: {
+                    top: 26,
+                    data: ['330kV', '220kV', '110kV', '35kV', '10kV']
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: function (params) {
+                        var date = new Date(params[0].name);
+                        var text = "<center><b>" + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + 
+                            date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + "</center></b>";
+                        for (var j = 0; j < params.length; j++) {
+                            text += params[j].seriesName + "母线电压 : " + params[j].value[1] + " 千伏<br/>";
+                        }
+                        return text;
+                    },
+                    axisPointer: {
+                        animation: true
+                    }
+                },
+                calculable: true,
+                grid: {
+                    y: 80,
+                    y2: 20,
+                    x: 40,
+                    x2: 20
+                },
+                xAxis: {
+                    type: 'time',
+                    splitLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '单位：千伏',
+                    boundaryGap: [0, '10%'],
+                    splitLine: {
+                        show: true
+                    }
+                },
+                series: [{
+                    name: '330kV',
+                    type: 'line',
+                    showSymbol: false,
+                    hoverAnimation: false,
+                    data: data1
+                },
+                {
+                    name: '220kV',
+                    type: 'line',
+                    showSymbol: false,
+                    hoverAnimation: false,
+                    data: data2
+                },
+                {
+                    name: '110kV',
+                    type: 'line',
+                    showSymbol: false,
+                    hoverAnimation: false,
+                    data: data3
+                },
+                {
+                    name: '35kV',
+                    type: 'line',
+                    showSymbol: false,
+                    hoverAnimation: false,
+                    data: data4
+                },
+                {
+                    name: '10kV',
+                    type: 'line',
+                    showSymbol: false,
+                    hoverAnimation: false,
+                    data: data5
+                }]
+            };
+            myChart.setOption(option);
+        }
+
+    </script>
+</body>
+</html>

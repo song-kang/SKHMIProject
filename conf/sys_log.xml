@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="GBK"?>
+<sys_log>
+  <log level="debug" module="SKHMI">
+    <concole open="true"/>
+    <tcp open="true" ip="127.0.0.1" port="7001" />
+    <file open="true" size="1024000" files="5" file="D:/GitHub/SKHMIProject/log/log_SKHMI.txt"/>
+  </log>
+</sys_log>

@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>Resources/close_down.png</file>
+        <file>Resources/close_hov.png</file>
+        <file>Resources/close_nor.png</file>
+        <file>Resources/max_down.png</file>
+        <file>Resources/max_down1.png</file>
+        <file>Resources/max_hov.png</file>
+        <file>Resources/max_hov1.png</file>
+        <file>Resources/max_nor.png</file>
+        <file>Resources/max_nor1.png</file>
+        <file>Resources/min_down.png</file>
+        <file>Resources/min_hov.png</file>
+        <file>Resources/min_nor.png</file>
+        <file>Resources/more_down.png</file>
+        <file>Resources/more_hov.png</file>
+        <file>Resources/more_nor.png</file>
+        <file>Resources/qt.png</file>
+        <file>Resources/full_hov.png</file>
+        <file>Resources/full_nor.png</file>
+        <file alias="skin">Resources/Skin.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="C:\echarts.min.js"></script>
+</head>
+<body>
+    <div id="main">
+    </div>
+    <script type="text/javascript">
+        var myChart;
+        function init(h, w) {
+            document.getElementById('main').style.height = h;
+            document.getElementById('main').style.width = w;
+            myChart = echarts.init(document.getElementById('main'));
+            myChart.on('click', function (param) {
+                if (typeof param.seriesIndex == 'undefined') {
+                    return;
+                }
+
+                CWebJsCallback.SlotWebCallback(myChart.getOption().series[param.seriesIndex].data[param.dataIndex].value);
+            });
+        }
+
+        function setValue(mmsVal, tcpVal, gooseVal, smvVal, udpVal) {
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['MMS流量', 'TCP流量', 'GOOSE流量', 'SMV流量', 'UDP流量']
+                },
+                toolbox: {
+                    show: false,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: false },
+                        magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                calculable: true,
+                grid: {
+                    y: 60,
+                    y2: 20,
+                    x: 60,
+                    x2: 40
+                },
+                xAxis: [
+                            {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['00时', '02时', '04时', '06时', '08时', '10时', '12时', '14时', '16时', '18时', '20时', '22时']
+                            }
+                        ],
+                yAxis: [
+                            {
+                                type: 'value',
+                                axisLabel: {
+                                    formatter: '{value}MB/S'
+                                }
+                            }
+                        ],
+                series: [
+                            {
+                                name: 'MMS流量',
+                                type: 'line',
+                                data: mmsVal
+                            },
+                            {
+                                name: 'TCP流量',
+                                type: 'line',
+                                data: tcpVal
+                            },
+                            {
+                                name: 'GOOSE流量',
+                                type: 'line',
+                                data: gooseVal
+                            },
+                            {
+                                name: 'SMV流量',
+                                type: 'line',
+                                data: smvVal
+                            },
+                            {
+                                name: 'UDP流量',
+                                type: 'line',
+                                data: udpVal
+                            }
+                        ]
+            };
+
+            myChart.setOption(option);
+        }
+
+        //window.onresize = myChart.resize;
+
+    </script>
+</body>
+</html>

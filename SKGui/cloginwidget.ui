@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CLoginWidget</class>
+ <widget class="QWidget" name="CLoginWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CLoginWidget</string>
+  </property>
+  <widget class="QLineEdit" name="lineEdit_password">
+   <property name="geometry">
+    <rect>
+     <x>96</x>
+     <y>140</y>
+     <width>261</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>100</y>
+     <width>60</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="skgui.qrc">:/images/username</pixmap>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_tip">
+   <property name="geometry">
+    <rect>
+     <x>98</x>
+     <y>169</y>
+     <width>241</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="skgui.qrc">:/images/login_tip</pixmap>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_user">
+   <property name="geometry">
+    <rect>
+     <x>96</x>
+     <y>100</y>
+     <width>261</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="editable">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnCancel">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>219</y>
+     <width>84</width>
+     <height>38</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton#btnCancel{
+  padding: -1;
+  border-image:url(:/images/btn_cancel);
+}
+
+QPushButton#btnCancel:hover {
+  padding: -1;
+  border-image:url(:/images/btn_cancel);
+}
+
+QPushButton#btnCancel:pressed {
+  padding: -1;
+  border-image:url(:/images/btn_cancel);
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnLogin">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>219</y>
+     <width>84</width>
+     <height>38</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton#btnLogin{
+  padding: -1;
+  border-image:url(:/images/btn_login);
+}
+
+QPushButton#btnLogin:hover {
+  padding: -1;
+  border-image:url(:/images/btn_login);
+}
+
+QPushButton#btnLogin:pressed {
+  padding: -1;
+  border-image:url(:/images/btn_login);
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>140</y>
+     <width>60</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="skgui.qrc">:/images/password</pixmap>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnClose">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>0</y>
+     <width>23</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton#btnClose{
+  padding: -1;
+  border-image:url(:/images/btn_close_normal);
+}
+
+QPushButton#btnClose:hover {
+  padding: -1;
+  border-image:url(:/images/btn_close_hover);
+}
+
+QPushButton#btnClose:pressed {
+  padding: -1;
+  border-image:url(:/images/btn_close_down);
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>comboBox_user</tabstop>
+  <tabstop>lineEdit_password</tabstop>
+  <tabstop>btnLogin</tabstop>
+  <tabstop>btnCancel</tabstop>
+  <tabstop>btnClose</tabstop>
+ </tabstops>
+ <resources>
+  <include location="skgui.qrc"/>
+ </resources>
+ <connections/>
+</ui>
