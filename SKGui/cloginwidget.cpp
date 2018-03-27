@@ -67,6 +67,7 @@ void CLoginWidget::SlotLogin()
 			SlotClose();
 			m_pHmi = new SKBaseWidget(NULL,new CMainWidget);
 			m_pHmi->SetWindowBackgroundImage(QPixmap(":/images/skin0"));
+			m_pHmi->SetWindowSize(1000,650);
 			m_pHmi->setMinimumSize(1000,650);
 			m_pHmi->SetWindowTitle(SK_GUI->GetHmiName());
 			m_pHmi->SetWindowIcon(QIcon(":/images/HmiLogo"));

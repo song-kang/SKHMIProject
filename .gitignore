@@ -19,3 +19,7 @@
 *.debug
 *.error
 *.warn
+*.opensdf
+moc*.cpp
+ui_*.h
+qrc_*.cpp

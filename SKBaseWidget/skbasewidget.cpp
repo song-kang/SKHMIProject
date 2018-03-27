@@ -66,16 +66,16 @@ void SKBaseWidget::InitSlot()
 
 void SKBaseWidget::mouseMoveEvent(QMouseEvent *e)
 {
+	QPoint p = mapFromGlobal(e->globalPos());
+	mouseMoveRect(p);
+
 	if (m_bIsFull || !m_bIsDrag)
 		return;
-
-	QPoint p = mapFromGlobal(e->globalPos());
 	if (m_bIsTopDrag && p.y() > TOPWIDGET_HEIGHT)
 		return;
 	if (m_bIsTopDrag && ((CTopWidget*)m_topWidget)->isHidden())
 		return;
 
-	mouseMoveRect(p);
 	if (m_state.MousePressed)
 	{
 		if (m_bIsMax)
