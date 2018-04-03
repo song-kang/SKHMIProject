@@ -6,7 +6,7 @@
 #define HMI_NAME	"UK9000 HMI"
 #define HMI_VERSION	"1.0.0"
 
-SKGui g_gui;
+SKGui *g_gui=NULL;
 SKGui::SKGui()
 {
 	Init();
@@ -20,7 +20,9 @@ SKGui::~SKGui()
 
 SKGui* SKGui::GetPtr()
 {
-	return &g_gui;
+	if(g_gui == NULL)
+		g_gui = new SKGui();
+	return g_gui;
 }
 
 void SKGui::Init()
@@ -67,8 +69,8 @@ bool SKGui::BeginAgent()
 
 void SKGui::End()
 {
-	for (int i = 0; i < m_pListBaseView->count(); i++)
-		delete m_pListBaseView->at(i);
+	while (m_pListBaseView->count())
+		delete m_pListBaseView->at(0);
 	delete m_pListBaseView;
 
 	m_pPluginMgr->Exit();
@@ -76,6 +78,7 @@ void SKGui::End()
 
 	CSpAgentClient::Stop();
 	StopAndWait(10);
+	delete this;
 }
 
 bool SKGui::ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer,int iLength)

@@ -23,6 +23,7 @@ private:
 
 protected:
 	virtual void paintEvent(QPaintEvent *);
+	virtual void keyPressEvent(QKeyEvent *);
 
 private:
 	void Init();

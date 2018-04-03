@@ -35,6 +35,7 @@ public:
 	void HideTopFrame();
 	void SetIsDrag(bool b) { m_bIsDrag = b; }
 	void SetIsTopDrag(bool b) { m_bIsTopDrag = b; }
+	void SetWindowsFlagsTool() { setWindowFlags(windowFlags() | Qt::Tool); }
 
 protected:
 	virtual void mouseMoveEvent(QMouseEvent *e);
@@ -62,6 +63,11 @@ private:
 	void Init();
 	void InitUi();
 	void InitSlot();
+
+signals:
+	void SigMax();
+	void SigMin();
+	void SigMove();
 
 public slots:
 	void SlotClose();

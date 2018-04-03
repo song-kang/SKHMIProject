@@ -14,6 +14,10 @@ public:
 	CBaseView(QWidget *parent = 0);
 	~CBaseView();
 
+	void SetPluginName(QString name) { m_sPluginName = name; }
+	QString GetPluginName() { return m_sPluginName; }
+
+public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0)
 	{
 		S_UNUSED(wMsgType);
@@ -24,10 +28,10 @@ public:
 		return false;
 	}
 
-	virtual void SetBackgroundColor(int red = 240, int yellow = 240, int blue = 240, int alpha = 255)=0;
+	virtual void SetBackgroundColor(int red = 240, int yellow = 240, int blue = 240, int alpha = 230)=0;
 
 private:
-	SString m_sFunCode;
+	QString m_sPluginName;
 
 };
 

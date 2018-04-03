@@ -105,6 +105,11 @@ public:
 			delete item;
 		}
 	}
+
+	static QWidget* GetWidget(int x, int y)
+	{
+		return QApplication::widgetAt(x, y);
+	}
 };
 
 #endif // SKHEAD_H

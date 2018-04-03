@@ -29,7 +29,7 @@ public:
 	view_plugin_demo1(QWidget *parent = 0);
 	~view_plugin_demo1();
 
-	virtual void SetBackgroundColor(int red = 240, int yellow = 240, int blue = 240, int alpha = 255)
+	virtual void SetBackgroundColor(int red = 240, int yellow = 240, int blue = 240, int alpha = 230)
 	{
 		setStyleSheet(tr("QWidget#%1{background:rgb(%2,%3,%4,%5);}").arg(objectName()).arg(red).arg(yellow).arg(blue).arg(alpha));
 	}

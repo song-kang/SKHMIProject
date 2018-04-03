@@ -1,5 +1,5 @@
 #include "cloginwidget.h"
-#include "cmainwidget.h"
+#include "chmiwidget.h"
 #include "skgui.h"
 
 CLoginWidget::CLoginWidget(QWidget *parent)
@@ -8,9 +8,12 @@ CLoginWidget::CLoginWidget(QWidget *parent)
 	ui.setupUi(this);
 
 	m_app = (SKBaseWidget *)parent;
+
 	Init();
 	InitUi();
 	InitSlot();
+
+	SlotLogin();
 }
 
 CLoginWidget::~CLoginWidget()
@@ -47,6 +50,14 @@ void CLoginWidget::paintEvent(QPaintEvent *e)
 	SKWidget::paintEvent(e);
 }
 
+void CLoginWidget::keyPressEvent(QKeyEvent *e)
+{
+	if (e->key() == Qt::Key_Return)
+	{
+		SlotLogin();
+	}
+}
+
 void CLoginWidget::SlotClose()
 {
 	emit SigClose();
@@ -54,18 +65,21 @@ void CLoginWidget::SlotClose()
 
 void CLoginWidget::SlotLogin()
 {
-	SString sql;
-	SRecordset rs;
-	sql.sprintf("select count(*) from t_ssp_user where usr_code='%s' and pwd='%s'",
-		ui.comboBox_user->currentText().toStdString().data(),ui.lineEdit_password->text().toStdString().data());
-	int cnt = DB->Retrieve(sql,rs);
-	if (cnt > 0)
-	{
-		int number = rs.GetValue(0,0).toInt();
-		if (number > 0)
-		{
+	//SString sql;
+	//SRecordset rs;
+	//sql.sprintf("select count(*) from t_ssp_user where usr_code='%s' and pwd='%s'",
+	//	ui.comboBox_user->currentText().toStdString().data(),ui.lineEdit_password->text().toStdString().data());
+	//int cnt = DB->Retrieve(sql,rs);
+	//if (cnt > 0)
+	//{
+	//	int number = rs.GetValue(0,0).toInt();
+	//	if (number > 0)
+	//	{
 			SlotClose();
-			m_pHmi = new SKBaseWidget(NULL,new CMainWidget);
+			CHMIWidget *wgt = new CHMIWidget();
+			m_pHmi = new SKBaseWidget(NULL,wgt);
+			wgt->SetApp(m_pHmi);
+			wgt->InitSlot();
 			m_pHmi->SetWindowBackgroundImage(QPixmap(":/images/skin0"));
 			m_pHmi->SetWindowSize(1000,650);
 			m_pHmi->setMinimumSize(1000,650);
@@ -73,11 +87,12 @@ void CLoginWidget::SlotLogin()
 			m_pHmi->SetWindowIcon(QIcon(":/images/HmiLogo"));
 			m_pHmi->SetWindowFlags(SKBASEWIDGET_MAXIMIZE | SKBASEWIDGET_MINIMIZE|SKBASEWIDGET_FULLSCREEN);
 			m_pHmi->SetIsTopDrag(true);
-			m_pHmi->ShowMaximized();
+			m_pHmi->Show();
+			//m_pHmi->ShowMaximized();
 			//m_pHmi->ShowFullScreen();
-			return;
-		}
-	}
+	//		return;
+	//	}
+	//}
 
 	ui.comboBox_user->setFocus();
 	ui.label_tip->setVisible(true);

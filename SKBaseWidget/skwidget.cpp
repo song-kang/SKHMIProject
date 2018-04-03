@@ -20,3 +20,8 @@ void SKWidget::paintEvent(QPaintEvent *e)
 	QPainter p(this);
 	style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }
+
+void SKWidget::mouseMoveEvent(QMouseEvent *e)
+{
+	
+}

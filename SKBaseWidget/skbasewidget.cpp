@@ -66,6 +66,7 @@ void SKBaseWidget::InitSlot()
 
 void SKBaseWidget::mouseMoveEvent(QMouseEvent *e)
 {
+	SigMove();
 	QPoint p = mapFromGlobal(e->globalPos());
 	mouseMoveRect(p);
 
@@ -229,7 +230,8 @@ void SKBaseWidget::SetWindowBackgroundImage(QPixmap pix)
 {
 	((CMainWidget*)m_mainWidget)->SetPixmap(pix);
 	((CTopWidget*)m_topWidget)->SetWindowBackgroundImaged(true);
-	m_vBoxLyout->setContentsMargins(1,0,1,1);
+	//m_vBoxLyout->setContentsMargins(1,0,1,1);
+	m_vBoxLyout->setContentsMargins(0,0,0,0);
 }
 
 void SKBaseWidget::HideTopFrame()
@@ -265,6 +267,8 @@ void SKBaseWidget::SlotClose()
 
 void SKBaseWidget::SlotShowMax()
 {
+	SigMax();
+
 	int curMonitor = QApplication::desktop()->screenNumber(this);
 	if (m_bIsFull)
 	{
@@ -300,6 +304,8 @@ void SKBaseWidget::SlotShowMax()
 
 void SKBaseWidget::SlotShowMin()
 {
+	SigMin();
+
 	showMinimized();
 }
 

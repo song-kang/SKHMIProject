@@ -22,5 +22,30 @@
         <file alias="username">Resources/username.png</file>
         <file alias="HmiLogo">Resources/HmiLogo.png</file>
         <file alias="skin0">Resources/skin0.png</file>
+        <file alias="start_logo">Resources/start_logo.png</file>
+        <file alias="gw_start_cli">Resources/gw_start_cli.png</file>
+        <file alias="gw_start_hov">Resources/gw_start_hov.png</file>
+        <file alias="gw_start_nor">Resources/gw_start_nor.png</file>
+        <file alias="nw_start_cli">Resources/nw_start_cli.png</file>
+        <file alias="nw_start_hov">Resources/nw_start_hov.png</file>
+        <file alias="nw_start_nor">Resources/nw_start_nor.png</file>
+        <file alias="show_desktop_cli">Resources/show_desktop_cli.png</file>
+        <file alias="show_desktop_hov">Resources/show_desktop_hov.png</file>
+        <file alias="show_desktop_nor">Resources/show_desktop_nor.png</file>
+        <file alias="arr_left_cli">Resources/arr_left_cli.png</file>
+        <file alias="arr_left_hov">Resources/arr_left_hov.png</file>
+        <file alias="arr_left_nor">Resources/arr_left_nor.png</file>
+        <file alias="arr_right_cli">Resources/arr_right_cli.png</file>
+        <file alias="arr_right_hov">Resources/arr_right_hov.png</file>
+        <file alias="arr_right_nor">Resources/arr_right_nor.png</file>
+        <file alias="search">Resources/search.png</file>
+        <file alias="arrow-left">Resources/arrow-left.png</file>
+        <file alias="arrow-right">Resources/arrow-right.png</file>
+        <file alias="user">Resources/user.png</file>
+        <file alias="config">Resources/config.png</file>
+        <file alias="help">Resources/help.png</file>
+        <file alias="shutDown">Resources/shutDown.png</file>
+        <file alias="userSwitch">Resources/userSwitch.png</file>
+        <file alias="btn_bg">Resources/btn_bg.png</file>
     </qresource>
 </RCC>

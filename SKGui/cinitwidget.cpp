@@ -20,7 +20,7 @@ void LoadThread::run()
 	SApi::UsSleep(200000); //大于1/8秒，避免等待图形不出现情况
 
 	SigText(tr("加载日志配置......"));
-	SApi::UsSleep(500000);
+	//SApi::UsSleep(500000);
 	if (!SK_LOG->Load(QCoreApplication::applicationDirPath().toStdString()+"\\..\\conf\\sys_log.xml"))
 	{
 		m_sError = tr("日志配置加载出现异常！");
@@ -28,7 +28,7 @@ void LoadThread::run()
 	}
 
 	SigText(tr("加载数据库配置......"));
-	SApi::UsSleep(500000);
+	//SApi::UsSleep(500000);
 	if (!SK_DATABASE->Load(QCoreApplication::applicationDirPath().toStdString()+"\\..\\conf\\sys_database.xml"))
 	{
 		m_sError = tr("数据库配置加载出现异常！");
@@ -37,7 +37,7 @@ void LoadThread::run()
 
 	SDatabase* pDb;
 	SigText(tr("测试连接数据库......"));
-	SApi::UsSleep(500000);
+	//SApi::UsSleep(500000);
 	if ((pDb = DB->GetDatabasePool()->GetDatabase(true)) == NULL)
 	{
 		m_sError = tr("数据库连接测试失败！");
@@ -45,15 +45,15 @@ void LoadThread::run()
 	}
 
 	SigText(tr("加载代理配置，启动代理......"));
-	SApi::UsSleep(500000);
+	//SApi::UsSleep(500000);
 	SK_GUI->BeginAgent();
 
 	SigText(tr("加载动态插件库......"));
-	SApi::UsSleep(500000);
+	//SApi::UsSleep(500000);
 	SK_GUI->m_pPluginMgr->Init();
 
 	SigText(tr("加载完毕."));
-	SApi::UsSleep(500000);
+	//SApi::UsSleep(500000);
 }
 
 ///////////////////////////// CInitWidget //////////////////////////////////
