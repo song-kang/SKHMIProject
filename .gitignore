@@ -23,3 +23,7 @@
 moc*.cpp
 ui_*.h
 qrc_*.cpp
+*.idb
+SKBase/Debug/SKBased_manifest.rc
+*.res
+*.unsuccessfulbuild
