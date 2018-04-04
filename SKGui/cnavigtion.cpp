@@ -2,6 +2,8 @@
 #include "chmiwidget.h"
 #include "ctoolwidget.h"
 
+#define MAX_QUICK_NUM		10
+
 CNavigtion::CNavigtion(QWidget *parent)
 	: SKWidget(parent)
 {
@@ -28,7 +30,7 @@ void CNavigtion::Init()
 	ui.labelUser->setScaledContents(true);
 
 	ui.btnUser->setFixedWidth(120);
-	ui.btnUser->setText("宋康");
+	ui.btnUser->setText("未登录");
 	
 	ui.btnFunSwitch->setText(tr("  所有功能点"));
 	ui.btnFunSwitch->setIcon(QIcon(":/images/arrow-right"));
@@ -37,89 +39,91 @@ void CNavigtion::Init()
 	
 	this->setMouseTracking(true);
 	ui.btnUser->setMouseTracking(true);
-	ui.btnConfig->setMouseTracking(true);
+	ui.btnUsers->setMouseTracking(true);
 	ui.btnUserSwitch->setMouseTracking(true);
+	ui.btnFunPoint->setMouseTracking(true);
 	ui.btnQuit->setMouseTracking(true);
 	ui.btnHelp->setMouseTracking(true);
 
 	ui.treeWidgetItems->setRootIsDecorated(false);
+	ui.treeWidgetItems->setStyleSheet("QTreeView::branch:has-children:!has-siblings:closed,\
+								 QTreeView::branch:closed:has-children:has-siblings{border-image: none; image: none;}\
+								 QTreeView::branch:open:has-children:!has-siblings,\
+								 QTreeView::branch:open:has-children:has-siblings{border-image: none; image: none;}");
 	ui.treeWidgetItems->hide();
+
+	m_iQuickNum = 0;
+	SetQuickFunPoint(SK_GUI->m_lstFunPoint);
+	SetTreeFunPoint(SK_GUI->m_lstFunPoint,SK_GUI->m_lstUsers,NULL);
+}
+
+void CNavigtion::SetQuickFunPoint(QList<CFunPoint*> lstFunPoint)
+{
+	foreach (CFunPoint *p, lstFunPoint)
+	{
+		if (p->m_lstChilds.count() == 0 && m_iQuickNum < MAX_QUICK_NUM)
+		{
+			QPushButton *btn = new QPushButton(p->GetDesc());
+			btn->setObjectName(p->GetKey());
+			btn->setIconSize(QSize(32,32));
+			if (p->m_pImageBuffer && p->m_iImageLen > 0)
+			{
+				QPixmap pix;
+				pix.loadFromData(p->m_pImageBuffer,p->m_iImageLen);
+				btn->setIcon(QIcon(pix));
+			}
+			else
+				btn->setIcon(QIcon(":/images/application"));
+
+			btn->setStyleSheet("QPushButton{background: transparent;border-radius:2px;;text-align: left;height:40px;padding-left:1px;}"
+				"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
+
+			ui.vLayoutFun->addWidget(btn);
+			m_iQuickNum++;
+		}
+
+		SetQuickFunPoint(p->m_lstChilds);
+	}
+}
+
+void CNavigtion::SetTreeFunPoint(QList<CFunPoint*> lstFunPoint, QList<CUsers*> lstUsers, QTreeWidgetItem *itemParent)
+{
+	QTreeWidgetItem *item = itemParent;
+	foreach (CFunPoint *p, lstFunPoint)
+	{
+		if (p->m_lstChilds.count() == 0 || p->m_lstChilds.count() > 1)
+		{
+			if (itemParent)
+				item = new QTreeWidgetItem(itemParent);
+			else
+				item = new QTreeWidgetItem(ui.treeWidgetItems);
+
+			item->setText(0,p->GetDesc());
+			item->setToolTip(0,p->GetDesc());
+			item->setData(0,Qt::UserRole,p->GetKey());
+
+			if (p->m_lstChilds.count() == 0)
+			{
+				if (p->m_pImageBuffer && p->m_iImageLen > 0)
+				{
+					QPixmap pix;
+					pix.loadFromData(p->m_pImageBuffer,p->m_iImageLen);
+					item->setIcon(0,QIcon(pix));
+				}
+				else
+					item->setIcon(0,QIcon(":/images/application"));
+			}
+			else if (p->m_lstChilds.count() > 1)
+				item->setIcon(0,QIcon(":/images/folder_open"));
+		}
+
+		SetTreeFunPoint(p->m_lstChilds,lstUsers,item);
+	}
 }
 
 void CNavigtion::InitUi()
 {
-	QPushButton *btn1 = new QPushButton("SCD对比");
-	btn1->setIconSize(QSize(32,32));
-	btn1->setIcon(QIcon(":/images/user"));
-	btn1->setStyleSheet(
-		"QPushButton{background: transparent;border-radius:2px;;text-align: left;height:40px;padding-left:1px;}"
-		"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
 	
-	QPushButton *btn2 = new QPushButton("对比");
-	btn2->setIconSize(QSize(32,32));
-	btn2->setIcon(QIcon(":/images/config"));
-	btn2->setStyleSheet(
-		"QPushButton{background: transparent;border-radius:2px;;text-align: left;height:40px;padding-left:1px;}"
-		"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
-
-	QPushButton *btn3 = new QPushButton("对比对比");
-	btn3->setIconSize(QSize(32,32));
-	btn3->setIcon(QIcon(":/images/shutDown"));
-	btn3->setStyleSheet(
-		"QPushButton{background: transparent;border-radius:2px;;text-align: left;height:40px;padding-left:1px;}"
-		"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
-
-	QPushButton *btn4 = new QPushButton("SCD对比");
-	btn4->setIconSize(QSize(32,32));
-	btn4->setIcon(QIcon(":/images/user"));
-	btn4->setStyleSheet(
-		"QPushButton{background: transparent;border-radius:2px;;text-align: left;height:40px;padding-left:1px;}"
-		"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
-
-	QPushButton *btn5 = new QPushButton("对比");
-	btn5->setIconSize(QSize(32,32));
-	btn5->setIcon(QIcon(":/images/config"));
-	btn5->setStyleSheet(
-		"QPushButton{background: transparent;border-radius:2px;;text-align: left;height:40px;padding-left:1px;}"
-		"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
-
-	QPushButton *btn6 = new QPushButton("对比对比");
-	btn6->setIconSize(QSize(32,32));
-	btn6->setIcon(QIcon(":/images/shutDown"));
-	btn6->setStyleSheet(
-		"QPushButton{background: transparent;border-radius:2px;;text-align: left;height:40px;padding-left:1px;}"
-		"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
-
-	QPushButton *btn7 = new QPushButton("SCD对比");
-	btn7->setIconSize(QSize(32,32));
-	btn7->setIcon(QIcon(":/images/user"));
-	btn7->setStyleSheet(
-		"QPushButton{background: transparent;border-radius:2px;;text-align: left;height:40px;padding-left:1px;}"
-		"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
-
-	QPushButton *btn8 = new QPushButton("对比");
-	btn8->setIconSize(QSize(32,32));
-	btn8->setIcon(QIcon(":/images/config"));
-	btn8->setStyleSheet(
-		"QPushButton{background: transparent;border-radius:2px;;text-align: left;height:40px;padding-left:1px;}"
-		"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
-
-	QPushButton *btn9 = new QPushButton("对比对比");
-	btn9->setIconSize(QSize(32,32));
-	btn9->setIcon(QIcon(":/images/shutDown"));
-	btn9->setStyleSheet(
-		"QPushButton{background: transparent;border-radius:2px;;text-align: left;height:40px;padding-left:1px;}"
-		"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
-
-	ui.vLayoutFun->addWidget(btn1);
-	ui.vLayoutFun->addWidget(btn2);
-	ui.vLayoutFun->addWidget(btn3);
-	ui.vLayoutFun->addWidget(btn4);
-	ui.vLayoutFun->addWidget(btn5);
-	ui.vLayoutFun->addWidget(btn6);
-	ui.vLayoutFun->addWidget(btn7);
-	ui.vLayoutFun->addWidget(btn8);
-	ui.vLayoutFun->addWidget(btn9);
 }
 
 void CNavigtion::InitSlot()
@@ -127,6 +131,8 @@ void CNavigtion::InitSlot()
 	connect(ui.btnFunSwitch, SIGNAL(clicked()), this, SLOT(SlotFunSwitch()));
 	connect(ui.btnUserSwitch, SIGNAL(clicked()), this, SLOT(SlotUserSwitch()));
 	connect(ui.btnQuit, SIGNAL(clicked()), this, SLOT(SlotQuit()));
+	connect(ui.btnFunPoint, SIGNAL(clicked()), this, SLOT(SlotFunPoint()));
+	connect(ui.btnUsers, SIGNAL(clicked()), this, SLOT(SlotUsers()));
 }
 
 void CNavigtion::paintEvent(QPaintEvent *e)
@@ -143,7 +149,9 @@ void CNavigtion::mouseMoveEvent(QMouseEvent *e)
 
 	if (name == "btnUser")
 		ui.labelUser->setPixmap(QPixmap(":/images/user"));
-	else if (name == "btnConfig")
+	else if (name == "btnUsers")
+		ui.labelUser->setPixmap(QPixmap(":/images/userGroup"));
+	else if (name == "btnFunPoint")
 		ui.labelUser->setPixmap(QPixmap(":/images/config"));
 	else if (name == "btnHelp")
 		ui.labelUser->setPixmap(QPixmap(":/images/help"));
@@ -193,4 +201,14 @@ void CNavigtion::SlotQuit()
 		m_pTool->CreateToolButton("plugin_demo2","插件测试用例2");
 		m_pTool->SetToolButtonClicked("plugin_demo2");
 	}
+}
+
+void CNavigtion::SlotFunPoint()
+{
+
+}
+
+void CNavigtion::SlotUsers()
+{
+	SigUsers();
 }

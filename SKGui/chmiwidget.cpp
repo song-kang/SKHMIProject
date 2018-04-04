@@ -1,4 +1,5 @@
 #include "chmiwidget.h"
+#include "cuserswidget.h"
 
 CHMIWidget::CHMIWidget(QWidget *parent)
 	: SKWidget(parent)
@@ -7,12 +8,14 @@ CHMIWidget::CHMIWidget(QWidget *parent)
 
 	Init();
 	InitUi();
-	//InitSlot();
 }
 
 CHMIWidget::~CHMIWidget()
 {
-	delete m_pNavigtion;
+	DeleteNavigtion();
+
+	if (m_pUsersWidget)
+		delete m_pUsersWidget;
 }
 
 void CHMIWidget::Init()
@@ -31,16 +34,25 @@ void CHMIWidget::Init()
 	m_pFloatToolWidget->setFixedHeight(40);
 	m_pFloatToolWidget->hide();
 
-	//m_pNavigtion = new SKBaseWidget(NULL,new CNavigtion(this));
-	//m_pNavigtion->SetWindowsFlagsTool();
-	//m_pNavigtion->SetWindowFixSize(400,500);
-	//m_pNavigtion->SetIsDrag(false);
-	//m_pNavigtion->HideTopFrame();
+	CreateNavigtion();
+	m_pUsersWidget = NULL;
+}
+
+void CHMIWidget::CreateNavigtion()
+{
 	m_pNavigtion = new CNavigtion();
 	m_pNavigtion->SetHmi(this);
 	m_pNavigtion->SetTool(m_pToolWidget);
 	m_pNavigtion->setFixedSize(450,550);
 	m_pNavigtion->hide();
+	connect(m_pNavigtion, SIGNAL(SigUsers()), this, SLOT(SlotUsers()));
+}
+
+void CHMIWidget::DeleteNavigtion()
+{
+	disconnect(m_pNavigtion, SIGNAL(SigUsers()), this, SLOT(SlotUsers()));
+	delete m_pNavigtion;
+	m_pNavigtion = NULL;
 }
 
 void CHMIWidget::InitUi()
@@ -83,7 +95,11 @@ void CHMIWidget::SlotStart()
 	p.setY(p.y() + (m_pStackedWidget->height() - m_pNavigtion->height() - 5));
 	m_pNavigtion->move(p);
 	if (m_pNavigtion->isHidden())
+	{
+		m_pNavigtion->SetEveryFunction(true);
+		m_pNavigtion->SlotFunSwitch();
 		m_pNavigtion->show();
+	}
 	else
 		m_pNavigtion->hide();
 }
@@ -101,6 +117,35 @@ void CHMIWidget::SlotMin()
 void CHMIWidget::SlotMove()
 {
 	m_pNavigtion->hide();
+}
+
+void CHMIWidget::SlotUsers()
+{
+	m_pNavigtion->hide();
+
+	if (!m_pUsersWidget)
+	{
+		m_pUsersWidget = new SKBaseWidget(NULL,new CUsersWidget(this));
+		m_pUsersWidget->SetWindowsFlagsTool();
+		m_pUsersWidget->SetWindowsModal();
+		m_pUsersWidget->SetWindowTitle(" 用户账户管理");
+		m_pUsersWidget->SetWindowIcon(QIcon(""));
+		m_pUsersWidget->SetWindowFlags(0);
+		m_pUsersWidget->SetWindowBackgroundImage(QPixmap(":/images/skin0"));
+		m_pUsersWidget->SetWindowSize(700,500);
+		m_pUsersWidget->SetIsDrag(true);
+		connect(m_pUsersWidget, SIGNAL(SigClose()), this, SLOT(SlotUsersWidgetClose()));
+	}
+	
+	((CUsersWidget*)m_pUsersWidget->GetCenterWidget())->Start();
+	m_pUsersWidget->Show();
+}
+
+void CHMIWidget::SlotUsersWidgetClose()
+{
+	disconnect(m_pUsersWidget, SIGNAL(SigClose()), this, SLOT(SlotUsersWidgetClose()));
+	delete m_pUsersWidget;
+	m_pUsersWidget = NULL;
 }
 
 bool CHMIWidget::GotoWidget(QString name)

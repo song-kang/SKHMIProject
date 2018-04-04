@@ -36,6 +36,10 @@ public:
 	void SetIsDrag(bool b) { m_bIsDrag = b; }
 	void SetIsTopDrag(bool b) { m_bIsTopDrag = b; }
 	void SetWindowsFlagsTool() { setWindowFlags(windowFlags() | Qt::Tool); }
+	void SetWindowsFlagsTopHit() { setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint); }
+	void SetWindowsModal() { setAttribute(Qt::WA_ShowModal, true); setWindowModality(Qt::ApplicationModal); }
+
+	QWidget* GetCenterWidget() { return m_centerWidget; }
 
 protected:
 	virtual void mouseMoveEvent(QMouseEvent *e);
@@ -68,6 +72,7 @@ signals:
 	void SigMax();
 	void SigMin();
 	void SigMove();
+	void SigClose();
 
 public slots:
 	void SlotClose();

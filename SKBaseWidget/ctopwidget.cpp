@@ -137,7 +137,10 @@ void CTopWidget::paintEvent(QPaintEvent *e)
 
 void CTopWidget::SetWindowIcon(QIcon icon)
 {
-	m_btnLogo->setIcon(icon);
+	if (icon.isNull())
+		m_btnLogo->hide();
+	else
+		m_btnLogo->setIcon(icon);
 }
 
 void CTopWidget::SetWindowTitle(QString title)

@@ -2,6 +2,8 @@
 #include "cinitwidget.h"
 #include "sk_unitconfig.h"
 #include "cpluginmgr.h"
+#include "cfunpoint.h"
+#include "cusers.h"
 
 #define HMI_NAME	"UK9000 HMI"
 #define HMI_VERSION	"1.0.0"
@@ -16,6 +18,11 @@ SKGui::~SKGui()
 {
 	if (w)
 		delete ((SKBaseWidget*)w);
+
+	foreach (CFunPoint *p, m_lstFunPoint)
+		delete p;
+	foreach (CUsers *u, m_lstUsers)
+		delete u;
 }
 
 SKGui* SKGui::GetPtr()
@@ -98,4 +105,91 @@ CBaseView* SKGui::NewView(QString sPluginName,QWidget* parent)
 		return view;
 
 	return NULL;
+}
+
+void SKGui::SetFunPoint(CFunPoint *fpoint)
+{
+	SString sql;
+	SRecordset rs;
+	if (fpoint)
+		sql.sprintf("select fun_key,name,auth,img_normal from t_ssp_fun_point where p_fun_key='%s' order by idx asc",fpoint->GetKey().toStdString().data());
+	else
+		sql.sprintf("select fun_key,name,auth,img_normal from t_ssp_fun_point where p_fun_key='%s' order by idx asc","top");
+	int cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		for (int i = 0; i < cnt; i++)
+		{
+			CFunPoint *p = new CFunPoint(fpoint);
+			p->SetKey(rs.GetValue(i,0).data());
+			p->SetDesc(rs.GetValue(i,1).data());
+			p->SetAuth((bool)rs.GetValue(i,2).toInt());
+			
+			SString sWhere = SString::toFormat("fun_key='%s'",p->GetKey().toStdString().data());
+			DB->ReadLobToMem("t_ssp_fun_point","img_normal",sWhere,p->m_pImageBuffer,p->m_iImageLen);
+
+			if (fpoint)
+				fpoint->m_lstChilds.append(p);
+			else
+				m_lstFunPoint.append(p);
+
+			SetFunPoint(p);
+		}
+	}
+}
+
+void SKGui::SetUsersAuth()
+{
+	SString sql;
+	SRecordset rs,rs1;
+	sql.sprintf("select grp_code,name,dsc from t_ssp_user_group");
+	int cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		for (int i = 0; i < cnt; i++)
+		{
+			CUsers *grp = new CUsers();
+			grp->SetCode(rs.GetValue(i,0).data());
+			grp->SetName(rs.GetValue(i,1).data());
+			grp->SetDesc(rs.GetValue(i,2).data());
+			sql.sprintf("select fun_key,auth from t_ssp_usergroup_auth where grp_code='%s'",grp->GetCode().toStdString().data());
+			int cnt1 = DB->Retrieve(sql,rs1);
+			for (int j = 0; j < cnt1; j++)
+				grp->m_lstAuth.append(rs1.GetValue(j,0).data());
+
+			SetUserAuth(grp);
+			m_lstUsers.append(grp);
+		}
+	}
+}
+
+void SKGui::SetUserAuth(CUsers *grp)
+{
+	SString sql;
+	SRecordset rs,rs1;
+	sql.sprintf("select usr_sn,usr_code,grp_code,name,pwd,dsc,email,mobile,create_time,login_timeout from t_ssp_user where grp_code='%s'",grp->GetCode().toStdString().data());
+	int cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		for (int i = 0; i < cnt; i++)
+		{
+			CUser *user = new CUser(grp);
+			user->SetSn(rs.GetValue(i,0).toInt());
+			user->SetCode(rs.GetValue(i,1).data());
+			user->SetGrpCode(rs.GetValue(i,2).data());
+			user->SetName(rs.GetValue(i,3).data());
+			user->SetPassword(rs.GetValue(i,4).data());
+			user->SetDesc(rs.GetValue(i,5).data());
+			user->SetEmail(rs.GetValue(i,6).data());
+			user->SetMobile(rs.GetValue(i,7).data());
+			user->SetLoginTime(rs.GetValue(i,8).toUInt());
+			user->SetLoginTimeout(rs.GetValue(i,9).toUInt());
+			sql.sprintf("select fun_key,auth from t_ssp_user_auth where usr_sn=%d",user->GetSn());
+			int cnt1 = DB->Retrieve(sql,rs1);
+			for (int j = 0; j < cnt1; j++)
+				user->m_lstAuth.append(rs1.GetValue(j,0).data());
+
+			grp->m_lstUser.append(user);
+		}
+	}
 }

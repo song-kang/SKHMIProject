@@ -47,5 +47,10 @@
         <file alias="shutDown">Resources/shutDown.png</file>
         <file alias="userSwitch">Resources/userSwitch.png</file>
         <file alias="btn_bg">Resources/btn_bg.png</file>
+        <file alias="folder_open">Resources/folder_open.png</file>
+        <file alias="terminal">Resources/terminal.png</file>
+        <file alias="terminal_big">Resources/terminal_big.png</file>
+        <file alias="userGroup">Resources/userGroup.png</file>
+        <file alias="application">Resources/application.png</file>
     </qresource>
 </RCC>

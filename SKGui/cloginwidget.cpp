@@ -13,7 +13,8 @@ CLoginWidget::CLoginWidget(QWidget *parent)
 	InitUi();
 	InitSlot();
 
-	SlotLogin();
+	ui.comboBox_user->setEditText("admin");
+	ui.lineEdit_password->setText("123");
 }
 
 CLoginWidget::~CLoginWidget()
@@ -65,20 +66,21 @@ void CLoginWidget::SlotClose()
 
 void CLoginWidget::SlotLogin()
 {
-	//SString sql;
-	//SRecordset rs;
-	//sql.sprintf("select count(*) from t_ssp_user where usr_code='%s' and pwd='%s'",
-	//	ui.comboBox_user->currentText().toStdString().data(),ui.lineEdit_password->text().toStdString().data());
-	//int cnt = DB->Retrieve(sql,rs);
-	//if (cnt > 0)
-	//{
-	//	int number = rs.GetValue(0,0).toInt();
-	//	if (number > 0)
-	//	{
+	SString sql;
+	SRecordset rs;
+	sql.sprintf("select count(*) from t_ssp_user where usr_code='%s' and pwd='%s'",
+		ui.comboBox_user->currentText().toStdString().data(),ui.lineEdit_password->text().toStdString().data());
+	int cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		int number = rs.GetValue(0,0).toInt();
+		if (number > 0)
+		{
 			SlotClose();
 			CHMIWidget *wgt = new CHMIWidget();
 			m_pHmi = new SKBaseWidget(NULL,wgt);
 			wgt->SetApp(m_pHmi);
+			wgt->SetUser(ui.comboBox_user->currentText());
 			wgt->InitSlot();
 			m_pHmi->SetWindowBackgroundImage(QPixmap(":/images/skin0"));
 			m_pHmi->SetWindowSize(1000,650);
@@ -90,9 +92,9 @@ void CLoginWidget::SlotLogin()
 			m_pHmi->Show();
 			//m_pHmi->ShowMaximized();
 			//m_pHmi->ShowFullScreen();
-	//		return;
-	//	}
-	//}
+			return;
+		}
+	}
 
 	ui.comboBox_user->setFocus();
 	ui.label_tip->setVisible(true);

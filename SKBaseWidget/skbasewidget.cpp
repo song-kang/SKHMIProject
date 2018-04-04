@@ -263,6 +263,7 @@ void SKBaseWidget::ShowFullScreen()
 void SKBaseWidget::SlotClose()
 {
 	close();
+	SigClose();
 }
 
 void SKBaseWidget::SlotShowMax()

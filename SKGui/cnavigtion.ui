@@ -268,7 +268,7 @@ QPushButton::hover {
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnConfig">
+        <widget class="QPushButton" name="btnFunPoint">
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
@@ -288,7 +288,32 @@ QPushButton::hover {
 }</string>
          </property>
          <property name="text">
-          <string>系统设置</string>
+          <string>功能点管理</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnUsers">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	border-radius:1px;
+	border:none;
+	background: transparent;
+	color:#ffffff;
+	text-align: left;
+	height:35px;
+	padding-left:10px;
+}
+
+QPushButton::hover {
+	border-image:url(:/images/btn_bg)
+}</string>
+         </property>
+         <property name="text">
+          <string>用户账户</string>
          </property>
         </widget>
        </item>

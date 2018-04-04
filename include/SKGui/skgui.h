@@ -3,6 +3,7 @@
 
 #include "skgui_global.h"
 #include "skhead.h"
+#include "sk_database.h"
 #include "cbaseview.h"
 #include "SApplication.h"
 
@@ -13,6 +14,8 @@
 #define SK_GUI SKGui::GetPtr()
 
 class CPluginMgr;
+class CFunPoint;
+class CUsers;
 class SKGUI_EXPORT SKGui : public SApplication
 {
 public:
@@ -27,6 +30,8 @@ public:
 	QString GetHmiName() { return m_sHmiName.data(); }
 	QString GetHmiVersion() { return m_sHmiVersion.data(); }
 	CBaseView* NewView(QString sPluginName,QWidget* parent = 0);
+	void SetFunPoint(CFunPoint *fpoint);
+	void SetUsersAuth();
 
 public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
@@ -35,6 +40,8 @@ public:
 	
 public:
 	CPluginMgr *m_pPluginMgr;
+	QList<CFunPoint*> m_lstFunPoint;
+	QList<CUsers*> m_lstUsers;
 
 private:
 	void *w;
@@ -44,6 +51,7 @@ private:
 
 private:
 	void Init();
+	void SetUserAuth(CUsers *grp);
 
 };
 

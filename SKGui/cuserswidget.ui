@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CUsersWidget</class>
+ <widget class="QWidget" name="CUsersWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>457</width>
+    <height>370</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CUsersWidget</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QTreeWidget" name="treeWidgetUsers">
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <column>
+       <property name="text">
+        <string notr="true">用户组和用户</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QTableWidget" name="tableWidgetAuth">
+      <column>
+       <property name="text">
+        <string/>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>功能点</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>功能点描述</string>
+       </property>
+      </column>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

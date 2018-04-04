@@ -44,6 +44,14 @@ void LoadThread::run()
 		return;
 	}
 
+	SigText(tr("加载功能点配置......"));
+	//SApi::UsSleep(500000);
+	SK_GUI->SetFunPoint(NULL);
+
+	SigText(tr("加载用户组、用户及权限配置......"));
+	//SApi::UsSleep(500000);
+	SK_GUI->SetUsersAuth();
+
 	SigText(tr("加载代理配置，启动代理......"));
 	//SApi::UsSleep(500000);
 	SK_GUI->BeginAgent();
