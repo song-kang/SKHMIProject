@@ -32,6 +32,7 @@ public:
 	CBaseView* NewView(QString sPluginName,QWidget* parent = 0);
 	void SetFunPoint(CFunPoint *fpoint);
 	void SetUsersAuth();
+	int GetSkinNo() { return m_iSkinNo; }
 
 public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
@@ -45,6 +46,7 @@ public:
 
 private:
 	void *w;
+	int m_iSkinNo;
 	SString m_sHmiName;
 	SString m_sHmiVersion;
 	QList<CBaseView*> *m_pListBaseView;

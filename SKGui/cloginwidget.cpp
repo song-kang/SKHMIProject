@@ -82,7 +82,7 @@ void CLoginWidget::SlotLogin()
 			wgt->SetApp(m_pHmi);
 			wgt->SetUser(ui.comboBox_user->currentText());
 			wgt->InitSlot();
-			m_pHmi->SetWindowBackgroundImage(QPixmap(":/images/skin0"));
+			m_pHmi->SetWindowBackgroundImage(QPixmap(tr(":/skins/skin%1").arg(SK_GUI->GetSkinNo())));
 			m_pHmi->SetWindowSize(1000,650);
 			m_pHmi->setMinimumSize(1000,650);
 			m_pHmi->SetWindowTitle(SK_GUI->GetHmiName());

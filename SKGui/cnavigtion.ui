@@ -46,19 +46,10 @@
            <item row="0" column="0">
             <layout class="QVBoxLayout" name="verticalLayout">
              <property name="spacing">
-              <number>2</number>
+              <number>5</number>
              </property>
-             <property name="leftMargin">
+             <property name="margin">
               <number>3</number>
-             </property>
-             <property name="topMargin">
-              <number>3</number>
-             </property>
-             <property name="rightMargin">
-              <number>3</number>
-             </property>
-             <property name="bottomMargin">
-              <number>9</number>
              </property>
              <item>
               <widget class="QWidget" name="widgetItem" native="true">
@@ -205,7 +196,7 @@ QLineEdit:hover {
         <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>10</number>
+        <number>5</number>
        </property>
        <item>
         <widget class="QWidget" name="widget_4" native="true">
@@ -268,6 +259,56 @@ QPushButton::hover {
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="btnPlugin">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	border-radius:1px;
+	border:none;
+	background: transparent;
+	color:#ffffff;
+	text-align: left;
+	height:35px;
+	padding-left:10px;
+}
+
+QPushButton::hover {
+	border-image:url(:/images/btn_bg)
+}</string>
+         </property>
+         <property name="text">
+          <string>插件管理</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnUsers">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	border-radius:1px;
+	border:none;
+	background: transparent;
+	color:#ffffff;
+	text-align: left;
+	height:35px;
+	padding-left:10px;
+}
+
+QPushButton::hover {
+	border-image:url(:/images/btn_bg)
+}</string>
+         </property>
+         <property name="text">
+          <string>用户权限</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="btnFunPoint">
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
@@ -293,7 +334,20 @@ QPushButton::hover {
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnUsers">
+        <widget class="Line" name="line_3">
+         <property name="styleSheet">
+          <string notr="true">color: gray;</string>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnSysConfig">
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
@@ -313,7 +367,70 @@ QPushButton::hover {
 }</string>
          </property>
          <property name="text">
-          <string>用户账户</string>
+          <string>系统配置</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnLog">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	border-radius:1px;
+	border:none;
+	background: transparent;
+	color:#ffffff;
+	text-align: left;
+	height:35px;
+	padding-left:10px;
+}
+
+QPushButton::hover {
+	border-image:url(:/images/btn_bg)
+}</string>
+         </property>
+         <property name="text">
+          <string>日志配置</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnDB">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	border-radius:1px;
+	border:none;
+	background: transparent;
+	color:#ffffff;
+	text-align: left;
+	height:35px;
+	padding-left:10px;
+}
+
+QPushButton::hover {
+	border-image:url(:/images/btn_bg)
+}</string>
+         </property>
+         <property name="text">
+          <string>数据库配置</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_4">
+         <property name="styleSheet">
+          <string notr="true">color: gray;</string>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>

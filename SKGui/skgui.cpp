@@ -5,8 +5,9 @@
 #include "cfunpoint.h"
 #include "cusers.h"
 
-#define HMI_NAME	"UK9000 HMI"
-#define HMI_VERSION	"1.0.0"
+#define HMI_NAME		"UK9000 HMI"
+#define HMI_VERSION		"1.0.0"
+#define MAX_SKIN		9
 
 SKGui *g_gui=NULL;
 SKGui::SKGui()
@@ -39,6 +40,10 @@ void SKGui::Init()
 
 	SetModuleDesc(m_sHmiName = HMI_NAME);
 	SetVersion(m_sHmiVersion = HMI_VERSION);
+
+	QTime t= QTime::currentTime();
+	qsrand(t.msec()+t.second()*1000);
+	m_iSkinNo = qrand() % MAX_SKIN;
 }
 
 bool SKGui::Begin()

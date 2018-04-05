@@ -21,7 +21,6 @@
         <file alias="project_name">Resources/project_name.png</file>
         <file alias="username">Resources/username.png</file>
         <file alias="HmiLogo">Resources/HmiLogo.png</file>
-        <file alias="skin0">Resources/skin0.png</file>
         <file alias="start_logo">Resources/start_logo.png</file>
         <file alias="gw_start_cli">Resources/gw_start_cli.png</file>
         <file alias="gw_start_hov">Resources/gw_start_hov.png</file>
@@ -52,5 +51,22 @@
         <file alias="terminal_big">Resources/terminal_big.png</file>
         <file alias="userGroup">Resources/userGroup.png</file>
         <file alias="application">Resources/application.png</file>
+        <file alias="auth">Resources/auth.png</file>
+        <file alias="dbConfig">Resources/dbConfig.png</file>
+        <file alias="logConfig">Resources/logConfig.png</file>
+        <file alias="plugin">Resources/plugin.png</file>
+        <file alias="sysConfig">Resources/sysConfig.png</file>
+        <file alias="auth">Resources/auth.png</file>
+    </qresource>
+    <qresource prefix="/skins">
+        <file alias="skin0">Resources/skin/skin0.jpg</file>
+        <file alias="skin2">Resources/skin/skin2.jpg</file>
+        <file alias="skin3">Resources/skin/skin3.jpg</file>
+        <file alias="skin4">Resources/skin/skin4.jpg</file>
+        <file alias="skin5">Resources/skin/skin5.jpg</file>
+        <file alias="skin6">Resources/skin/skin6.jpg</file>
+        <file alias="skin7">Resources/skin/skin7.jpg</file>
+        <file alias="skin8">Resources/skin/skin8.jpg</file>
+        <file alias="skin1">Resources/skin/skin1.jpg</file>
     </qresource>
 </RCC>

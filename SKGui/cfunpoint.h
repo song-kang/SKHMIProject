@@ -18,6 +18,8 @@ public:
 	QString GetDesc() { return m_sDesc; }
 	bool GetAuth() { return m_bAuth; }
 
+	bool IsExist(QString key);
+
 public:
 	QList<CFunPoint*> m_lstChilds;
 	unsigned char* m_pImageBuffer;

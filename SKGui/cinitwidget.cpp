@@ -47,9 +47,16 @@ void LoadThread::run()
 	SigText(tr("加载功能点配置......"));
 	//SApi::UsSleep(500000);
 	SK_GUI->SetFunPoint(NULL);
+	CheckFunPoint();
 
 	SigText(tr("加载用户组、用户及权限配置......"));
 	//SApi::UsSleep(500000);
+	SK_GUI->SetUsersAuth();
+	DeleteUserAuth();
+	CheckUserAuth(SK_GUI->m_lstFunPoint);
+	foreach (CUsers *u, SK_GUI->m_lstUsers)
+		delete u;
+	SK_GUI->m_lstUsers.clear();
 	SK_GUI->SetUsersAuth();
 
 	SigText(tr("加载代理配置，启动代理......"));
@@ -62,6 +69,98 @@ void LoadThread::run()
 
 	SigText(tr("加载完毕."));
 	//SApi::UsSleep(500000);
+}
+
+void LoadThread::CheckFunPoint()
+{
+	SString sql;
+	SRecordset rs;
+
+	sql.sprintf("select fun_key from t_ssp_fun_point order by fun_key asc");
+	int cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		for (int i = 0; i < cnt; i++)
+		{
+			QString key = rs.GetValue(i,0).data();
+			if (!IsExistKey(key))
+			{
+				sql.sprintf("delete from t_ssp_fun_point where fun_key='%s'",key.toStdString().data());
+				DB->Execute(sql);
+			}
+		}
+	}
+}
+
+void LoadThread::CheckUserAuth(QList<CFunPoint*> lstFunPoint)
+{
+	SString sql;
+	foreach (CFunPoint *p, lstFunPoint)
+	{
+		foreach (CUsers *users, SK_GUI->m_lstUsers)
+		{
+			if (!users->m_lstAuth.contains(p->GetKey()))
+			{
+				sql.sprintf("insert into t_ssp_usergroup_auth values ('%s','%s',1)",
+					users->GetCode().toStdString().data(),p->GetKey().toStdString().data());
+				DB->Execute(sql);
+			}
+
+			foreach (CUser *user, users->m_lstUser)
+			{
+				if (!user->m_lstAuth.contains(p->GetKey()))
+				{
+					sql.sprintf("insert into t_ssp_user_auth values (%d,'%s',1)",user->GetSn(),p->GetKey().toStdString().data());
+					DB->Execute(sql);
+				}
+			}
+		}
+
+		CheckUserAuth(p->m_lstChilds);
+	}
+}
+
+void LoadThread::DeleteUserAuth()
+{
+	SString sql;
+	foreach (CUsers *users, SK_GUI->m_lstUsers)
+	{
+		foreach (QString key, users->m_lstAuth)
+		{
+			if (!IsExistKey(key))
+			{
+				sql.sprintf("delete from t_ssp_usergroup_auth where grp_code='%s' and fun_key='%s'",
+					users->GetCode().toStdString().data(),key.toStdString().data());
+				DB->Execute(sql);
+			}
+		}
+
+		foreach (CUser *user, users->m_lstUser)
+		{
+			foreach (QString key, user->m_lstAuth)
+			{
+				if (!IsExistKey(key))
+				{
+					sql.sprintf("delete from t_ssp_user_auth where usr_sn=%d and fun_key='%s'",
+						user->GetSn(),key.toStdString().data());
+					DB->Execute(sql);
+				}
+			}
+		}
+	}
+}
+
+bool LoadThread::IsExistKey(QString key)
+{
+	bool bFind = false;
+
+	foreach (CFunPoint *p, SK_GUI->m_lstFunPoint)
+	{
+		if (p->IsExist(key))
+			bFind = true;
+	}
+
+	return bFind;
 }
 
 ///////////////////////////// CInitWidget //////////////////////////////////

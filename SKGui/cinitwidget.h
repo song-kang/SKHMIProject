@@ -7,6 +7,8 @@
 #include "skhead.h"
 #include "sk_database.h"
 #include "sk_log.h"
+#include "cfunpoint.h"
+#include "cusers.h"
 
 class CInitWidget;
 class LoadThread : public QThread
@@ -27,6 +29,12 @@ signals:
 
 private:
 	QString m_sError;
+
+private:
+	void CheckFunPoint();
+	void CheckUserAuth(QList<CFunPoint*> lstFunPoint);
+	void DeleteUserAuth();
+	bool IsExistKey(QString key);
 
 private:
 	CInitWidget *m_pApp;

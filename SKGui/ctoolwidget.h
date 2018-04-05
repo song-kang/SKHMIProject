@@ -31,6 +31,9 @@ public:
 private:
 	Ui::CToolWidget ui;
 
+	QTimer *m_pDateTimer;
+	QMap<int,QString> m_weekMap;
+
 protected:
 	virtual void paintEvent(QPaintEvent *);
 	virtual void mousePressEvent(QMouseEvent *);
@@ -49,6 +52,7 @@ private slots:
 	void SlotStart();
 	void SlotDesktop();
 	void SlotToolButtonClick();
+	void SlotDateTime();
 
 private:
 	CHMIWidget *m_pHmi;

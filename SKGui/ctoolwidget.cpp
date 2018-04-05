@@ -62,6 +62,18 @@ void CToolWidget::Init()
 	ui.label_ymd->setFont(m_font);
 	ui.label_hms->setStyleSheet("color:white");
 	ui.label_ymd->setStyleSheet("color:white");
+
+	m_weekMap.insert(1,"星期一");
+	m_weekMap.insert(2,"星期二");
+	m_weekMap.insert(3,"星期三");
+	m_weekMap.insert(4,"星期四");
+	m_weekMap.insert(5,"星期五");
+	m_weekMap.insert(6,"星期六");
+	m_weekMap.insert(7,"星期日");
+
+	m_pDateTimer = new QTimer(this);
+	m_pDateTimer->setInterval(2000);
+	m_pDateTimer->start();
 }
 
 void CToolWidget::InitUi()
@@ -75,6 +87,7 @@ void CToolWidget::InitSlot()
 	connect(ui.btnRight, SIGNAL(clicked()), this, SLOT(SlotRight()));
 	connect(ui.btnStart, SIGNAL(clicked()), this, SLOT(SlotStart()));
 	connect(ui.btnDesktop, SIGNAL(clicked()), this, SLOT(SlotDesktop()));
+	connect(m_pDateTimer, SIGNAL(timeout()), this, SLOT(SlotDateTime()));
 }
 
 void CToolWidget::paintEvent(QPaintEvent *e)
@@ -148,6 +161,15 @@ void CToolWidget::SlotToolButtonClick()
 		m_pHmi->ShowWidgetByPluginName(btn->objectName());
 
 	m_pHmi->m_pNavigtion->hide();
+}
+
+void CToolWidget::SlotDateTime()
+{
+	QString text;
+	QDateTime dt = QDateTime::currentDateTime();
+	ui.label_hms->setText(text.sprintf("%02d:%02d",dt.time().hour(),dt.time().minute()));
+	text.sprintf("%d/%d/%d",dt.date().year(),dt.date().month(),dt.date().day());
+	ui.label_ymd->setText(text + " " + m_weekMap.value(dt.date().dayOfWeek()));
 }
 
 void CToolWidget::CreateToolButton(QString name, QString desc)

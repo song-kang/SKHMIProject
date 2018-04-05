@@ -131,7 +131,7 @@ void CHMIWidget::SlotUsers()
 		m_pUsersWidget->SetWindowTitle(" 用户账户管理");
 		m_pUsersWidget->SetWindowIcon(QIcon(""));
 		m_pUsersWidget->SetWindowFlags(0);
-		m_pUsersWidget->SetWindowBackgroundImage(QPixmap(":/images/skin0"));
+		m_pUsersWidget->SetWindowBackgroundImage(QPixmap(tr(":/skins/skin%1").arg(SK_GUI->GetSkinNo())));
 		m_pUsersWidget->SetWindowSize(700,500);
 		m_pUsersWidget->SetIsDrag(true);
 		connect(m_pUsersWidget, SIGNAL(SigClose()), this, SLOT(SlotUsersWidgetClose()));

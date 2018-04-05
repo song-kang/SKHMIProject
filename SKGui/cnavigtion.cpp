@@ -44,6 +44,10 @@ void CNavigtion::Init()
 	ui.btnFunPoint->setMouseTracking(true);
 	ui.btnQuit->setMouseTracking(true);
 	ui.btnHelp->setMouseTracking(true);
+	ui.btnPlugin->setMouseTracking(true);
+	ui.btnLog->setMouseTracking(true);
+	ui.btnDB->setMouseTracking(true);
+	ui.btnSysConfig->setMouseTracking(true);
 
 	ui.treeWidgetItems->setRootIsDecorated(false);
 	ui.treeWidgetItems->setStyleSheet("QTreeView::branch:has-children:!has-siblings:closed,\
@@ -115,7 +119,9 @@ void CNavigtion::SetTreeFunPoint(QList<CFunPoint*> lstFunPoint, QList<CUsers*> l
 			}
 			else if (p->m_lstChilds.count() > 1)
 				item->setIcon(0,QIcon(":/images/folder_open"));
-		}
+	}
+		else if (!itemParent && p->m_lstChilds.count() == 1)
+			item = NULL;
 
 		SetTreeFunPoint(p->m_lstChilds,lstUsers,item);
 	}
@@ -150,7 +156,7 @@ void CNavigtion::mouseMoveEvent(QMouseEvent *e)
 	if (name == "btnUser")
 		ui.labelUser->setPixmap(QPixmap(":/images/user"));
 	else if (name == "btnUsers")
-		ui.labelUser->setPixmap(QPixmap(":/images/userGroup"));
+		ui.labelUser->setPixmap(QPixmap(":/images/auth"));
 	else if (name == "btnFunPoint")
 		ui.labelUser->setPixmap(QPixmap(":/images/config"));
 	else if (name == "btnHelp")
@@ -159,6 +165,14 @@ void CNavigtion::mouseMoveEvent(QMouseEvent *e)
 		ui.labelUser->setPixmap(QPixmap(":/images/userSwitch"));
 	else if (name == "btnQuit")
 		ui.labelUser->setPixmap(QPixmap(":/images/shutDown"));
+	else if (name == "btnLog")
+		ui.labelUser->setPixmap(QPixmap(":/images/logConfig"));
+	else if (name == "btnDB")
+		ui.labelUser->setPixmap(QPixmap(":/images/dbConfig"));
+	else if (name == "btnSysConfig")
+		ui.labelUser->setPixmap(QPixmap(":/images/sysConfig"));
+	else if (name == "btnPlugin")
+		ui.labelUser->setPixmap(QPixmap(":/images/plugin"));
 	else
 		ui.labelUser->setPixmap(QPixmap(":/images/user"));
 }
