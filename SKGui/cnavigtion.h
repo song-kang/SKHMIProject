@@ -23,10 +23,10 @@ public:
 	void SetHmi(CHMIWidget *hmi) { m_pHmi = hmi; }
 	void SetTool(CToolWidget *tool) { m_pTool = tool; }
 	void SetEveryFunction(bool b) { m_bEveryFunction = b; }
-	void SetUser(QString user) { m_sUser = user; ui.btnUser->setText(m_sUser);}
 
+	void SetUser(QString user);
 	void SetQuickFunPoint(QList<CFunPoint*> lstFunPoint);
-	void SetTreeFunPoint(QList<CFunPoint*> lstFunPoint, QList<CUsers*> lstUsers, QTreeWidgetItem *itemParent);
+	void SetTreeFunPoint(QList<CFunPoint*> lstFunPoint, CUser *user, QTreeWidgetItem *itemParent);
 
 private:
 	Ui::CNavigtion ui;

@@ -99,7 +99,7 @@ void LoadThread::CheckUserAuth(QList<CFunPoint*> lstFunPoint)
 	{
 		foreach (CUsers *users, SK_GUI->m_lstUsers)
 		{
-			if (!users->m_lstAuth.contains(p->GetKey()))
+			if (!users->IsExistKey(p->GetKey()))
 			{
 				sql.sprintf("insert into t_ssp_usergroup_auth values ('%s','%s',1)",
 					users->GetCode().toStdString().data(),p->GetKey().toStdString().data());
@@ -108,7 +108,7 @@ void LoadThread::CheckUserAuth(QList<CFunPoint*> lstFunPoint)
 
 			foreach (CUser *user, users->m_lstUser)
 			{
-				if (!user->m_lstAuth.contains(p->GetKey()))
+				if (!user->IsExistKey(p->GetKey()))
 				{
 					sql.sprintf("insert into t_ssp_user_auth values (%d,'%s',1)",user->GetSn(),p->GetKey().toStdString().data());
 					DB->Execute(sql);
@@ -125,24 +125,24 @@ void LoadThread::DeleteUserAuth()
 	SString sql;
 	foreach (CUsers *users, SK_GUI->m_lstUsers)
 	{
-		foreach (QString key, users->m_lstAuth)
+		foreach (stuAuth *auth, users->m_lstAuth)
 		{
-			if (!IsExistKey(key))
+			if (!IsExistKey(auth->fun_key))
 			{
 				sql.sprintf("delete from t_ssp_usergroup_auth where grp_code='%s' and fun_key='%s'",
-					users->GetCode().toStdString().data(),key.toStdString().data());
+					users->GetCode().toStdString().data(),auth->fun_key.toStdString().data());
 				DB->Execute(sql);
 			}
 		}
 
 		foreach (CUser *user, users->m_lstUser)
 		{
-			foreach (QString key, user->m_lstAuth)
+			foreach (stuAuth *auth, user->m_lstAuth)
 			{
-				if (!IsExistKey(key))
+				if (!IsExistKey(auth->fun_key))
 				{
 					sql.sprintf("delete from t_ssp_user_auth where usr_sn=%d and fun_key='%s'",
-						user->GetSn(),key.toStdString().data());
+						user->GetSn(),auth->fun_key.toStdString().data());
 					DB->Execute(sql);
 				}
 			}

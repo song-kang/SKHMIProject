@@ -160,7 +160,12 @@ void SKGui::SetUsersAuth()
 			sql.sprintf("select fun_key,auth from t_ssp_usergroup_auth where grp_code='%s'",grp->GetCode().toStdString().data());
 			int cnt1 = DB->Retrieve(sql,rs1);
 			for (int j = 0; j < cnt1; j++)
-				grp->m_lstAuth.append(rs1.GetValue(j,0).data());
+			{
+				stuAuth *auth = new stuAuth;
+				auth->fun_key = rs1.GetValue(j,0).data();
+				auth->auth = (bool)rs1.GetValue(j,1).toInt();
+				grp->m_lstAuth.append(auth);
+			}
 
 			SetUserAuth(grp);
 			m_lstUsers.append(grp);
@@ -192,9 +197,27 @@ void SKGui::SetUserAuth(CUsers *grp)
 			sql.sprintf("select fun_key,auth from t_ssp_user_auth where usr_sn=%d",user->GetSn());
 			int cnt1 = DB->Retrieve(sql,rs1);
 			for (int j = 0; j < cnt1; j++)
-				user->m_lstAuth.append(rs1.GetValue(j,0).data());
+			{
+				stuAuth *auth = new stuAuth;
+				auth->fun_key = rs1.GetValue(j,0).data();
+				auth->auth = (bool)rs1.GetValue(j,1).toInt();
+				user->m_lstAuth.append(auth);
+			}
 
 			grp->m_lstUser.append(user);
 		}
+	}
+}
+
+void SKGui::SetRunPoints(QList<CFunPoint*> lstFunPoint)
+{
+	foreach (CFunPoint *p, lstFunPoint)
+	{
+		if (p->m_lstChilds.count() == 0)
+		{
+			m_lstRunFunPoint.append(p);
+		}
+
+		SetRunPoints(p->m_lstChilds);
 	}
 }

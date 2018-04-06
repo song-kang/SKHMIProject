@@ -33,7 +33,8 @@ public:
 	void SetFunPoint(CFunPoint *fpoint);
 	void SetUsersAuth();
 	int GetSkinNo() { return m_iSkinNo; }
-
+	QList<CFunPoint*> GetRunFunPoints() { m_lstRunFunPoint.clear(); SetRunPoints(m_lstFunPoint); return m_lstRunFunPoint; }
+	
 public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
 	virtual bool Start(){ return true; }
@@ -50,10 +51,12 @@ private:
 	SString m_sHmiName;
 	SString m_sHmiVersion;
 	QList<CBaseView*> *m_pListBaseView;
+	QList<CFunPoint*> m_lstRunFunPoint;
 
 private:
 	void Init();
 	void SetUserAuth(CUsers *grp);
+	void SetRunPoints(QList<CFunPoint*> lstFunPoint);
 
 };
 

@@ -1,8 +1,17 @@
 #ifndef CUSERS_H
 #define CUSERS_H
 
-#include <QObject>
+#include "skhead.h"
+#include "sk_database.h"
+#include "sk_log.h"
 
+struct stuAuth
+{
+	QString fun_key;
+	bool auth;
+};
+
+class CFunPoint;
 class CUsers;
 class CUser : public QObject
 {
@@ -34,8 +43,15 @@ public:
 	quint32 GetLoginTime() { return m_iLoginTime; }
 	quint32 GetLoginTimeout() { return m_iLoginTimeout; }
 
+	bool IsExistKey(QString key);
+	void SetAuth(CFunPoint *funPoint, bool auth);
+	void SetAuthTrue(CFunPoint *funPoint);
+	void SetAuthFalse(CFunPoint *funPoint);
+	bool IsAuthTrue(QString key);
+
 public:
-	QList<QString> m_lstAuth;
+	CUsers *m_pUsers;
+	QList<stuAuth*> m_lstAuth;
 
 private:
 	qint32 m_iSn;
@@ -68,14 +84,22 @@ public:
 	QString GetName() { return m_sName; }
 	QString GetDesc() { return m_sDesc; }
 
+	bool IsExistKey(QString key);
+	void SetAuth(CFunPoint *funPoint, bool auth);
+	void SetAuthTrue(CFunPoint *funPoint);
+	void SetAuthFalse(CFunPoint *funPoint);
+
 public:
 	QList<CUser*> m_lstUser;
-	QList<QString> m_lstAuth;
+	QList<stuAuth*> m_lstAuth;
 
 private:
 	QString m_sCode;
 	QString m_sName;
 	QString m_sDesc;
+
+private:
+	bool IsAuthTrue(QString key);
 	
 };
 

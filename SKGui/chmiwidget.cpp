@@ -44,6 +44,7 @@ void CHMIWidget::CreateNavigtion()
 	m_pNavigtion->SetHmi(this);
 	m_pNavigtion->SetTool(m_pToolWidget);
 	m_pNavigtion->setFixedSize(450,550);
+	m_pNavigtion->SetUser(m_sUser);
 	m_pNavigtion->hide();
 	connect(m_pNavigtion, SIGNAL(SigUsers()), this, SLOT(SlotUsers()));
 }
@@ -128,7 +129,7 @@ void CHMIWidget::SlotUsers()
 		m_pUsersWidget = new SKBaseWidget(NULL,new CUsersWidget(this));
 		m_pUsersWidget->SetWindowsFlagsTool();
 		m_pUsersWidget->SetWindowsModal();
-		m_pUsersWidget->SetWindowTitle(" 用户账户管理");
+		m_pUsersWidget->SetWindowTitle(" 用户权限");
 		m_pUsersWidget->SetWindowIcon(QIcon(""));
 		m_pUsersWidget->SetWindowFlags(0);
 		m_pUsersWidget->SetWindowBackgroundImage(QPixmap(tr(":/skins/skin%1").arg(SK_GUI->GetSkinNo())));
@@ -146,6 +147,9 @@ void CHMIWidget::SlotUsersWidgetClose()
 	disconnect(m_pUsersWidget, SIGNAL(SigClose()), this, SLOT(SlotUsersWidgetClose()));
 	delete m_pUsersWidget;
 	m_pUsersWidget = NULL;
+
+	DeleteNavigtion();
+	CreateNavigtion();
 }
 
 bool CHMIWidget::GotoWidget(QString name)

@@ -57,8 +57,38 @@ void CNavigtion::Init()
 	ui.treeWidgetItems->hide();
 
 	m_iQuickNum = 0;
-	SetQuickFunPoint(SK_GUI->m_lstFunPoint);
-	SetTreeFunPoint(SK_GUI->m_lstFunPoint,SK_GUI->m_lstUsers,NULL);
+}
+
+void CNavigtion::InitUi()
+{
+	
+}
+
+void CNavigtion::InitSlot()
+{
+	connect(ui.btnFunSwitch, SIGNAL(clicked()), this, SLOT(SlotFunSwitch()));
+	connect(ui.btnUserSwitch, SIGNAL(clicked()), this, SLOT(SlotUserSwitch()));
+	connect(ui.btnQuit, SIGNAL(clicked()), this, SLOT(SlotQuit()));
+	connect(ui.btnFunPoint, SIGNAL(clicked()), this, SLOT(SlotFunPoint()));
+	connect(ui.btnUsers, SIGNAL(clicked()), this, SLOT(SlotUsers()));
+}
+
+void CNavigtion::SetUser(QString user)
+{
+	m_sUser = user; 
+	ui.btnUser->setText(m_sUser);
+
+	foreach (CUsers *users, SK_GUI->m_lstUsers)
+	{
+		foreach (CUser *user, users->m_lstUser)
+		{
+			if (user->GetCode() == m_sUser)
+			{
+				SetQuickFunPoint(SK_GUI->m_lstFunPoint);
+				SetTreeFunPoint(SK_GUI->m_lstFunPoint,user,NULL);
+			}
+		}
+	}
 }
 
 void CNavigtion::SetQuickFunPoint(QList<CFunPoint*> lstFunPoint)
@@ -90,55 +120,44 @@ void CNavigtion::SetQuickFunPoint(QList<CFunPoint*> lstFunPoint)
 	}
 }
 
-void CNavigtion::SetTreeFunPoint(QList<CFunPoint*> lstFunPoint, QList<CUsers*> lstUsers, QTreeWidgetItem *itemParent)
+void CNavigtion::SetTreeFunPoint(QList<CFunPoint*> lstFunPoint, CUser *user, QTreeWidgetItem *itemParent)
 {
 	QTreeWidgetItem *item = itemParent;
 	foreach (CFunPoint *p, lstFunPoint)
 	{
 		if (p->m_lstChilds.count() == 0 || p->m_lstChilds.count() > 1)
 		{
-			if (itemParent)
-				item = new QTreeWidgetItem(itemParent);
-			else
-				item = new QTreeWidgetItem(ui.treeWidgetItems);
-
-			item->setText(0,p->GetDesc());
-			item->setToolTip(0,p->GetDesc());
-			item->setData(0,Qt::UserRole,p->GetKey());
-
-			if (p->m_lstChilds.count() == 0)
+			if (user->IsAuthTrue(p->GetKey()))
 			{
-				if (p->m_pImageBuffer && p->m_iImageLen > 0)
-				{
-					QPixmap pix;
-					pix.loadFromData(p->m_pImageBuffer,p->m_iImageLen);
-					item->setIcon(0,QIcon(pix));
-				}
+				if (itemParent)
+					item = new QTreeWidgetItem(itemParent);
 				else
-					item->setIcon(0,QIcon(":/images/application"));
+					item = new QTreeWidgetItem(ui.treeWidgetItems);
+
+				item->setText(0,p->GetDesc());
+				item->setToolTip(0,p->GetDesc());
+				item->setData(0,Qt::UserRole,p->GetKey());
+
+				if (p->m_lstChilds.count() == 0)
+				{
+					if (p->m_pImageBuffer && p->m_iImageLen > 0)
+					{
+						QPixmap pix;
+						pix.loadFromData(p->m_pImageBuffer,p->m_iImageLen);
+						item->setIcon(0,QIcon(pix));
+					}
+					else
+						item->setIcon(0,QIcon(":/images/application"));
+				}
+				else if (p->m_lstChilds.count() > 1)
+					item->setIcon(0,QIcon(":/images/folder_open"));
 			}
-			else if (p->m_lstChilds.count() > 1)
-				item->setIcon(0,QIcon(":/images/folder_open"));
-	}
+		}
 		else if (!itemParent && p->m_lstChilds.count() == 1)
 			item = NULL;
 
-		SetTreeFunPoint(p->m_lstChilds,lstUsers,item);
+		SetTreeFunPoint(p->m_lstChilds,user,item);
 	}
-}
-
-void CNavigtion::InitUi()
-{
-	
-}
-
-void CNavigtion::InitSlot()
-{
-	connect(ui.btnFunSwitch, SIGNAL(clicked()), this, SLOT(SlotFunSwitch()));
-	connect(ui.btnUserSwitch, SIGNAL(clicked()), this, SLOT(SlotUserSwitch()));
-	connect(ui.btnQuit, SIGNAL(clicked()), this, SLOT(SlotQuit()));
-	connect(ui.btnFunPoint, SIGNAL(clicked()), this, SLOT(SlotFunPoint()));
-	connect(ui.btnUsers, SIGNAL(clicked()), this, SLOT(SlotUsers()));
 }
 
 void CNavigtion::paintEvent(QPaintEvent *e)

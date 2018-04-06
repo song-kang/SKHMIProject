@@ -21,12 +21,12 @@ public:
 	bool IsExist(QString key);
 
 public:
+	CFunPoint *m_pParent;
 	QList<CFunPoint*> m_lstChilds;
 	unsigned char* m_pImageBuffer;
 	int m_iImageLen;
 
 private:
-	CFunPoint *m_pParent;
 	QString m_sKey;
 	QString m_sDesc;
 	bool m_bAuth;

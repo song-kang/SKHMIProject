@@ -35,7 +35,7 @@
      <widget class="QTableWidget" name="tableWidgetAuth">
       <column>
        <property name="text">
-        <string/>
+        <string>权限</string>
        </property>
       </column>
       <column>
