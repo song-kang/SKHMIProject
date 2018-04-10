@@ -23,6 +23,7 @@ public:
 	void InsertWidget(CBaseView *view);
 	void ShowDesktop();
 	void SetUser(QString user) { m_sUser = user; m_pNavigtion->SetUser(m_sUser);}
+	QString GetUser() { return m_sUser; }
 
 protected:
 	virtual void paintEvent(QPaintEvent *);

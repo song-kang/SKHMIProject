@@ -16,6 +16,7 @@
 class CPluginMgr;
 class CFunPoint;
 class CUsers;
+class CUser;
 class SKGUI_EXPORT SKGui : public SApplication
 {
 public:
@@ -31,7 +32,8 @@ public:
 	QString GetHmiVersion() { return m_sHmiVersion.data(); }
 	CBaseView* NewView(QString sPluginName,QWidget* parent = 0);
 	void SetFunPoint(CFunPoint *fpoint);
-	void SetUsersAuth();
+	void SetUsersAuth(QString code);
+	CUser* SetUserAuth(CUsers *grp, int sn);
 	int GetSkinNo() { return m_iSkinNo; }
 	QList<CFunPoint*> GetRunFunPoints() { m_lstRunFunPoint.clear(); SetRunPoints(m_lstFunPoint); return m_lstRunFunPoint; }
 	
@@ -55,7 +57,6 @@ private:
 
 private:
 	void Init();
-	void SetUserAuth(CUsers *grp);
 	void SetRunPoints(QList<CFunPoint*> lstFunPoint);
 
 };

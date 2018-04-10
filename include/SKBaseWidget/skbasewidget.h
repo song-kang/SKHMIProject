@@ -38,6 +38,7 @@ public:
 	void SetWindowsFlagsTool() { setWindowFlags(windowFlags() | Qt::Tool); }
 	void SetWindowsFlagsTopHit() { setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint); }
 	void SetWindowsModal() { setAttribute(Qt::WA_ShowModal, true); setWindowModality(Qt::ApplicationModal); }
+	void SetContentsMargins(int left, int top, int right, int bottom) { m_vBoxLyout->setContentsMargins(left,top,right,bottom); }
 
 	QWidget* GetCenterWidget() { return m_centerWidget; }
 

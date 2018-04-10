@@ -143,11 +143,14 @@ void SKGui::SetFunPoint(CFunPoint *fpoint)
 	}
 }
 
-void SKGui::SetUsersAuth()
+void SKGui::SetUsersAuth(QString code)
 {
 	SString sql;
 	SRecordset rs,rs1;
-	sql.sprintf("select grp_code,name,dsc from t_ssp_user_group");
+	if (code.isEmpty())
+		sql.sprintf("select grp_code,name,dsc from t_ssp_user_group");
+	else
+		sql.sprintf("select grp_code,name,dsc from t_ssp_user_group where grp_code='%s'",code.toStdString().data());
 	int cnt = DB->Retrieve(sql,rs);
 	if (cnt > 0)
 	{
@@ -167,23 +170,27 @@ void SKGui::SetUsersAuth()
 				grp->m_lstAuth.append(auth);
 			}
 
-			SetUserAuth(grp);
+			SetUserAuth(grp,-1);
 			m_lstUsers.append(grp);
 		}
 	}
 }
 
-void SKGui::SetUserAuth(CUsers *grp)
+CUser* SKGui::SetUserAuth(CUsers *grp, int sn)
 {
 	SString sql;
 	SRecordset rs,rs1;
-	sql.sprintf("select usr_sn,usr_code,grp_code,name,pwd,dsc,email,mobile,create_time,login_timeout from t_ssp_user where grp_code='%s'",grp->GetCode().toStdString().data());
+	if (sn == -1)
+		sql.sprintf("select usr_sn,usr_code,grp_code,name,pwd,dsc,email,mobile,create_time,login_timeout from t_ssp_user where grp_code='%s'",grp->GetCode().toStdString().data());
+	else
+		sql.sprintf("select usr_sn,usr_code,grp_code,name,pwd,dsc,email,mobile,create_time,login_timeout from t_ssp_user where grp_code='%s' and usr_sn=%d",grp->GetCode().toStdString().data(),sn);
 	int cnt = DB->Retrieve(sql,rs);
+	CUser *user = 0;
 	if (cnt > 0)
 	{
 		for (int i = 0; i < cnt; i++)
 		{
-			CUser *user = new CUser(grp);
+			user = new CUser(grp);
 			user->SetSn(rs.GetValue(i,0).toInt());
 			user->SetCode(rs.GetValue(i,1).data());
 			user->SetGrpCode(rs.GetValue(i,2).data());
@@ -207,6 +214,8 @@ void SKGui::SetUserAuth(CUsers *grp)
 			grp->m_lstUser.append(user);
 		}
 	}
+
+	return user;
 }
 
 void SKGui::SetRunPoints(QList<CFunPoint*> lstFunPoint)

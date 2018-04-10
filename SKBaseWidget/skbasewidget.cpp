@@ -230,14 +230,12 @@ void SKBaseWidget::SetWindowBackgroundImage(QPixmap pix)
 {
 	((CMainWidget*)m_mainWidget)->SetPixmap(pix);
 	((CTopWidget*)m_topWidget)->SetWindowBackgroundImaged(true);
-	//m_vBoxLyout->setContentsMargins(1,0,1,1);
 	m_vBoxLyout->setContentsMargins(0,0,0,0);
 }
 
 void SKBaseWidget::HideTopFrame()
 {
 	((CTopWidget*)m_topWidget)->hide();
-	//m_vBoxLyout->setContentsMargins(1,1,1,1);
 	m_vBoxLyout->setContentsMargins(0,0,0,0);
 }
 

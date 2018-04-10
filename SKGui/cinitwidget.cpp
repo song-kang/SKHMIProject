@@ -51,13 +51,13 @@ void LoadThread::run()
 
 	SigText(tr("加载用户组、用户及权限配置......"));
 	//SApi::UsSleep(500000);
-	SK_GUI->SetUsersAuth();
+	SK_GUI->SetUsersAuth(QString::null);
 	DeleteUserAuth();
 	CheckUserAuth(SK_GUI->m_lstFunPoint);
 	foreach (CUsers *u, SK_GUI->m_lstUsers)
 		delete u;
 	SK_GUI->m_lstUsers.clear();
-	SK_GUI->SetUsersAuth();
+	SK_GUI->SetUsersAuth(QString::null);
 
 	SigText(tr("加载代理配置，启动代理......"));
 	//SApi::UsSleep(500000);
