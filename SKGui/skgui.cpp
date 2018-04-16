@@ -65,7 +65,11 @@ bool SKGui::Begin()
 
 bool SKGui::BeginAgent()
 {
+#ifdef WIN32
 	if (SK_UNITCONFIG->Load(QCoreApplication::applicationDirPath().toStdString()+"\\..\\conf\\sys_unitconfig.xml"))
+#else
+	if (SK_UNITCONFIG->Load(QCoreApplication::applicationDirPath().toStdString()+"/../conf/sys_unitconfig.xml"))
+#endif
 	{
 		m_iUnitId = SK_UNITCONFIG->GetUnitId();
 		m_sUnitName = SK_UNITCONFIG->GetUnitName();

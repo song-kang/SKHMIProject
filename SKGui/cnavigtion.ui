@@ -13,9 +13,6 @@
   <property name="windowTitle">
    <string>CNavigtion</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QWidget#CNavigtion{background:rgb(0,58,108,150);border-radius:4px;border:1px solid gray}</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout_6">
    <property name="margin">
     <number>0</number>

@@ -27,6 +27,7 @@ public:
 	void ShowFullScreen();
 	void SetWindowFlags(int flags);
 	void SetWindowIcon(QIcon icon);
+	void SetWindowIcon(QString icon);
 	void SetWindowTitle(QString title);
 	void SetWindowSize(int width,int height);
 	void SetWindowFixSize(int width,int height);

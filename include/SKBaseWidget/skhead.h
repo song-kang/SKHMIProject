@@ -58,17 +58,17 @@ class Common
 	~Common();
 
 public:
-	static QString Common::GetCurrentAppPath()
+	static QString GetCurrentAppPath()
 	{
 		return QCoreApplication::applicationDirPath()+"/";
 	}
 
-	static QString Common::GetCurrentAppName()
+	static QString GetCurrentAppName()
 	{
 		return QCoreApplication::applicationName();
 	}
 
-	static bool Common::FolderExists(QString strFolder)
+	static bool FolderExists(QString strFolder)
 	{
 		QDir tempFolder(strFolder);
 		if(tempFolder.exists())
@@ -76,13 +76,13 @@ public:
 		return false;
 	}
 
-	static bool Common::CreateFolder(QString strFolder)
+	static bool CreateFolder(QString strFolder)
 	{
 		QDir dir;
 		return dir.mkdir(strFolder);
 	}
 
-	static bool Common::FileExists(QString strFile)
+	static bool FileExists(QString strFile)
 	{
 		QFileInfo fi(strFile);
 		if (fi.exists())

@@ -16,6 +16,7 @@ public:
 	~CTopWidget();
 
 	void SetWindowIcon(QIcon icon);
+	void SetWindowIcon(QString icon);
 	void SetWindowTitle(QString title);
 	void SetWindowFlags(int flags = 0);
 	void SetWindowMainMenu(QMenu *menu) { m_iMainMenu = menu; }

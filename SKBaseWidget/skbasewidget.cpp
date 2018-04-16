@@ -2,7 +2,11 @@
 #include "ctopwidget.h"
 #include "cmainwidget.h"
 
+#ifdef WIN32
 #define SHADOW_WIDTH	6
+#else
+#define SHADOW_WIDTH	1
+#endif
 
 SKBaseWidget::SKBaseWidget(QWidget *parent,QWidget *w)
 	: AbsFrameLessAutoSize(parent)
@@ -140,16 +144,21 @@ void SKBaseWidget::paintEvent(QPaintEvent *e)
 {
 	QPainterPath path;
 	path.setFillRule(Qt::WindingFill);
+#ifdef WIN32
 	if (m_bIsMax || m_bIsFull)
 		path.addRect(0,0,this->width(),this->height());
 	else
 		path.addRoundRect(SHADOW_WIDTH,SHADOW_WIDTH,this->width()-SHADOW_WIDTH*2,this->height()-SHADOW_WIDTH*2,3);
+#else
+	path.addRect(0,0,this->width(),this->height());
+#endif
 
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);
 	//painter.fillPath(path,QBrush(QColor(240,240,240,255)));
 	painter.fillPath(path,QBrush(QColor(COLOR_NW)));
 
+#ifdef WIN32
 	QColor color(0, 0, 0);
 	for (int i = 0; i < SHADOW_WIDTH; i++)
 	{
@@ -163,25 +172,26 @@ void SKBaseWidget::paintEvent(QPaintEvent *e)
 		painter.setPen(color);
 		painter.drawPath(path);
 	}
+#endif
 }
 
 void SKBaseWidget::changeEvent(QEvent *e)
 {
-#if (QT_VERSION <= QT_VERSION_CHECK(5,1,0))
-	if (e->type() == QEvent::WindowStateChange)
-	{
-		if(windowState() & Qt::WindowMinimized )
-		{
-			//do something after minimize
-		}
-		else
-		{
-			setWindowFlags(Qt::Window);//set normal window flag
-			setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint);//and return to your old flags
-			showNormal();
-		}
-	}
-#endif
+//#if (QT_VERSION <= QT_VERSION_CHECK(5,1,0))
+//	if (e->type() == QEvent::WindowStateChange)
+//	{
+//		if(windowState() & Qt::WindowMinimized )
+//		{
+//			//do something after minimize
+//		}
+//		else
+//		{
+//			setWindowFlags(Qt::Window);//set normal window flag
+//			setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint);//and return to your old flags
+//			showNormal();
+//		}
+//	}
+//#endif
 }
 
 void SKBaseWidget::SetWindowSize(int width,int height)
@@ -207,6 +217,11 @@ void SKBaseWidget::SetWindowFixSize(int width,int height)
 }
 
 void SKBaseWidget::SetWindowIcon(QIcon icon)
+{
+	((CTopWidget*)m_topWidget)->SetWindowIcon(icon);
+}
+
+void SKBaseWidget::SetWindowIcon(QString icon)
 {
 	((CTopWidget*)m_topWidget)->SetWindowIcon(icon);
 }
@@ -272,7 +287,11 @@ void SKBaseWidget::SlotShowMax()
 	if (m_bIsFull)
 	{
 		m_mainGridLayout->setContentsMargins(0,0,0,0);
+#ifdef WIN32
 		setGeometry(QApplication::desktop()->screenGeometry(curMonitor));
+#else
+		showFullScreen();
+#endif
 		return;
 	}
 
@@ -318,6 +337,9 @@ void SKBaseWidget::SlotFullScreen()
 
 void SKBaseWidget::SlotShowNormal()
 {
+#ifndef WIN32
+	showNormal();
+#endif
 	if (m_bIsMax)
 	{
 		int curMonitor = QApplication::desktop()->screenNumber(this);

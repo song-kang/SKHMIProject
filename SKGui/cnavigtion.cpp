@@ -24,6 +24,12 @@ void CNavigtion::Init()
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
 	setAttribute(Qt::WA_TranslucentBackground);
 
+#ifdef WIN32
+	setStyleSheet(tr("QWidget#CNavigtion{background:rgb(0,58,108,150);border-radius:4px;border:1px solid gray}"));
+#else
+	setStyleSheet(tr("QWidget#CNavigtion{background:rgb(0,58,108,150);border:1px solid gray}"));
+#endif
+
 	m_bEveryFunction = false;
 	ui.labelUser->setFixedSize(64,64);
 	ui.labelUser->setPixmap(QPixmap(":/images/user"));

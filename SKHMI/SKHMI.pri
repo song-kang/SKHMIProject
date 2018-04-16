@@ -7,9 +7,4 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./plugin_demo1.h \
-    ./view_plugin_demo1.h
-SOURCES += ./plugin_demo1.cpp \
-    ./view_plugin_demo1.cpp
-FORMS += ./view_plugin_demo1.ui
-RESOURCES += plugin_demo1.qrc
+SOURCES += ./main.cpp

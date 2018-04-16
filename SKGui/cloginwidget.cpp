@@ -86,7 +86,11 @@ void CLoginWidget::SlotLogin()
 			m_pHmi->SetWindowSize(1000,650);
 			m_pHmi->setMinimumSize(1000,650);
 			m_pHmi->SetWindowTitle(SK_GUI->GetHmiName());
+#ifdef WIN32
 			m_pHmi->SetWindowIcon(QIcon(":/images/HmiLogo"));
+#else
+			m_pHmi->SetWindowIcon(":/images/HmiLogo");
+#endif
 			m_pHmi->SetWindowFlags(SKBASEWIDGET_MAXIMIZE | SKBASEWIDGET_MINIMIZE|SKBASEWIDGET_FULLSCREEN);
 			m_pHmi->SetIsTopDrag(true);
 			m_pHmi->Show();

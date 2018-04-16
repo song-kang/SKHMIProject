@@ -3,25 +3,19 @@
 # ------------------------------------------------------
 
 TEMPLATE = lib
-TARGET = plugin_demo1
-DESTDIR = ../Debug
-QT += core gui webkit
+TARGET = SKBaseWidget
+DESTDIR = /home/uk/lib
+QT += core gui
 CONFIG += debug
-DEFINES += QT_DLL QT_WEBKIT_LIB
+DEFINES += QT_DLL SKBASEWIDGET_LIB
 INCLUDEPATH += ./GeneratedFiles \
     . \
     ./GeneratedFiles/Debug \
-    ./../include/SKBase \
-    ./../include/SKBaseWidget \
-    ./../include/SKGui
-LIBS += -L"./../Debug" \
-    -lSKBased \
-    -lSKBaseWidgetd \
-    -lSKGuid
+    ./../include/SKBaseWidget
 PRECOMPILED_HEADER = StdAfx.h
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/debug
 OBJECTS_DIR += debug
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
-include(plugin_demo1.pri)
+include(SKBaseWidget.pri)

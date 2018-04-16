@@ -21,7 +21,11 @@ void LoadThread::run()
 
 	SigText(tr("加载日志配置......"));
 	//SApi::UsSleep(500000);
+#ifdef WIN32
 	if (!SK_LOG->Load(QCoreApplication::applicationDirPath().toStdString()+"\\..\\conf\\sys_log.xml"))
+#else
+	if (!SK_LOG->Load(QCoreApplication::applicationDirPath().toStdString()+"/../conf/sys_log.xml"))
+#endif
 	{
 		m_sError = tr("日志配置加载出现异常！");
 		return;
@@ -29,7 +33,11 @@ void LoadThread::run()
 
 	SigText(tr("加载数据库配置......"));
 	//SApi::UsSleep(500000);
+#ifdef WIN32
 	if (!SK_DATABASE->Load(QCoreApplication::applicationDirPath().toStdString()+"\\..\\conf\\sys_database.xml"))
+#else
+	if (!SK_DATABASE->Load(QCoreApplication::applicationDirPath().toStdString()+"/../conf/sys_database.xml"))
+#endif
 	{
 		m_sError = tr("数据库配置加载出现异常！");
 		return;

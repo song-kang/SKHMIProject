@@ -38,10 +38,18 @@ void CTopWidget::InitUi()
 	m_btnMaximize = new QPushButton(this);
 	m_btnClose = new QPushButton(this);
 
+#ifdef WIN32
 	m_btnLogo->setStyleSheet("background:transparent;");
 	m_btnLogo->setFixedSize(TOPWIDGET_HEIGHT,TOPWIDGET_HEIGHT);
 	m_btnLogo->setIconSize(QSize(18,18));
 	m_btnLogo->setIcon(QIcon(":/image/Resources/qt.png"));
+#else
+	m_btnLogo->setFixedSize(18,18);
+	m_btnLogo->setStyleSheet(
+		"QPushButton{border-image:url(:/image/Resources/qt.png);}"
+		"QPushButton::hover{border-image:url(:/image/Resources/qt.png);}"
+		"QPushButton::pressed{border-image:url(:/image/Resources/qt.png);}");
+#endif
 
 	QFont m_font;
 	m_font.setFamily("Microsoft YaHei");
@@ -141,6 +149,19 @@ void CTopWidget::SetWindowIcon(QIcon icon)
 		m_btnLogo->hide();
 	else
 		m_btnLogo->setIcon(icon);
+}
+
+void CTopWidget::SetWindowIcon(QString icon)
+{
+	if (icon.isEmpty())
+		m_btnLogo->hide();
+	else
+	{
+		m_btnLogo->setStyleSheet(tr(
+			"QPushButton{border-image:url(%1);}"
+			"QPushButton::hover{border-image:url(%1);}"
+			"QPushButton::pressed{border-image:url(%1);}").arg(icon));
+	}
 }
 
 void CTopWidget::SetWindowTitle(QString title)

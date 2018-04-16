@@ -48,7 +48,7 @@ bool CPlugin::Load(SString sPluginFile)
 		err = true;
 		LOGWARN("dlsym error:%s\n",pErr);
 	}
-	m_pSSP_GetPluginName = (pFunPluginGetPluginName)dlsym(m_hInstance, "PluginGetPluginName");
+	m_pPlugin_GetPluginName = (pFunPluginGetPluginName)dlsym(m_hInstance, "PluginGetPluginName");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;
