@@ -4,7 +4,7 @@
 
 TEMPLATE = lib
 TARGET = plugin_demo2
-DESTDIR = ../Debug
+DESTDIR = /home/uk/bin
 QT += core gui webkit
 CONFIG += debug
 DEFINES += QT_DLL QT_WEBKIT_LIB
@@ -13,11 +13,24 @@ INCLUDEPATH += ./GeneratedFiles \
     ./GeneratedFiles/Debug \
     ./../include/SKBase \
     ./../include/SKBaseWidget \
-    ./../include/SKGui
-LIBS += -L"./../Debug" \
+    ./../include/SKGui \
+    /usr/include/mysql \
+    /home/uk/include \
+    /home/uk/include/comm \
+    /home/uk/include/db \
+    /home/uk/include/db/mysql \
+    /home/uk/include/db/oracle \
+    /home/uk/include/db/oracle/oci/include
+
+LIBS += -L"/home/uk/lib" \
+    -L"/usr/lib/i386-linux-gnu" \
+    -lsbased \
+    -lsbase_mysqld \
     -lSKBased \
-    -lSKBaseWidgetd \
-    -lSKGuid
+    -lSKBaseWidget \
+    -lSKGui \
+    -lmysqlclient
+
 PRECOMPILED_HEADER = StdAfx.h
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/debug

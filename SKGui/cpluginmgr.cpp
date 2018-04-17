@@ -42,19 +42,19 @@ bool CPlugin::Load(SString sPluginFile)
 		err = true;
 		LOGWARN("dlsym error:%s\n",pErr);
 	}
-	m_pPlugin_Exit = (pFunPluginExit)dlsym(m_hInstance, "SSP_Exit");
+	m_pPlugin_Exit = (pFunPluginExit)dlsym(m_hInstance, "PluginExit");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;
 		LOGWARN("dlsym error:%s\n",pErr);
 	}
-	m_pPlugin_GetPluginName = (pFunPluginGetPluginName)dlsym(m_hInstance, "PluginGetPluginName");
+	m_pPlugin_GetPluginName = (pFunPluginGetPluginName)dlsym(m_hInstance, "PluginGetName");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;
 		LOGWARN("dlsym error:%s\n",pErr);
 	}
-	m_pPlugin_GetPluginVer = (pFunPluginGetPluginVer)dlsym(m_hInstance, "PluginGetPluginVer");
+	m_pPlugin_GetPluginVer = (pFunPluginGetPluginVer)dlsym(m_hInstance, "PluginGetVer");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;

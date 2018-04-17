@@ -74,6 +74,8 @@ void CToolWidget::Init()
 	m_pDateTimer = new QTimer(this);
 	m_pDateTimer->setInterval(2000);
 	m_pDateTimer->start();
+
+	ui.scrollArea->setFrameShape(QFrame::NoFrame);
 }
 
 void CToolWidget::InitUi()
