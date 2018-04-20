@@ -15,7 +15,8 @@ CToolWidget::CToolWidget(QWidget *parent)
 
 CToolWidget::~CToolWidget()
 {
-
+	foreach (stuToolButton *btn, m_lstToolButton)
+		delete btn;
 }
 
 void CToolWidget::Init()
@@ -76,6 +77,10 @@ void CToolWidget::Init()
 	m_pDateTimer->start();
 
 	ui.scrollArea->setFrameShape(QFrame::NoFrame);
+
+	m_pFunPointMenu = new QMenu(this);
+	m_pFunPointCloseAction = m_pFunPointMenu->addAction(QIcon(":/images/cancel"),tr("关闭窗口(&C)"));
+	m_pFunPointLockAction  = m_pFunPointMenu->addAction(QIcon(":/images/pin-off"),tr("将此窗口锁定在任务栏(&L)"));
 }
 
 void CToolWidget::InitUi()
@@ -90,6 +95,7 @@ void CToolWidget::InitSlot()
 	connect(ui.btnStart, SIGNAL(clicked()), this, SLOT(SlotStart()));
 	connect(ui.btnDesktop, SIGNAL(clicked()), this, SLOT(SlotDesktop()));
 	connect(m_pDateTimer, SIGNAL(timeout()), this, SLOT(SlotDateTime()));
+	connect(m_pFunPointMenu, SIGNAL(triggered(QAction*)), this, SLOT(SlotTriggerMenu(QAction*)));
 }
 
 void CToolWidget::paintEvent(QPaintEvent *e)
@@ -108,8 +114,30 @@ void CToolWidget::mousePressEvent(QMouseEvent *e)
 		if (wgt)
 			name = wgt->objectName();
 
-		if (name == "")
+		if (name.left(7) == "plugin_")
 		{
+			m_sCurrentFunName = name;
+			for (int pos = 0; pos < m_lstToolButton.count(); pos++)
+			{
+				stuToolButton *btn = m_lstToolButton.at(pos);
+				if (btn->m_pToolButton->objectName() == m_sCurrentFunName)
+				{
+					if (btn->m_bLock)
+					{
+						m_pFunPointLockAction->setText(tr("将此窗口从任务栏中解锁(&L)"));
+						m_pFunPointLockAction->setIcon(QIcon(":/images/pin-on"));
+					}
+					else
+					{
+						m_pFunPointLockAction->setText(tr("将此窗口锁定在任务栏(&L)"));
+						m_pFunPointLockAction->setIcon(QIcon(":/images/pin-off"));
+					}
+					m_pFunPointCloseAction->setEnabled(!btn->m_bLock);
+					break;
+				}
+			}
+			
+			m_pFunPointMenu->popup(e->globalPos());
 		}
 	}
 	else if (e->button() == Qt::LeftButton)
@@ -134,8 +162,8 @@ void CToolWidget::SlotDesktop()
 {
 	m_pHmi->ShowDesktop();
 
-	foreach (QToolButton *btn, m_lstToolButton)
-		SetToolButtonUnclicked(btn);
+	foreach (stuToolButton *btn, m_lstToolButton)
+		SetToolButtonUnclicked(btn->m_pToolButton);
 
 	m_pHmi->m_pNavigtion->hide();
 }
@@ -174,7 +202,52 @@ void CToolWidget::SlotDateTime()
 	ui.label_ymd->setText(text + " " + m_weekMap.value(dt.date().dayOfWeek()));
 }
 
-void CToolWidget::CreateToolButton(QString name, QString desc)
+void CToolWidget::SlotTriggerMenu(QAction *action)
+{
+	if (action->text() == "关闭窗口(&C)")  
+	{
+		int pos = 0;
+		for (pos = 0; pos < m_lstToolButton.count(); pos++)
+		{
+			stuToolButton *btn = m_lstToolButton.at(pos);
+			if (btn->m_pToolButton->objectName() == m_sCurrentFunName)
+			{
+				if (btn->m_bLock)
+					return;
+				m_lstToolButton.removeAt(pos);
+				delete btn;
+				break;
+			}
+		}
+
+		m_pHmi->DeleteWidget(m_sCurrentFunName);
+		DeleteToolButton(m_sCurrentFunName);
+
+		if (m_lstToolButton.count() > 0)
+		{
+			stuToolButton *btn = NULL;
+			if (pos - 1 < 0) //删除的是第一个窗口
+				btn = m_lstToolButton.at(0);
+			else
+				btn = m_lstToolButton.at(pos-1);
+			SetToolButtonClicked(btn->m_pToolButton);
+		}		
+	}
+	else if (action->text() == "将此窗口锁定在任务栏(&L)" || action->text() == "将此窗口从任务栏中解锁(&L)")
+	{
+		for (int pos = 0; pos < m_lstToolButton.count(); pos++)
+		{
+			stuToolButton *btn = m_lstToolButton.at(pos);
+			if (btn->m_pToolButton->objectName() == m_sCurrentFunName)
+			{
+				btn->m_bLock = !btn->m_bLock;
+				break;
+			}
+		}
+	}
+}
+
+void CToolWidget::CreateToolButton(QString name, QString desc, QIcon icon)
 {
 	QToolButton *btn = new QToolButton();
 
@@ -182,14 +255,33 @@ void CToolWidget::CreateToolButton(QString name, QString desc)
 	btn->setToolTip(desc);
 	btn->setFixedSize(QSize(60, 40));
 	btn->setIconSize(QSize(32, 32));
-	btn->setIcon(QIcon(":/images/gw_start_nor"));
+	btn->setIcon(icon);
 	btn->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	SetToolButtonClicked(btn);
 
-	m_lstToolButton.append(btn);
+	stuToolButton *stuTB = new stuToolButton;
+	stuTB->m_pToolButton = btn;
+	m_lstToolButton.append(stuTB);
 	InsertToolButton(btn);
 
 	connect(btn, SIGNAL(clicked(bool)), this, SLOT(SlotToolButtonClick()));
+}
+
+void CToolWidget::DeleteToolButton(QString name)
+{
+	QLayoutItem *item = NULL;
+	int count = ui.toolHLayout->count();
+	for (int i = 0; i < count; i++)
+	{
+		item = ui.toolHLayout->itemAt(i);
+		if (item && item->widget() && item->widget()->objectName() == name)
+		{
+			ui.toolHLayout->takeAt(i);
+			delete item->widget();
+			delete item;
+			break;
+		}
+	}
 }
 
 void CToolWidget::InsertToolButton(QToolButton *btn)
@@ -211,12 +303,12 @@ void CToolWidget::InsertToolButton(QToolButton *btn)
 
 void CToolWidget::SetToolButtonClicked(QString name)
 {
-	foreach (QToolButton *btn, m_lstToolButton)
+	foreach (stuToolButton *btn, m_lstToolButton)
 	{
-		if (btn->objectName() == name)
-			SetToolButtonClicked(btn);
+		if (btn->m_pToolButton->objectName() == name)
+			SetToolButtonClicked(btn->m_pToolButton);
 		else
-			SetToolButtonUnclicked(btn);
+			SetToolButtonUnclicked(btn->m_pToolButton);
 	}
 }
 

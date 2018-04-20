@@ -1,5 +1,6 @@
 #include "chmiwidget.h"
 #include "cuserswidget.h"
+#include "cloginwidget.h"
 
 CHMIWidget::CHMIWidget(QWidget *parent)
 	: SKWidget(parent)
@@ -36,6 +37,7 @@ void CHMIWidget::Init()
 
 	CreateNavigtion();
 	m_pUsersWidget = NULL;
+	m_pUserSwitchWidget = NULL;
 }
 
 void CHMIWidget::CreateNavigtion()
@@ -47,6 +49,8 @@ void CHMIWidget::CreateNavigtion()
 	m_pNavigtion->SetUser(m_sUser);
 	m_pNavigtion->hide();
 	connect(m_pNavigtion, SIGNAL(SigUsers()), this, SLOT(SlotUsers()));
+	connect(m_pNavigtion, SIGNAL(SigUserSwitch()), this, SLOT(SlotUserSwitch()));
+	connect(m_pNavigtion, SIGNAL(SigQuit()), this, SLOT(SlotQuit()));
 }
 
 void CHMIWidget::DeleteNavigtion()
@@ -134,16 +138,16 @@ void CHMIWidget::SlotUsers()
 		m_pUsersWidget->SetWindowFlags(0);
 		m_pUsersWidget->SetWindowSize(700,500);
 		m_pUsersWidget->SetIsDrag(true);
-		connect(m_pUsersWidget, SIGNAL(SigClose()), this, SLOT(SlotUsersWidgetClose()));
+		connect(m_pUsersWidget, SIGNAL(SigClose()), this, SLOT(SlotUsersClose()));
 	}
 	
 	((CUsersWidget*)m_pUsersWidget->GetCenterWidget())->Start();
 	m_pUsersWidget->Show();
 }
 
-void CHMIWidget::SlotUsersWidgetClose()
+void CHMIWidget::SlotUsersClose()
 {
-	disconnect(m_pUsersWidget, SIGNAL(SigClose()), this, SLOT(SlotUsersWidgetClose()));
+	disconnect(m_pUsersWidget, SIGNAL(SigClose()), this, SLOT(SlotUsersClose()));
 	delete m_pUsersWidget;
 	m_pUsersWidget = NULL;
 
@@ -151,18 +155,65 @@ void CHMIWidget::SlotUsersWidgetClose()
 	CreateNavigtion();
 }
 
-bool CHMIWidget::GotoWidget(QString name)
+void CHMIWidget::SlotUserSwitch()
+{
+	m_pNavigtion->hide();
+
+	if (!m_pUserSwitchWidget)
+	{
+		CLoginWidget *w = new CLoginWidget;
+		w->SetFirst(false);
+		m_pUserSwitchWidget = new SKBaseWidget(NULL,w);
+		m_pUserSwitchWidget->SetWindowsFlagsTool();
+		m_pUserSwitchWidget->SetWindowsModal();
+		m_pUserSwitchWidget->SetWindowFixSize(420,290);
+		m_pUserSwitchWidget->SetWindowBackgroundImage(QPixmap(":/images/login"));
+		m_pUserSwitchWidget->HideTopFrame();
+		connect(m_pUserSwitchWidget, SIGNAL(SigClose()), this, SLOT(SlotUserSwitchClose()));
+		m_pUserSwitchWidget->Show();
+	}
+}
+
+void CHMIWidget::SlotUserSwitchClose()
+{
+	if (((CLoginWidget*)m_pUserSwitchWidget->GetCenterWidget())->GetLoginOk())
+	{
+		m_sUser = ((CLoginWidget*)m_pUserSwitchWidget->GetCenterWidget())->GetUser();
+		DeleteNavigtion();
+		CreateNavigtion();
+	}
+
+	disconnect(m_pUserSwitchWidget, SIGNAL(SigClose()), this, SLOT(SlotUserSwitchClose()));
+	delete m_pUserSwitchWidget;
+	m_pUserSwitchWidget = NULL;
+}
+
+void CHMIWidget::SlotQuit()
+{
+	m_pNavigtion->hide();
+
+	int ret = QMessageBox::question(NULL,tr("询问"),tr("确认退出系统？"),tr("退出"),tr("取消"));
+	if (ret == 0)
+		SigClose();
+}
+
+int CHMIWidget::GotoWidget(QString name)
 {
 	m_pNavigtion->hide();
 	bool ret = ShowWidgetByPluginName(name);
 	if (!ret)
 	{
 		CBaseView *view = SK_GUI->NewView(name);
-		view->SetPluginName(name);
-		InsertWidget(view);
+		if (view)
+		{
+			view->SetPluginName(name);
+			InsertWidget(view);
+			return 1; //新建插件成功
+		}
+		return 2; //未发现加载过的插件，且新建插件失败
 	}
 
-	return ret;
+	return 0; //发现了加载过的插件
 }
 
 bool CHMIWidget::ShowWidgetByPluginName(QString name)
@@ -185,6 +236,19 @@ void CHMIWidget::InsertWidget(CBaseView *view)
 {
 	m_pStackedWidget->addWidget(view);
 	m_pStackedWidget->setCurrentWidget(view);
+}
+
+void CHMIWidget::DeleteWidget(QString name)
+{
+	for (int i = 1; i < m_pStackedWidget->count(); i++)
+	{
+		CBaseView *view = (CBaseView*)m_pStackedWidget->widget(i);
+		if (view->GetPluginName() == name)
+		{
+			m_pStackedWidget->removeWidget(view);
+			delete view;
+		}
+	}
 }
 
 void CHMIWidget::ShowDesktop()

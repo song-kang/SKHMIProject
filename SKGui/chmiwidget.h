@@ -18,9 +18,10 @@ public:
 	~CHMIWidget();
 
 	void SetApp(SKBaseWidget *app) { m_app = app; }
-	bool GotoWidget(QString name);
+	int  GotoWidget(QString name);
 	bool ShowWidgetByPluginName(QString name);
 	void InsertWidget(CBaseView *view);
+	void DeleteWidget(QString name);
 	void ShowDesktop();
 	void SetUser(QString user) { m_sUser = user; m_pNavigtion->SetUser(m_sUser);}
 	QString GetUser() { return m_sUser; }
@@ -38,8 +39,9 @@ private:
 	QString m_sUser;
 
 public:
-	SKBaseWidget *m_pUsersWidget;
 	CNavigtion *m_pNavigtion;
+	SKBaseWidget *m_pUsersWidget;
+	SKBaseWidget *m_pUserSwitchWidget;
 
 private:
 	void Init();
@@ -59,8 +61,10 @@ private slots:
 	void SlotMin();
 	void SlotMove();
 	void SlotUsers();
-
-	void SlotUsersWidgetClose();
+	void SlotUsersClose();
+	void SlotUserSwitch();
+	void SlotUserSwitchClose();
+	void SlotQuit();
 
 private:
 	SKBaseWidget *m_app;

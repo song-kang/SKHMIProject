@@ -53,12 +53,12 @@ void CUsersWidget::Init()
 	ui.tableWidgetAuth->verticalHeader()->setVisible(false);						//去除最前列
 
 	m_pMenuNull = new QMenu(this);
-	m_pMenuNull->addAction(tr("添加用户组(&A)"));
+	m_pMenuNull->addAction(QIcon(":/images/userGroup"),tr("添加用户组(&A)"));
 	m_pMenuGrp = new QMenu(this);
-	m_pMenuGrp->addAction(tr("添加用户(&A)"));
-	m_pMenuGrp->addAction(tr("删除用户组(&D)"));
+	m_pMenuGrp->addAction(QIcon(":/images/user"),tr("添加用户(&A)"));
+	m_pMenuGrp->addAction(QIcon(":/images/cancel"),tr("删除用户组(&D)"));
 	m_pMenuUser = new QMenu(this);
-	m_pMenuUser->addAction(tr("删除用户(&D)"));
+	m_pMenuUser->addAction(QIcon(":/images/cancel"),tr("删除用户(&D)"));
 }
 
 void CUsersWidget::InitUi()
@@ -117,10 +117,35 @@ bool CUsersWidget::eventFilter(QObject *obj,QEvent *e)
 			{
 				if (item->type() == USER_GROUP)
 				{
+#ifndef WIN32
+					foreach (CUsers *users, SK_GUI->m_lstUsers)
+					{
+						if (users->GetCode() == item->data(0,Qt::UserRole).toString())
+						{
+							m_iType = USER_GROUP;
+							m_pCurrentUsers = users;
+						}
+					}
+#endif
 					m_pMenuGrp->popup(m_e->globalPos());
 				}
 				else if (item->type() == USER)
+				{
+#ifndef WIN32
+					foreach (CUsers *users, SK_GUI->m_lstUsers)
+					{
+						foreach (CUser *user, users->m_lstUser)
+						{
+							if (user->GetSn() == item->data(0,Qt::UserRole).toInt())
+							{
+								m_iType = USER;
+								m_pCurrentUser = user;
+							}
+						}
+					}
+#endif
 					m_pMenuUser->popup(m_e->globalPos());
+				}
 			}
 			else 
 				m_pMenuNull->popup(m_e->globalPos());

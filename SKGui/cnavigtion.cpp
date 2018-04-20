@@ -1,6 +1,7 @@
 #include "cnavigtion.h"
 #include "chmiwidget.h"
 #include "ctoolwidget.h"
+#include "cloginwidget.h"
 
 #define MAX_QUICK_NUM		10
 
@@ -77,6 +78,7 @@ void CNavigtion::InitSlot()
 	connect(ui.btnQuit, SIGNAL(clicked()), this, SLOT(SlotQuit()));
 	connect(ui.btnFunPoint, SIGNAL(clicked()), this, SLOT(SlotFunPoint()));
 	connect(ui.btnUsers, SIGNAL(clicked()), this, SLOT(SlotUsers()));
+	connect(ui.treeWidgetItems,SIGNAL(itemClicked(QTreeWidgetItem *,int)),this,SLOT(SlotTreeItemClicked(QTreeWidgetItem *,int)));
 }
 
 void CNavigtion::SetUser(QString user)
@@ -119,6 +121,7 @@ void CNavigtion::SetQuickFunPoint(QList<CFunPoint*> lstFunPoint)
 				"QPushButton::hover{background-color:rgb(194,220,252);border:1px solid rgb(21,131,221)}");
 
 			ui.vLayoutFun->addWidget(btn);
+			connect(btn, SIGNAL(clicked()), this, SLOT(SlotClickedFunPoint()));
 			m_iQuickNum++;
 		}
 
@@ -224,22 +227,12 @@ void CNavigtion::SlotFunSwitch()
 
 void CNavigtion::SlotUserSwitch()
 {
-	bool ret = m_pHmi->GotoWidget("plugin_demo1");
-	if (!ret)
-	{
-		m_pTool->CreateToolButton("plugin_demo1","插件测试用例1");
-		m_pTool->SetToolButtonClicked("plugin_demo1");
-	}
+	SigUserSwitch();
 }
 
 void CNavigtion::SlotQuit()
 {
-	bool ret = m_pHmi->GotoWidget("plugin_demo2");
-	if (!ret)
-	{
-		m_pTool->CreateToolButton("plugin_demo2","插件测试用例2");
-		m_pTool->SetToolButtonClicked("plugin_demo2");
-	}
+	SigQuit();
 }
 
 void CNavigtion::SlotFunPoint()
@@ -250,4 +243,43 @@ void CNavigtion::SlotFunPoint()
 void CNavigtion::SlotUsers()
 {
 	SigUsers();
+}
+
+void CNavigtion::SlotClickedFunPoint()
+{
+	QPushButton *btn = (QPushButton*)sender();
+	if (!btn)
+		return;
+
+	QString name = btn->objectName();
+	QString desc = btn->text().trimmed();
+	QIcon icon = btn->icon();
+	int ret = m_pHmi->GotoWidget(name);
+	if (ret == 1) //新建插件成功
+	{
+		m_pTool->CreateToolButton(name,desc,icon);
+		m_pTool->SetToolButtonClicked(name);
+	}
+	else if (ret == 2) //未发现加载过的插件，且新建插件失败
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("界面【%1】加载失败！").arg(desc));
+	}
+}
+
+void CNavigtion::SlotTreeItemClicked(QTreeWidgetItem *item,int column)
+{
+	if (item->childCount())
+		return;
+
+	QString name = item->data(column,Qt::UserRole).toString();
+	int ret = m_pHmi->GotoWidget(name);
+	if (ret == 1) //新建插件成功
+	{
+		m_pTool->CreateToolButton(name,item->text(column),item->icon(column));
+		m_pTool->SetToolButtonClicked(name);
+	}
+	else if (ret == 2) //未发现加载过的插件，且新建插件失败
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("界面【%1】加载失败！").arg(item->text(column)));
+	}
 }

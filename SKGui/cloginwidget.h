@@ -16,10 +16,17 @@ public:
 	CLoginWidget(QWidget *parent = 0);
 	~CLoginWidget();
 
+	void SetFirst(bool b) { m_bFirst = b; }
+	QString GetUser() { return m_sUser; }
+	bool GetLoginOk() { return m_bLoginOk; }
+
 private:
 	Ui::CLoginWidget ui;
 
 	SKBaseWidget *m_pHmi;
+	bool m_bFirst;
+	QString m_sUser;
+	bool m_bLoginOk;
 
 protected:
 	virtual void paintEvent(QPaintEvent *);

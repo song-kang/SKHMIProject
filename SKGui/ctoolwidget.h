@@ -15,6 +15,17 @@ class CToolWidget : public SKWidget
 	Q_OBJECT
 
 public:
+	struct stuToolButton
+	{
+		stuToolButton()
+		{
+			m_pToolButton = NULL;
+			m_bLock = false;
+		}
+		QToolButton *m_pToolButton;
+		bool m_bLock;
+	};
+public:
 	CToolWidget(QWidget *parent = 0);
 	~CToolWidget();
 
@@ -22,17 +33,22 @@ public:
 	void SetToolButtonClicked(QString name);
 	void SetToolButtonClicked(QToolButton *btn);
 	void SetToolButtonUnclicked(QToolButton *btn);
-	QPoint GetStartPos() { return ui.btnStart->pos();  }
-	void CreateToolButton(QString name, QString desc);
+	QPoint GetStartPos() { return ui.btnStart->pos(); }
+	void CreateToolButton(QString name, QString desc, QIcon icon);
+	void DeleteToolButton(QString name);
 
 public:
-	QList<QToolButton*> m_lstToolButton;
+	QList<stuToolButton*> m_lstToolButton;
 
 private:
 	Ui::CToolWidget ui;
 
 	QTimer *m_pDateTimer;
 	QMap<int,QString> m_weekMap;
+	QMenu *m_pFunPointMenu;
+	QAction *m_pFunPointCloseAction;
+	QAction *m_pFunPointLockAction;
+	QString m_sCurrentFunName;
 
 protected:
 	virtual void paintEvent(QPaintEvent *);
@@ -53,6 +69,7 @@ private slots:
 	void SlotDesktop();
 	void SlotToolButtonClick();
 	void SlotDateTime();
+	void SlotTriggerMenu(QAction *action);
 
 private:
 	CHMIWidget *m_pHmi;

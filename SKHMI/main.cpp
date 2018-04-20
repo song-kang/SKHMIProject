@@ -13,14 +13,14 @@ int main(int argc, char *argv[])
 	a.setFont(QFont("Microsoft Yahei", 10));
 #else
 	QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath()+"/../lib/plugins");
-	int fontId = QFontDatabase::addApplicationFont(":/msyh.ttf");
+	int fontId = QFontDatabase::addApplicationFont(QCoreApplication::applicationDirPath()+"/../font/msyh.ttf");
 	if (fontId != -1)
 	{
 		QStringList lstFont = QFontDatabase::applicationFontFamilies(fontId);
 		if (lstFont.size() != 0) 
 		{
 			QFont font(lstFont.at(0));
-			font.setPixelSize(10);
+			font.setPixelSize(13);
 			a.setFont(font);
 		}
 	}

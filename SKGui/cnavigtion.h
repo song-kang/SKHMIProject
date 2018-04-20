@@ -46,6 +46,8 @@ private:
 
 signals:
 	void SigUsers();
+	void SigUserSwitch();
+	void SigQuit();
 
 public slots:
 	void SlotFunSwitch();
@@ -53,6 +55,8 @@ public slots:
 	void SlotQuit();
 	void SlotFunPoint();
 	void SlotUsers();
+	void SlotClickedFunPoint();
+	void SlotTreeItemClicked(QTreeWidgetItem *item,int column);
 
 private:
 	CHMIWidget *m_pHmi;

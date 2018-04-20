@@ -57,6 +57,10 @@
         <file alias="plugin">Resources/plugin.png</file>
         <file alias="sysConfig">Resources/sysConfig.png</file>
         <file alias="auth">Resources/auth.png</file>
+        <file alias="cancel">Resources/cancel.png</file>
+        <file alias="ok">Resources/ok.png</file>
+        <file alias="pin-off">Resources/pin-off.png</file>
+        <file alias="pin-on">Resources/pin-on.png</file>
     </qresource>
     <qresource prefix="/skins">
         <file alias="skin0">Resources/skin/skin0.jpg</file>

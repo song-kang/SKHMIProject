@@ -26,6 +26,8 @@ CLoginWidget::~CLoginWidget()
 void CLoginWidget::Init()
 {
 	m_pHmi = NULL;
+	m_bFirst = true;
+	m_bLoginOk = false;
 }
 
 void CLoginWidget::InitUi()
@@ -76,26 +78,35 @@ void CLoginWidget::SlotLogin()
 		int number = rs.GetValue(0,0).toInt();
 		if (number > 0)
 		{
-			SlotClose();
-			CHMIWidget *wgt = new CHMIWidget();
-			m_pHmi = new SKBaseWidget(NULL,wgt);
-			wgt->SetApp(m_pHmi);
-			wgt->SetUser(ui.comboBox_user->currentText());
-			wgt->InitSlot();
-			m_pHmi->SetWindowBackgroundImage(QPixmap(tr(":/skins/skin%1").arg(SK_GUI->GetSkinNo())));
-			m_pHmi->SetWindowSize(1000,650);
-			m_pHmi->setMinimumSize(1000,650);
-			m_pHmi->SetWindowTitle(SK_GUI->GetHmiName());
+			if (m_bFirst)
+			{
+				CHMIWidget *wgt = new CHMIWidget();
+				m_pHmi = new SKBaseWidget(NULL,wgt);
+				wgt->SetApp(m_pHmi);
+				wgt->SetUser(ui.comboBox_user->currentText());
+				wgt->InitSlot();
+				m_pHmi->SetWindowBackgroundImage(QPixmap(tr(":/skins/skin%1").arg(SK_GUI->GetSkinNo())));
+				m_pHmi->SetWindowSize(1000,650);
+				m_pHmi->setMinimumSize(1000,650);
+				m_pHmi->SetWindowTitle(SK_GUI->GetHmiName());
 #ifdef WIN32
-			m_pHmi->SetWindowIcon(QIcon(":/images/HmiLogo"));
+				m_pHmi->SetWindowIcon(QIcon(":/images/HmiLogo"));
 #else
-			m_pHmi->SetWindowIcon(":/images/HmiLogo");
+				m_pHmi->SetWindowIcon(":/images/HmiLogo");
 #endif
-			m_pHmi->SetWindowFlags(SKBASEWIDGET_MAXIMIZE | SKBASEWIDGET_MINIMIZE|SKBASEWIDGET_FULLSCREEN);
-			m_pHmi->SetIsTopDrag(true);
-			m_pHmi->Show();
-			//m_pHmi->ShowMaximized();
-			//m_pHmi->ShowFullScreen();
+				m_pHmi->SetWindowFlags(SKBASEWIDGET_MAXIMIZE | SKBASEWIDGET_MINIMIZE|SKBASEWIDGET_FULLSCREEN);
+				m_pHmi->SetIsTopDrag(true);
+				m_pHmi->Show();
+				//m_pHmi->ShowMaximized();
+				//m_pHmi->ShowFullScreen();
+			}
+			else
+			{
+				m_sUser = ui.comboBox_user->currentText().trimmed();
+				m_bLoginOk = true;
+			}
+
+			SlotClose();
 			return;
 		}
 	}
