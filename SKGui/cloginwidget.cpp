@@ -70,7 +70,7 @@ void CLoginWidget::SlotLogin()
 {
 	SString sql;
 	SRecordset rs;
-	sql.sprintf("select count(*) from t_ssp_user where usr_code='%s' and pwd='%s'",
+	sql.sprintf("select count(*) from t_ssp_user where binary usr_code='%s' and binary pwd='%s'",
 		ui.comboBox_user->currentText().toStdString().data(),ui.lineEdit_password->text().toStdString().data());
 	int cnt = DB->Retrieve(sql,rs);
 	if (cnt > 0)
