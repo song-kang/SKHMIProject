@@ -24,6 +24,9 @@ SKGui::~SKGui()
 		delete p;
 	foreach (CUsers *u, m_lstUsers)
 		delete u;
+
+	if (m_iSettings)
+		delete m_iSettings;
 }
 
 SKGui* SKGui::GetPtr()
@@ -35,6 +38,7 @@ SKGui* SKGui::GetPtr()
 
 void SKGui::Init()
 {
+	m_iSettings = NULL;
 	m_pPluginMgr = new CPluginMgr;
 	m_pListBaseView = new QList<CBaseView*>;
 
@@ -44,6 +48,29 @@ void SKGui::Init()
 	QTime t= QTime::currentTime();
 	qsrand(t.msec()+t.second()*1000);
 	m_iSkinNo = qrand() % MAX_SKIN;
+}
+
+void SKGui::InitSettings(QString name)
+{
+	if (m_iSettings)
+	{
+		delete m_iSettings;
+		m_iSettings = NULL;
+	}
+
+#ifdef WIN32
+	bool isExist = Common::FileExists(QCoreApplication::applicationDirPath()+ "\\..\\conf\\" + name);
+	m_iSettings = new QSettings(QCoreApplication::applicationDirPath()+ "\\..\\conf\\" + name, QSettings::IniFormat);
+#else
+	bool isExist = Common::FileExists(QCoreApplication::applicationDirPath()+ "/../conf/" + name);
+	m_iSettings = new QSettings(QCoreApplication::applicationDirPath()+ "/../conf/" + name, QSettings::IniFormat);
+#endif
+
+	if (!isExist)
+	{
+		SetSettingsValue(SG_SETTING,SV_NAME,"Unknown");
+		SetSettingsValue(SG_SETTING,SV_LOGINTIME,0);
+	}
 }
 
 bool SKGui::Begin()
@@ -233,4 +260,36 @@ void SKGui::SetRunPoints(QList<CFunPoint*> lstFunPoint)
 
 		SetRunPoints(p->m_lstChilds);
 	}
+}
+
+void SKGui::SetSettingsValue(const QString &group, const QString &key, const QVariant &value)
+{
+	m_iSettings->beginGroup(group);
+	m_iSettings->setValue(key, value);
+	m_iSettings->endGroup();
+	m_iSettings->sync();
+}
+
+QVariant SKGui::GetSettingsValue(const QString &group, const QString &key, const QVariant &defaultValue)
+{
+	m_iSettings->beginGroup(group);
+	QVariant value = m_iSettings->value(key, defaultValue);
+	m_iSettings->endGroup();
+	return value;
+}
+
+bool SKGui::ContaintsSettingsValue(const QString &group, const QString &key)
+{
+	m_iSettings->beginGroup(group);
+	bool bcontain = m_iSettings->contains(key);
+	m_iSettings->endGroup();
+	return bcontain;
+}
+
+void SKGui::RemoveSettingsValue(const QString &group, const QString &key)
+{
+	m_iSettings->beginGroup(group);
+	m_iSettings->remove(key);
+	m_iSettings->endGroup();
+	m_iSettings->sync();
 }

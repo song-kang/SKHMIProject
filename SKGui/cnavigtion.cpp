@@ -3,6 +3,12 @@
 #include "ctoolwidget.h"
 #include "cloginwidget.h"
 
+struct stuFunPoint
+{
+	quint32 times;
+	QString key;
+};
+
 #define MAX_QUICK_NUM		10
 
 CNavigtion::CNavigtion(QWidget *parent)
@@ -92,18 +98,55 @@ void CNavigtion::SetUser(QString user)
 		{
 			if (user->GetCode() == m_sUser)
 			{
-				SetQuickFunPoint(SK_GUI->m_lstFunPoint);
+				SetQuickFunPointList();
 				SetTreeFunPoint(SK_GUI->m_lstFunPoint,user,NULL);
 			}
 		}
 	}
 }
 
-void CNavigtion::SetQuickFunPoint(QList<CFunPoint*> lstFunPoint)
+bool compareData(const stuFunPoint *data1, const stuFunPoint *data2)
+{
+	if (data1->times > data2->times)
+		return true;
+
+	return false;
+}
+
+void CNavigtion::SetQuickFunPointList()
+{
+	QList<stuFunPoint*> fpList;
+	QString s = SK_GUI->GetSettingsValue(SG_FUNPOINT,SV_QUICKPOINT).toString();
+	if (!s.isEmpty())
+	{
+		QStringList l = s.split("||");
+		for (int i = 0; i < l.count(); i++)
+		{
+			stuFunPoint *fp = new stuFunPoint;
+			fp->times = l.at(i).split("::").at(1).toUInt();
+			fp->key = l.at(i).split("::").at(0);
+			fpList.append(fp);
+		}
+	}
+	qSort(fpList.begin(),fpList.end(),compareData);
+
+	m_iQuickNum = 0;
+	foreach (stuFunPoint *fp, fpList)
+	{
+		if (m_iQuickNum < MAX_QUICK_NUM)
+		{
+			QuickFunPointList(fp->key,SK_GUI->m_lstFunPoint);
+			m_iQuickNum++;
+		}
+		delete fp;
+	}
+}
+
+void CNavigtion::QuickFunPointList(QString key, QList<CFunPoint*> lstFunPoint)
 {
 	foreach (CFunPoint *p, lstFunPoint)
 	{
-		if (p->m_lstChilds.count() == 0 && m_iQuickNum < MAX_QUICK_NUM)
+		if (p->GetKey() == key)
 		{
 			QPushButton *btn = new QPushButton(p->GetDesc());
 			btn->setObjectName(p->GetKey());
@@ -122,10 +165,10 @@ void CNavigtion::SetQuickFunPoint(QList<CFunPoint*> lstFunPoint)
 
 			ui.vLayoutFun->addWidget(btn);
 			connect(btn, SIGNAL(clicked()), this, SLOT(SlotClickedFunPoint()));
-			m_iQuickNum++;
+			break;
 		}
 
-		SetQuickFunPoint(p->m_lstChilds);
+		QuickFunPointList(key, p->m_lstChilds);
 	}
 }
 
@@ -264,6 +307,10 @@ void CNavigtion::SlotClickedFunPoint()
 	{
 		QMessageBox::warning(NULL,tr("告警"),tr("界面【%1】加载失败！").arg(desc));
 	}
+
+	SetQuickFunPoint(name);
+	Common::ClearLayout(ui.vLayoutFun);
+	SetQuickFunPointList();
 }
 
 void CNavigtion::SlotTreeItemClicked(QTreeWidgetItem *item,int column)
@@ -282,4 +329,40 @@ void CNavigtion::SlotTreeItemClicked(QTreeWidgetItem *item,int column)
 	{
 		QMessageBox::warning(NULL,tr("告警"),tr("界面【%1】加载失败！").arg(item->text(column)));
 	}
+
+	SetQuickFunPoint(name);
+	Common::ClearLayout(ui.vLayoutFun);
+	SetQuickFunPointList();
+}
+
+void CNavigtion::SetQuickFunPoint(QString key)
+{
+	QString result;
+	QString s = SK_GUI->GetSettingsValue(SG_FUNPOINT,SV_QUICKPOINT).toString();
+	if (s.isEmpty())
+	{
+		result = key + "::1||";
+	}
+	else
+	{
+		bool bFind = false;
+		QStringList l = s.split("||");
+		for (int i = 0; i < l.count(); i++) 
+		{
+			if (l.at(i).split("::").at(0) == key)
+			{
+				result += tr("%1::%2||").arg(key).arg(l.at(i).split("::").at(1).toInt()+1);
+				bFind = true;
+			}
+			else
+				result += l.at(i) + "||";
+		}
+		if (!bFind)
+			result += key + "::1||";
+	}
+
+	if (result.right(2) == "||")
+		result = result.left(result.size()-2);
+
+	SK_GUI->SetSettingsValue(SG_FUNPOINT,SV_QUICKPOINT,result);
 }

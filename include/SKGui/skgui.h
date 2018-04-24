@@ -11,6 +11,13 @@
 #include <vld.h>
 #endif
 
+#define SG_SETTING		"Setting"
+#define SG_FUNPOINT		"FunPoint"
+
+#define SV_NAME			"Name"
+#define SV_LOGINTIME	"LoginTime"
+#define SV_QUICKPOINT	"QuickPoint"
+
 #define SK_GUI SKGui::GetPtr()
 
 class CPluginMgr;
@@ -36,6 +43,11 @@ public:
 	CUser* SetUserAuth(CUsers *grp, int sn);
 	int GetSkinNo() { return m_iSkinNo; }
 	QList<CFunPoint*> GetRunFunPoints() { m_lstRunFunPoint.clear(); SetRunPoints(m_lstFunPoint); return m_lstRunFunPoint; }
+	void InitSettings(QString name);
+	void SetSettingsValue(const QString &group, const QString &key, const QVariant &value);
+	QVariant GetSettingsValue(const QString &group, const QString &key, const QVariant &defaultValue=QVariant());
+	bool ContaintsSettingsValue(const QString &group, const QString &key);
+	void RemoveSettingsValue(const QString &group, const QString &key);
 	
 public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
@@ -46,6 +58,7 @@ public:
 	CPluginMgr *m_pPluginMgr;
 	QList<CFunPoint*> m_lstFunPoint;
 	QList<CUsers*> m_lstUsers;
+	QSettings *m_iSettings;
 
 private:
 	void *w;

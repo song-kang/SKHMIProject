@@ -25,7 +25,7 @@ public:
 	void SetEveryFunction(bool b) { m_bEveryFunction = b; }
 
 	void SetUser(QString user);
-	void SetQuickFunPoint(QList<CFunPoint*> lstFunPoint);
+	void SetQuickFunPointList();
 	void SetTreeFunPoint(QList<CFunPoint*> lstFunPoint, CUser *user, QTreeWidgetItem *itemParent);
 
 private:
@@ -43,6 +43,8 @@ private:
 	void Init();
 	void InitUi();
 	void InitSlot();
+	void SetQuickFunPoint(QString key);
+	void QuickFunPointList(QString key, QList<CFunPoint*> lstFunPoint);
 
 signals:
 	void SigUsers();

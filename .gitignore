@@ -27,3 +27,4 @@ qrc_*.cpp
 SKBase/Debug/SKBased_manifest.rc
 *.res
 *.unsuccessfulbuild
+conf/USER1
