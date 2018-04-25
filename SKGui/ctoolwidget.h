@@ -36,6 +36,7 @@ public:
 	QPoint GetStartPos() { return ui.btnStart->pos(); }
 	void CreateToolButton(QString name, QString desc, QIcon icon);
 	void DeleteToolButton(QString name);
+	void DeleteAllToolButton();
 
 public:
 	QList<stuToolButton*> m_lstToolButton;

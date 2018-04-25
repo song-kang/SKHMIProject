@@ -45,6 +45,7 @@ private:
 	void InitSlot();
 	void SetQuickFunPoint(QString key);
 	void QuickFunPointList(QString key, QList<CFunPoint*> lstFunPoint);
+	void FindFunPoint(QTreeWidgetItem *item, const QString &text);
 
 signals:
 	void SigUsers();
@@ -59,6 +60,7 @@ public slots:
 	void SlotUsers();
 	void SlotClickedFunPoint();
 	void SlotTreeItemClicked(QTreeWidgetItem *item,int column);
+	void SlotQueryTextChanged(const QString &text);
 
 private:
 	CHMIWidget *m_pHmi;

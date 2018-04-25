@@ -240,6 +240,12 @@ void CUsersWidget::SlotTrigerMenu(QAction *action)
 	}
 	else if (action->text() == "删除用户组(&D)")
 	{
+		if (m_pCurrentUsers->GetCode() == "admin")
+		{
+			QMessageBox::warning(NULL,"告警","管理员组不允许删除");
+			return;
+		}
+
 		foreach (CUser *user, m_pCurrentUsers->m_lstUser)
 		{
 			if (user->GetCode() == m_pHmi->GetUser())
@@ -249,14 +255,18 @@ void CUsersWidget::SlotTrigerMenu(QAction *action)
 			}
 		}
 
-		foreach (CUser *user, m_pCurrentUsers->m_lstUser)
-			DelUserAuth(user);
-		DelUsersAuth(m_pCurrentUsers);
+		int ret = QMessageBox::question(NULL,tr("询问"),tr("确认删除【%1】用户组及此用户组下所有用户？").arg(m_pCurrentUsers->GetName()),tr("确认"),tr("取消"));
+		if (ret == 0)
+		{
+			foreach (CUser *user, m_pCurrentUsers->m_lstUser)
+				DelUserAuth(user);
+			DelUsersAuth(m_pCurrentUsers);
 
-		ui.treeWidgetUsers->clear();
-		ui.tableWidgetAuth->clearContents();
-		ui.tableWidgetAuth->setRowCount(0);
-		InitTreeWidget();
+			ui.treeWidgetUsers->clear();
+			ui.tableWidgetAuth->clearContents();
+			ui.tableWidgetAuth->setRowCount(0);
+			InitTreeWidget();
+		}
 	}
 	else if (action->text() == "添加用户(&A)")
 	{
@@ -279,18 +289,28 @@ void CUsersWidget::SlotTrigerMenu(QAction *action)
 	}
 	else if (action->text() == "删除用户(&D)")
 	{
+		if (m_pCurrentUser->GetCode() == "admin")
+		{
+			QMessageBox::warning(NULL,"告警","管理员【admin】不允许删除");
+			return;
+		}
+
 		if (m_pCurrentUser->GetCode() == m_pHmi->GetUser())
 		{
 			QMessageBox::warning(NULL,"告警","此用户为运行用户，无法删除");
 			return;
 		}
 
-		DelUserAuth(m_pCurrentUser);
+		int ret = QMessageBox::question(NULL,tr("询问"),tr("确认删除【%1】用户？").arg(m_pCurrentUser->GetName()),tr("确认"),tr("取消"));
+		if (ret == 0)
+		{
+			DelUserAuth(m_pCurrentUser);
 
-		ui.treeWidgetUsers->clear();
-		ui.tableWidgetAuth->clearContents();
-		ui.tableWidgetAuth->setRowCount(0);
-		InitTreeWidget();
+			ui.treeWidgetUsers->clear();
+			ui.tableWidgetAuth->clearContents();
+			ui.tableWidgetAuth->setRowCount(0);
+			InitTreeWidget();
+		}
 	}
 }
 

@@ -153,6 +153,7 @@ void CHMIWidget::SlotUsersClose()
 
 	DeleteNavigtion();
 	CreateNavigtion();
+	m_pToolWidget->DeleteAllToolButton();
 }
 
 void CHMIWidget::SlotUserSwitch()
@@ -181,6 +182,7 @@ void CHMIWidget::SlotUserSwitchClose()
 		m_sUser = ((CLoginWidget*)m_pUserSwitchWidget->GetCenterWidget())->GetUser();
 		DeleteNavigtion();
 		CreateNavigtion();
+		m_pToolWidget->DeleteAllToolButton();
 	}
 
 	disconnect(m_pUserSwitchWidget, SIGNAL(SigClose()), this, SLOT(SlotUserSwitchClose()));

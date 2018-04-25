@@ -284,6 +284,21 @@ void CToolWidget::DeleteToolButton(QString name)
 	}
 }
 
+void CToolWidget::DeleteAllToolButton()
+{
+	for (int pos = 0; pos < m_lstToolButton.count(); pos++)
+	{
+		stuToolButton *btn = m_lstToolButton.at(pos);
+		QString funPointKey = btn->m_pToolButton->objectName();
+		delete btn;
+
+		m_pHmi->DeleteWidget(funPointKey);
+		DeleteToolButton(funPointKey);
+	}
+
+	m_lstToolButton.clear();
+}
+
 void CToolWidget::InsertToolButton(QToolButton *btn)
 {
 	if (ui.toolHLayout->count() == 0)

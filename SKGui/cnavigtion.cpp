@@ -85,6 +85,7 @@ void CNavigtion::InitSlot()
 	connect(ui.btnFunPoint, SIGNAL(clicked()), this, SLOT(SlotFunPoint()));
 	connect(ui.btnUsers, SIGNAL(clicked()), this, SLOT(SlotUsers()));
 	connect(ui.treeWidgetItems,SIGNAL(itemClicked(QTreeWidgetItem *,int)),this,SLOT(SlotTreeItemClicked(QTreeWidgetItem *,int)));
+	connect(ui.lineEditFind,SIGNAL(textChanged(const QString&)),this,SLOT(SlotQueryTextChanged(const QString&)));
 }
 
 void CNavigtion::SetUser(QString user)
@@ -100,8 +101,33 @@ void CNavigtion::SetUser(QString user)
 			{
 				SetQuickFunPointList();
 				SetTreeFunPoint(SK_GUI->m_lstFunPoint,user,NULL);
+				ui.treeWidgetItems->expandAll();
 			}
 		}
+	}
+
+	SString sql;
+	SRecordset rs;
+	sql.sprintf("select grp_code from t_ssp_user where usr_code='%s'",user.toStdString().data());
+	int cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		QString grp_code = rs.GetValue(0,0).data();
+		if (grp_code == "admin")
+		{
+			ui.btnUsers->setEnabled(true);
+			ui.btnFunPoint->setEnabled(true);
+		}
+		else
+		{
+			ui.btnUsers->setEnabled(false);
+			ui.btnFunPoint->setEnabled(false);
+		}
+	}
+	else
+	{
+		ui.btnUsers->setEnabled(false);
+		ui.btnFunPoint->setEnabled(false);
 	}
 }
 
@@ -333,6 +359,48 @@ void CNavigtion::SlotTreeItemClicked(QTreeWidgetItem *item,int column)
 	SetQuickFunPoint(name);
 	Common::ClearLayout(ui.vLayoutFun);
 	SetQuickFunPointList();
+}
+
+void CNavigtion::SlotQueryTextChanged(const QString &text)
+{
+	if (!text.isEmpty())
+	{
+		ui.btnFunSwitch->setText(tr("  快捷功能点"));
+		ui.btnFunSwitch->setIcon(QIcon(":/images/arrow-left"));
+		ui.widgetItem->hide();
+		ui.treeWidgetItems->show();
+	}
+
+	for (int i = 0; i < ui.treeWidgetItems->topLevelItemCount(); i++)
+	{
+		QTreeWidgetItem *item = ui.treeWidgetItems->topLevelItem(i);
+		FindFunPoint(item,text);
+	}
+}
+
+void CNavigtion::FindFunPoint(QTreeWidgetItem *item, const QString &text)
+{
+	if (!item)
+	{
+		item->setHidden(true);
+		return;
+	}
+
+	if (item->text(0).contains(text,Qt::CaseInsensitive))
+	{
+		item->setHidden(false);
+		QTreeWidgetItem *parent = item->parent();
+		while (parent)
+		{
+			parent->setHidden(false);
+			parent = parent->parent();
+		}
+	}
+	else
+		item->setHidden(true);
+
+	for (int i = 0; i < item->childCount(); i++)
+		FindFunPoint(item->child(i),text);
 }
 
 void CNavigtion::SetQuickFunPoint(QString key)

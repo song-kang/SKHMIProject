@@ -28,3 +28,4 @@ SKBase/Debug/SKBased_manifest.rc
 *.res
 *.unsuccessfulbuild
 conf/USER1
+conf/USER2
