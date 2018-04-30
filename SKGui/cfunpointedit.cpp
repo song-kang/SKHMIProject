@@ -480,14 +480,14 @@ void CFunPointEdit::SlotSave()
 	}
 
 	SString sql;
-	SRecordset rs;
-	sql.sprintf("select count(*) from t_ssp_fun_point where fun_key='%s'",tmp_key.toStdString().data());
-	int cnt = DB->Retrieve(sql,rs);
-	if (rs.GetValue(0,0).toInt() > 0)
-	{
-		QMessageBox::warning(NULL,tr("告警"),tr("插件名称重复"));
-		goto fin;
-	}
+	//SRecordset rs;
+	//sql.sprintf("select count(*) from t_ssp_fun_point where fun_key='%s'",tmp_key.toStdString().data());
+	//int cnt = DB->Retrieve(sql,rs);
+	//if (rs.GetValue(0,0).toInt() > 0)
+	//{
+	//	QMessageBox::warning(NULL,tr("告警"),tr("插件名称重复"));
+	//	goto fin;
+	//}
 
 	sql.sprintf("update t_ssp_fun_point set fun_key='%s',name='%s',idx=%d,type=%d where fun_key='%s'",
 		tmp_key.toStdString().data(),

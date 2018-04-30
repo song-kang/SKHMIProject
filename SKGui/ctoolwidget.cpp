@@ -253,10 +253,13 @@ void CToolWidget::CreateToolButton(QString name, QString desc, QIcon icon)
 
 	btn->setObjectName(name);
 	btn->setToolTip(desc);
-	btn->setFixedSize(QSize(60, 40));
+	//btn->setFixedSize(QSize(60, 40));
+	btn->setFixedHeight(40);
 	btn->setIconSize(QSize(32, 32));
 	btn->setIcon(icon);
-	btn->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	//btn->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	btn->setText(desc);
+	btn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	SetToolButtonClicked(btn);
 
 	stuToolButton *stuTB = new stuToolButton;
