@@ -51,6 +51,7 @@ signals:
 	void SigUsers();
 	void SigUserSwitch();
 	void SigQuit();
+	void SigFPointEdit();
 
 public slots:
 	void SlotFunSwitch();

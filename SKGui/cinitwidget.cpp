@@ -20,7 +20,6 @@ void LoadThread::run()
 	SApi::UsSleep(200000); //大于1/8秒，避免等待图形不出现情况
 
 	SigText(tr("加载日志配置......"));
-	//SApi::UsSleep(500000);
 #ifdef WIN32
 	if (!SK_LOG->Load(QCoreApplication::applicationDirPath().toStdString()+"\\..\\conf\\sys_log.xml"))
 #else
@@ -32,7 +31,6 @@ void LoadThread::run()
 	}
 
 	SigText(tr("加载数据库配置......"));
-	//SApi::UsSleep(500000);
 #ifdef WIN32
 	if (!SK_DATABASE->Load(QCoreApplication::applicationDirPath().toStdString()+"\\..\\conf\\sys_database.xml"))
 #else
@@ -45,130 +43,19 @@ void LoadThread::run()
 
 	SDatabase* pDb;
 	SigText(tr("测试连接数据库......"));
-	//SApi::UsSleep(500000);
 	if ((pDb = DB->GetDatabasePool()->GetDatabase(true)) == NULL)
 	{
 		m_sError = tr("数据库连接测试失败！");
 		return;
 	}
 
-	SigText(tr("加载功能点配置......"));
-	//SApi::UsSleep(500000);
-	SK_GUI->SetFunPoint(NULL);
-	CheckFunPoint();
-
-	SigText(tr("加载用户组、用户及权限配置......"));
-	//SApi::UsSleep(500000);
-	SK_GUI->SetUsersAuth(QString::null);
-	DeleteUserAuth();
-	CheckUserAuth(SK_GUI->m_lstFunPoint);
-	foreach (CUsers *u, SK_GUI->m_lstUsers)
-		delete u;
-	SK_GUI->m_lstUsers.clear();
-	SK_GUI->SetUsersAuth(QString::null);
-
 	SigText(tr("加载代理配置，启动代理......"));
-	//SApi::UsSleep(500000);
 	SK_GUI->BeginAgent();
 
 	SigText(tr("加载动态插件库......"));
-	//SApi::UsSleep(500000);
 	SK_GUI->m_pPluginMgr->Init();
 
 	SigText(tr("加载完毕."));
-	//SApi::UsSleep(500000);
-}
-
-void LoadThread::CheckFunPoint()
-{
-	SString sql;
-	SRecordset rs;
-
-	sql.sprintf("select fun_key from t_ssp_fun_point order by fun_key asc");
-	int cnt = DB->Retrieve(sql,rs);
-	if (cnt > 0)
-	{
-		for (int i = 0; i < cnt; i++)
-		{
-			QString key = rs.GetValue(i,0).data();
-			if (!IsExistKey(key))
-			{
-				sql.sprintf("delete from t_ssp_fun_point where fun_key='%s'",key.toStdString().data());
-				DB->Execute(sql);
-			}
-		}
-	}
-}
-
-void LoadThread::CheckUserAuth(QList<CFunPoint*> lstFunPoint)
-{
-	SString sql;
-	foreach (CFunPoint *p, lstFunPoint)
-	{
-		foreach (CUsers *users, SK_GUI->m_lstUsers)
-		{
-			if (!users->IsExistKey(p->GetKey()))
-			{
-				sql.sprintf("insert into t_ssp_usergroup_auth values ('%s','%s',1)",
-					users->GetCode().toStdString().data(),p->GetKey().toStdString().data());
-				DB->Execute(sql);
-			}
-
-			foreach (CUser *user, users->m_lstUser)
-			{
-				if (!user->IsExistKey(p->GetKey()))
-				{
-					sql.sprintf("insert into t_ssp_user_auth values (%d,'%s',1)",user->GetSn(),p->GetKey().toStdString().data());
-					DB->Execute(sql);
-				}
-			}
-		}
-
-		CheckUserAuth(p->m_lstChilds);
-	}
-}
-
-void LoadThread::DeleteUserAuth()
-{
-	SString sql;
-	foreach (CUsers *users, SK_GUI->m_lstUsers)
-	{
-		foreach (stuAuth *auth, users->m_lstAuth)
-		{
-			if (!IsExistKey(auth->fun_key))
-			{
-				sql.sprintf("delete from t_ssp_usergroup_auth where grp_code='%s' and fun_key='%s'",
-					users->GetCode().toStdString().data(),auth->fun_key.toStdString().data());
-				DB->Execute(sql);
-			}
-		}
-
-		foreach (CUser *user, users->m_lstUser)
-		{
-			foreach (stuAuth *auth, user->m_lstAuth)
-			{
-				if (!IsExistKey(auth->fun_key))
-				{
-					sql.sprintf("delete from t_ssp_user_auth where usr_sn=%d and fun_key='%s'",
-						user->GetSn(),auth->fun_key.toStdString().data());
-					DB->Execute(sql);
-				}
-			}
-		}
-	}
-}
-
-bool LoadThread::IsExistKey(QString key)
-{
-	bool bFind = false;
-
-	foreach (CFunPoint *p, SK_GUI->m_lstFunPoint)
-	{
-		if (p->IsExist(key))
-			bFind = true;
-	}
-
-	return bFind;
 }
 
 ///////////////////////////// CInitWidget //////////////////////////////////
@@ -255,6 +142,16 @@ void CInitWidget::SlotLoadThreadFinished()
 {
 	if (m_pLoadThread->GetError().isEmpty())
 	{
+		SK_GUI->SetFunPoint(NULL);
+		SK_GUI->CheckFunPoint();
+		SK_GUI->SetUsersAuth(QString::null);
+		SK_GUI->DeleteUserAuth();
+		SK_GUI->CheckUserAuth(SK_GUI->m_lstFunPoint);
+		foreach (CUsers *u, SK_GUI->m_lstUsers)
+			delete u;
+		SK_GUI->m_lstUsers.clear();
+		SK_GUI->SetUsersAuth(QString::null);
+
 		SlotClose();
 		m_pLogin = new SKBaseWidget(NULL,new CLoginWidget);
 		m_pLogin->SetWindowFixSize(420,290);

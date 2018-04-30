@@ -44,6 +44,7 @@ public:
 	bool Init();
 	bool Exit();
 	CBaseView* NewView(QString sPluginName,QWidget* parent);
+	QList<CPlugin*> GetPluginList() { return m_lstPlugin; }
 
 private:
 	QList<CPlugin*> m_lstPlugin;

@@ -61,6 +61,8 @@
         <file alias="ok">Resources/ok.png</file>
         <file alias="pin-off">Resources/pin-off.png</file>
         <file alias="pin-on">Resources/pin-on.png</file>
+        <file alias="export">Resources/export.png</file>
+        <file alias="save">Resources/save.png</file>
     </qresource>
     <qresource prefix="/skins">
         <file alias="skin0">Resources/skin/skin0.jpg</file>

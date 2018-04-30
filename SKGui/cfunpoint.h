@@ -14,9 +14,11 @@ public:
 	void SetKey(QString key) { m_sKey = key; }
 	void SetDesc(QString desc) { m_sDesc = desc; }
 	void SetAuth(bool b) { m_bAuth = b; }
+	void SetType(int type) { m_iType = type; }
 	QString GetKey() { return m_sKey; }
 	QString GetDesc() { return m_sDesc; }
 	bool GetAuth() { return m_bAuth; }
+	int GetType() { return m_iType; }
 
 	bool IsExist(QString key);
 
@@ -30,6 +32,7 @@ private:
 	QString m_sKey;
 	QString m_sDesc;
 	bool m_bAuth;
+	int	m_iType;
 	
 };
 

@@ -58,7 +58,7 @@ private:
 private slots:
 	void SlotTreeItemClicked(QTreeWidgetItem *item, int column);
 	void SlotTableItemClicked(QTableWidgetItem *item);
-	void SlotTrigerMenu(QAction *action);
+	void SlotTriggerMenu(QAction *action);
 	void SlotAuthWidgetClose();
 
 };

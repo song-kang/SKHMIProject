@@ -1,6 +1,7 @@
 #include "chmiwidget.h"
 #include "cuserswidget.h"
 #include "cloginwidget.h"
+#include "cfunpointedit.h"
 
 CHMIWidget::CHMIWidget(QWidget *parent)
 	: SKWidget(parent)
@@ -38,6 +39,7 @@ void CHMIWidget::Init()
 	CreateNavigtion();
 	m_pUsersWidget = NULL;
 	m_pUserSwitchWidget = NULL;
+	m_pFunPointEdit = NULL;
 }
 
 void CHMIWidget::CreateNavigtion()
@@ -51,6 +53,7 @@ void CHMIWidget::CreateNavigtion()
 	connect(m_pNavigtion, SIGNAL(SigUsers()), this, SLOT(SlotUsers()));
 	connect(m_pNavigtion, SIGNAL(SigUserSwitch()), this, SLOT(SlotUserSwitch()));
 	connect(m_pNavigtion, SIGNAL(SigQuit()), this, SLOT(SlotQuit()));
+	connect(m_pNavigtion, SIGNAL(SigFPointEdit()), this, SLOT(SlotFunPointEdit()));
 }
 
 void CHMIWidget::DeleteNavigtion()
@@ -133,8 +136,8 @@ void CHMIWidget::SlotUsers()
 		m_pUsersWidget = new SKBaseWidget(NULL,new CUsersWidget(this));
 		m_pUsersWidget->SetWindowsFlagsTool();
 		m_pUsersWidget->SetWindowsModal();
-		m_pUsersWidget->SetWindowTitle(" 用户权限");
-		m_pUsersWidget->SetWindowIcon(QIcon(""));
+		m_pUsersWidget->SetWindowTitle("用户权限");
+		m_pUsersWidget->SetWindowIcon(QIcon(":/images/auth"));
 		m_pUsersWidget->SetWindowFlags(0);
 		m_pUsersWidget->SetWindowSize(700,500);
 		m_pUsersWidget->SetIsDrag(true);
@@ -183,6 +186,7 @@ void CHMIWidget::SlotUserSwitchClose()
 		DeleteNavigtion();
 		CreateNavigtion();
 		m_pToolWidget->DeleteAllToolButton();
+		QMessageBox::information(NULL,tr("提示"),tr("用户切换成功"));
 	}
 
 	disconnect(m_pUserSwitchWidget, SIGNAL(SigClose()), this, SLOT(SlotUserSwitchClose()));
@@ -197,6 +201,52 @@ void CHMIWidget::SlotQuit()
 	int ret = QMessageBox::question(NULL,tr("询问"),tr("确认退出系统？"),tr("退出"),tr("取消"));
 	if (ret == 0)
 		SigClose();
+}
+
+void CHMIWidget::SlotFunPointEdit()
+{
+	m_pNavigtion->hide();
+
+	if (!m_pFunPointEdit)
+	{
+		CFunPointEdit *w = new CFunPointEdit(this);
+		m_pFunPointEdit = new SKBaseWidget(NULL,w);
+		m_pFunPointEdit->SetWindowsFlagsTool();
+		m_pFunPointEdit->SetWindowsModal();
+		m_pFunPointEdit->SetWindowTitle("功能点管理");
+		m_pFunPointEdit->SetWindowIcon(QIcon(":/images/config"));
+		m_pFunPointEdit->SetWindowFlags(0);
+		m_pFunPointEdit->SetWindowSize(800,600);
+		m_pFunPointEdit->SetIsDrag(true);
+		connect(m_pFunPointEdit, SIGNAL(SigClose()), this, SLOT(SlotFunPointEditClose()));
+	}
+
+	((CFunPointEdit*)m_pFunPointEdit->GetCenterWidget())->Start();
+	m_pFunPointEdit->Show();
+}
+
+void CHMIWidget::SlotFunPointEditClose()
+{
+	disconnect(m_pFunPointEdit, SIGNAL(SigClose()), this, SLOT(SlotFunPointEditClose()));
+	delete m_pFunPointEdit;
+	m_pFunPointEdit = NULL;
+
+	foreach (CFunPoint *fp, SK_GUI->m_lstFunPoint)
+		delete fp;
+	SK_GUI->m_lstFunPoint.clear();
+	SK_GUI->SetFunPoint(NULL);
+	SK_GUI->CheckFunPoint();
+	SK_GUI->SetUsersAuth(QString::null);
+	SK_GUI->DeleteUserAuth();
+	SK_GUI->CheckUserAuth(SK_GUI->m_lstFunPoint);
+	foreach (CUsers *u, SK_GUI->m_lstUsers)
+		delete u;
+	SK_GUI->m_lstUsers.clear();
+	SK_GUI->SetUsersAuth(QString::null);
+
+	DeleteNavigtion();
+	CreateNavigtion();
+	m_pToolWidget->DeleteAllToolButton();
 }
 
 int CHMIWidget::GotoWidget(QString name)

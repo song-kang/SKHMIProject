@@ -256,31 +256,6 @@ QPushButton::hover {
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btnPlugin">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-	border-radius:1px;
-	border:none;
-	background: transparent;
-	color:#ffffff;
-	text-align: left;
-	height:35px;
-	padding-left:10px;
-}
-
-QPushButton::hover {
-	border-image:url(:/images/btn_bg)
-}</string>
-         </property>
-         <property name="text">
-          <string>插件管理</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="btnUsers">
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
@@ -331,15 +306,27 @@ QPushButton::hover {
         </widget>
        </item>
        <item>
-        <widget class="Line" name="line_3">
+        <widget class="QPushButton" name="btnPlugin">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
          <property name="styleSheet">
-          <string notr="true">color: gray;</string>
+          <string notr="true">QPushButton {
+	border-radius:1px;
+	border:none;
+	background: transparent;
+	color:#ffffff;
+	text-align: left;
+	height:35px;
+	padding-left:10px;
+}
+
+QPushButton::hover {
+	border-image:url(:/images/btn_bg)
+}</string>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+         <property name="text">
+          <string>插件管理</string>
          </property>
         </widget>
        </item>

@@ -148,9 +148,9 @@ void SKGui::SetFunPoint(CFunPoint *fpoint)
 	SString sql;
 	SRecordset rs;
 	if (fpoint)
-		sql.sprintf("select fun_key,name,auth,img_normal from t_ssp_fun_point where p_fun_key='%s' order by idx asc",fpoint->GetKey().toStdString().data());
+		sql.sprintf("select fun_key,name,auth,type from t_ssp_fun_point where p_fun_key='%s' order by idx asc",fpoint->GetKey().toStdString().data());
 	else
-		sql.sprintf("select fun_key,name,auth,img_normal from t_ssp_fun_point where p_fun_key='%s' order by idx asc","top");
+		sql.sprintf("select fun_key,name,auth,type from t_ssp_fun_point where p_fun_key='%s' order by idx asc","top");
 	int cnt = DB->Retrieve(sql,rs);
 	if (cnt > 0)
 	{
@@ -160,6 +160,7 @@ void SKGui::SetFunPoint(CFunPoint *fpoint)
 			p->SetKey(rs.GetValue(i,0).data());
 			p->SetDesc(rs.GetValue(i,1).data());
 			p->SetAuth((bool)rs.GetValue(i,2).toInt());
+			p->SetType(rs.GetValue(i,3).toInt());
 			
 			SString sWhere = SString::toFormat("fun_key='%s'",p->GetKey().toStdString().data());
 			DB->ReadLobToMem("t_ssp_fun_point","img_normal",sWhere,p->m_pImageBuffer,p->m_iImageLen);
@@ -253,7 +254,7 @@ void SKGui::SetRunPoints(QList<CFunPoint*> lstFunPoint)
 {
 	foreach (CFunPoint *p, lstFunPoint)
 	{
-		if (p->m_lstChilds.count() == 0)
+		if (p->m_lstChilds.count() == 0 && p->GetType() != 1)
 		{
 			m_lstRunFunPoint.append(p);
 		}
@@ -292,4 +293,96 @@ void SKGui::RemoveSettingsValue(const QString &group, const QString &key)
 	m_iSettings->remove(key);
 	m_iSettings->endGroup();
 	m_iSettings->sync();
+}
+
+void SKGui::CheckFunPoint()
+{
+	SString sql;
+	SRecordset rs;
+
+	sql.sprintf("select fun_key from t_ssp_fun_point order by fun_key asc");
+	int cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		for (int i = 0; i < cnt; i++)
+		{
+			QString key = rs.GetValue(i,0).data();
+			if (!IsExistKey(key) && key != "top")
+			{
+				sql.sprintf("delete from t_ssp_fun_point where fun_key='%s'",key.toStdString().data());
+				DB->Execute(sql);
+			}
+		}
+	}
+}
+
+void SKGui::CheckUserAuth(QList<CFunPoint*> lstFunPoint)
+{
+	SString sql;
+	foreach (CFunPoint *p, lstFunPoint)
+	{
+		foreach (CUsers *users, SK_GUI->m_lstUsers)
+		{
+			if (!users->IsExistKey(p->GetKey()))
+			{
+				sql.sprintf("insert into t_ssp_usergroup_auth values ('%s','%s',1)",
+					users->GetCode().toStdString().data(),p->GetKey().toStdString().data());
+				DB->Execute(sql);
+			}
+
+			foreach (CUser *user, users->m_lstUser)
+			{
+				if (!user->IsExistKey(p->GetKey()))
+				{
+					sql.sprintf("insert into t_ssp_user_auth values (%d,'%s',1)",user->GetSn(),p->GetKey().toStdString().data());
+					DB->Execute(sql);
+				}
+			}
+		}
+
+		CheckUserAuth(p->m_lstChilds);
+	}
+}
+
+void SKGui::DeleteUserAuth()
+{
+	SString sql;
+	foreach (CUsers *users, SK_GUI->m_lstUsers)
+	{
+		foreach (stuAuth *auth, users->m_lstAuth)
+		{
+			if (!IsExistKey(auth->fun_key))
+			{
+				sql.sprintf("delete from t_ssp_usergroup_auth where grp_code='%s' and fun_key='%s'",
+					users->GetCode().toStdString().data(),auth->fun_key.toStdString().data());
+				DB->Execute(sql);
+			}
+		}
+
+		foreach (CUser *user, users->m_lstUser)
+		{
+			foreach (stuAuth *auth, user->m_lstAuth)
+			{
+				if (!IsExistKey(auth->fun_key))
+				{
+					sql.sprintf("delete from t_ssp_user_auth where usr_sn=%d and fun_key='%s'",
+						user->GetSn(),auth->fun_key.toStdString().data());
+					DB->Execute(sql);
+				}
+			}
+		}
+	}
+}
+
+bool SKGui::IsExistKey(QString key)
+{
+	bool bFind = false;
+
+	foreach (CFunPoint *p, SK_GUI->m_lstFunPoint)
+	{
+		if (p->IsExist(key))
+			bFind = true;
+	}
+
+	return bFind;
 }

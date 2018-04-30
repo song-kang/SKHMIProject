@@ -101,7 +101,7 @@ void CNavigtion::SetUser(QString user)
 			{
 				SetQuickFunPointList();
 				SetTreeFunPoint(SK_GUI->m_lstFunPoint,user,NULL);
-				ui.treeWidgetItems->expandAll();
+				//ui.treeWidgetItems->expandAll();
 			}
 		}
 	}
@@ -115,19 +115,19 @@ void CNavigtion::SetUser(QString user)
 		QString grp_code = rs.GetValue(0,0).data();
 		if (grp_code == "admin")
 		{
-			ui.btnUsers->setEnabled(true);
-			ui.btnFunPoint->setEnabled(true);
+			ui.btnUsers->setVisible(true);
+			ui.btnFunPoint->setVisible(true);
 		}
 		else
 		{
-			ui.btnUsers->setEnabled(false);
-			ui.btnFunPoint->setEnabled(false);
+			ui.btnUsers->setVisible(false);
+			ui.btnFunPoint->setVisible(false);
 		}
 	}
 	else
 	{
-		ui.btnUsers->setEnabled(false);
-		ui.btnFunPoint->setEnabled(false);
+		ui.btnUsers->setVisible(false);
+		ui.btnFunPoint->setVisible(false);
 	}
 }
 
@@ -203,20 +203,20 @@ void CNavigtion::SetTreeFunPoint(QList<CFunPoint*> lstFunPoint, CUser *user, QTr
 	QTreeWidgetItem *item = itemParent;
 	foreach (CFunPoint *p, lstFunPoint)
 	{
-		if (p->m_lstChilds.count() == 0 || p->m_lstChilds.count() > 1)
-		{
+		//if (p->m_lstChilds.count() == 0 || p->m_lstChilds.count() > 1)
+		//{
 			if (user->IsAuthTrue(p->GetKey()))
 			{
 				if (itemParent)
-					item = new QTreeWidgetItem(itemParent);
+					item = new QTreeWidgetItem(itemParent,p->GetType());
 				else
-					item = new QTreeWidgetItem(ui.treeWidgetItems);
+					item = new QTreeWidgetItem(ui.treeWidgetItems,p->GetType());
 
 				item->setText(0,p->GetDesc());
 				item->setToolTip(0,p->GetDesc());
 				item->setData(0,Qt::UserRole,p->GetKey());
 
-				if (p->m_lstChilds.count() == 0)
+				if (p->m_lstChilds.count() == 0 && p->GetType() != 1)
 				{
 					if (p->m_pImageBuffer && p->m_iImageLen > 0)
 					{
@@ -227,12 +227,12 @@ void CNavigtion::SetTreeFunPoint(QList<CFunPoint*> lstFunPoint, CUser *user, QTr
 					else
 						item->setIcon(0,QIcon(":/images/application"));
 				}
-				else if (p->m_lstChilds.count() > 1)
+				else/* if (p->m_lstChilds.count() > 1)*/
 					item->setIcon(0,QIcon(":/images/folder_open"));
 			}
-		}
-		else if (!itemParent && p->m_lstChilds.count() == 1)
-			item = NULL;
+		//}
+		//else if (!itemParent && p->m_lstChilds.count() == 1)
+		//	item = NULL;
 
 		SetTreeFunPoint(p->m_lstChilds,user,item);
 	}
@@ -306,7 +306,7 @@ void CNavigtion::SlotQuit()
 
 void CNavigtion::SlotFunPoint()
 {
-
+	SigFPointEdit();
 }
 
 void CNavigtion::SlotUsers()
@@ -341,7 +341,7 @@ void CNavigtion::SlotClickedFunPoint()
 
 void CNavigtion::SlotTreeItemClicked(QTreeWidgetItem *item,int column)
 {
-	if (item->childCount())
+	if (item->childCount() || item->type() == 1)
 		return;
 
 	QString name = item->data(column,Qt::UserRole).toString();
@@ -393,6 +393,8 @@ void CNavigtion::FindFunPoint(QTreeWidgetItem *item, const QString &text)
 		while (parent)
 		{
 			parent->setHidden(false);
+			if (!text.isEmpty())
+				ui.treeWidgetItems->expandItem(parent);
 			parent = parent->parent();
 		}
 	}

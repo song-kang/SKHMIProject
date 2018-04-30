@@ -31,12 +31,6 @@ private:
 	QString m_sError;
 
 private:
-	void CheckFunPoint();
-	void CheckUserAuth(QList<CFunPoint*> lstFunPoint);
-	void DeleteUserAuth();
-	bool IsExistKey(QString key);
-
-private:
 	CInitWidget *m_pApp;
 };
 

@@ -48,6 +48,11 @@ public:
 	QVariant GetSettingsValue(const QString &group, const QString &key, const QVariant &defaultValue=QVariant());
 	bool ContaintsSettingsValue(const QString &group, const QString &key);
 	void RemoveSettingsValue(const QString &group, const QString &key);
+
+	void CheckFunPoint();
+	void CheckUserAuth(QList<CFunPoint*> lstFunPoint);
+	void DeleteUserAuth();
+	bool IsExistKey(QString key);
 	
 public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);

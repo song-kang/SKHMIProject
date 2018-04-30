@@ -42,6 +42,7 @@ public:
 	CNavigtion *m_pNavigtion;
 	SKBaseWidget *m_pUsersWidget;
 	SKBaseWidget *m_pUserSwitchWidget;
+	SKBaseWidget *m_pFunPointEdit;
 
 private:
 	void Init();
@@ -65,6 +66,8 @@ private slots:
 	void SlotUserSwitch();
 	void SlotUserSwitchClose();
 	void SlotQuit();
+	void SlotFunPointEdit();
+	void SlotFunPointEditClose();
 
 private:
 	SKBaseWidget *m_app;

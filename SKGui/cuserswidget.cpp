@@ -71,9 +71,9 @@ void CUsersWidget::InitSlot()
 {
 	connect(ui.treeWidgetUsers,SIGNAL(itemClicked(QTreeWidgetItem *,int)),this,SLOT(SlotTreeItemClicked(QTreeWidgetItem *,int)));
 	connect(ui.tableWidgetAuth,SIGNAL(itemClicked(QTableWidgetItem *)),this,SLOT(SlotTableItemClicked(QTableWidgetItem *)));
-	connect(m_pMenuNull,SIGNAL(triggered(QAction*)),this,SLOT(SlotTrigerMenu(QAction*)));
-	connect(m_pMenuGrp,SIGNAL(triggered(QAction*)),this,SLOT(SlotTrigerMenu(QAction*)));
-	connect(m_pMenuUser,SIGNAL(triggered(QAction*)),this,SLOT(SlotTrigerMenu(QAction*)));
+	connect(m_pMenuNull,SIGNAL(triggered(QAction*)),this,SLOT(SlotTriggerMenu(QAction*)));
+	connect(m_pMenuGrp,SIGNAL(triggered(QAction*)),this,SLOT(SlotTriggerMenu(QAction*)));
+	connect(m_pMenuUser,SIGNAL(triggered(QAction*)),this,SLOT(SlotTriggerMenu(QAction*)));
 }
 
 void CUsersWidget::InitTreeWidget()
@@ -164,6 +164,7 @@ void CUsersWidget::SlotTreeItemClicked(QTreeWidgetItem *item, int column)
 {
 	ui.tableWidgetAuth->setRowCount(0);
 	ui.tableWidgetAuth->clearContents();
+	ui.tableWidgetAuth->scrollToTop();
 	
 	if (item->type() == USER_GROUP)
 	{
@@ -218,7 +219,7 @@ void CUsersWidget::SlotTableItemClicked(QTableWidgetItem *item)
 	}
 }
 
-void CUsersWidget::SlotTrigerMenu(QAction *action)
+void CUsersWidget::SlotTriggerMenu(QAction *action)
 {
 	if (action->text() == "添加用户组(&A)")  
 	{
@@ -229,14 +230,15 @@ void CUsersWidget::SlotTrigerMenu(QAction *action)
 		((CAuthWidget*)m_pAuthWidget->GetCenterWidget())->Start();
 		m_pAuthWidget->SetWindowsFlagsTool();
 		m_pAuthWidget->SetWindowsModal();
-		m_pAuthWidget->SetWindowTitle(" 添加用户组");
-		m_pAuthWidget->SetWindowIcon(QIcon(""));
+		m_pAuthWidget->SetWindowTitle("添加用户组");
+		m_pAuthWidget->SetWindowIcon(QIcon(":/images/userGroup"));
 		m_pAuthWidget->SetWindowFlags(0);
 		m_pAuthWidget->SetWindowSize(500,600);
 		m_pAuthWidget->SetIsDrag(true);
 		m_pAuthWidget->SetContentsMargins(1,0,1,1);
 		connect(m_pAuthWidget, SIGNAL(SigClose()), this, SLOT(SlotAuthWidgetClose()));
 		m_pAuthWidget->Show();
+		//m_pHmi->m_pUsersWidget->hide();
 	}
 	else if (action->text() == "删除用户组(&D)")
 	{
@@ -278,14 +280,15 @@ void CUsersWidget::SlotTrigerMenu(QAction *action)
 		((CAuthWidget*)m_pAuthWidget->GetCenterWidget())->Start();
 		m_pAuthWidget->SetWindowsFlagsTool();
 		m_pAuthWidget->SetWindowsModal();
-		m_pAuthWidget->SetWindowTitle(" 添加用户");
-		m_pAuthWidget->SetWindowIcon(QIcon(""));
+		m_pAuthWidget->SetWindowTitle("添加用户");
+		m_pAuthWidget->SetWindowIcon(QIcon(":/images/user"));
 		m_pAuthWidget->SetWindowFlags(0);
 		m_pAuthWidget->SetWindowSize(500,600);
 		m_pAuthWidget->SetIsDrag(true);
 		m_pAuthWidget->SetContentsMargins(1,0,1,1);
 		connect(m_pAuthWidget, SIGNAL(SigClose()), this, SLOT(SlotAuthWidgetClose()));
 		m_pAuthWidget->Show();
+		//m_pHmi->m_pUsersWidget->hide();
 	}
 	else if (action->text() == "删除用户(&D)")
 	{
@@ -324,6 +327,7 @@ void CUsersWidget::SlotAuthWidgetClose()
 	ui.tableWidgetAuth->clearContents();
 	ui.tableWidgetAuth->setRowCount(0);
 	InitTreeWidget();
+	//m_pHmi->m_pUsersWidget->show();
 }
 
 void CUsersWidget::ShowUserAuth(CUsers *users, CUser *user)
