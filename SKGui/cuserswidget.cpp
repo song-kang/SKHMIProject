@@ -162,6 +162,8 @@ void CUsersWidget::Start()
 
 void CUsersWidget::SlotTreeItemClicked(QTreeWidgetItem *item, int column)
 {
+	Q_UNUSED(column);
+
 	ui.tableWidgetAuth->setRowCount(0);
 	ui.tableWidgetAuth->clearContents();
 	ui.tableWidgetAuth->scrollToTop();
@@ -231,14 +233,20 @@ void CUsersWidget::SlotTriggerMenu(QAction *action)
 		m_pAuthWidget->SetWindowsFlagsTool();
 		m_pAuthWidget->SetWindowsModal();
 		m_pAuthWidget->SetWindowTitle("添加用户组");
+#ifdef WIN32
 		m_pAuthWidget->SetWindowIcon(QIcon(":/images/userGroup"));
+#else
+		m_pAuthWidget->SetWindowIcon(":/images/userGroup");
+#endif
 		m_pAuthWidget->SetWindowFlags(0);
 		m_pAuthWidget->SetWindowSize(500,600);
 		m_pAuthWidget->SetIsDrag(true);
 		m_pAuthWidget->SetContentsMargins(1,0,1,1);
 		connect(m_pAuthWidget, SIGNAL(SigClose()), this, SLOT(SlotAuthWidgetClose()));
 		m_pAuthWidget->Show();
-		//m_pHmi->m_pUsersWidget->hide();
+#ifndef WIN32
+		m_pHmi->m_pUsersWidget->hide();
+#endif
 	}
 	else if (action->text() == "删除用户组(&D)")
 	{
@@ -281,14 +289,20 @@ void CUsersWidget::SlotTriggerMenu(QAction *action)
 		m_pAuthWidget->SetWindowsFlagsTool();
 		m_pAuthWidget->SetWindowsModal();
 		m_pAuthWidget->SetWindowTitle("添加用户");
+#ifdef WIN32
 		m_pAuthWidget->SetWindowIcon(QIcon(":/images/user"));
+#else
+		m_pAuthWidget->SetWindowIcon(":/images/user");
+#endif
 		m_pAuthWidget->SetWindowFlags(0);
 		m_pAuthWidget->SetWindowSize(500,600);
 		m_pAuthWidget->SetIsDrag(true);
 		m_pAuthWidget->SetContentsMargins(1,0,1,1);
 		connect(m_pAuthWidget, SIGNAL(SigClose()), this, SLOT(SlotAuthWidgetClose()));
 		m_pAuthWidget->Show();
-		//m_pHmi->m_pUsersWidget->hide();
+#ifndef WIN32
+		m_pHmi->m_pUsersWidget->hide();
+#endif
 	}
 	else if (action->text() == "删除用户(&D)")
 	{
@@ -327,7 +341,9 @@ void CUsersWidget::SlotAuthWidgetClose()
 	ui.tableWidgetAuth->clearContents();
 	ui.tableWidgetAuth->setRowCount(0);
 	InitTreeWidget();
-	//m_pHmi->m_pUsersWidget->show();
+#ifndef WIN32
+	m_pHmi->m_pUsersWidget->show();
+#endif
 }
 
 void CUsersWidget::ShowUserAuth(CUsers *users, CUser *user)

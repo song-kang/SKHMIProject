@@ -137,7 +137,11 @@ void CHMIWidget::SlotUsers()
 		m_pUsersWidget->SetWindowsFlagsTool();
 		m_pUsersWidget->SetWindowsModal();
 		m_pUsersWidget->SetWindowTitle("用户权限");
+#ifdef WIN32
 		m_pUsersWidget->SetWindowIcon(QIcon(":/images/auth"));
+#else
+		m_pUsersWidget->SetWindowIcon(":/images/auth");
+#endif
 		m_pUsersWidget->SetWindowFlags(0);
 		m_pUsersWidget->SetWindowSize(700,500);
 		m_pUsersWidget->SetIsDrag(true);
@@ -214,7 +218,11 @@ void CHMIWidget::SlotFunPointEdit()
 		m_pFunPointEdit->SetWindowsFlagsTool();
 		m_pFunPointEdit->SetWindowsModal();
 		m_pFunPointEdit->SetWindowTitle("功能点管理");
+#ifdef WIN32
 		m_pFunPointEdit->SetWindowIcon(QIcon(":/images/config"));
+#else
+		m_pFunPointEdit->SetWindowIcon(":/images/config");
+#endif
 		m_pFunPointEdit->SetWindowFlags(0);
 		m_pFunPointEdit->SetWindowSize(800,600);
 		m_pFunPointEdit->SetIsDrag(true);

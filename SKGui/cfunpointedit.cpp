@@ -576,21 +576,29 @@ void CFunPointEdit::SlotTableItemClicked(QTableWidgetItem *item)
 
 void CFunPointEdit::SlotNoTextChanged(const QString &text)
 {
+	Q_UNUSED(text);
+
 	CompareChange();
 }
 
 void CFunPointEdit::SlotNameTextChanged(const QString &text)
 {
+	Q_UNUSED(text);
+
 	CompareChange();
 }
 
 void CFunPointEdit::SlotTypeCurrentIndexChanged(int index)
 {
+	Q_UNUSED(index);
+
 	CompareChange();
 }
 
 void CFunPointEdit::SlotPluginEditTextChanged(const QString &text)
 {
+	Q_UNUSED(text);
+
 	CompareChange();
 }
 
@@ -607,7 +615,11 @@ void CFunPointEdit::SlotTriggerMenu(QAction *action)
 			m_pFunPointAddWidget->SetWindowsFlagsTool();
 			m_pFunPointAddWidget->SetWindowsModal();
 			m_pFunPointAddWidget->SetWindowTitle("添加文件夹");
+#ifdef WIN32
 			m_pFunPointAddWidget->SetWindowIcon(QIcon(":/images/folder_open"));
+#else
+			m_pFunPointAddWidget->SetWindowIcon(":/images/folder_open");
+#endif
 			m_pFunPointAddWidget->SetWindowFlags(0);
 			m_pFunPointAddWidget->SetWindowSize(500,550);
 			m_pFunPointAddWidget->SetIsDrag(true);
@@ -615,7 +627,9 @@ void CFunPointEdit::SlotTriggerMenu(QAction *action)
 		}
 		((CFunPointAdd*)m_pFunPointAddWidget->GetCenterWidget())->Start();
 		m_pFunPointAddWidget->Show();
-		//m_pHmi->m_pFunPointEdit->hide();
+#ifndef WIN32
+		m_pHmi->m_pFunPointEdit->hide();
+#endif
 	}
 	else if (action->text() == "添加功能点(&N)")  
 	{
@@ -628,7 +642,11 @@ void CFunPointEdit::SlotTriggerMenu(QAction *action)
 			m_pFunPointAddWidget->SetWindowsFlagsTool();
 			m_pFunPointAddWidget->SetWindowsModal();
 			m_pFunPointAddWidget->SetWindowTitle("添加功能点");
+#ifdef WIN32
 			m_pFunPointAddWidget->SetWindowIcon(QIcon(":/images/application"));
+#else
+			m_pFunPointAddWidget->SetWindowIcon(":/images/application");
+#endif
 			m_pFunPointAddWidget->SetWindowFlags(0);
 			m_pFunPointAddWidget->SetWindowSize(500,550);
 			m_pFunPointAddWidget->SetIsDrag(true);
@@ -636,7 +654,9 @@ void CFunPointEdit::SlotTriggerMenu(QAction *action)
 		}
 		((CFunPointAdd*)m_pFunPointAddWidget->GetCenterWidget())->Start();
 		m_pFunPointAddWidget->Show();
-		//m_pHmi->m_pFunPointEdit->hide();
+#ifndef WIN32
+		m_pHmi->m_pFunPointEdit->hide();
+#endif
 	}
 	else if (action->text() == "删除文件夹(&D)")
 	{
@@ -700,7 +720,9 @@ void CFunPointEdit::SlotFunPointAddClose()
 	disconnect(m_pFunPointAddWidget, SIGNAL(SigClose()), this, SLOT(SlotUsersClose()));
 	delete m_pFunPointAddWidget;
 	m_pFunPointAddWidget = NULL;
-	//m_pHmi->m_pFunPointEdit->show();
+#ifndef WIN32
+	m_pHmi->m_pFunPointEdit->show();
+#endif
 }
 
 bool CFunPointEdit::CompareChange()
