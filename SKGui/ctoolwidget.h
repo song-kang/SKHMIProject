@@ -37,6 +37,7 @@ public:
 	void CreateToolButton(QString name, QString desc, QIcon icon);
 	void DeleteToolButton(QString name);
 	void DeleteAllToolButton();
+	void RefreshArrow();
 
 public:
 	QList<stuToolButton*> m_lstToolButton;
@@ -53,7 +54,9 @@ private:
 
 protected:
 	virtual void paintEvent(QPaintEvent *);
+	virtual void resizeEvent(QResizeEvent *);
 	virtual void mousePressEvent(QMouseEvent *);
+	virtual void keyPressEvent(QKeyEvent *);
 
 private:
 	void Init();
@@ -66,11 +69,13 @@ signals:
 private slots:
 	void SlotLeft();
 	void SlotRight();
-	void SlotStart();
 	void SlotDesktop();
 	void SlotToolButtonClick();
 	void SlotDateTime();
 	void SlotTriggerMenu(QAction *action);
+
+public slots:
+	void SlotStart();
 
 private:
 	CHMIWidget *m_pHmi;

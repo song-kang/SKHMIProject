@@ -53,12 +53,12 @@ public:
 	void CheckUserAuth(QList<CFunPoint*> lstFunPoint);
 	void DeleteUserAuth();
 	bool IsExistKey(QString key);
-	
+
 public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
 	virtual bool Start(){ return true; }
 	virtual bool Stop(){ return true; }
-	
+
 public:
 	CPluginMgr *m_pPluginMgr;
 	QList<CFunPoint*> m_lstFunPoint;

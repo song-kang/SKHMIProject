@@ -103,6 +103,11 @@ void CToolWidget::paintEvent(QPaintEvent *e)
 	SKWidget::paintEvent(e);
 }
 
+void CToolWidget::resizeEvent(QResizeEvent *e)
+{
+	RefreshArrow();
+}
+
 void CToolWidget::mousePressEvent(QMouseEvent *e)
 {
 	QString name;
@@ -151,6 +156,14 @@ void CToolWidget::mousePressEvent(QMouseEvent *e)
 			int a = 0;
 		}
 	}
+}
+
+void CToolWidget::keyPressEvent(QKeyEvent *e)
+{
+	//if ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_Alt)
+	//{
+	//	SlotStart();
+	//}
 }
 
 void CToolWidget::SlotStart()
@@ -231,7 +244,9 @@ void CToolWidget::SlotTriggerMenu(QAction *action)
 			else
 				btn = m_lstToolButton.at(pos-1);
 			SetToolButtonClicked(btn->m_pToolButton);
-		}		
+		}
+
+		RefreshArrow();
 	}
 	else if (action->text() == "将此窗口锁定在任务栏(&L)" || action->text() == "将此窗口从任务栏中解锁(&L)")
 	{
@@ -348,4 +363,26 @@ void CToolWidget::SetToolButtonUnclicked(QToolButton *btn)
 	list.append(QString("QToolButton:hover{background:%1;}").arg("#d3d7d4"));
 	list.append(QString("QToolButton:pressed{background:%1;}").arg("#f6f5ec"));
 	btn->setStyleSheet(list.join(""));
+}
+
+void CToolWidget::RefreshArrow()
+{
+	int btnLength = 0;
+	int areaLength = ui.scrollArea->width();
+	foreach (stuToolButton *btn, m_lstToolButton)
+	{
+		btnLength += btn->m_pToolButton->width();
+		btnLength += 6; //间隔宽度
+	}
+	btnLength -= 6;
+	if (btnLength > areaLength)
+	{
+		ui.btnLeft->setVisible(true);
+		ui.btnRight->setVisible(true);
+	}
+	else
+	{
+		ui.btnLeft->setVisible(false);
+		ui.btnRight->setVisible(false);
+	}
 }

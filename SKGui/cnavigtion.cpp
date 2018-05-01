@@ -337,6 +337,8 @@ void CNavigtion::SlotClickedFunPoint()
 	SetQuickFunPoint(name);
 	Common::ClearLayout(ui.vLayoutFun);
 	SetQuickFunPointList();
+
+	m_pTool->RefreshArrow();
 }
 
 void CNavigtion::SlotTreeItemClicked(QTreeWidgetItem *item,int column)
@@ -359,6 +361,8 @@ void CNavigtion::SlotTreeItemClicked(QTreeWidgetItem *item,int column)
 	SetQuickFunPoint(name);
 	Common::ClearLayout(ui.vLayoutFun);
 	SetQuickFunPointList();
+
+	m_pTool->RefreshArrow();
 }
 
 void CNavigtion::SlotQueryTextChanged(const QString &text)
