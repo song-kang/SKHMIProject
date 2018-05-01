@@ -29,7 +29,6 @@ public:
 protected:
 	virtual void paintEvent(QPaintEvent *);
 	virtual void mousePressEvent(QMouseEvent *);
-	virtual void keyPressEvent(QKeyEvent *);
 
 private:
 	QVBoxLayout *m_vBoxLyout;

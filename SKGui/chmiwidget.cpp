@@ -95,11 +95,6 @@ void CHMIWidget::mousePressEvent(QMouseEvent *e)
 	}
 }
 
-void CHMIWidget::keyPressEvent(QKeyEvent *e)
-{
-
-}
-
 void CHMIWidget::SlotStart()
 {
 	QPoint p = m_pToolWidget->GetStartPos();

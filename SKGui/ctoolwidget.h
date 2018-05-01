@@ -56,7 +56,6 @@ protected:
 	virtual void paintEvent(QPaintEvent *);
 	virtual void resizeEvent(QResizeEvent *);
 	virtual void mousePressEvent(QMouseEvent *);
-	virtual void keyPressEvent(QKeyEvent *);
 
 private:
 	void Init();

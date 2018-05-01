@@ -158,14 +158,6 @@ void CToolWidget::mousePressEvent(QMouseEvent *e)
 	}
 }
 
-void CToolWidget::keyPressEvent(QKeyEvent *e)
-{
-	//if ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_Alt)
-	//{
-	//	SlotStart();
-	//}
-}
-
 void CToolWidget::SlotStart()
 {
 	SigStart();
