@@ -612,7 +612,7 @@ void CFunPointEdit::SlotTriggerMenu(QAction *action)
 			w->SetType(TYPE_FOLDER);
 			w->SetTreeItem(m_pCurrentTreeItem);
 			m_pFunPointAddWidget = new SKBaseWidget(NULL,w);
-			m_pFunPointAddWidget->SetWindowsFlagsTool();
+			//m_pFunPointAddWidget->SetWindowsFlagsTool();
 			m_pFunPointAddWidget->SetWindowsModal();
 			m_pFunPointAddWidget->SetWindowTitle("添加文件夹");
 #ifdef WIN32
@@ -639,7 +639,7 @@ void CFunPointEdit::SlotTriggerMenu(QAction *action)
 			w->SetType(TYPE_APP);
 			w->SetTreeItem(m_pCurrentTreeItem);
 			m_pFunPointAddWidget = new SKBaseWidget(NULL,w);
-			m_pFunPointAddWidget->SetWindowsFlagsTool();
+			//m_pFunPointAddWidget->SetWindowsFlagsTool();
 			m_pFunPointAddWidget->SetWindowsModal();
 			m_pFunPointAddWidget->SetWindowTitle("添加功能点");
 #ifdef WIN32

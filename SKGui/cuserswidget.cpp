@@ -230,7 +230,7 @@ void CUsersWidget::SlotTriggerMenu(QAction *action)
 		wgt->SetType(USER_GROUP);
 		wgt->SetApp(m_pAuthWidget);
 		((CAuthWidget*)m_pAuthWidget->GetCenterWidget())->Start();
-		m_pAuthWidget->SetWindowsFlagsTool();
+		//m_pAuthWidget->SetWindowsFlagsTool();
 		m_pAuthWidget->SetWindowsModal();
 		m_pAuthWidget->SetWindowTitle("添加用户组");
 #ifdef WIN32
@@ -286,7 +286,7 @@ void CUsersWidget::SlotTriggerMenu(QAction *action)
 		wgt->SetUsers(m_pCurrentUsers);
 		wgt->SetApp(m_pAuthWidget);
 		((CAuthWidget*)m_pAuthWidget->GetCenterWidget())->Start();
-		m_pAuthWidget->SetWindowsFlagsTool();
+		//m_pAuthWidget->SetWindowsFlagsTool();
 		m_pAuthWidget->SetWindowsModal();
 		m_pAuthWidget->SetWindowTitle("添加用户");
 #ifdef WIN32

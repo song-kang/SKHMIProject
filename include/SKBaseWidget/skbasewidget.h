@@ -37,6 +37,7 @@ public:
 	void SetIsDrag(bool b) { m_bIsDrag = b; }
 	void SetIsTopDrag(bool b) { m_bIsTopDrag = b; }
 	void SetWindowsFlagsTool() { setWindowFlags(windowFlags() | Qt::Tool); }
+	void SetWindowsFlagsDialog() { setWindowFlags(windowFlags() | Qt::Dialog); }
 	void SetWindowsFlagsTopHit() { setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint); }
 	void SetWindowsModal() { setAttribute(Qt::WA_ShowModal, true); setWindowModality(Qt::ApplicationModal); }
 	void SetContentsMargins(int left, int top, int right, int bottom) { m_vBoxLyout->setContentsMargins(left,top,right,bottom); }
