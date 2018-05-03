@@ -230,7 +230,7 @@ void CUsersWidget::SlotTriggerMenu(QAction *action)
 		wgt->SetType(USER_GROUP);
 		wgt->SetApp(m_pAuthWidget);
 		((CAuthWidget*)m_pAuthWidget->GetCenterWidget())->Start();
-		//m_pAuthWidget->SetWindowsFlagsTool();
+		m_pAuthWidget->SetWindowsFlagsDialog();
 		m_pAuthWidget->SetWindowsModal();
 		m_pAuthWidget->SetWindowTitle("添加用户组");
 #ifdef WIN32
@@ -244,9 +244,6 @@ void CUsersWidget::SlotTriggerMenu(QAction *action)
 		m_pAuthWidget->SetContentsMargins(1,0,1,1);
 		connect(m_pAuthWidget, SIGNAL(SigClose()), this, SLOT(SlotAuthWidgetClose()));
 		m_pAuthWidget->Show();
-#ifndef WIN32
-		m_pHmi->m_pUsersWidget->hide();
-#endif
 	}
 	else if (action->text() == "删除用户组(&D)")
 	{
@@ -286,7 +283,7 @@ void CUsersWidget::SlotTriggerMenu(QAction *action)
 		wgt->SetUsers(m_pCurrentUsers);
 		wgt->SetApp(m_pAuthWidget);
 		((CAuthWidget*)m_pAuthWidget->GetCenterWidget())->Start();
-		//m_pAuthWidget->SetWindowsFlagsTool();
+		m_pAuthWidget->SetWindowsFlagsDialog();
 		m_pAuthWidget->SetWindowsModal();
 		m_pAuthWidget->SetWindowTitle("添加用户");
 #ifdef WIN32
@@ -300,9 +297,6 @@ void CUsersWidget::SlotTriggerMenu(QAction *action)
 		m_pAuthWidget->SetContentsMargins(1,0,1,1);
 		connect(m_pAuthWidget, SIGNAL(SigClose()), this, SLOT(SlotAuthWidgetClose()));
 		m_pAuthWidget->Show();
-#ifndef WIN32
-		m_pHmi->m_pUsersWidget->hide();
-#endif
 	}
 	else if (action->text() == "删除用户(&D)")
 	{
@@ -341,9 +335,6 @@ void CUsersWidget::SlotAuthWidgetClose()
 	ui.tableWidgetAuth->clearContents();
 	ui.tableWidgetAuth->setRowCount(0);
 	InitTreeWidget();
-#ifndef WIN32
-	m_pHmi->m_pUsersWidget->show();
-#endif
 }
 
 void CUsersWidget::ShowUserAuth(CUsers *users, CUser *user)

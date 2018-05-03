@@ -612,7 +612,7 @@ void CFunPointEdit::SlotTriggerMenu(QAction *action)
 			w->SetType(TYPE_FOLDER);
 			w->SetTreeItem(m_pCurrentTreeItem);
 			m_pFunPointAddWidget = new SKBaseWidget(NULL,w);
-			//m_pFunPointAddWidget->SetWindowsFlagsTool();
+			m_pFunPointAddWidget->SetWindowsFlagsDialog();
 			m_pFunPointAddWidget->SetWindowsModal();
 			m_pFunPointAddWidget->SetWindowTitle("添加文件夹");
 #ifdef WIN32
@@ -627,9 +627,6 @@ void CFunPointEdit::SlotTriggerMenu(QAction *action)
 		}
 		((CFunPointAdd*)m_pFunPointAddWidget->GetCenterWidget())->Start();
 		m_pFunPointAddWidget->Show();
-#ifndef WIN32
-		m_pHmi->m_pFunPointEdit->hide();
-#endif
 	}
 	else if (action->text() == "添加功能点(&N)")  
 	{
@@ -639,7 +636,7 @@ void CFunPointEdit::SlotTriggerMenu(QAction *action)
 			w->SetType(TYPE_APP);
 			w->SetTreeItem(m_pCurrentTreeItem);
 			m_pFunPointAddWidget = new SKBaseWidget(NULL,w);
-			//m_pFunPointAddWidget->SetWindowsFlagsTool();
+			m_pFunPointAddWidget->SetWindowsFlagsDialog();
 			m_pFunPointAddWidget->SetWindowsModal();
 			m_pFunPointAddWidget->SetWindowTitle("添加功能点");
 #ifdef WIN32
@@ -654,9 +651,6 @@ void CFunPointEdit::SlotTriggerMenu(QAction *action)
 		}
 		((CFunPointAdd*)m_pFunPointAddWidget->GetCenterWidget())->Start();
 		m_pFunPointAddWidget->Show();
-#ifndef WIN32
-		m_pHmi->m_pFunPointEdit->hide();
-#endif
 	}
 	else if (action->text() == "删除文件夹(&D)")
 	{
@@ -720,9 +714,6 @@ void CFunPointEdit::SlotFunPointAddClose()
 	disconnect(m_pFunPointAddWidget, SIGNAL(SigClose()), this, SLOT(SlotUsersClose()));
 	delete m_pFunPointAddWidget;
 	m_pFunPointAddWidget = NULL;
-#ifndef WIN32
-	m_pHmi->m_pFunPointEdit->show();
-#endif
 }
 
 bool CFunPointEdit::CompareChange()

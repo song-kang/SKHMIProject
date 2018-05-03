@@ -134,7 +134,7 @@ void CHMIWidget::SlotUsers()
 	if (!m_pUsersWidget)
 	{
 		m_pUsersWidget = new SKBaseWidget(NULL,new CUsersWidget(this));
-		//m_pUsersWidget->SetWindowsFlagsTool();
+		m_pUsersWidget->SetWindowsFlagsDialog();
 		m_pUsersWidget->SetWindowsModal();
 		m_pUsersWidget->SetWindowTitle("用户权限");
 #ifdef WIN32
@@ -172,7 +172,7 @@ void CHMIWidget::SlotUserSwitch()
 		CLoginWidget *w = new CLoginWidget;
 		w->SetFirst(false);
 		m_pUserSwitchWidget = new SKBaseWidget(NULL,w);
-		//m_pUserSwitchWidget->SetWindowsFlagsTool();
+		m_pUserSwitchWidget->SetWindowsFlagsDialog();
 		m_pUserSwitchWidget->SetWindowsModal();
 		m_pUserSwitchWidget->SetWindowFixSize(420,290);
 		m_pUserSwitchWidget->SetWindowBackgroundImage(QPixmap(":/images/login"));
@@ -215,7 +215,7 @@ void CHMIWidget::SlotFunPointEdit()
 	{
 		CFunPointEdit *w = new CFunPointEdit(this);
 		m_pFunPointEdit = new SKBaseWidget(NULL,w);
-		//m_pFunPointEdit->SetWindowsFlagsTool();
+		m_pFunPointEdit->SetWindowsFlagsDialog();
 		m_pFunPointEdit->SetWindowsModal();
 		m_pFunPointEdit->SetWindowTitle("功能点管理");
 #ifdef WIN32
