@@ -29,6 +29,7 @@ public:
 protected:
 	virtual void paintEvent(QPaintEvent *);
 	virtual void mousePressEvent(QMouseEvent *);
+	virtual void keyPressEvent(QKeyEvent *e);
 
 private:
 	QVBoxLayout *m_vBoxLyout;
@@ -37,6 +38,7 @@ private:
 	CToolWidget *m_pToolWidget;
 	CToolWidget *m_pFloatToolWidget;
 	QString m_sUser;
+	QTimer *m_pLoginOutTimer;
 
 public:
 	CNavigtion *m_pNavigtion;
@@ -68,6 +70,8 @@ private slots:
 	void SlotQuit();
 	void SlotFunPointEdit();
 	void SlotFunPointEditClose();
+	void SlotCtrlAlt() { SlotStart(); }
+	void SlotLoginTimeout();
 
 private:
 	SKBaseWidget *m_app;

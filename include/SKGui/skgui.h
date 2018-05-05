@@ -64,6 +64,7 @@ public:
 	QList<CFunPoint*> m_lstFunPoint;
 	QList<CUsers*> m_lstUsers;
 	QSettings *m_iSettings;
+	quint32 m_iLoginOutTime;
 
 private:
 	void *w;

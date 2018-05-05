@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include "skbasewidget.h"
 #include "example.h"
+#include "tmainwindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
 #endif
 
 	example *exp = new example;
+	//TMainWindow *exp = new TMainWindow;
 	SKBaseWidget w(NULL,exp);
 	//SKBaseWidget w;
 	w.SetWindowSize(800,600);

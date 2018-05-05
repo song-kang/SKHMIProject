@@ -5,9 +5,29 @@
 #include <vld.h>
 #endif
 
+class GlobalApplication : public QApplication
+{
+public:
+	GlobalApplication(int &argc,char **argv) : QApplication(argc,argv) {};
+	~GlobalApplication() {};
+
+	bool notify(QObject *o, QEvent *e)
+	{
+		if (e->type() == QEvent::KeyPress ||
+			e->type() == QEvent::MouseMove ||
+			e->type() == QEvent::MouseButtonPress ||
+			e->type() == QEvent::MouseButtonDblClick)
+		{
+			SK_GUI->m_iLoginOutTime = 0;
+		}
+
+		return QApplication::notify(o,e);
+	}
+};
+
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
+	GlobalApplication a(argc, argv);
 
 #ifdef WIN32
 	a.setFont(QFont("Microsoft Yahei", 10));

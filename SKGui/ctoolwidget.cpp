@@ -158,6 +158,11 @@ void CToolWidget::mousePressEvent(QMouseEvent *e)
 	}
 }
 
+void CToolWidget::keyPressEvent(QKeyEvent *e)
+{
+	QWidget::keyPressEvent(e);
+}
+
 void CToolWidget::SlotStart()
 {
 	SigStart();

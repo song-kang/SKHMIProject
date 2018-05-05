@@ -16,7 +16,7 @@ public:
 	CLoginWidget(QWidget *parent = 0);
 	~CLoginWidget();
 
-	void SetFirst(bool b) { m_bFirst = b; }
+	void SetFirst(bool b) { m_bFirst = b; if (!m_bFirst) ui.btnClose->setVisible(false); }
 	QString GetUser() { return m_sUser; }
 	bool GetLoginOk() { return m_bLoginOk; }
 

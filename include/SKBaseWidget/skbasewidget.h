@@ -76,6 +76,7 @@ signals:
 	void SigMin();
 	void SigMove();
 	void SigClose();
+	void SigCtrlAlt();
 
 public slots:
 	void SlotClose();

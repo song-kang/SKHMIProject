@@ -36,7 +36,7 @@ void SKBaseWidget::InitUi()
 {
 	setAttribute(Qt::WA_TranslucentBackground);
 
-	m_mainWidget = new CMainWidget();
+	m_mainWidget = new CMainWidget(this);
 	m_mainGridLayout = new QGridLayout;
 	m_mainGridLayout->addWidget((CMainWidget*)m_mainWidget);
 	m_mainGridLayout->setContentsMargins(SHADOW_WIDTH,SHADOW_WIDTH,SHADOW_WIDTH,SHADOW_WIDTH);
@@ -133,6 +133,10 @@ void SKBaseWidget::keyPressEvent(QKeyEvent *e)
 	{
 		SlotShowNormal();
 	}
+	else if (e->modifiers() & Qt::ControlModifier && e->key() == Qt::Key_Alt)
+	{
+		SigCtrlAlt();
+	}
 }
 
 void SKBaseWidget::closeEvent(QCloseEvent *e)
@@ -177,21 +181,7 @@ void SKBaseWidget::paintEvent(QPaintEvent *e)
 
 void SKBaseWidget::changeEvent(QEvent *e)
 {
-//#if (QT_VERSION <= QT_VERSION_CHECK(5,1,0))
-//	if (e->type() == QEvent::WindowStateChange)
-//	{
-//		if(windowState() & Qt::WindowMinimized )
-//		{
-//			//do something after minimize
-//		}
-//		else
-//		{
-//			setWindowFlags(Qt::Window);//set normal window flag
-//			setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint);//and return to your old flags
-//			showNormal();
-//		}
-//	}
-//#endif
+	
 }
 
 void SKBaseWidget::SetWindowSize(int width,int height)

@@ -3,6 +3,8 @@
 #include "cloginwidget.h"
 #include "cfunpointedit.h"
 
+#define MAX_LOGIN_OUT_TIME		300
+
 CHMIWidget::CHMIWidget(QWidget *parent)
 	: SKWidget(parent)
 {
@@ -40,6 +42,10 @@ void CHMIWidget::Init()
 	m_pUsersWidget = NULL;
 	m_pUserSwitchWidget = NULL;
 	m_pFunPointEdit = NULL;
+
+	m_pLoginOutTimer = new QTimer(this);
+	m_pLoginOutTimer->setInterval(1000);
+	m_pLoginOutTimer->start();
 }
 
 void CHMIWidget::CreateNavigtion()
@@ -75,10 +81,12 @@ void CHMIWidget::InitUi()
 
 void CHMIWidget::InitSlot()
 {
+	connect(m_pLoginOutTimer, SIGNAL(timeout()), this, SLOT(SlotLoginTimeout()));
 	connect(m_pToolWidget, SIGNAL(SigStart()), this, SLOT(SlotStart()));
 	connect(m_app, SIGNAL(SigMax()), this, SLOT(SlotMax()));
 	connect(m_app, SIGNAL(SigMin()), this, SLOT(SlotMin()));
 	connect(m_app, SIGNAL(SigMove()), this, SLOT(SlotMove()));
+	connect(m_app, SIGNAL(SigCtrlAlt()), this, SLOT(SlotCtrlAlt()));
 }
 
 void CHMIWidget::paintEvent(QPaintEvent *e)
@@ -93,6 +101,11 @@ void CHMIWidget::mousePressEvent(QMouseEvent *e)
 	{
 		
 	}
+}
+
+void CHMIWidget::keyPressEvent(QKeyEvent *e)
+{
+	QWidget::keyPressEvent(e);
 }
 
 void CHMIWidget::SlotStart()
@@ -166,6 +179,7 @@ void CHMIWidget::SlotUsersClose()
 void CHMIWidget::SlotUserSwitch()
 {
 	m_pNavigtion->hide();
+	m_pLoginOutTimer->stop();
 
 	if (!m_pUserSwitchWidget)
 	{
@@ -191,6 +205,7 @@ void CHMIWidget::SlotUserSwitchClose()
 		CreateNavigtion();
 		m_pToolWidget->DeleteAllToolButton();
 		QMessageBox::information(NULL,tr("提示"),tr("用户切换成功"));
+		m_pLoginOutTimer->start();
 	}
 
 	disconnect(m_pUserSwitchWidget, SIGNAL(SigClose()), this, SLOT(SlotUserSwitchClose()));
@@ -255,6 +270,15 @@ void CHMIWidget::SlotFunPointEditClose()
 	DeleteNavigtion();
 	CreateNavigtion();
 	m_pToolWidget->DeleteAllToolButton();
+}
+
+void CHMIWidget::SlotLoginTimeout()
+{
+	if (SK_GUI->m_iLoginOutTime++ > MAX_LOGIN_OUT_TIME)
+	{
+		SK_GUI->m_iLoginOutTime = 0; 
+		SlotUserSwitch(); 
+	}
 }
 
 int CHMIWidget::GotoWidget(QString name)

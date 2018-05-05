@@ -48,6 +48,8 @@ void SKGui::Init()
 	QTime t= QTime::currentTime();
 	qsrand(t.msec()+t.second()*1000);
 	m_iSkinNo = qrand() % MAX_SKIN;
+
+	m_iLoginOutTime = 0;
 }
 
 void SKGui::InitSettings(QString name)
