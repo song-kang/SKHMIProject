@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SKDrawClass</class>
+ <widget class="QMainWindow" name="SKDrawClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>869</width>
+    <height>528</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SKDraw</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout_3">
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayoutCentral"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>869</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>文件(&amp;F)</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionOpen"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSaveas"/>
+    <addaction name="actionClose"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>编辑(&amp;E)</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionDelete"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>视图(&amp;V)</string>
+    </property>
+    <addaction name="actionZoomin"/>
+    <addaction name="actionZoomout"/>
+   </widget>
+   <widget class="QMenu" name="menuTool">
+    <property name="title">
+     <string>工具(&amp;T)</string>
+    </property>
+    <widget class="QMenu" name="menuShape">
+     <property name="title">
+      <string>形状</string>
+     </property>
+     <addaction name="actionSelect"/>
+     <addaction name="actionLine"/>
+     <addaction name="actionPolyline"/>
+     <addaction name="actionRectangle"/>
+     <addaction name="actionRoundRect"/>
+     <addaction name="actionPolygon"/>
+     <addaction name="actionCiricle"/>
+     <addaction name="actionEllipse"/>
+     <addaction name="actionRotate"/>
+    </widget>
+    <widget class="QMenu" name="menuAlign">
+     <property name="title">
+      <string>排列</string>
+     </property>
+     <addaction name="actionLeft"/>
+     <addaction name="actionRight"/>
+     <addaction name="actionTop"/>
+     <addaction name="actionBottom"/>
+     <addaction name="separator"/>
+     <addaction name="actionVCenter"/>
+     <addaction name="actionHCenter"/>
+     <addaction name="actionVSpace"/>
+     <addaction name="actionHSpace"/>
+     <addaction name="separator"/>
+     <addaction name="actionHeight"/>
+     <addaction name="actionWidth"/>
+     <addaction name="actionSize"/>
+     <addaction name="separator"/>
+     <addaction name="actionfront"/>
+     <addaction name="actionback"/>
+     <addaction name="separator"/>
+     <addaction name="actionGroup"/>
+     <addaction name="actionUngroup"/>
+    </widget>
+    <addaction name="menuShape"/>
+    <addaction name="menuAlign"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>帮助(&amp;H)</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
+   <addaction name="menuTool"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="fileToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionNew"/>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockWidgetSence">
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dwgtContentsSence">
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QTreeWidget" name="treeWidgetSence">
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetProperty">
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dwgtContentsProperty">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QTableView" name="tableView"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QToolBar" name="editToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="actionCut"/>
+   <addaction name="actionCopy"/>
+   <addaction name="actionPaste"/>
+  </widget>
+  <widget class="QToolBar" name="viewToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionZoomin"/>
+   <addaction name="actionZoomout"/>
+  </widget>
+  <widget class="QToolBar" name="shapeToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionSelect"/>
+   <addaction name="actionLine"/>
+   <addaction name="actionPolyline"/>
+   <addaction name="actionRectangle"/>
+   <addaction name="actionRoundRect"/>
+   <addaction name="actionPolygon"/>
+   <addaction name="actionCiricle"/>
+   <addaction name="actionEllipse"/>
+   <addaction name="actionRotate"/>
+  </widget>
+  <widget class="QToolBar" name="alignToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionLeft"/>
+   <addaction name="actionRight"/>
+   <addaction name="actionTop"/>
+   <addaction name="actionBottom"/>
+   <addaction name="actionVCenter"/>
+   <addaction name="actionHCenter"/>
+   <addaction name="actionVSpace"/>
+   <addaction name="actionHSpace"/>
+   <addaction name="actionHeight"/>
+   <addaction name="actionWidth"/>
+   <addaction name="actionSize"/>
+   <addaction name="separator"/>
+   <addaction name="actionfront"/>
+   <addaction name="actionback"/>
+   <addaction name="actionGroup"/>
+   <addaction name="actionUngroup"/>
+  </widget>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/new</normaloff>:/images/new</iconset>
+   </property>
+   <property name="text">
+    <string>新建(&amp;N)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/open</normaloff>:/images/open</iconset>
+   </property>
+   <property name="text">
+    <string>打开(&amp;O)...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/save</normaloff>:/images/save</iconset>
+   </property>
+   <property name="text">
+    <string>保存(&amp;S)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSaveas">
+   <property name="text">
+    <string>另存为...</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>退出(&amp;X)</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/undo</normaloff>:/images/undo</iconset>
+   </property>
+   <property name="text">
+    <string>撤消(&amp;U)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/redo</normaloff>:/images/redo</iconset>
+   </property>
+   <property name="text">
+    <string>恢复(&amp;R)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/cut</normaloff>:/images/cut</iconset>
+   </property>
+   <property name="text">
+    <string>剪切(&amp;C)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/copy</normaloff>:/images/copy</iconset>
+   </property>
+   <property name="text">
+    <string>拷贝(&amp;O)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/paste</normaloff>:/images/paste</iconset>
+   </property>
+   <property name="text">
+    <string>粘贴(&amp;P)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>删除(&amp;D)</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionZoomin">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/zoomin</normaloff>:/images/zoomin</iconset>
+   </property>
+   <property name="text">
+    <string>放大(&amp;I)</string>
+   </property>
+  </action>
+  <action name="actionZoomout">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/zoomout</normaloff>:/images/zoomout</iconset>
+   </property>
+   <property name="text">
+    <string>缩小(&amp;O)</string>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/arrow</normaloff>:/images/arrow</iconset>
+   </property>
+   <property name="text">
+    <string>选择</string>
+   </property>
+  </action>
+  <action name="actionLine">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/line</normaloff>:/images/line</iconset>
+   </property>
+   <property name="text">
+    <string>线段</string>
+   </property>
+  </action>
+  <action name="actionRectangle">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/rectangle</normaloff>:/images/rectangle</iconset>
+   </property>
+   <property name="text">
+    <string>矩形</string>
+   </property>
+  </action>
+  <action name="actionCiricle">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/circle</normaloff>:/images/circle</iconset>
+   </property>
+   <property name="text">
+    <string>圆形</string>
+   </property>
+  </action>
+  <action name="actionEllipse">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/ellipse</normaloff>:/images/ellipse</iconset>
+   </property>
+   <property name="text">
+    <string>椭圆形</string>
+   </property>
+  </action>
+  <action name="actionPolyline">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/polyline</normaloff>:/images/polyline</iconset>
+   </property>
+   <property name="text">
+    <string>折线</string>
+   </property>
+  </action>
+  <action name="actionPolygon">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/polygon</normaloff>:/images/polygon</iconset>
+   </property>
+   <property name="text">
+    <string>多边形</string>
+   </property>
+  </action>
+  <action name="actionLeft">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_left</normaloff>:/images/align_left</iconset>
+   </property>
+   <property name="text">
+    <string>左对齐</string>
+   </property>
+  </action>
+  <action name="actionRight">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_right</normaloff>:/images/align_right</iconset>
+   </property>
+   <property name="text">
+    <string>右对齐</string>
+   </property>
+  </action>
+  <action name="actionTop">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_top</normaloff>:/images/align_top</iconset>
+   </property>
+   <property name="text">
+    <string>上对齐</string>
+   </property>
+  </action>
+  <action name="actionBottom">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_bottom</normaloff>:/images/align_bottom</iconset>
+   </property>
+   <property name="text">
+    <string>下对齐</string>
+   </property>
+  </action>
+  <action name="actionVCenter">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_vcenter</normaloff>:/images/align_vcenter</iconset>
+   </property>
+   <property name="text">
+    <string>垂直居中</string>
+   </property>
+  </action>
+  <action name="actionHCenter">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_hcenter</normaloff>:/images/align_hcenter</iconset>
+   </property>
+   <property name="text">
+    <string>水平居中</string>
+   </property>
+  </action>
+  <action name="actionVSpace">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_verteven</normaloff>:/images/align_verteven</iconset>
+   </property>
+   <property name="text">
+    <string>垂直等间隔</string>
+   </property>
+  </action>
+  <action name="actionHSpace">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_horzeven</normaloff>:/images/align_horzeven</iconset>
+   </property>
+   <property name="text">
+    <string>水平等间隔</string>
+   </property>
+  </action>
+  <action name="actionHeight">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_height</normaloff>:/images/align_height</iconset>
+   </property>
+   <property name="text">
+    <string>等高</string>
+   </property>
+  </action>
+  <action name="actionWidth">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_width</normaloff>:/images/align_width</iconset>
+   </property>
+   <property name="text">
+    <string>等宽</string>
+   </property>
+  </action>
+  <action name="actionSize">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/align_all</normaloff>:/images/align_all</iconset>
+   </property>
+   <property name="text">
+    <string>等大小</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/logo</normaloff>:/images/logo</iconset>
+   </property>
+   <property name="text">
+    <string>关于...</string>
+   </property>
+  </action>
+  <action name="actionfront">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/bringtofront</normaloff>:/images/bringtofront</iconset>
+   </property>
+   <property name="text">
+    <string>置前</string>
+   </property>
+  </action>
+  <action name="actionback">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/sendtoback</normaloff>:/images/sendtoback</iconset>
+   </property>
+   <property name="text">
+    <string>置后</string>
+   </property>
+  </action>
+  <action name="actionGroup">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/group</normaloff>:/images/group</iconset>
+   </property>
+   <property name="text">
+    <string>组合</string>
+   </property>
+  </action>
+  <action name="actionUngroup">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/ungroup</normaloff>:/images/ungroup</iconset>
+   </property>
+   <property name="text">
+    <string>拆分</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>关闭</string>
+   </property>
+  </action>
+  <action name="actionRoundRect">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/roundrect</normaloff>:/images/roundrect</iconset>
+   </property>
+   <property name="text">
+    <string>圆角矩形</string>
+   </property>
+  </action>
+  <action name="actionRotate">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/rotate</normaloff>:/images/rotate</iconset>
+   </property>
+   <property name="text">
+    <string>旋转</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="skdraw.qrc"/>
+ </resources>
+ <connections/>
+</ui>

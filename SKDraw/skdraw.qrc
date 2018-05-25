@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="copy">Resources/images/copy.png</file>
+        <file alias="cut">Resources/images/cut.png</file>
+        <file alias="paste">Resources/images/paste.png</file>
+        <file alias="new">Resources/images/new.png</file>
+        <file alias="redo">Resources/images/redo.png</file>
+        <file alias="undo">Resources/images/undo.png</file>
+        <file alias="zoomin">Resources/images/zoomin.png</file>
+        <file alias="zoomout">Resources/images/zoomout.png</file>
+        <file alias="open">Resources/images/open.png</file>
+        <file alias="print">Resources/images/print.png</file>
+        <file alias="save">Resources/images/save.png</file>
+        <file alias="logo">Resources/images/logo.png</file>
+        <file alias="align_all">Resources/images/align_all.png</file>
+        <file alias="align_bottom">Resources/images/align_bottom.png</file>
+        <file alias="align_hcenter">Resources/images/align_hcenter.png</file>
+        <file alias="align_height">Resources/images/align_height.png</file>
+        <file alias="align_horzeven">Resources/images/align_horzeven.png</file>
+        <file alias="align_left">Resources/images/align_left.png</file>
+        <file alias="align_right">Resources/images/align_right.png</file>
+        <file alias="align_top">Resources/images/align_top.png</file>
+        <file alias="align_vcenter">Resources/images/align_vcenter.png</file>
+        <file alias="align_verteven">Resources/images/align_verteven.png</file>
+        <file alias="align_width">Resources/images/align_width.png</file>
+        <file alias="arrow">Resources/images/arrow.png</file>
+        <file alias="bringtofront">Resources/images/bringtofront.png</file>
+        <file alias="ellipse">Resources/images/ellipse.png</file>
+        <file alias="group">Resources/images/group.png</file>
+        <file alias="line">Resources/images/line.png</file>
+        <file alias="polygon">Resources/images/polygon.png</file>
+        <file alias="polyline">Resources/images/polyline.png</file>
+        <file alias="rectangle">Resources/images/rectangle.png</file>
+        <file alias="roundrect">Resources/images/roundrect.png</file>
+        <file alias="sendtoback">Resources/images/sendtoback.png</file>
+        <file alias="ungroup">Resources/images/ungroup.png</file>
+        <file alias="rotate">Resources/images/rotate.png</file>
+        <file alias="circle">Resources/images/circle.png</file>
+    </qresource>
+</RCC>

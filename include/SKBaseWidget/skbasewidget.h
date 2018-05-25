@@ -77,6 +77,12 @@ signals:
 	void SigMove();
 	void SigClose();
 	void SigCtrlAlt();
+	void SigKeyUp();
+	void SigKeyDown();
+	void SigKeyLeft();
+	void SigKeyRight();
+	void SigKeyEqual();
+	void SigKeyMinus();
 
 public slots:
 	void SlotClose();

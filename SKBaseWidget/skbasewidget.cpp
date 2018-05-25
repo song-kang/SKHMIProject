@@ -130,13 +130,21 @@ void SKBaseWidget::mouseDoubleClickEvent(QMouseEvent *e)
 void SKBaseWidget::keyPressEvent(QKeyEvent *e)
 {
 	if (e->key() == Qt::Key_Escape && m_bIsFull)
-	{
 		SlotShowNormal();
-	}
 	else if (e->modifiers() & Qt::ControlModifier && e->key() == Qt::Key_Alt)
-	{
 		SigCtrlAlt();
-	}
+	else if (e->key() == Qt::Key_Up)
+		SigKeyUp();
+	else if (e->key() == Qt::Key_Down)
+		SigKeyDown();
+	else if (e->key() == Qt::Key_Left)
+		SigKeyLeft();
+	else if (e->key() == Qt::Key_Right)
+		SigKeyRight();
+	else if (e->key() == Qt::Key_Equal)
+		SigKeyEqual();
+	else if (e->key() == Qt::Key_Minus)
+		SigKeyMinus();
 }
 
 void SKBaseWidget::closeEvent(QCloseEvent *e)
