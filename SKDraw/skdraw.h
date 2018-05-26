@@ -45,6 +45,9 @@ private slots:
 	void SlotKeyRight();
 	void SlotKeyEqual();
 	void SlotKeyMinus();
+	void SlotKeyShift();
+	void SlotReleaseKeyShift();
+	void SlotKeyEscape();
 
 };
 

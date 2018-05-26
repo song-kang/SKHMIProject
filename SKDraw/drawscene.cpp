@@ -48,6 +48,8 @@ DrawScene::DrawScene(QObject *parent)
 
 	SetWidth(DEFAULT_WIDTH);
 	SetHeight(DEFAULT_HEIGHT);
+	SetPressShift(false);
+
 	setSceneRect(QRectF(0, 0, m_iWidth, m_iHeight));
 	setBackgroundBrush(Qt::darkGray);
 }
@@ -74,14 +76,14 @@ void DrawScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void DrawScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-	DrawTool * tool = DrawTool::findTool(DrawTool::c_drawShape);
+	DrawTool *tool = DrawTool::findTool(DrawTool::c_drawShape);
 	if (tool)
 		tool->mouseMoveEvent(mouseEvent,this);
 }
 
 void DrawScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-	DrawTool * tool = DrawTool::findTool(DrawTool::c_drawShape);
+	DrawTool *tool = DrawTool::findTool(DrawTool::c_drawShape);
 	if (tool)
 		tool->mouseReleaseEvent(mouseEvent,this);
 }
@@ -93,7 +95,7 @@ void DrawScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvet)
 
 void DrawScene::keyPressEvent(QKeyEvent *e)
 {
-	int a = 0;
+	
 }
 
 void DrawScene::keyReleaseEvent(QKeyEvent *e)

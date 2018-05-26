@@ -7,7 +7,6 @@ SKDraw::SKDraw(QWidget *parent, Qt::WFlags flags)
 
 	Init();
 	InitUi();
-	//InitSlot();
 }
 
 SKDraw::~SKDraw()
@@ -34,14 +33,17 @@ void SKDraw::InitSlot()
 	connect(ui.actionClose,SIGNAL(triggered()),this,SLOT(SlotClose()));
 	connect(ui.actionSelect,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionLine,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
-	connect(QApplication::clipboard(),SIGNAL(dataChanged()),this,SLOT(SlotDataChanged()));
-
 	connect(m_app, SIGNAL(SigKeyUp()), this, SLOT(SlotKeyUp()));
 	connect(m_app, SIGNAL(SigKeyDown()), this, SLOT(SlotKeyDown()));
 	connect(m_app, SIGNAL(SigKeyLeft()), this, SLOT(SlotKeyLeft()));
 	connect(m_app, SIGNAL(SigKeyRight()), this, SLOT(SlotKeyRight()));
 	connect(m_app, SIGNAL(SigKeyEqual()), this, SLOT(SlotKeyEqual()));
 	connect(m_app, SIGNAL(SigKeyMinus()), this, SLOT(SlotKeyMinus()));
+	connect(m_app, SIGNAL(SigKeyShift()), this, SLOT(SlotKeyShift()));
+	connect(m_app, SIGNAL(SigReleaseKeyShift()), this, SLOT(SlotReleaseKeyShift()));
+	connect(m_app, SIGNAL(SigKeyEscape()), this, SLOT(SlotKeyEscape()));
+	connect(QApplication::clipboard(),SIGNAL(dataChanged()),this,SLOT(SlotDataChanged()));
+
 }
 
 void SKDraw::SlotNew()
@@ -119,25 +121,25 @@ void SKDraw::SlotPositionChanged(int x, int y)
 void SKDraw::SlotKeyUp()
 {
 	if (m_pView)
-		m_pView->Translate(QPointF(0, -2));
+		m_pView->Translate(QPointF(0, -10));
 }
 
 void SKDraw::SlotKeyDown()
 {
 	if (m_pView)
-		m_pView->Translate(QPointF(0, 2));
+		m_pView->Translate(QPointF(0, 10));
 }
 
 void SKDraw::SlotKeyLeft()
 {
 	if (m_pView)
-		m_pView->Translate(QPointF(2, 0));
+		m_pView->Translate(QPointF(10, 0));
 }
 
 void SKDraw::SlotKeyRight()
 {
 	if (m_pView)
-		m_pView->Translate(QPointF(-2, 0));
+		m_pView->Translate(QPointF(-10, 0));
 }
 
 void SKDraw::SlotKeyEqual()
@@ -150,4 +152,29 @@ void SKDraw::SlotKeyMinus()
 {
 	if (m_pView)
 		m_pView->ZoomOut();
+}
+
+void SKDraw::SlotKeyShift()
+{
+	if (m_pScene)
+		m_pScene->SetPressShift(true);
+}
+
+void SKDraw::SlotReleaseKeyShift()
+{
+	if (m_pScene)
+		m_pScene->SetPressShift(false);
+}
+
+void SKDraw::SlotKeyEscape()
+{
+	DrawTool *tool = DrawTool::findTool(DrawTool::c_drawShape);
+	if (tool && ((DrawPolygonTool*)tool)->item)
+	{
+		m_pScene->removeItem(((DrawPolygonTool*)tool)->item);
+		delete ((DrawPolygonTool*)tool)->item;
+		((DrawPolygonTool*)tool)->item = NULL;
+	}
+
+	DrawTool::c_drawShape = eDrawSelection;
 }

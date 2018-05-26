@@ -50,7 +50,6 @@ void SizeHandleRect::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     painter->restore();
 }
 
-
 void SizeHandleRect::SetState(SelectionHandleState st)
 {
     if (st == m_state)
@@ -91,10 +90,3 @@ void SizeHandleRect::hoverLeaveEvent(QGraphicsSceneHoverEvent *e)
 
     QGraphicsRectItem::hoverLeaveEvent(e);
 }
-
-
-
-
-
-
-

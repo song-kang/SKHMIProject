@@ -3,6 +3,7 @@
 
 #include "skhead.h"
 #include "sizehandle.h"
+#include "drawscene.h"
 
 typedef std::vector<SizeHandleRect*> Handles;
 
@@ -93,6 +94,9 @@ public:
 	GraphicsPolygonItem(QGraphicsItem * parent = 0);
 	~GraphicsPolygonItem();
 
+	void SetScene(DrawScene *scene) { m_pScene = scene; }
+	DrawScene *GetScene() { return m_pScene; }
+
 public:
 	virtual void Move(const QPointF &point);
 	virtual void Control(int direct, const QPointF &delta);
@@ -113,6 +117,9 @@ public:
 public:
 	QPolygonF m_points;
 	QPolygonF m_initialPoints;
+
+private:
+	DrawScene *m_pScene;
 
 };
 

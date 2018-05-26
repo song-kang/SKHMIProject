@@ -180,34 +180,33 @@ void DrawPolygonTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene
 		//else if ( c_drawShape == polyline )
 		//	item = new GraphicsBezier(false);
 		/*else */if (c_drawShape == eDrawLine)
+		{
 			item = new GraphicsLineItem(NULL);
+			item->SetScene(scene);
+		}
 
 		item->setPos(event->scenePos());
 		scene->addItem(item);
 		initialPositions = c_down;
 		item->AddPoint(c_down);
-		item->setSelected(true);
 		m_nPoints++;
+		item->AddPoint(c_down + QPoint(1,0));
+		m_nPoints++;
+		m_selectMode = size ;
+		m_nDragHandle = item->HandleCount();
 	}
-	else if ( c_down == c_last )
+	else if (c_drawShape == eDrawLine)
 	{
-		/*
-		if ( item != NULL )
-		{
-		scene->removeItem(item);
-		delete item;
-		item = NULL ;
-		c_drawShape = selection;
-		selectMode = none;
-		return ;
-		}
-		*/
+		item->EndPoint(event->scenePos());
+		item->UpdateCoordinate();
+		item->setSelected(true);
+		//emit scene->itemAdded(item);
+		item = NULL;
+		
+		m_selectMode = none;
+		//c_drawShape = eDrawSelection;
+		m_nPoints = 0;
 	}
-
-	item->AddPoint(c_down + QPoint(1,0));
-	m_nPoints++;
-	m_selectMode = size ;
-	m_nDragHandle = item->HandleCount();
 }
 
 void DrawPolygonTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
@@ -225,17 +224,17 @@ void DrawPolygonTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawSce
 {
 	DrawTool::mousePressEvent(event,scene);
 
-	if (c_drawShape == eDrawLine)
-	{
-		item->EndPoint(event->scenePos());
-		item->UpdateCoordinate();
-		//emit scene->itemAdded(item);
+	//if (c_drawShape == eDrawLine)
+	//{
+	//	item->EndPoint(event->scenePos());
+	//	item->UpdateCoordinate();
+	//	//emit scene->itemAdded(item);
 
-		item = NULL;
-		m_selectMode = none;
-		c_drawShape = eDrawSelection;
-		m_nPoints = 0;
-	}
+	//	item = NULL;
+	//	m_selectMode = none;
+	//	c_drawShape = eDrawSelection;
+	//	m_nPoints = 0;
+	//}
 }
 
 void DrawPolygonTool::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)

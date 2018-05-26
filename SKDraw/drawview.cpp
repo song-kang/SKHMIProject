@@ -52,32 +52,32 @@ void DrawView::resizeEvent(QResizeEvent *event)
 	QGraphicsView::resizeEvent(event);
 }
 
-void DrawView::keyPressEvent(QKeyEvent *event)
-{
-	switch (event->key())
-	{
-	case Qt::Key_Up:
-		Translate(QPointF(0, -2));
-		break;
-	case Qt::Key_Down:
-		Translate(QPointF(0, 2));
-		break;
-	case Qt::Key_Left:
-		Translate(QPointF(2, 0));
-		break;
-	case Qt::Key_Right:
-		Translate(QPointF(-2, 0));
-		break;
-	case Qt::Key_Equal:
-		ZoomIn();
-		break;
-	case Qt::Key_Minus:
-		ZoomOut();
-		break;
-	}
-
-	QGraphicsView::keyPressEvent(event);
-}
+//void DrawView::keyPressEvent(QKeyEvent *event)
+//{
+//	switch (event->key())
+//	{
+//	case Qt::Key_Up:
+//		Translate(QPointF(0, -2));
+//		break;
+//	case Qt::Key_Down:
+//		Translate(QPointF(0, 2));
+//		break;
+//	case Qt::Key_Left:
+//		Translate(QPointF(2, 0));
+//		break;
+//	case Qt::Key_Right:
+//		Translate(QPointF(-2, 0));
+//		break;
+//	case Qt::Key_Equal:
+//		ZoomIn();
+//		break;
+//	case Qt::Key_Minus:
+//		ZoomOut();
+//		break;
+//	}
+//
+//	QGraphicsView::keyPressEvent(event);
+//}
 
 void DrawView::mouseMoveEvent(QMouseEvent *event)
 {

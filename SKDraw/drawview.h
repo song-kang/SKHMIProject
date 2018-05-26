@@ -15,14 +15,12 @@ public:
 public:
 	void ZoomIn();
 	void ZoomOut();
-	void UpdateRuler();
 	void Translate(QPointF delta);
-	//void KeyPressEvent(QKeyEvent *event);
 
 protected:
 	virtual void wheelEvent(QWheelEvent *event);
 	virtual void resizeEvent(QResizeEvent *event);
-	virtual void keyPressEvent(QKeyEvent *event);
+	//virtual void keyPressEvent(QKeyEvent *event);
 	virtual void mouseMoveEvent(QMouseEvent *event);
 	virtual void mousePressEvent(QMouseEvent *event);
 	virtual void mouseReleaseEvent(QMouseEvent *event);
@@ -35,6 +33,9 @@ private:
 	bool m_bMouseTranslate;
 	qreal m_scale;
 	qreal m_zoomDelta;
+
+private:
+	void UpdateRuler();
 
 signals:
 	void SigPositionChanged(int x ,int y);

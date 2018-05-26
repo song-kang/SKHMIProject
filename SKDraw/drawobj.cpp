@@ -58,7 +58,7 @@ QVariant GraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, cons
 GraphicsPolygonItem::GraphicsPolygonItem(QGraphicsItem *parent)
 	:GraphicsItem(parent)
 {
-
+	m_pScene = NULL;
 }
 
 GraphicsPolygonItem::~GraphicsPolygonItem()
@@ -160,14 +160,25 @@ void GraphicsLineItem::Control(int direct, const QPointF &delta)
 {
 	QPointF pt = mapFromScene(delta);
 	if (direct <= Handle_Left)
-		return ;
+		return;
+
+	prepareGeometryChange();
+
+	if (GetScene()->GetPressShift() == false)
+	{
+		if (abs(pt.x() - m_points.at(0).x()) > abs(pt.y() - m_points.at(0).y()))
+			pt.setY(m_points.at(0).y());
+		else
+			pt.setX(m_points.at(0).x());
+	}
 
 	m_points[direct - Handle_Left - 1] = pt;
-	prepareGeometryChange();
 	m_localRect = m_points.boundingRect();
 	m_width = m_localRect.width();
 	m_height = m_localRect.height();
 	m_initialPoints = m_points;
+
+	UpdateHandles();
 }
 
 void GraphicsLineItem::Stretch(int handle, double sx, double sy, const QPointF &origin)
@@ -188,9 +199,7 @@ bool GraphicsLineItem::LoadFromXml(QXmlStreamReader *xml)
 void GraphicsLineItem::UpdateHandles()
 {
 	for (int i = 0; i < m_points.size(); ++i)
-	{
-		m_handles[i]->Move(m_points[i].x() ,m_points[i].y() );
-	}
+		m_handles[i]->Move(m_points[i].x() ,m_points[i].y());
 }
 
 void GraphicsLineItem::UpdateCoordinate()
@@ -228,7 +237,7 @@ void GraphicsLineItem::AddPoint(const QPointF &point)
 	m_points.append(mapFromScene(point));
 
 	int direct = m_points.count();
-	SizeHandleRect *shr = new SizeHandleRect(this, direct + Handle_Left, direct == 1 ? false : true);
+	SizeHandleRect *shr = new SizeHandleRect(this, direct + Handle_Left, false);
 	shr->SetState(SelectionHandleActive);
 	m_handles.push_back(shr);
 }

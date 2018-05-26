@@ -33,6 +33,8 @@ public:
 	void SetView(QGraphicsView *view ) { m_pView = view; }
 	void SetWidth(int w) { m_iWidth = w; }
 	void SetHeight(int h) { m_iHeight = h; }
+	void SetPressShift(bool b) { m_bPressShift = b; }
+	bool GetPressShift() { return m_bPressShift; }
 
 protected:
 	virtual void drawBackground(QPainter *painter, const QRectF &rect);
@@ -48,6 +50,7 @@ private:
 	QGraphicsView *m_pView;
 	int	m_iWidth;
 	int m_iHeight;
+	bool m_bPressShift;
 	
 };
 

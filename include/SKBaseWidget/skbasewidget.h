@@ -50,6 +50,7 @@ protected:
 	virtual void mouseReleaseEvent(QMouseEvent *e);
 	virtual void mouseDoubleClickEvent(QMouseEvent *e);
 	virtual void keyPressEvent(QKeyEvent *e);
+	virtual void keyReleaseEvent(QKeyEvent *e);
 	virtual void closeEvent(QCloseEvent *e);
 	virtual void paintEvent(QPaintEvent *e);
 	virtual void changeEvent(QEvent *e);
@@ -83,6 +84,9 @@ signals:
 	void SigKeyRight();
 	void SigKeyEqual();
 	void SigKeyMinus();
+	void SigKeyShift();
+	void SigReleaseKeyShift();
+	void SigKeyEscape();
 
 public slots:
 	void SlotClose();

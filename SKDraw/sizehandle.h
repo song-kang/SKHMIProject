@@ -3,9 +3,31 @@
 
 #include "skhead.h"
 
-enum { SELECTION_HANDLE_SIZE = 6, SELECTION_MARGIN = 10 };
-enum SelectionHandleState { SelectionHandleOff, SelectionHandleInactive, SelectionHandleActive };
-enum { Handle_None = 0 , Handle_LeftTop , Handle_Top, Handle_RightTop, Handle_Right, Handle_RightBottom, Handle_Bottom, Handle_LeftBottom, Handle_Left };
+enum 
+{ 
+	SELECTION_HANDLE_SIZE = 6, 
+	SELECTION_MARGIN = 10 
+};
+
+enum SelectionHandleState 
+{ 
+	SelectionHandleOff, 
+	SelectionHandleInactive, 
+	SelectionHandleActive 
+};
+
+enum 
+{ 
+	Handle_None = 0,
+	Handle_LeftTop, 
+	Handle_Top, 
+	Handle_RightTop, 
+	Handle_Right, 
+	Handle_RightBottom, 
+	Handle_Bottom, 
+	Handle_LeftBottom, 
+	Handle_Left 
+};
 
 class SizeHandleRect : public QGraphicsRectItem
 {
