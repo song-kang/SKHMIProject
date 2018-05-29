@@ -3,12 +3,12 @@
 
 #include <QObject>
 #include "skhead.h"
-#include "drawscene.h"
 #include "drawobj.h"
 
 enum DrawShape
 {
 	eDrawSelection,
+	eDrawSelectionArea,
 	eDrawRotation,
 	eDrawLine,
 	eDrawRectangle,
@@ -29,6 +29,7 @@ public:
 	~DrawTool();
 
 	DrawShape m_drawShape;
+	bool m_bHoverSizer;
 
 public:
 	virtual void mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene);

@@ -24,6 +24,28 @@ static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, cons
 	return p;
 }
 
+///////////////////////// ShapeMimeData /////////////////////////
+ShapeMimeData::ShapeMimeData(QList<QGraphicsItem *> items)
+{
+	foreach (QGraphicsItem *item, items)
+	{
+		AbstractShape *sp = qgraphicsitem_cast<AbstractShape*>(item);
+		m_items.append(sp->Duplicate());
+	}
+}
+
+ShapeMimeData::~ShapeMimeData()
+{
+	foreach (QGraphicsItem *item, m_items)
+		delete item;
+	m_items.clear();
+}
+
+QList<QGraphicsItem *> ShapeMimeData::items() const
+{
+	return m_items;
+}
+
 ///////////////////////// GraphicsItem /////////////////////////
 GraphicsItem::GraphicsItem(QGraphicsItem *parent)
     :AbstractShapeType<QGraphicsItem>(parent)
@@ -51,6 +73,20 @@ void GraphicsItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
 QVariant GraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
 {
+	if (change == QGraphicsItem::ItemSelectedHasChanged)
+	{
+		QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(parentItem());
+		if (!g)
+		{
+			SetState(value.toBool() ? SelectionHandleActive : SelectionHandleOff);
+		}
+		else
+		{
+			setSelected(false);
+			return QVariant::fromValue<bool>(false);
+		}
+	}
+
     return QGraphicsItem::itemChange(change, value);
 }
 
@@ -140,10 +176,7 @@ void GraphicsPolygonItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 GraphicsLineItem::GraphicsLineItem(QGraphicsItem *parent)
 	:GraphicsPolygonItem(parent)
 {
-	m_handles.reserve(Handle_Left);
-	for (Handles::iterator it = m_handles.begin(); it != m_handles.end(); ++it)
-		delete (*it);
-	m_handles.clear();
+
 }
 
 GraphicsLineItem::~GraphicsLineItem()
@@ -163,13 +196,22 @@ void GraphicsLineItem::Control(int direct, const QPointF &delta)
 		return;
 
 	prepareGeometryChange();
-
 	if (GetScene()->GetPressShift() == false)
 	{
-		if (abs(pt.x() - m_points.at(0).x()) > abs(pt.y() - m_points.at(0).y()))
-			pt.setY(m_points.at(0).y());
-		else
-			pt.setX(m_points.at(0).x());
+		if (direct == 9)
+		{
+			if (abs(pt.x() - m_points.at(1).x()) > abs(pt.y() - m_points.at(1).y()))
+				pt.setY(m_points.at(1).y());
+			else
+				pt.setX(m_points.at(1).x());
+		}
+		else if (direct == 10)
+		{
+			if (abs(pt.x() - m_points.at(0).x()) > abs(pt.y() - m_points.at(0).y()))
+				pt.setY(m_points.at(0).y());
+			else
+				pt.setX(m_points.at(0).x());
+		}
 	}
 
 	m_points[direct - Handle_Left - 1] = pt;
@@ -204,12 +246,34 @@ void GraphicsLineItem::UpdateHandles()
 
 void GraphicsLineItem::UpdateCoordinate()
 {
+	SizeHandleRect *shr = new SizeHandleRect(this, 1 + Handle_Left, false);
+	this->m_handles.push_back(shr);
+	shr = new SizeHandleRect(this, 2 + Handle_Left, false);
+	this->m_handles.push_back(shr);
 
+	UpdateHandles();
 }
 
 QGraphicsItem* GraphicsLineItem::Duplicate()
 {
-	return 0;
+	GraphicsLineItem *item = new GraphicsLineItem();
+
+	item->m_width = GetWidth();
+	item->m_height = GetHeight();
+	item->m_points = m_points;
+	item->m_initialPoints = m_initialPoints;
+	item->SetScene(GetScene());
+	item->setPos(pos().x(), pos().y());
+	item->SetPen(GetPen());
+	item->SetBrush(GetBrush());
+	item->setTransform(transform());
+	item->setTransformOriginPoint(transformOriginPoint());
+	item->setRotation(rotation());
+	item->setScale(scale());
+	item->setZValue(zValue()+0.1);
+	item->UpdateCoordinate();
+
+	return item;
 }
 
 QPointF GraphicsLineItem::Opposite(int handle)
@@ -238,7 +302,7 @@ void GraphicsLineItem::AddPoint(const QPointF &point)
 
 	int direct = m_points.count();
 	SizeHandleRect *shr = new SizeHandleRect(this, direct + Handle_Left, false);
-	shr->SetState(SelectionHandleActive);
+	//shr->SetState(SelectionHandleActive);
 	m_handles.push_back(shr);
 }
 

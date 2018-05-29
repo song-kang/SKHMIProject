@@ -36,5 +36,6 @@
         <file alias="ungroup">Resources/images/ungroup.png</file>
         <file alias="rotate">Resources/images/rotate.png</file>
         <file alias="circle">Resources/images/circle.png</file>
+        <file alias="arrow_area">Resources/images/arrow_area.png</file>
     </qresource>
 </RCC>

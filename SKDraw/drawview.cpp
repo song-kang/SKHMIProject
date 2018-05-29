@@ -1,8 +1,12 @@
 #include "drawview.h"
+#include "skdraw.h"
+#include "drawscene.h"
 
 DrawView::DrawView(QGraphicsScene *scene)
 	: QGraphicsView(scene)
 {
+	m_pScene = scene;
+
 	setRenderHint(QPainter::Antialiasing);
 	setTransform(transform().scale(1,-1));
 
@@ -11,6 +15,8 @@ DrawView::DrawView(QGraphicsScene *scene)
 	//setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
 	//setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	setViewport(new QWidget);
 
 	m_pHorRuler = new QtRuleBar(Qt::Horizontal,this,this);
@@ -52,32 +58,50 @@ void DrawView::resizeEvent(QResizeEvent *event)
 	QGraphicsView::resizeEvent(event);
 }
 
-//void DrawView::keyPressEvent(QKeyEvent *event)
-//{
-//	switch (event->key())
-//	{
-//	case Qt::Key_Up:
-//		Translate(QPointF(0, -2));
-//		break;
-//	case Qt::Key_Down:
-//		Translate(QPointF(0, 2));
-//		break;
-//	case Qt::Key_Left:
-//		Translate(QPointF(2, 0));
-//		break;
-//	case Qt::Key_Right:
-//		Translate(QPointF(-2, 0));
-//		break;
-//	case Qt::Key_Equal:
-//		ZoomIn();
-//		break;
-//	case Qt::Key_Minus:
-//		ZoomOut();
-//		break;
-//	}
-//
-//	QGraphicsView::keyPressEvent(event);
-//}
+void DrawView::keyPressEvent(QKeyEvent *event)
+{
+	switch (event->key())
+	{
+	case Qt::Key_Up:
+		Translate(QPointF(0, -10));
+		break;
+	case Qt::Key_Down:
+		Translate(QPointF(0, 10));
+		break;
+	case Qt::Key_Left:
+		Translate(QPointF(10, 0));
+		break;
+	case Qt::Key_Right:
+		Translate(QPointF(-10, 0));
+		break;
+	case Qt::Key_Equal:
+		ZoomIn();
+		break;
+	case Qt::Key_Minus:
+		ZoomOut();
+		break;
+	case Qt::Key_Escape:
+		m_app->SlotKeyEscape();
+		break;
+	case Qt::Key_Shift:
+		((DrawScene*)m_pScene)->SetPressShift(true);
+		break;
+	}
+
+	QGraphicsView::keyPressEvent(event);
+}
+
+void DrawView::keyReleaseEvent(QKeyEvent *event)
+{
+	switch (event->key())
+	{
+	case Qt::Key_Shift:
+		((DrawScene*)m_pScene)->SetPressShift(false);
+		break;
+	}
+
+	QGraphicsView::keyReleaseEvent(event);
+}
 
 void DrawView::mouseMoveEvent(QMouseEvent *event)
 {
@@ -100,7 +124,7 @@ void DrawView::mouseMoveEvent(QMouseEvent *event)
 
 void DrawView::mousePressEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton && dragMode() != QGraphicsView::RubberBandDrag)
 	{
 		QPointF point = mapToScene(event->pos());
 		if (scene()->itemAt(point, transform()) == NULL)
@@ -127,8 +151,10 @@ void DrawView::mouseReleaseEvent(QMouseEvent *event)
 
 void DrawView::Translate(QPointF delta)
 {
+	if (((DrawScene*)m_pScene)->selectedItems().count() > 0 || DrawTool::c_drawShape != eDrawSelection)
+		return;
+	
 	delta *= m_scale;
-
 	QPoint newCenter(viewport()->rect().width() / 2 - delta.x(), viewport()->rect().height() / 2 + delta.y());
 	centerOn(mapToScene(newCenter));
 

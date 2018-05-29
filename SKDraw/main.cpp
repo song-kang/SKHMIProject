@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
 	SKBaseWidget w(NULL,draw);
 	draw->SetApp(&w);
 	draw->InitSlot();
+	draw->Start();
 	w.SetWindowSize(1000,600);
 	w.setMinimumSize(1000,600);
 	w.SetWindowTitle("SKDraw");

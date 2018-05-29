@@ -1,4 +1,5 @@
 #include "skdraw.h"
+#include "commands.h"
 
 SKDraw::SKDraw(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -18,8 +19,9 @@ void SKDraw::Init()
 {
 	m_pView = NULL;
 	m_pScene = NULL;
+	m_pUndoStack = new QUndoStack(this);
 
-	ui.actionClose->setEnabled(false);
+	UpdateActions();
 }
 
 void SKDraw::InitUi()
@@ -31,8 +33,29 @@ void SKDraw::InitSlot()
 {
 	connect(ui.actionNew,SIGNAL(triggered()),this,SLOT(SlotNew()));
 	connect(ui.actionClose,SIGNAL(triggered()),this,SLOT(SlotClose()));
+
+	connect(ui.actionCopy,SIGNAL(triggered()),this,SLOT(SlotCopy()));
+	connect(ui.actionCut,SIGNAL(triggered()),this,SLOT(SlotCut()));
+	connect(ui.actionPaste,SIGNAL(triggered()),this,SLOT(SlotPaste()));
+	connect(ui.actionDelete,SIGNAL(triggered()),this,SLOT(SlotDelete()));
+	connect(QApplication::clipboard(),SIGNAL(dataChanged()),this,SLOT(SlotDataChanged()));
+
+	connect(ui.actionUndo,SIGNAL(triggered()),this,SLOT(SlotUndo()));
+	connect(ui.actionRedo,SIGNAL(triggered()),this,SLOT(SlotRedo()));
+	connect(ui.actionZoomin,SIGNAL(triggered()),this,SLOT(SlotZoomin()));
+	connect(ui.actionZoomout,SIGNAL(triggered()),this,SLOT(SlotZoomout()));
+
 	connect(ui.actionSelect,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionSelectArea,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionRotate,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionLine,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionPolyline,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionRectangle,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionRoundRect,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionCiricle,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionEllipse,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionPolygon,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+
 	connect(m_app, SIGNAL(SigKeyUp()), this, SLOT(SlotKeyUp()));
 	connect(m_app, SIGNAL(SigKeyDown()), this, SLOT(SlotKeyDown()));
 	connect(m_app, SIGNAL(SigKeyLeft()), this, SLOT(SlotKeyLeft()));
@@ -42,8 +65,11 @@ void SKDraw::InitSlot()
 	connect(m_app, SIGNAL(SigKeyShift()), this, SLOT(SlotKeyShift()));
 	connect(m_app, SIGNAL(SigReleaseKeyShift()), this, SLOT(SlotReleaseKeyShift()));
 	connect(m_app, SIGNAL(SigKeyEscape()), this, SLOT(SlotKeyEscape()));
-	connect(QApplication::clipboard(),SIGNAL(dataChanged()),this,SLOT(SlotDataChanged()));
+}
 
+void SKDraw::Start()
+{
+	SlotNew();
 }
 
 void SKDraw::SlotNew()
@@ -52,9 +78,7 @@ void SKDraw::SlotNew()
 	ui.gridLayoutCentral->addWidget(view);
 	view->show();
 
-	ui.actionNew->setEnabled(false);
-	ui.actionOpen->setEnabled(false);
-	ui.actionClose->setEnabled(true);
+	UpdateActions();
 }
 
 void SKDraw::SlotClose()
@@ -64,36 +88,184 @@ void SKDraw::SlotClose()
 	m_pView = NULL;
 	m_pScene = NULL;
 
-	ui.actionNew->setEnabled(true);
-	ui.actionOpen->setEnabled(true);
-	ui.actionClose->setEnabled(false);
+	UpdateActions();
 }
 
-void SKDraw::SlotAddShape()
+void SKDraw::SlotCopy()
 {
-	if (sender() == ui.actionSelect)
-		DrawTool::c_drawShape = eDrawSelection;
-	else if (sender() == ui.actionRotate)
-		DrawTool::c_drawShape = eDrawRotation;
-	else if (sender() == ui.actionLine)
-		DrawTool::c_drawShape = eDrawLine;
-	else if (sender() == ui.actionPolyline)
-		DrawTool::c_drawShape = eDrawPolyline;
-	else if (sender() == ui.actionRectangle)
-		DrawTool::c_drawShape = eDrawRectangle;
-	else if (sender() == ui.actionRoundRect)
-		DrawTool::c_drawShape = eDrawRoundrect;
-	else if (sender() == ui.actionCiricle)
-		DrawTool::c_drawShape = eDrawCiricle;
-	else if (sender() == ui.actionEllipse)
-		DrawTool::c_drawShape = eDrawEllipse ;
-	else if (sender() == ui.actionPolygon)
-		DrawTool::c_drawShape = eDrawPolygon;
+	ShapeMimeData *data = new ShapeMimeData(m_pScene->selectedItems());
+	QApplication::clipboard()->setMimeData(data);
+
+	UpdateActions();
+}
+
+void SKDraw::SlotCut()
+{
+	QList<QGraphicsItem *> copylist;
+	foreach (QGraphicsItem *item, m_pScene->selectedItems())
+	{
+		AbstractShape *sp = qgraphicsitem_cast<AbstractShape*>(item);
+		QGraphicsItem *copy = sp->Duplicate();
+		if (copy)
+			copylist.append(copy);
+	}
+
+	QUndoCommand *removeCommand = new RemoveShapeCommand(m_pScene);
+	m_pUndoStack->push(removeCommand);
+	if (copylist.count() > 0)
+	{
+		ShapeMimeData *data = new ShapeMimeData(copylist);
+		QApplication::clipboard()->setMimeData(data);
+	}
+
+	foreach (QGraphicsItem *item, copylist)
+		delete item;
+	copylist.clear();
+
+	UpdateActions();
+}
+
+void SKDraw::SlotPaste()
+{
+	QMimeData *mp = const_cast<QMimeData *>(QApplication::clipboard()->mimeData());
+	ShapeMimeData *data = dynamic_cast<ShapeMimeData*>(mp);
+	if (data)
+	{
+		m_pScene->clearSelection();
+		foreach (QGraphicsItem * item, data->items())
+		{
+			AbstractShape *sp = qgraphicsitem_cast<AbstractShape*>(item);
+			QGraphicsItem *copy = sp->Duplicate();
+			if (copy)
+			{
+				copy->setSelected(true);
+				copy->moveBy(10, 10);
+				QUndoCommand *addCommand = new AddShapeCommand(copy, m_pScene);
+				m_pUndoStack->push(addCommand);
+			}
+		}
+	}
+
+	UpdateActions();
+}
+
+void SKDraw::SlotDelete()
+{
+	if (m_pScene == NULL || m_pScene->selectedItems().isEmpty())
+		return;
+
+	QUndoCommand *removeCommand = new RemoveShapeCommand(m_pScene);
+	m_pUndoStack->push(removeCommand);
+
+	UpdateActions();
 }
 
 void SKDraw::SlotDataChanged()
 {
 	ui.actionPaste->setEnabled(true);
+
+	UpdateActions();
+}
+
+void SKDraw::SlotUndo()
+{
+	m_pUndoStack->undo();
+
+	UpdateActions();
+}
+
+void SKDraw::SlotRedo()
+{
+	m_pUndoStack->redo();
+
+	UpdateActions();
+}
+
+void SKDraw::SlotZoomin()
+{
+	if (m_pView)
+		m_pView->ZoomIn();
+}
+
+void SKDraw::SlotZoomout()
+{
+	if (m_pView)
+		m_pView->ZoomOut();
+}
+
+void SKDraw::SlotAddShape()
+{
+	if (sender() == ui.actionSelectArea)
+	{
+		DrawTool::c_drawShape = eDrawSelectionArea;
+		m_pView->setDragMode(QGraphicsView::RubberBandDrag);
+	}
+	else
+	{
+		if (sender() == ui.actionSelect)
+			DrawTool::c_drawShape = eDrawSelection;
+		else if (sender() == ui.actionRotate)
+			DrawTool::c_drawShape = eDrawRotation;
+		else if (sender() == ui.actionLine)
+			DrawTool::c_drawShape = eDrawLine;
+		else if (sender() == ui.actionPolyline)
+			DrawTool::c_drawShape = eDrawPolyline;
+		else if (sender() == ui.actionRectangle)
+			DrawTool::c_drawShape = eDrawRectangle;
+		else if (sender() == ui.actionRoundRect)
+			DrawTool::c_drawShape = eDrawRoundrect;
+		else if (sender() == ui.actionCiricle)
+			DrawTool::c_drawShape = eDrawCiricle;
+		else if (sender() == ui.actionEllipse)
+			DrawTool::c_drawShape = eDrawEllipse ;
+		else if (sender() == ui.actionPolygon)
+			DrawTool::c_drawShape = eDrawPolygon;
+		m_pView->setDragMode(QGraphicsView::NoDrag);
+	}
+	
+	if (sender() != ui.actionSelect && sender() != ui.actionSelectArea && sender() != ui.actionRotate)
+		m_pScene->clearSelection();
+
+	UpdateActions();
+}
+
+void SKDraw::UpdateActions()
+{
+	ui.actionNew->setEnabled(m_pScene ? false : true);
+	ui.actionOpen->setEnabled(m_pScene ? false : true);
+	ui.actionClose->setEnabled(m_pScene);
+	ui.actionClose->setEnabled(m_pScene);
+
+	ui.actionCopy->setEnabled(m_pScene && m_pScene->selectedItems().count() > 0);
+	ui.actionCut->setEnabled(m_pScene && m_pScene->selectedItems().count() > 0);
+
+	ui.actionSelect->setEnabled(m_pScene);
+	ui.actionSelectArea->setEnabled(m_pScene);
+	ui.actionLine->setEnabled(m_pScene);
+	ui.actionRectangle->setEnabled(m_pScene);
+	ui.actionRoundRect->setEnabled(m_pScene);
+	ui.actionEllipse->setEnabled(m_pScene);
+	ui.actionCiricle->setEnabled(m_pScene);
+	ui.actionRotate->setEnabled(m_pScene);
+	ui.actionPolygon->setEnabled(m_pScene);
+	ui.actionPolyline->setEnabled(m_pScene);
+
+	ui.actionZoomin->setEnabled(m_pScene);
+	ui.actionZoomout->setEnabled(m_pScene);
+
+	ui.actionSelect->setChecked(DrawTool::c_drawShape == eDrawSelection);
+	ui.actionSelectArea->setChecked(DrawTool::c_drawShape == eDrawSelectionArea);
+	ui.actionLine->setChecked(DrawTool::c_drawShape == eDrawLine);
+	ui.actionRectangle->setChecked(DrawTool::c_drawShape == eDrawRectangle);
+	ui.actionRoundRect->setChecked(DrawTool::c_drawShape == eDrawRoundrect);
+	ui.actionEllipse->setChecked(DrawTool::c_drawShape == eDrawEllipse);
+	ui.actionCiricle->setChecked(DrawTool::c_drawShape == eDrawCiricle);
+	ui.actionRotate->setChecked(DrawTool::c_drawShape == eDrawRotation);
+	ui.actionPolygon->setChecked(DrawTool::c_drawShape == eDrawPolygon);
+	ui.actionPolyline->setChecked(DrawTool::c_drawShape == eDrawPolyline );
+
+	ui.actionUndo->setEnabled(m_pUndoStack->canUndo());
+	ui.actionRedo->setEnabled(m_pUndoStack->canRedo());
 }
 
 DrawView* SKDraw::CreateView()
@@ -107,10 +279,48 @@ DrawView* SKDraw::CreateView()
 	connect(m_pScene, SIGNAL(itemControl(QGraphicsItem*,int,const QPointF&,const QPointF&)), this, SLOT(SlotItemControl(QGraphicsItem*,int,QPointF,QPointF)));
 
 	m_pView = new DrawView(m_pScene);
+	m_pView->SetApp(this);
 	m_pScene->SetView(m_pView);
 	connect(m_pView, SIGNAL(SigPositionChanged(int,int)), this, SLOT(SlotPositionChanged(int,int)));
 
 	return m_pView;
+}
+
+void SKDraw::SlotItemSelected()
+{
+	QList<QGraphicsItem*> l = m_pScene->selectedItems();
+	if (l.count() > 0 && l.first()->isSelected())
+	{
+		QGraphicsItem *item = m_pScene->selectedItems().first();
+		int a = 0;
+	}
+
+	UpdateActions();
+}
+
+void SKDraw::SlotItemAdded(QGraphicsItem *item)
+{
+	int a = 0;
+}
+
+void SKDraw::SlotItemMoved(QGraphicsItem *item, const QPointF &oldPosition)
+{
+
+}
+
+void SKDraw::SlotItemRotate(QGraphicsItem *item, const qreal oldAngle)
+{
+
+}
+
+void SKDraw::SlotItemResize(QGraphicsItem *item,int, const QPointF &scale)
+{
+
+}
+
+void SKDraw::SlotItemControl(QGraphicsItem *item,int, const QPointF &newPos, const QPointF &lastPos_)
+{
+
 }
 
 void SKDraw::SlotPositionChanged(int x, int y)
@@ -144,14 +354,12 @@ void SKDraw::SlotKeyRight()
 
 void SKDraw::SlotKeyEqual()
 {
-	if (m_pView)
-		m_pView->ZoomIn();
+	SlotZoomin();
 }
 
 void SKDraw::SlotKeyMinus()
 {
-	if (m_pView)
-		m_pView->ZoomOut();
+	SlotZoomout();
 }
 
 void SKDraw::SlotKeyShift()
@@ -177,4 +385,7 @@ void SKDraw::SlotKeyEscape()
 	}
 
 	DrawTool::c_drawShape = eDrawSelection;
+	m_pView->setDragMode(QGraphicsView::NoDrag);
+
+	UpdateActions();
 }

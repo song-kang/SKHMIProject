@@ -4,6 +4,7 @@
 #include "skhead.h"
 #include "rulebar.h"
 
+class SKDraw;
 class DrawView : public QGraphicsView
 {
 	Q_OBJECT
@@ -11,6 +12,9 @@ class DrawView : public QGraphicsView
 public:
 	DrawView(QGraphicsScene *scene);
 	~DrawView();
+
+	void SetApp(SKDraw *app) { m_app = app; }
+	void SetMouseTranslate(bool b) { m_bMouseTranslate = b; }
 
 public:
 	void ZoomIn();
@@ -20,7 +24,8 @@ public:
 protected:
 	virtual void wheelEvent(QWheelEvent *event);
 	virtual void resizeEvent(QResizeEvent *event);
-	//virtual void keyPressEvent(QKeyEvent *event);
+	virtual void keyPressEvent(QKeyEvent *event);
+	virtual void keyReleaseEvent(QKeyEvent *event);
 	virtual void mouseMoveEvent(QMouseEvent *event);
 	virtual void mousePressEvent(QMouseEvent *event);
 	virtual void mouseReleaseEvent(QMouseEvent *event);
@@ -39,6 +44,10 @@ private:
 
 signals:
 	void SigPositionChanged(int x ,int y);
+
+private:
+	SKDraw *m_app;
+	QGraphicsScene *m_pScene;
 	
 };
 

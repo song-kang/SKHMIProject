@@ -5,6 +5,21 @@
 #include "sizehandle.h"
 #include "drawscene.h"
 
+class ShapeMimeData : public QMimeData
+{
+	Q_OBJECT
+
+public:
+	ShapeMimeData(QList<QGraphicsItem *> items);
+	~ShapeMimeData();
+
+	QList<QGraphicsItem *> items() const;
+
+private:
+	QList<QGraphicsItem *> m_items;
+
+};
+
 typedef std::vector<SizeHandleRect*> Handles;
 
 template <typename BaseType = QGraphicsItem>
@@ -15,6 +30,7 @@ public:
 		:BaseType(parent)
 	{
 		m_pen = QPen(Qt::black);
+		m_pen.setWidthF(1.0);
 		m_brush = QBrush(Qt::NoBrush);
 		m_width = m_height = 0.0;
 	}
@@ -39,6 +55,19 @@ public:
 	{
 		for (Handles::iterator it = m_handles.begin(); it != m_handles.end(); ++it)
 			(*it)->SetState(st);
+	}
+
+	int CollidesWithHandle(const QPointF &point) const
+	{
+		const Handles::const_reverse_iterator hend = m_handles.rend();
+		for (Handles::const_reverse_iterator it = m_handles.rbegin(); it != hend; ++it)
+		{
+			QPointF pt = (*it)->mapFromScene(point);
+			if ((*it)->contains(pt))
+				return (*it)->GetDirect();
+		}
+
+		return Handle_None;
 	}
 
 public:

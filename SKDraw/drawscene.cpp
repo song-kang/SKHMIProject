@@ -1,8 +1,9 @@
 #include "drawscene.h"
 #include "drawtool.h"
+#include "skdraw.h"
 
-#define DEFAULT_WIDTH		800
-#define DEFAULT_HEIGHT		600
+#define DEFAULT_WIDTH		1366
+#define DEFAULT_HEIGHT		768
 
 ///////////////////////// GridTool /////////////////////////
 GridTool::GridTool(const QSize &grid , const QSize &space)
@@ -52,6 +53,8 @@ DrawScene::DrawScene(QObject *parent)
 
 	setSceneRect(QRectF(0, 0, m_iWidth, m_iHeight));
 	setBackgroundBrush(Qt::darkGray);
+
+	m_dx = m_dy = 0;
 }
 
 DrawScene::~DrawScene()
@@ -65,6 +68,22 @@ void DrawScene::drawBackground(QPainter *painter, const QRectF &rect)
 
 	if (m_pGrid)
 		m_pGrid->PaintGrid(painter, sceneRect().toRect());
+}
+
+void DrawScene::MouseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+	switch(mouseEvent->type())
+	{
+	case QEvent::GraphicsSceneMousePress:
+		QGraphicsScene::mousePressEvent(mouseEvent);
+		break;
+	case QEvent::GraphicsSceneMouseMove:
+		QGraphicsScene::mouseMoveEvent(mouseEvent);
+		break;
+	case QEvent::GraphicsSceneMouseRelease:
+		QGraphicsScene::mouseReleaseEvent(mouseEvent);
+		break;
+	}
 }
 
 void DrawScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -95,10 +114,47 @@ void DrawScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvet)
 
 void DrawScene::keyPressEvent(QKeyEvent *e)
 {
-	
+	qreal dx = 0;
+	qreal dy = 0;
+	m_bMoved = false;
+
+	switch(e->key())
+	{
+	case Qt::Key_Up:
+		dx = 0;
+		dy = 1;
+		m_bMoved = true;
+		break;
+	case Qt::Key_Down:
+		dx = 0;
+		dy = -1;
+		m_bMoved = true;
+		break;
+	case Qt::Key_Left:
+		dx = -1;
+		dy = 0;
+		m_bMoved = true;
+		break;
+	case Qt::Key_Right:
+		dx = 1;
+		dy = 0;
+		m_bMoved = true;
+		break;
+	}
+
+	m_dx += dx;
+	m_dy += dy;
+	if (m_bMoved)
+	{
+		foreach (QGraphicsItem *item, selectedItems()) 
+			item->moveBy(dx,dy);
+	}
 }
 
 void DrawScene::keyReleaseEvent(QKeyEvent *e)
 {
+	//if (m_bMoved && selectedItems().count() > 0)
+	//	emit itemMoved(NULL, QPointF(m_dx,m_dy));
 
+	m_dx = m_dy = 0;
 }

@@ -22,9 +22,13 @@ private:
 };
 
 ///////////////////////// DrawScene /////////////////////////
+class DrawTool;
 class DrawScene : public QGraphicsScene
 {
 	Q_OBJECT
+
+	friend class DrawRectTool;
+	friend class DrawPolygonTool;
 
 public:
 	DrawScene(QObject *parent);
@@ -35,6 +39,10 @@ public:
 	void SetHeight(int h) { m_iHeight = h; }
 	void SetPressShift(bool b) { m_bPressShift = b; }
 	bool GetPressShift() { return m_bPressShift; }
+	QGraphicsView *GetView() { return m_pView; }
+
+public:
+	void MouseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 protected:
 	virtual void drawBackground(QPainter *painter, const QRectF &rect);
@@ -51,6 +59,16 @@ private:
 	int	m_iWidth;
 	int m_iHeight;
 	bool m_bPressShift;
+	qreal m_dx;
+	qreal m_dy;
+	bool m_bMoved;
+
+signals:
+	void itemAdded(QGraphicsItem *item);
+	void itemMoved(QGraphicsItem *item, const QPointF &oldPosition);
+	void itemRotate(QGraphicsItem *item, const qreal oldAngle);
+	void itemResize(QGraphicsItem *item , int handle, const QPointF &scale);
+	void itemControl(QGraphicsItem *item , int handle, const QPointF &newPos, const QPointF &lastPos_);
 	
 };
 
