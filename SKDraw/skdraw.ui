@@ -78,9 +78,10 @@
      <addaction name="separator"/>
      <addaction name="actionLine"/>
      <addaction name="actionPolyline"/>
+     <addaction name="actionPolygon"/>
+     <addaction name="separator"/>
      <addaction name="actionRectangle"/>
      <addaction name="actionRoundRect"/>
-     <addaction name="actionPolygon"/>
      <addaction name="actionCiricle"/>
      <addaction name="actionEllipse"/>
     </widget>
@@ -225,9 +226,10 @@
    <addaction name="separator"/>
    <addaction name="actionLine"/>
    <addaction name="actionPolyline"/>
+   <addaction name="actionPolygon"/>
+   <addaction name="separator"/>
    <addaction name="actionRectangle"/>
    <addaction name="actionRoundRect"/>
-   <addaction name="actionPolygon"/>
    <addaction name="actionCiricle"/>
    <addaction name="actionEllipse"/>
   </widget>

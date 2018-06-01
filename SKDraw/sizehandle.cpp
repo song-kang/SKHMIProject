@@ -7,14 +7,14 @@
 #include <QtGui>
 
 SizeHandleRect::SizeHandleRect(QGraphicsItem *parent, int direct, bool control)
-    :QGraphicsRectItem(-SELECTION_HANDLE_SIZE/2,
-                       -SELECTION_HANDLE_SIZE/2,
-                       SELECTION_HANDLE_SIZE,
-                       SELECTION_HANDLE_SIZE,
+    :QGraphicsRectItem(-eSelectionHandleSize/2,
+                       -eSelectionHandleSize/2,
+                       eSelectionHandleSize,
+                       eSelectionHandleSize,
 					   parent)
     ,m_direct(direct)
     ,m_controlPoint(control)
-    ,m_state(SelectionHandleOff)
+    ,m_state(eSelectionHandleOff)
     ,m_borderColor(Qt::white)
 {
     this->setAcceptHoverEvents(true);
@@ -57,11 +57,11 @@ void SizeHandleRect::SetState(SelectionHandleState st)
 
     switch (st) 
 	{
-    case SelectionHandleOff:
+    case eSelectionHandleOff:
         hide();
         break;
-    case SelectionHandleInactive:
-    case SelectionHandleActive:
+    case eSelectionHandleInactive:
+    case eSelectionHandleActive:
         show();
         break;
     }

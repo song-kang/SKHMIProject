@@ -62,7 +62,6 @@ public:
 public:
 	QPointF m_initialPositions;
 	QPointF m_opposite;
-	QGraphicsPathItem *m_pDashRect;
 	//GraphicsItemGroup *selLayer;
 };
 
@@ -80,7 +79,6 @@ public:
 
 public:
 	qreal m_lastAngle;
-	QGraphicsPathItem *m_pDashRect;
 };
 
 ///////////////////////// DrawRectTool ////////////////////////
@@ -96,14 +94,15 @@ public:
 	virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene);
 
 public:
-	GraphicsItem *item;
+	GraphicsItem *m_pItem;
+	QPointF m_opposite;
 };
 
 ///////////////////////// DrawPolygonTool ////////////////////////
 class DrawPolygonTool : public DrawTool
 {
 public:
-	DrawPolygonTool(DrawShape shape );
+	DrawPolygonTool(DrawShape shape);
 	~DrawPolygonTool();
 
 public:
@@ -114,8 +113,8 @@ public:
 
 public:
 	int m_nPoints;	
-	QPointF initialPositions;
-	GraphicsPolygonItem *item;
+	QPointF m_initialPositions;
+	GraphicsPolygonItem *m_pItem;
 
 };
 

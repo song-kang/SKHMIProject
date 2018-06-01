@@ -31,6 +31,7 @@ private:
 	DrawView	 *m_pView;
 	DrawScene	 *m_pScene;
 	QUndoStack   *m_pUndoStack;
+	QMenu		 *m_pEditMenu;
 
 private:
 	void Init();
@@ -72,6 +73,8 @@ private slots:
 	void SlotKeyMinus();
 	void SlotKeyShift();
 	void SlotReleaseKeyShift();
+
+	void SlotMouseRightButton(QPoint p);
 
 };
 

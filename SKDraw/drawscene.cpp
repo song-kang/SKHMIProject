@@ -107,9 +107,11 @@ void DrawScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		tool->mouseReleaseEvent(mouseEvent,this);
 }
 
-void DrawScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvet)
+void DrawScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-
+	DrawTool *tool = DrawTool::findTool(DrawTool::c_drawShape);
+	if (tool)
+		tool->mouseDoubleClickEvent(mouseEvent,this);
 }
 
 void DrawScene::keyPressEvent(QKeyEvent *e)

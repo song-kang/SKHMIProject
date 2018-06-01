@@ -8,9 +8,16 @@ QPointF DrawTool::c_last;
 
 DrawShape DrawTool::c_drawShape = eDrawSelection;
 
-static DrawSelectTool	selectTool;
-static DrawRotationTool rotationTool;
-static DrawPolygonTool	lineTool(eDrawLine);
+static DrawSelectTool	c_selectTool;
+static DrawRotationTool c_rotationTool;
+
+static DrawPolygonTool	c_lineTool(eDrawLine);
+static DrawPolygonTool	c_polygonlineTool(eDrawPolyline);
+static DrawPolygonTool	c_polygonTool(eDrawPolygon);
+
+static DrawRectTool		c_rectTool(eDrawRectangle);
+static DrawRectTool		c_roundRectTool(eDrawRoundrect);
+static DrawRectTool		c_ellipseTool(eDrawEllipse);
 
 enum SelectMode
 {
@@ -23,7 +30,7 @@ enum SelectMode
 };
 
 SelectMode m_selectMode = eModeNone;
-int m_nDragHandle = Handle_None;
+int m_nDragHandle = eHandleNone;
 
 static void SetCursor(DrawScene *scene, const QCursor &cursor)
 {
@@ -83,7 +90,7 @@ DrawTool* DrawTool::findTool(DrawShape drawShape)
 DrawSelectTool::DrawSelectTool()
 	: DrawTool(eDrawSelection)
 {
-	m_pDashRect = NULL;
+	m_opposite = QPointF();
 }
 
 DrawSelectTool::~DrawSelectTool()
@@ -109,17 +116,16 @@ void DrawSelectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene 
 	if (item != NULL)
 	{
 		m_nDragHandle = item->CollidesWithHandle(event->scenePos());
-		if (m_nDragHandle != Handle_None && m_nDragHandle <= Handle_Left)
+		if (m_nDragHandle != eHandleNone && m_nDragHandle <= eHandleLeft)
 		{
 			m_selectMode = eModeSize;
-
-			//opposite_ = item->opposite(nDragHandle);
-			//if( opposite_.x() == 0 )
-			//	opposite_.setX(1);
-			//if (opposite_.y() == 0 )
-			//	opposite_.setY(1);
+			m_opposite = item->Opposite(m_nDragHandle);
+			if( m_opposite.x() == 0 )
+				m_opposite.setX(1);
+			if (m_opposite.y() == 0 )
+				m_opposite.setY(1);
 		}
-		else if ( m_nDragHandle > Handle_Left )
+		else if ( m_nDragHandle > eHandleLeft )
 			m_selectMode = eModeEditor;
 		else
 			m_selectMode =  eModeMove;
@@ -142,41 +148,45 @@ void DrawSelectTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *
 		item = qgraphicsitem_cast<AbstractShape*>(items.first());
 		if (item != NULL)
 		{
-			if (m_nDragHandle != Handle_None && m_selectMode == eModeSize)
+			if (m_nDragHandle != eHandleNone && m_selectMode == eModeSize)
 			{
-				//if (opposite_.isNull())
-				//{
-				//	opposite_ = item->opposite(m_nDragHandle);
-				//	if( opposite_.x() == 0 )
-				//		opposite_.setX(1);
-				//	if (opposite_.y() == 0 )
-				//		opposite_.setY(1);
-				//}
+				if (m_opposite.isNull())
+				{
+					m_opposite = item->Opposite(m_nDragHandle);
+					if (m_opposite.x() == 0)
+						m_opposite.setX(1);
+					if (m_opposite.y() == 0)
+						m_opposite.setY(1);
+				}
 
-				//QPointF new_delta = item->mapFromScene(c_last) - opposite_;
-				//QPointF initial_delta = item->mapFromScene(c_down) - opposite_;
-
-				//double sx = new_delta.x() / initial_delta.x();
-				//double sy = new_delta.y() / initial_delta.y();
-
-				//item->Stretch(m_nDragHandle, sx , sy , opposite_);
-
+				QPointF new_delta = item->mapFromScene(c_last) - m_opposite;
+				QPointF initial_delta = item->mapFromScene(c_down) - m_opposite;
+				double sx = new_delta.x() / initial_delta.x();
+				double sy = new_delta.y() / initial_delta.y();
+				item->Stretch(m_nDragHandle, sx, sy, m_opposite);
 				//emit scene->itemResize(item,m_nDragHandle,QPointF(sx,sy));
 			} 
-			else if (m_nDragHandle > Handle_Left && m_selectMode == eModeEditor)
+			else if (m_nDragHandle > eHandleLeft && m_selectMode == eModeEditor)
 			{
 				item->Control(m_nDragHandle,c_last);
 				//emit scene->itemControl(item,m_nDragHandle,c_last,c_down);
 			}
-			else if (m_nDragHandle == Handle_None)
+			else if (m_nDragHandle == eHandleNone)
 			{
 				int handle = item->CollidesWithHandle(event->scenePos());
-				if (handle != Handle_None)
+				if (handle != eHandleNone)
 				{
-					SetCursor(scene,Qt::OpenHandCursor);
-					if (handle > Handle_Left)
+					if (handle > eHandleLeft)
 						SetCursor(scene,Qt::CrossCursor); //Ïß¶ÎÊÖÊÆ
-					//m_bHoverSizer = true;
+					else if (handle == eHandleLeft || handle == eHandleRight)
+						SetCursor(scene,Qt::SizeHorCursor);
+					else if (handle == eHandleTop || handle == eHandleBottom)
+						SetCursor(scene,Qt::SizeVerCursor);
+					else if (handle == eHandleLeftTop || handle == eHandleRightBottom)
+						SetCursor(scene,Qt::SizeBDiagCursor);
+					else if (handle == eHandleLeftBottom || handle == eHandleRightTop)
+						SetCursor(scene,Qt::SizeFDiagCursor);
+					m_bHoverSizer = true;
 				}
 				else if (m_selectMode == eModeMove)
 				{
@@ -185,7 +195,7 @@ void DrawSelectTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *
 				else
 				{
 					SetCursor(scene,Qt::ArrowCursor);
-					//m_bHoverSizer = false;
+					m_bHoverSizer = false;
 				}
 			}
 		}
@@ -213,7 +223,7 @@ void DrawSelectTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScen
 		}
 		else if (item !=0 && (m_selectMode == eModeSize || m_selectMode == eModeEditor) && c_last != c_down)
 		{
-			//item->UpdateCoordinate();
+			item->UpdateCoordinate();
 		}
 	}
 	else if (items.count() > 1 && m_selectMode == eModeMove && c_last != c_down)
@@ -222,9 +232,9 @@ void DrawSelectTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScen
 	}
 
 	m_selectMode = eModeNone;
-	m_nDragHandle = Handle_None;
+	m_nDragHandle = eHandleNone;
 	m_bHoverSizer = false;
-	//opposite_ = QPointF();
+	m_opposite = QPointF();
 	scene->MouseEvent(event);
 }
 
@@ -233,7 +243,6 @@ DrawRotationTool::DrawRotationTool()
 	: DrawTool(eDrawRotation)
 {
 	m_lastAngle = 0;
-	m_pDashRect = NULL;
 }
 
 DrawRotationTool::~DrawRotationTool()
@@ -260,34 +269,97 @@ void DrawRotationTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawSc
 DrawRectTool::DrawRectTool(DrawShape shape)
 	: DrawTool(shape)
 {
-	
+	m_pItem = NULL;
+	m_opposite = QPointF();
 }
 
 DrawRectTool::~DrawRectTool()
 {
-
+	
 }
 
 void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
+	DrawTool::mousePressEvent(event,scene);
 
+	if (event->button() != Qt::LeftButton) 
+		return;
+
+	if (m_pItem == NULL)
+	{
+		m_opposite = QPointF();
+		scene->clearSelection();
+		if (c_drawShape == eDrawRectangle)
+			m_pItem = new GraphicsRectItem(QRect(1, 1, 1, 1));
+		else if (c_drawShape == eDrawRoundrect)
+			m_pItem = new GraphicsRectItem(QRect(1, 1, 1, 1), true);
+		//else if (c_drawShape == eDrawEllipse)
+		//	m_pItem = new GraphicsLineItem();
+
+		c_down += QPoint(2, 2);
+		scene->addItem(m_pItem);
+		m_pItem->setPos(event->scenePos());
+
+		m_selectMode = eModeSize;
+		m_nDragHandle = eHandleRightBottom;
+	}
+	else
+	{
+		if (event->scenePos() == (c_down - QPoint(2,2)) && m_pItem)
+		{
+			scene->removeItem(m_pItem);
+			delete m_pItem ;
+		}
+		else if (m_pItem)
+		{
+			m_pItem->setSelected(true);
+			m_pItem->UpdateCoordinate();
+			m_selectMode = eModeNone;
+			//emit scene->itemAdded(m_pItem);
+		}
+
+		m_pItem = NULL;
+	}
 }
 
 void DrawRectTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
+	//c_selectTool.mouseMoveEvent(event, scene);
+	DrawTool::mouseMoveEvent(event,scene);
 
+	if (m_pItem != 0)
+	{
+		if (m_nDragHandle != eHandleNone && m_selectMode == eModeSize)
+		{
+			if (m_opposite.isNull())
+			{
+				m_opposite = m_pItem->Opposite(m_nDragHandle);
+				if (m_opposite.x() == 0)
+					m_opposite.setX(1);
+				if (m_opposite.y() == 0)
+					m_opposite.setY(1);
+			}
+			
+			QPointF new_delta = m_pItem->mapFromScene(c_last) - m_opposite;
+			QPointF initial_delta = m_pItem->mapFromScene(c_down) - m_opposite;
+			double sx = new_delta.x() / initial_delta.x();
+			double sy = new_delta.y() / initial_delta.y();
+			m_pItem->Stretch(m_nDragHandle, sx, sy, m_opposite);
+			//emit scene->itemResize(item,m_nDragHandle,QPointF(sx,sy));
+		}
+	}
 }
 
 void DrawRectTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
-
+	DrawTool::mouseReleaseEvent(event, scene);
 }
 
 ///////////////////////// DrawPolygonTool /////////////////////////
 DrawPolygonTool::DrawPolygonTool(DrawShape shape)
 	: DrawTool(shape)
 {
-	item = NULL;
+	m_pItem = NULL;
 	m_nPoints = 0;
 }
 
@@ -303,69 +375,67 @@ void DrawPolygonTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene
 	if (event->button() != Qt::LeftButton) 
 		return;
 
-	if (item == NULL)
+	if (m_pItem == NULL)
 	{
 		scene->clearSelection();
+		if (c_drawShape == eDrawPolygon)
+			m_pItem = new GraphicsPolygonItem();
+		else if (c_drawShape == eDrawPolyline)
+			m_pItem = new GraphicsPolygonLineItem();
+		else if (c_drawShape == eDrawLine)
+			m_pItem = new GraphicsLineItem();
 
-		//if ( c_drawShape == polygon )
-		//	item = new GraphicsPolygonItem(NULL);
-		//else if (c_drawShape == bezier )
-		//	item = new GraphicsBezier();
-		//else if ( c_drawShape == polyline )
-		//	item = new GraphicsBezier(false);
-		/*else */if (c_drawShape == eDrawLine)
-			item = new GraphicsLineItem(NULL);
-
-		item->SetScene(scene);
-		item->setPos(event->scenePos());
-		scene->addItem(item);
-		initialPositions = c_down;
-		item->AddPoint(c_down);
+		m_initialPositions = c_down;
+		scene->addItem(m_pItem);
+		m_pItem->SetScene(scene);
+		m_pItem->setPos(event->scenePos());
+		m_pItem->AddPoint(c_down);
 		m_nPoints++;
-		item->AddPoint(c_down + QPoint(1,0));
-		m_nPoints++;
-		m_selectMode = eModeSize ;
-		m_nDragHandle = item->HandleCount();
 	}
 	else if (c_drawShape == eDrawLine)
 	{
-		item->EndPoint(event->scenePos());
-		item->UpdateCoordinate();
-		item->setSelected(true);
-		emit scene->itemAdded(item);
-		item = NULL;
+		m_pItem->EndPoint(event->scenePos());
+		m_pItem->setSelected(true);
+		//emit scene->itemAdded(m_pItem);
+		m_pItem = NULL;
 		
 		m_selectMode = eModeNone;
 		m_nPoints = 0;
+		return;
 	}
+
+	m_pItem->AddPoint(c_down);
+	m_nPoints++;
+	m_selectMode = eModeSize ;
+	m_nDragHandle = m_pItem->HandleCount();
 }
 
 void DrawPolygonTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
 	DrawTool::mouseMoveEvent(event,scene);
 
-	if (item != 0)
+	if (m_pItem != 0)
 	{
-		if (m_nDragHandle != Handle_None && m_selectMode == eModeSize )
-			item->Control(m_nDragHandle,c_last);
+		if (m_nDragHandle != eHandleNone && m_selectMode == eModeSize)
+			m_pItem->Control(m_nDragHandle,c_last);
 	}
 }
 
 void DrawPolygonTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
-	DrawTool::mousePressEvent(event,scene);
+	DrawTool::mouseReleaseEvent(event,scene);
 }
 
 void DrawPolygonTool::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
 	DrawTool::mouseDoubleClickEvent(event,scene);
 
-	item->EndPoint(event->scenePos());
-	item->UpdateCoordinate();
-	//emit scene->itemAdded(item);
+	m_pItem->EndPoint(event->scenePos());
+	m_pItem->UpdateCoordinate();
+	m_pItem->setSelected(true);
+	//emit scene->itemAdded(m_pItem);
+	m_pItem = NULL;
 
-	item = NULL;
 	m_selectMode = eModeNone;
-	c_drawShape = eDrawSelection;
 	m_nPoints = 0;
 }

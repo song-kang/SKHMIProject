@@ -49,7 +49,7 @@ protected:
 	virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
 	virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
 	virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvet);
+	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
 	virtual void keyPressEvent(QKeyEvent *e);
 	virtual void keyReleaseEvent(QKeyEvent *e);
 

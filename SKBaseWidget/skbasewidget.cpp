@@ -30,6 +30,12 @@ void SKBaseWidget::Init()
 	m_bIsFull = false;
 	m_bIsDrag = true;
 	m_bIsTopDrag = false;
+
+	//auto shadowEffect = new QGraphicsDropShadowEffect(this);
+	//shadowEffect->setOffset(0, 0);
+	//shadowEffect->setColor(Qt::black);
+	//shadowEffect->setBlurRadius(SHADOW_WIDTH);
+	//this->setGraphicsEffect(shadowEffect);
 }
 
 void SKBaseWidget::InitUi()
@@ -115,6 +121,12 @@ void SKBaseWidget::mouseMoveEvent(QMouseEvent *e)
 void SKBaseWidget::mousePressEvent(QMouseEvent *e)
 {
 	AbsFrameLessAutoSize::mousePressEvent(e);
+
+	if (e->button() == Qt::RightButton)
+	{
+		QPoint point = e->pos();
+		SigMouseRightButton(point);
+	}
 }
 
 void SKBaseWidget::mouseReleaseEvent(QMouseEvent *e)

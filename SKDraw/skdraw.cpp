@@ -20,6 +20,13 @@ void SKDraw::Init()
 	m_pView = NULL;
 	m_pScene = NULL;
 	m_pUndoStack = new QUndoStack(this);
+	m_pEditMenu = new QMenu(this);
+	m_pEditMenu->addAction(ui.actionSelect);
+	m_pEditMenu->addAction(ui.actionSelectArea);
+	m_pEditMenu->addSeparator();
+	m_pEditMenu->addAction(ui.actionCut);
+	m_pEditMenu->addAction(ui.actionCopy);
+	m_pEditMenu->addAction(ui.actionPaste);
 
 	UpdateActions();
 }
@@ -65,6 +72,7 @@ void SKDraw::InitSlot()
 	connect(m_app, SIGNAL(SigKeyShift()), this, SLOT(SlotKeyShift()));
 	connect(m_app, SIGNAL(SigReleaseKeyShift()), this, SLOT(SlotReleaseKeyShift()));
 	connect(m_app, SIGNAL(SigKeyEscape()), this, SLOT(SlotKeyEscape()));
+	connect(m_app, SIGNAL(SigMouseRightButton(QPoint)), this, SLOT(SlotMouseRightButton(QPoint)));
 }
 
 void SKDraw::Start()
@@ -93,6 +101,7 @@ void SKDraw::SlotClose()
 
 void SKDraw::SlotCopy()
 {
+	QList<QGraphicsItem *> items = m_pScene->selectedItems();
 	ShapeMimeData *data = new ShapeMimeData(m_pScene->selectedItems());
 	QApplication::clipboard()->setMimeData(data);
 
@@ -300,7 +309,8 @@ void SKDraw::SlotItemSelected()
 
 void SKDraw::SlotItemAdded(QGraphicsItem *item)
 {
-	int a = 0;
+	QUndoCommand *addCommand = new AddShapeCommand(item, item->scene());
+	m_pUndoStack->push(addCommand);
 }
 
 void SKDraw::SlotItemMoved(QGraphicsItem *item, const QPointF &oldPosition)
@@ -377,15 +387,31 @@ void SKDraw::SlotReleaseKeyShift()
 void SKDraw::SlotKeyEscape()
 {
 	DrawTool *tool = DrawTool::findTool(DrawTool::c_drawShape);
-	if (tool && ((DrawPolygonTool*)tool)->item)
+	if (tool &&
+		(tool->m_drawShape == eDrawLine || tool->m_drawShape == eDrawPolyline || tool->m_drawShape == eDrawPolygon) &&
+		((DrawPolygonTool*)tool)->m_pItem)
 	{
-		m_pScene->removeItem(((DrawPolygonTool*)tool)->item);
-		delete ((DrawPolygonTool*)tool)->item;
-		((DrawPolygonTool*)tool)->item = NULL;
+		m_pScene->removeItem(((DrawPolygonTool*)tool)->m_pItem);
+		delete ((DrawPolygonTool*)tool)->m_pItem;
+		((DrawPolygonTool*)tool)->m_pItem = NULL;
+	}
+	else if (tool &&
+			 (tool->m_drawShape == eDrawRectangle || tool->m_drawShape == eDrawRoundrect || tool->m_drawShape == eDrawEllipse) &&
+			 ((DrawRectTool*)tool)->m_pItem)
+	{
+		m_pScene->removeItem(((DrawRectTool*)tool)->m_pItem);
+		delete ((DrawRectTool*)tool)->m_pItem;
+		((DrawRectTool*)tool)->m_pItem = NULL;
 	}
 
+	m_pScene->clearSelection();
 	DrawTool::c_drawShape = eDrawSelection;
 	m_pView->setDragMode(QGraphicsView::NoDrag);
 
 	UpdateActions();
+}
+
+void SKDraw::SlotMouseRightButton(QPoint p)
+{
+	m_pEditMenu->popup(p);
 }

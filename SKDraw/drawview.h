@@ -48,6 +48,9 @@ signals:
 private:
 	SKDraw *m_app;
 	QGraphicsScene *m_pScene;
+
+private slots:
+	void SlotScrollBarValueChanged(int pos);
 	
 };
 

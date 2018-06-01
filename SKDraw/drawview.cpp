@@ -12,8 +12,7 @@ DrawView::DrawView(QGraphicsScene *scene)
 
 	//setCacheMode(QGraphicsView::CacheBackground);
 	//setOptimizationFlags(QGraphicsView::DontSavePainterState);
-	//setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-	//setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -25,11 +24,19 @@ DrawView::DrawView(QGraphicsScene *scene)
 	m_bMouseTranslate = false;
 	m_scale = 1.0;
 	m_zoomDelta = 0.1;
+
+	connect(horizontalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
+	connect(verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
 }
 
 DrawView::~DrawView()
 {
 
+}
+
+void DrawView::SlotScrollBarValueChanged(int pos)
+{
+	UpdateRuler();
 }
 
 void DrawView::wheelEvent(QWheelEvent *event)
@@ -136,6 +143,7 @@ void DrawView::mousePressEvent(QMouseEvent *event)
 	}
 
 	QGraphicsView::mousePressEvent(event);
+	QWidget::mousePressEvent(event);
 }
 
 void DrawView::mouseReleaseEvent(QMouseEvent *event)

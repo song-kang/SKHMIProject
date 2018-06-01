@@ -67,7 +67,59 @@ public:
 				return (*it)->GetDirect();
 		}
 
-		return Handle_None;
+		return eHandleNone;
+	}
+
+	QPointF Opposite(int handle)
+	{
+		QPointF pt;
+		switch (handle)
+		{
+		case eHandleRight:
+			pt = m_handles.at(eHandleLeft-1)->pos();
+			break;
+		case eHandleRightTop:
+			pt = m_handles[eHandleLeftBottom-1]->pos();
+			break;
+		case eHandleRightBottom:
+			pt = m_handles[eHandleLeftTop-1]->pos();
+			break;
+		case eHandleLeftBottom:
+			pt = m_handles[eHandleRightTop-1]->pos();
+			break;
+		case eHandleBottom:
+			pt = m_handles[eHandleTop-1]->pos();
+			break;
+		case eHandleLeftTop:
+			pt = m_handles[eHandleRightBottom-1]->pos();
+			break;
+		case eHandleLeft:
+			pt = m_handles[eHandleRight-1]->pos();
+			break;
+		case eHandleTop:
+			pt = m_handles[eHandleBottom-1]->pos();
+			break;
+		}
+
+		return pt;
+	}
+
+	void DrawOutline(QPainter *painter, QPainterPath path)
+	{
+		QPainterPathStroker stroker;
+		stroker.setCapStyle(Qt::RoundCap);
+		stroker.setJoinStyle(Qt::RoundJoin);
+		stroker.setDashPattern(Qt::DashLine);
+		stroker.setWidth(0.3);
+
+		QPainterPath outlinePath = stroker.createStroke(path);
+
+		QPen pen = painter->pen();
+		pen.setColor(Qt::gray);
+		pen.setWidth(0.3);
+		painter->setPen(pen);
+		painter->drawPath(outlinePath);
+		painter->fillPath(outlinePath, QBrush(Qt::NoBrush));
 	}
 
 public:
@@ -124,14 +176,12 @@ public:
 	~GraphicsPolygonItem();
 
 	void SetScene(DrawScene *scene) { m_pScene = scene; }
-	DrawScene *GetScene() { return m_pScene; }
+	DrawScene* GetScene() { return m_pScene; }
 
 public:
 	virtual void Move(const QPointF &point);
 	virtual void Control(int direct, const QPointF &delta);
 	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
-	virtual bool SaveToXml(QXmlStreamWriter *xml);
-	virtual bool LoadFromXml(QXmlStreamReader *xml);
 	virtual void UpdateHandles();
 	virtual void UpdateCoordinate();
 	virtual QString DisplayName() const { return tr("多边形"); }	
@@ -142,6 +192,9 @@ public:
 	virtual void AddPoint(const QPointF &point);
 	virtual void EndPoint(const QPointF &point);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
 
 public:
 	QPolygonF m_points;
@@ -160,22 +213,81 @@ public:
 	~GraphicsLineItem();
 
 public:
-	virtual void Move(const QPointF &point);
 	virtual void Control(int direct, const QPointF &delta);
-	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
-	virtual bool SaveToXml(QXmlStreamWriter *xml);
-	virtual bool LoadFromXml(QXmlStreamReader *xml);
 	virtual void UpdateHandles();
-	virtual void UpdateCoordinate();
-	virtual int HandleCount() const { return m_handles.size() + Handle_Left;}
+	virtual int HandleCount() const { return m_handles.size() + eHandleLeft; }
 	virtual QString DisplayName() const { return tr("线段"); }	
 	virtual QGraphicsItem* Duplicate();
 
-	virtual QPointF Opposite(int handle);
 	virtual QPainterPath Shape() const;
 	virtual void AddPoint(const QPointF &point);
 	virtual void EndPoint(const QPointF &point);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+};
+
+///////////////////////// GraphicsPolygonLineItem /////////////////////////
+class GraphicsPolygonLineItem : public GraphicsPolygonItem
+{
+public:
+	GraphicsPolygonLineItem(QGraphicsItem * parent = 0);
+	~GraphicsPolygonLineItem();
+
+public:
+	virtual void Control(int direct, const QPointF &delta);
+	virtual QString DisplayName() const { return tr("折线"); }
+	virtual QGraphicsItem *Duplicate();
+
+	virtual QPainterPath Shape() const;
+	virtual void EndPoint(const QPointF &point);
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+};
+
+///////////////////////// GraphicsRectItem /////////////////////////
+class GraphicsRectItem : public GraphicsItem
+{
+public:
+	GraphicsRectItem(const QRect &rect, bool isRound = false, QGraphicsItem * parent = 0);
+	~GraphicsRectItem();
+
+	void SetScene(DrawScene *scene) { m_pScene = scene; }
+	void SetRx(qreal r) { m_rx = r; }
+	void SetRy(qreal r) { m_ry = r; }
+	DrawScene* GetScene() { return m_pScene; }
+	QRectF GetLocalRect() const { return m_localRect; }
+
+public:
+	virtual void Move(const QPointF & point);
+	virtual void Control(int dir, const QPointF & delta);
+	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
+	virtual void UpdateCoordinate();
+	virtual QString DisplayName();
+	virtual QGraphicsItem *Duplicate();
+
+	virtual QRectF boundingRect() const;
+	virtual QPainterPath Shape() const;
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	bool m_isRound;
+	qreal m_rx;
+	qreal m_ry;
+	QRectF m_initialRect;
+	QPointF m_opposite;
+	QPointF m_originPoint;
+
+private:
+	DrawScene *m_pScene;
 
 };
 

@@ -87,6 +87,7 @@ signals:
 	void SigKeyShift();
 	void SigReleaseKeyShift();
 	void SigKeyEscape();
+	void SigMouseRightButton(QPoint p);
 
 public slots:
 	void SlotClose();
