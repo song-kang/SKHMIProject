@@ -62,6 +62,8 @@ void SKDraw::InitSlot()
 	connect(ui.actionCircle,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionEllipse,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionPolygon,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionText,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionPicture,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 
 	connect(m_app, SIGNAL(SigKeyUp()), this, SLOT(SlotKeyUp()));
 	connect(m_app, SIGNAL(SigKeyDown()), this, SLOT(SlotKeyDown()));
@@ -148,7 +150,7 @@ void SKDraw::SlotPaste()
 			if (copy)
 			{
 				copy->setSelected(true);
-				copy->moveBy(10, 10);
+				copy->moveBy(10, -10);
 				QUndoCommand *addCommand = new AddShapeCommand(copy, m_pScene);
 				m_pUndoStack->push(addCommand);
 			}
@@ -229,6 +231,10 @@ void SKDraw::SlotAddShape()
 			DrawTool::c_drawShape = eDrawEllipse ;
 		else if (sender() == ui.actionPolygon)
 			DrawTool::c_drawShape = eDrawPolygon;
+		else if (sender() == ui.actionText)
+			DrawTool::c_drawShape = eDrawText;
+		else if (sender() == ui.actionPicture)
+			DrawTool::c_drawShape = eDrawPicture;
 		m_pView->setDragMode(QGraphicsView::NoDrag);
 	}
 	
@@ -258,6 +264,8 @@ void SKDraw::UpdateActions()
 	ui.actionRotate->setEnabled(m_pScene);
 	ui.actionPolygon->setEnabled(m_pScene);
 	ui.actionPolyline->setEnabled(m_pScene);
+	ui.actionText->setEnabled(m_pScene);
+	ui.actionPicture->setEnabled(m_pScene);
 
 	ui.actionZoomin->setEnabled(m_pScene);
 	ui.actionZoomout->setEnabled(m_pScene);
@@ -271,7 +279,9 @@ void SKDraw::UpdateActions()
 	ui.actionCircle->setChecked(DrawTool::c_drawShape == eDrawCircle);
 	ui.actionRotate->setChecked(DrawTool::c_drawShape == eDrawRotation);
 	ui.actionPolygon->setChecked(DrawTool::c_drawShape == eDrawPolygon);
-	ui.actionPolyline->setChecked(DrawTool::c_drawShape == eDrawPolyline );
+	ui.actionPolyline->setChecked(DrawTool::c_drawShape == eDrawPolyline);
+	ui.actionText->setChecked(DrawTool::c_drawShape == eDrawText);
+	ui.actionPicture->setChecked(DrawTool::c_drawShape == eDrawPicture);
 
 	ui.actionUndo->setEnabled(m_pUndoStack->canUndo());
 	ui.actionRedo->setEnabled(m_pUndoStack->canRedo());
@@ -342,13 +352,13 @@ void SKDraw::SlotPositionChanged(int x, int y)
 void SKDraw::SlotKeyUp()
 {
 	if (m_pView)
-		m_pView->Translate(QPointF(0, -10));
+		m_pView->Translate(QPointF(0, 10));
 }
 
 void SKDraw::SlotKeyDown()
 {
 	if (m_pView)
-		m_pView->Translate(QPointF(0, 10));
+		m_pView->Translate(QPointF(0, -10));
 }
 
 void SKDraw::SlotKeyLeft()
@@ -415,5 +425,5 @@ void SKDraw::SlotKeyEscape()
 
 void SKDraw::SlotMouseRightButton(QPoint p)
 {
-	m_pEditMenu->popup(p + QPoint(276,102));
+	m_pEditMenu->popup(p + QPoint(276,136));
 }

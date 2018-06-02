@@ -17,6 +17,8 @@ enum DrawShape
 	eDrawEllipse,
 	eDrawPolygon,
 	eDrawPolyline,
+	eDrawText,
+	eDrawPicture,
 };
 
 ///////////////////////// DrawTool ////////////////////////

@@ -8,7 +8,7 @@ DrawView::DrawView(QGraphicsScene *scene)
 	m_pScene = scene;
 
 	setRenderHint(QPainter::Antialiasing);
-	setTransform(transform().scale(1,-1));
+	//setTransform(transform().scale(1,-1)); //原点改为左下方
 
 	//setCacheMode(QGraphicsView::CacheBackground);
 	//setOptimizationFlags(QGraphicsView::DontSavePainterState);
@@ -70,10 +70,10 @@ void DrawView::keyPressEvent(QKeyEvent *event)
 	switch (event->key())
 	{
 	case Qt::Key_Up:
-		Translate(QPointF(0, -10));
+		Translate(QPointF(0, 10));
 		break;
 	case Qt::Key_Down:
-		Translate(QPointF(0, 10));
+		Translate(QPointF(0, -10));
 		break;
 	case Qt::Key_Left:
 		Translate(QPointF(10, 0));
@@ -166,7 +166,7 @@ void DrawView::Translate(QPointF delta)
 		return;
 	
 	delta *= m_scale;
-	QPoint newCenter(viewport()->rect().width() / 2 - delta.x(), viewport()->rect().height() / 2 + delta.y());
+	QPoint newCenter(viewport()->rect().width() / 2 - delta.x(), viewport()->rect().height() / 2 - delta.y());
 	centerOn(mapToScene(newCenter));
 
 	UpdateRuler();

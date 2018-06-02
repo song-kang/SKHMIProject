@@ -10,7 +10,7 @@ GridTool::GridTool(const QSize &grid , const QSize &space)
 	:m_sizeGrid(grid)
 	,m_sizeGridSpace(space)
 {
-	QColor c(Qt::white);
+	QColor c(Qt::black);
 	SetBackColor(c);
 }
 
@@ -124,12 +124,12 @@ void DrawScene::keyPressEvent(QKeyEvent *e)
 	{
 	case Qt::Key_Up:
 		dx = 0;
-		dy = 1;
+		dy = -1;
 		m_bMoved = true;
 		break;
 	case Qt::Key_Down:
 		dx = 0;
-		dy = -1;
+		dy = 1;
 		m_bMoved = true;
 		break;
 	case Qt::Key_Left:

@@ -19,6 +19,7 @@ static DrawRectTool		c_rectTool(eDrawRectangle);
 static DrawRectTool		c_roundRectTool(eDrawRoundrect);
 static DrawRectTool		c_ellipseTool(eDrawEllipse);
 static DrawRectTool		c_circleTool(eDrawCircle);
+static DrawRectTool		c_textTool(eDrawText);
 
 enum SelectMode
 {
@@ -184,9 +185,9 @@ void DrawSelectTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *
 					else if (handle == eHandleTop || handle == eHandleBottom)
 						SetCursor(scene,Qt::SizeVerCursor);
 					else if (handle == eHandleLeftTop || handle == eHandleRightBottom)
-						SetCursor(scene,Qt::SizeBDiagCursor);
-					else if (handle == eHandleLeftBottom || handle == eHandleRightTop)
 						SetCursor(scene,Qt::SizeFDiagCursor);
+					else if (handle == eHandleLeftBottom || handle == eHandleRightTop)
+						SetCursor(scene,Qt::SizeBDiagCursor);
 					m_bHoverSizer = true;
 				}
 				else if (m_selectMode == eModeMove)
@@ -298,11 +299,22 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 			m_pItem = new GraphicsEllipseItem(QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawCircle)
 			m_pItem = new GraphicsEllipseItem(QRect(1, 1, 1, 1), true);
+		else if (c_drawShape == eDrawText)
+			m_pItem = new GraphicsTextItem(QRect(0, 0, 50, 25));
 
-		c_down += QPoint(2, 2);
 		scene->addItem(m_pItem);
 		m_pItem->setPos(event->scenePos());
 
+		if (c_drawShape == eDrawText)
+		{
+			m_pItem->setSelected(true);
+			m_pItem->UpdateCoordinate();
+			m_selectMode = eModeNone;
+			m_pItem = NULL;
+			return;
+		}
+		
+		c_down += QPoint(2, 2);
 		m_selectMode = eModeSize;
 		m_nDragHandle = eHandleRightBottom;
 	}

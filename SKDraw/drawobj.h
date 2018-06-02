@@ -29,7 +29,7 @@ public:
 	explicit AbstractShapeType(QGraphicsItem * parent = 0)
 		:BaseType(parent)
 	{
-		m_pen = QPen(Qt::black);
+		m_pen = QPen(Qt::white);
 		m_pen.setWidthF(1.0);
 		m_brush = QBrush(Qt::NoBrush);
 		m_width = m_height = 0.0;
@@ -139,7 +139,7 @@ public:
 	virtual int HandleCount() const { return m_handles.size(); }
 	virtual void UpdateHandles() = 0;
 	virtual void UpdateCoordinate() = 0;
-	virtual QString DisplayName() const { return QString("抽象形态"); }	
+	virtual QString DisplayName() const { return QString("抽象图元"); }	
 	virtual QGraphicsItem* Duplicate() = 0;
 
 };
@@ -184,7 +184,7 @@ public:
 	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
 	virtual void UpdateHandles();
 	virtual void UpdateCoordinate();
-	virtual QString DisplayName() const { return tr("多边形"); }	
+	virtual QString DisplayName() const { return tr("多边形图元"); }	
 	virtual QGraphicsItem* Duplicate();
 
 	virtual QRectF boundingRect() const;
@@ -216,7 +216,7 @@ public:
 	virtual void Control(int direct, const QPointF &delta);
 	virtual void UpdateHandles();
 	virtual int HandleCount() const { return m_handles.size() + eHandleLeft; }
-	virtual QString DisplayName() const { return tr("线段"); }	
+	virtual QString DisplayName() const { return tr("线段图元"); }	
 	virtual QGraphicsItem* Duplicate();
 
 	virtual QPainterPath Shape() const;
@@ -238,7 +238,7 @@ public:
 
 public:
 	virtual void Control(int direct, const QPointF &delta);
-	virtual QString DisplayName() const { return tr("折线"); }
+	virtual QString DisplayName() const { return tr("折线图元"); }
 	virtual QGraphicsItem *Duplicate();
 
 	virtual QPainterPath Shape() const;
@@ -299,7 +299,6 @@ public:
 	~GraphicsEllipseItem();
 
 public:
-	virtual void Control(int dir, const QPointF &delta);
 	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
 	virtual void UpdateHandles();
 	virtual QString DisplayName();
@@ -314,6 +313,37 @@ public:
 
 public:
 	bool m_isCircle;
+
+};
+
+///////////////////////// GraphicsTextItem /////////////////////////
+class GraphicsTextItem :public GraphicsRectItem
+{
+public:
+	GraphicsTextItem(const QRect &rect, QGraphicsItem *parent = 0);
+	~GraphicsTextItem();
+
+	void SetFont(QFont font) { m_font = font; }
+	void SetText(QString text) { m_text = text; }
+	void SetOption(QTextOption option) { m_option = option; }
+	QFont GetFont() { return m_font; }
+	QString GetText() { return m_text; }
+	QTextOption GetOption() { return m_option; }
+
+public:
+	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
+	virtual QString DisplayName() { return tr("文字图元"); }
+	virtual QGraphicsItem *Duplicate();
+
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	QFont m_font;
+	QString m_text;
+	QTextOption m_option;
 
 };
 

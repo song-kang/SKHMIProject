@@ -652,9 +652,9 @@ QString GraphicsRectItem::DisplayName()
 	QString name;
 
 	if (m_isRound)
-		name = tr("圆角矩形");
+		name = tr("圆角矩形图元");
 	else
-		name = tr("矩形");
+		name = tr("矩形图元");
 
 	return name;
 }
@@ -729,11 +729,6 @@ GraphicsEllipseItem::~GraphicsEllipseItem()
 
 }
 
-void GraphicsEllipseItem::Control(int dir, const QPointF &delta)
-{
-
-}
-
 void GraphicsEllipseItem::Stretch(int handle, double sx, double sy, const QPointF &origin)
 {
 	QTransform trans;
@@ -781,9 +776,9 @@ QString GraphicsEllipseItem::DisplayName()
 	QString name;
 
 	if (m_isCircle)
-		name = tr("圆形");
+		name = tr("圆形图元");
 	else
-		name = tr("椭圆形");
+		name = tr("椭圆形图元");
 
 	return name;
 }
@@ -835,6 +830,102 @@ bool GraphicsEllipseItem::SaveToXml(QXmlStreamWriter *xml)
 }
 
 bool GraphicsEllipseItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	return true;
+}
+
+///////////////////////// GraphicsTextItem /////////////////////////
+GraphicsTextItem::GraphicsTextItem(const QRect &rect, QGraphicsItem *parent)
+	:GraphicsRectItem(rect, parent)
+{
+	SetPen(QPen(Qt::blue));
+	m_text = "文字";
+}
+
+GraphicsTextItem::~GraphicsTextItem()
+{
+
+}
+
+void GraphicsTextItem::Stretch(int handle, double sx, double sy, const QPointF &origin)
+{
+	QTransform trans;
+	switch (handle)
+	{
+	case eHandleRight:
+	case eHandleLeft:
+		sy = 1;
+		break;
+	case eHandleTop:
+	case eHandleBottom:
+		sx = 1;
+		break;
+	default:
+		break;
+	}
+
+	m_opposite = origin;
+	trans.translate(origin.x(), origin.y());
+	trans.scale(sx, sy);
+	trans.translate(-origin.x(), -origin.y());
+
+	prepareGeometryChange();
+	m_localRect = trans.mapRect(m_initialRect);
+	m_width = m_localRect.width();
+	m_height = m_localRect.height();
+
+	UpdateHandles();
+}
+
+QGraphicsItem* GraphicsTextItem::Duplicate()
+{
+	GraphicsTextItem * item = new GraphicsTextItem(m_localRect.toRect());
+
+	item->m_width = GetWidth();
+	item->m_height = GetHeight();
+	item->setPos(pos().x(), pos().y());
+	item->SetPen(GetPen());
+	item->SetBrush(GetBrush());
+	item->SetFont(GetFont());
+	item->SetText(GetText());
+	item->SetOption(GetOption());
+	item->setTransform(transform());
+	item->setTransformOriginPoint(transformOriginPoint());
+	item->setRotation(rotation());
+	item->setScale(scale());
+	item->setZValue(zValue()+0.1);
+	item->UpdateCoordinate();
+
+	return item;
+}
+
+void GraphicsTextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	QFont font;
+	font.setFamily("Microsoft YaHei");					//字体
+	font.setPointSize(16);								//大小
+	font.setItalic(false);								//斜体
+	font.setUnderline(false);							//设置下划线
+	font.setOverline(false);							//设置上划线
+	font.setCapitalization(QFont::SmallCaps);			//设置字母大小写
+	font.setLetterSpacing(QFont::AbsoluteSpacing, 2);	//设置字符间距
+
+	m_option.setAlignment(Qt::AlignCenter);
+	//m_option.setWrapMode(QTextOption::NoWrap);
+	m_option.setWrapMode(QTextOption::WordWrap);
+
+	painter->setFont(font);
+	painter->setPen(GetPen());
+	painter->setBrush(GetBrush());
+	painter->drawText(m_localRect, m_text, m_option);
+}
+
+bool GraphicsTextItem::SaveToXml(QXmlStreamWriter *xml)
+{
+	return true;
+}
+
+bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
 {
 	return true;
 }

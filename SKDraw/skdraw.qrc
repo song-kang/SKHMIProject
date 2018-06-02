@@ -37,5 +37,8 @@
         <file alias="rotate">Resources/images/rotate.png</file>
         <file alias="circle">Resources/images/circle.png</file>
         <file alias="arrow_area">Resources/images/arrow_area.png</file>
+        <file alias="font">Resources/images/font.png</file>
+        <file alias="text">Resources/images/text.png</file>
+        <file alias="picture">Resources/images/picture.png</file>
     </qresource>
 </RCC>

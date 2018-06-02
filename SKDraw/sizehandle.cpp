@@ -15,7 +15,7 @@ SizeHandleRect::SizeHandleRect(QGraphicsItem *parent, int direct, bool control)
     ,m_direct(direct)
     ,m_controlPoint(control)
     ,m_state(eSelectionHandleOff)
-    ,m_borderColor(Qt::white)
+    ,m_borderColor(Qt::black)
 {
     this->setAcceptHoverEvents(true);
     setFlag(QGraphicsItem::ItemIgnoresTransformations,true);
@@ -31,9 +31,9 @@ SizeHandleRect::~SizeHandleRect()
 void SizeHandleRect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->save();
-    painter->setPen(Qt::SolidLine);
+    painter->setPen(QPen(Qt::white, Qt::SolidLine));
     painter->setBrush(QBrush(m_borderColor));
-	painter->setBrush(Qt::NoBrush);
+	//painter->setBrush(Qt::NoBrush);
     painter->setRenderHint(QPainter::Antialiasing,false);
 
     if (m_controlPoint)
@@ -66,7 +66,7 @@ void SizeHandleRect::SetState(SelectionHandleState st)
         break;
     }
 
-    m_borderColor = Qt::white;
+    m_borderColor = Qt::black;
     m_state = st;
 }
 

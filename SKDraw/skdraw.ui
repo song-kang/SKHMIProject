@@ -84,6 +84,9 @@
      <addaction name="actionRoundRect"/>
      <addaction name="actionCircle"/>
      <addaction name="actionEllipse"/>
+     <addaction name="separator"/>
+     <addaction name="actionText"/>
+     <addaction name="actionPicture"/>
     </widget>
     <widget class="QMenu" name="menuAlign">
      <property name="title">
@@ -232,6 +235,9 @@
    <addaction name="actionRoundRect"/>
    <addaction name="actionCircle"/>
    <addaction name="actionEllipse"/>
+   <addaction name="separator"/>
+   <addaction name="actionText"/>
+   <addaction name="actionPicture"/>
   </widget>
   <widget class="QToolBar" name="alignToolBar">
    <property name="windowTitle">
@@ -241,7 +247,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
    <addaction name="actionLeft"/>
    <addaction name="actionRight"/>
@@ -665,6 +671,33 @@
    </property>
    <property name="text">
     <string>选择区域</string>
+   </property>
+  </action>
+  <action name="actionText">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/text</normaloff>:/images/text</iconset>
+   </property>
+   <property name="text">
+    <string>文字</string>
+   </property>
+  </action>
+  <action name="actionPicture">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/picture</normaloff>:/images/picture</iconset>
+   </property>
+   <property name="text">
+    <string>图像</string>
+   </property>
+   <property name="toolTip">
+    <string>图像</string>
    </property>
   </action>
  </widget>
