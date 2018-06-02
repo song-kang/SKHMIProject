@@ -44,6 +44,7 @@ private:
 
 signals:
 	void SigPositionChanged(int x ,int y);
+	void SigMouseRightButton(QPoint p);
 
 private:
 	SKDraw *m_app;

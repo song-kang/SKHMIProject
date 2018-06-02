@@ -715,3 +715,126 @@ bool GraphicsRectItem::LoadFromXml(QXmlStreamReader *xml)
 {
 	return true;
 }
+
+///////////////////////// GraphicsEllipseItem /////////////////////////
+GraphicsEllipseItem::GraphicsEllipseItem(const QRect &rect, bool isCircle, QGraphicsItem *parent)
+	:GraphicsRectItem(rect, parent)
+	,m_isCircle(isCircle)
+{
+	
+}
+
+GraphicsEllipseItem::~GraphicsEllipseItem()
+{
+
+}
+
+void GraphicsEllipseItem::Control(int dir, const QPointF &delta)
+{
+
+}
+
+void GraphicsEllipseItem::Stretch(int handle, double sx, double sy, const QPointF &origin)
+{
+	QTransform trans;
+	switch (handle)
+	{
+	case eHandleRight:
+	case eHandleLeft:
+		sy = 1;
+		break;
+	case eHandleTop:
+	case eHandleBottom:
+		sx = 1;
+		break;
+	default:
+		break;
+	}
+
+	m_opposite = origin;
+	trans.translate(origin.x(), origin.y());
+	trans.scale(sx, sy);
+	trans.translate(-origin.x(), -origin.y());
+
+	prepareGeometryChange();
+	m_localRect = trans.mapRect(m_initialRect);
+	if (m_isCircle)
+	{
+		if (m_localRect.width() > m_localRect.height())
+			m_localRect.setHeight(m_localRect.width());
+		else
+			m_localRect.setWidth(m_localRect.height());
+	}
+	m_width = m_localRect.width();
+	m_height = m_localRect.height();
+
+	UpdateHandles();
+}
+
+void GraphicsEllipseItem::UpdateHandles()
+{
+	GraphicsItem::UpdateHandles();
+}
+
+QString GraphicsEllipseItem::DisplayName()
+{
+	QString name;
+
+	if (m_isCircle)
+		name = tr("Ô²ÐÎ");
+	else
+		name = tr("ÍÖÔ²ÐÎ");
+
+	return name;
+}
+
+QGraphicsItem* GraphicsEllipseItem::Duplicate()
+{
+	GraphicsEllipseItem * item = new GraphicsEllipseItem(m_localRect.toRect(), m_isCircle);
+
+	item->m_width = GetWidth();
+	item->m_height = GetHeight();
+	item->setPos(pos().x(), pos().y());
+	item->SetPen(GetPen());
+	item->SetBrush(GetBrush());
+	item->setTransform(transform());
+	item->setTransformOriginPoint(transformOriginPoint());
+	item->setRotation(rotation());
+	item->setScale(scale());
+	item->setZValue(zValue()+0.1);
+	item->UpdateCoordinate();
+
+	return item;
+}
+
+QRectF GraphicsEllipseItem::boundingRect() const
+{
+	return Shape().controlPointRect();
+}
+
+QPainterPath GraphicsEllipseItem::Shape() const
+{
+	QPainterPath path;
+
+	path.addEllipse(m_localRect);
+	path.closeSubpath();
+
+	return path;
+}
+
+void GraphicsEllipseItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	painter->setPen(GetPen());
+	painter->setBrush(GetBrush());
+	painter->drawEllipse(m_localRect);
+}
+
+bool GraphicsEllipseItem::SaveToXml(QXmlStreamWriter *xml)
+{
+	return true;
+}
+
+bool GraphicsEllipseItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	return true;
+}

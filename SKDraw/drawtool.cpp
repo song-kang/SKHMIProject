@@ -18,6 +18,7 @@ static DrawPolygonTool	c_polygonTool(eDrawPolygon);
 static DrawRectTool		c_rectTool(eDrawRectangle);
 static DrawRectTool		c_roundRectTool(eDrawRoundrect);
 static DrawRectTool		c_ellipseTool(eDrawEllipse);
+static DrawRectTool		c_circleTool(eDrawCircle);
 
 enum SelectMode
 {
@@ -293,8 +294,10 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 			m_pItem = new GraphicsRectItem(QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawRoundrect)
 			m_pItem = new GraphicsRectItem(QRect(1, 1, 1, 1), true);
-		//else if (c_drawShape == eDrawEllipse)
-		//	m_pItem = new GraphicsLineItem();
+		else if (c_drawShape == eDrawEllipse)
+			m_pItem = new GraphicsEllipseItem(QRect(1, 1, 1, 1));
+		else if (c_drawShape == eDrawCircle)
+			m_pItem = new GraphicsEllipseItem(QRect(1, 1, 1, 1), true);
 
 		c_down += QPoint(2, 2);
 		scene->addItem(m_pItem);

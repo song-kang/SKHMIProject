@@ -291,4 +291,30 @@ private:
 
 };
 
+///////////////////////// GraphicsEllipseItem /////////////////////////
+class GraphicsEllipseItem :public GraphicsRectItem
+{
+public:
+	GraphicsEllipseItem(const QRect &rect, bool isCircle = false, QGraphicsItem *parent = 0);
+	~GraphicsEllipseItem();
+
+public:
+	virtual void Control(int dir, const QPointF &delta);
+	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
+	virtual void UpdateHandles();
+	virtual QString DisplayName();
+	virtual QGraphicsItem *Duplicate();
+	
+	virtual QRectF boundingRect() const;
+	virtual QPainterPath Shape() const;
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	bool m_isCircle;
+
+};
+
 #endif // DRAWOBJ_H

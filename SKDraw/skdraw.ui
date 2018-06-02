@@ -82,7 +82,7 @@
      <addaction name="separator"/>
      <addaction name="actionRectangle"/>
      <addaction name="actionRoundRect"/>
-     <addaction name="actionCiricle"/>
+     <addaction name="actionCircle"/>
      <addaction name="actionEllipse"/>
     </widget>
     <widget class="QMenu" name="menuAlign">
@@ -230,7 +230,7 @@
    <addaction name="separator"/>
    <addaction name="actionRectangle"/>
    <addaction name="actionRoundRect"/>
-   <addaction name="actionCiricle"/>
+   <addaction name="actionCircle"/>
    <addaction name="actionEllipse"/>
   </widget>
   <widget class="QToolBar" name="alignToolBar">
@@ -434,7 +434,7 @@
     <string>矩形</string>
    </property>
   </action>
-  <action name="actionCiricle">
+  <action name="actionCircle">
    <property name="checkable">
     <bool>true</bool>
    </property>

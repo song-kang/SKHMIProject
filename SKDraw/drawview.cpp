@@ -141,9 +141,12 @@ void DrawView::mousePressEvent(QMouseEvent *event)
 			setCursor(Qt::ClosedHandCursor);
 		}
 	}
+	else if (event->button() == Qt::RightButton)
+	{
+		SigMouseRightButton(event->pos());
+	}
 
 	QGraphicsView::mousePressEvent(event);
-	QWidget::mousePressEvent(event);
 }
 
 void DrawView::mouseReleaseEvent(QMouseEvent *event)

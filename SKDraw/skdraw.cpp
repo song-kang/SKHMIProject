@@ -59,7 +59,7 @@ void SKDraw::InitSlot()
 	connect(ui.actionPolyline,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionRectangle,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionRoundRect,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
-	connect(ui.actionCiricle,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionCircle,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionEllipse,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionPolygon,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 
@@ -72,7 +72,7 @@ void SKDraw::InitSlot()
 	connect(m_app, SIGNAL(SigKeyShift()), this, SLOT(SlotKeyShift()));
 	connect(m_app, SIGNAL(SigReleaseKeyShift()), this, SLOT(SlotReleaseKeyShift()));
 	connect(m_app, SIGNAL(SigKeyEscape()), this, SLOT(SlotKeyEscape()));
-	connect(m_app, SIGNAL(SigMouseRightButton(QPoint)), this, SLOT(SlotMouseRightButton(QPoint)));
+	//connect(m_app, SIGNAL(SigMouseRightButton(QPoint)), this, SLOT(SlotMouseRightButton(QPoint)));
 }
 
 void SKDraw::Start()
@@ -223,8 +223,8 @@ void SKDraw::SlotAddShape()
 			DrawTool::c_drawShape = eDrawRectangle;
 		else if (sender() == ui.actionRoundRect)
 			DrawTool::c_drawShape = eDrawRoundrect;
-		else if (sender() == ui.actionCiricle)
-			DrawTool::c_drawShape = eDrawCiricle;
+		else if (sender() == ui.actionCircle)
+			DrawTool::c_drawShape = eDrawCircle;
 		else if (sender() == ui.actionEllipse)
 			DrawTool::c_drawShape = eDrawEllipse ;
 		else if (sender() == ui.actionPolygon)
@@ -254,7 +254,7 @@ void SKDraw::UpdateActions()
 	ui.actionRectangle->setEnabled(m_pScene);
 	ui.actionRoundRect->setEnabled(m_pScene);
 	ui.actionEllipse->setEnabled(m_pScene);
-	ui.actionCiricle->setEnabled(m_pScene);
+	ui.actionCircle->setEnabled(m_pScene);
 	ui.actionRotate->setEnabled(m_pScene);
 	ui.actionPolygon->setEnabled(m_pScene);
 	ui.actionPolyline->setEnabled(m_pScene);
@@ -268,7 +268,7 @@ void SKDraw::UpdateActions()
 	ui.actionRectangle->setChecked(DrawTool::c_drawShape == eDrawRectangle);
 	ui.actionRoundRect->setChecked(DrawTool::c_drawShape == eDrawRoundrect);
 	ui.actionEllipse->setChecked(DrawTool::c_drawShape == eDrawEllipse);
-	ui.actionCiricle->setChecked(DrawTool::c_drawShape == eDrawCiricle);
+	ui.actionCircle->setChecked(DrawTool::c_drawShape == eDrawCircle);
 	ui.actionRotate->setChecked(DrawTool::c_drawShape == eDrawRotation);
 	ui.actionPolygon->setChecked(DrawTool::c_drawShape == eDrawPolygon);
 	ui.actionPolyline->setChecked(DrawTool::c_drawShape == eDrawPolyline );
@@ -291,6 +291,7 @@ DrawView* SKDraw::CreateView()
 	m_pView->SetApp(this);
 	m_pScene->SetView(m_pView);
 	connect(m_pView, SIGNAL(SigPositionChanged(int,int)), this, SLOT(SlotPositionChanged(int,int)));
+	connect(m_pView, SIGNAL(SigMouseRightButton(QPoint)), this, SLOT(SlotMouseRightButton(QPoint)));
 
 	return m_pView;
 }
@@ -396,7 +397,8 @@ void SKDraw::SlotKeyEscape()
 		((DrawPolygonTool*)tool)->m_pItem = NULL;
 	}
 	else if (tool &&
-			 (tool->m_drawShape == eDrawRectangle || tool->m_drawShape == eDrawRoundrect || tool->m_drawShape == eDrawEllipse) &&
+			 (tool->m_drawShape == eDrawRectangle || tool->m_drawShape == eDrawRoundrect || 
+			  tool->m_drawShape == eDrawEllipse || tool->m_drawShape == eDrawCircle) &&
 			 ((DrawRectTool*)tool)->m_pItem)
 	{
 		m_pScene->removeItem(((DrawRectTool*)tool)->m_pItem);
@@ -413,5 +415,5 @@ void SKDraw::SlotKeyEscape()
 
 void SKDraw::SlotMouseRightButton(QPoint p)
 {
-	m_pEditMenu->popup(p);
+	m_pEditMenu->popup(p + QPoint(276,102));
 }

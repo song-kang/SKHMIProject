@@ -13,7 +13,7 @@ enum DrawShape
 	eDrawLine,
 	eDrawRectangle,
 	eDrawRoundrect,
-	eDrawCiricle,
+	eDrawCircle,
 	eDrawEllipse,
 	eDrawPolygon,
 	eDrawPolyline,
