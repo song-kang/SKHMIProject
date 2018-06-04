@@ -19,6 +19,7 @@ public:
 public:
 	void ZoomIn();
 	void ZoomOut();
+	void ZoomOrg();
 	void Translate(QPointF delta);
 
 protected:
@@ -38,6 +39,7 @@ private:
 	bool m_bMouseTranslate;
 	qreal m_scale;
 	qreal m_zoomDelta;
+	int	m_zoomCount;
 
 private:
 	void UpdateRuler();

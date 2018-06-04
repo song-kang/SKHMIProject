@@ -104,22 +104,19 @@ public:
 		return pt;
 	}
 
-	void DrawOutline(QPainter *painter, QPainterPath path)
+	void DrawOutline(QPainter *painter)
 	{
-		QPainterPathStroker stroker;
-		stroker.setCapStyle(Qt::RoundCap);
-		stroker.setJoinStyle(Qt::RoundJoin);
-		stroker.setDashPattern(Qt::DashLine);
-		stroker.setWidth(0.3);
+		qreal itemPenWidth = GetPen().widthF();
+		const qreal pad = itemPenWidth / 2;
+		const qreal penWidth = 0;
 
-		QPainterPath outlinePath = stroker.createStroke(path);
+		painter->setPen(QPen(Qt::black, penWidth, Qt::SolidLine));
+		painter->setBrush(Qt::NoBrush);
+		painter->drawRect(boundingRect().adjusted(pad, pad, -pad, -pad));
 
-		QPen pen = painter->pen();
-		pen.setColor(Qt::gray);
-		pen.setWidth(0.3);
-		painter->setPen(pen);
-		painter->drawPath(outlinePath);
-		painter->fillPath(outlinePath, QBrush(Qt::NoBrush));
+		painter->setPen(QPen(Qt::white, 0, Qt::DotLine));
+		painter->setBrush(Qt::NoBrush);
+		painter->drawRect(boundingRect().adjusted(pad, pad, -pad, -pad));
 	}
 
 public:
@@ -344,6 +341,28 @@ public:
 	QFont m_font;
 	QString m_text;
 	QTextOption m_option;
+
+};
+
+///////////////////////// GraphicsPictureItem /////////////////////////
+class GraphicsPictureItem :public GraphicsRectItem
+{
+public:
+	GraphicsPictureItem(const QRect &rect, QPixmap &pix, QGraphicsItem *parent = 0);
+	~GraphicsPictureItem();
+
+public:
+	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
+	virtual QString DisplayName() { return tr("Í¼ÏñÍ¼Ôª"); }
+	virtual QGraphicsItem *Duplicate();
+
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	QPixmap m_picture;
 
 };
 

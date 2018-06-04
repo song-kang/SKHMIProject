@@ -51,6 +51,7 @@ void SKDraw::InitSlot()
 	connect(ui.actionRedo,SIGNAL(triggered()),this,SLOT(SlotRedo()));
 	connect(ui.actionZoomin,SIGNAL(triggered()),this,SLOT(SlotZoomin()));
 	connect(ui.actionZoomout,SIGNAL(triggered()),this,SLOT(SlotZoomout()));
+	connect(ui.actionZoomorg,SIGNAL(triggered()),this,SLOT(SlotZoomorg()));
 
 	connect(ui.actionSelect,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionSelectArea,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
@@ -204,6 +205,12 @@ void SKDraw::SlotZoomout()
 		m_pView->ZoomOut();
 }
 
+void SKDraw::SlotZoomorg()
+{
+	if (m_pView)
+		m_pView->ZoomOrg();
+}
+
 void SKDraw::SlotAddShape()
 {
 	if (sender() == ui.actionSelectArea)
@@ -235,6 +242,7 @@ void SKDraw::SlotAddShape()
 			DrawTool::c_drawShape = eDrawText;
 		else if (sender() == ui.actionPicture)
 			DrawTool::c_drawShape = eDrawPicture;
+
 		m_pView->setDragMode(QGraphicsView::NoDrag);
 	}
 	

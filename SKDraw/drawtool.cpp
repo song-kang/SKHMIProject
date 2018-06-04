@@ -20,6 +20,7 @@ static DrawRectTool		c_roundRectTool(eDrawRoundrect);
 static DrawRectTool		c_ellipseTool(eDrawEllipse);
 static DrawRectTool		c_circleTool(eDrawCircle);
 static DrawRectTool		c_textTool(eDrawText);
+static DrawRectTool		c_pictureTool(eDrawPicture);
 
 enum SelectMode
 {
@@ -301,16 +302,31 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 			m_pItem = new GraphicsEllipseItem(QRect(1, 1, 1, 1), true);
 		else if (c_drawShape == eDrawText)
 			m_pItem = new GraphicsTextItem(QRect(0, 0, 50, 25));
+		else if (c_drawShape == eDrawPicture)
+		{
+			QString f = QFileDialog::getOpenFileName(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png)"));
+			if (!f.isEmpty())
+			{
+				QPixmap pix(f);
+				m_pItem = new GraphicsPictureItem(QRect(0, 0, 0, 0), pix);
+			}
+			else
+			{
+				SetCursor(scene,Qt::ArrowCursor);
+				return;
+			}
+		}
 
 		scene->addItem(m_pItem);
 		m_pItem->setPos(event->scenePos());
 
-		if (c_drawShape == eDrawText)
+		if (c_drawShape == eDrawText || c_drawShape == eDrawPicture)
 		{
 			m_pItem->setSelected(true);
 			m_pItem->UpdateCoordinate();
 			m_selectMode = eModeNone;
 			m_pItem = NULL;
+			SetCursor(scene,Qt::ArrowCursor);
 			return;
 		}
 		
@@ -339,7 +355,6 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 
 void DrawRectTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
-	//c_selectTool.mouseMoveEvent(event, scene);
 	DrawTool::mouseMoveEvent(event,scene);
 
 	if (m_pItem != 0)

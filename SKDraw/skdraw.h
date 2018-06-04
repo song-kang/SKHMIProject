@@ -55,6 +55,7 @@ private slots:
 	void SlotRedo();
 	void SlotZoomin();
 	void SlotZoomout();
+	void SlotZoomorg();
 	void SlotAddShape();
 
 	void SlotItemSelected();

@@ -2,8 +2,8 @@
 #include "drawtool.h"
 #include "skdraw.h"
 
-#define DEFAULT_WIDTH		1366
-#define DEFAULT_HEIGHT		768
+#define DEFAULT_WIDTH		800
+#define DEFAULT_HEIGHT		600
 
 ///////////////////////// GridTool /////////////////////////
 GridTool::GridTool(const QSize &grid , const QSize &space)

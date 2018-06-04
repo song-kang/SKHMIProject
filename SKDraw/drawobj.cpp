@@ -840,6 +840,7 @@ GraphicsTextItem::GraphicsTextItem(const QRect &rect, QGraphicsItem *parent)
 {
 	SetPen(QPen(Qt::blue));
 	m_text = "文字";
+	setToolTip(m_text);
 }
 
 GraphicsTextItem::~GraphicsTextItem()
@@ -904,6 +905,7 @@ void GraphicsTextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	QFont font;
 	font.setFamily("Microsoft YaHei");					//字体
 	font.setPointSize(16);								//大小
+	font.setBold(true);									//粗体
 	font.setItalic(false);								//斜体
 	font.setUnderline(false);							//设置下划线
 	font.setOverline(false);							//设置上划线
@@ -918,6 +920,9 @@ void GraphicsTextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	painter->setPen(GetPen());
 	painter->setBrush(GetBrush());
 	painter->drawText(m_localRect, m_text, m_option);
+
+	if (option->state & QStyle::State_Selected)
+		DrawOutline(painter);
 }
 
 bool GraphicsTextItem::SaveToXml(QXmlStreamWriter *xml)
@@ -926,6 +931,83 @@ bool GraphicsTextItem::SaveToXml(QXmlStreamWriter *xml)
 }
 
 bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	return true;
+}
+
+///////////////////////// GraphicsPictureItem /////////////////////////
+GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QPixmap &pix, QGraphicsItem *parent)
+	:GraphicsRectItem(rect, parent),
+	m_picture(pix)
+{
+	m_width = pix.width();
+	m_height = pix.height();
+	m_localRect.setWidth(m_width);
+	m_localRect.setHeight(m_height);
+	m_initialRect = m_localRect;
+}
+
+GraphicsPictureItem::~GraphicsPictureItem()
+{
+
+}
+
+void GraphicsPictureItem::Stretch(int handle, double sx, double sy, const QPointF &origin)
+{
+	QTransform trans;
+	switch (handle)
+	{
+	case eHandleRight:
+	case eHandleLeft:
+		sy = 1;
+		break;
+	case eHandleTop:
+	case eHandleBottom:
+		sx = 1;
+		break;
+	default:
+		break;
+	}
+
+	prepareGeometryChange();
+	trans.scale(sx, sy);
+	m_localRect = trans.mapRect(m_initialRect);
+	m_width = m_localRect.width();
+	m_height = m_localRect.height();
+
+	UpdateHandles();
+}
+
+QGraphicsItem* GraphicsPictureItem::Duplicate()
+{
+	GraphicsPictureItem * item = new GraphicsPictureItem(m_localRect.toRect(), m_picture);
+
+	item->m_width = GetWidth();
+	item->m_height = GetHeight();
+	item->setPos(pos().x(), pos().y());
+	item->SetPen(GetPen());
+	item->SetBrush(GetBrush());
+	item->setTransform(transform());
+	item->setTransformOriginPoint(transformOriginPoint());
+	item->setRotation(rotation());
+	item->setScale(scale());
+	item->setZValue(zValue()+0.1);
+	item->UpdateCoordinate();
+
+	return item;
+}
+
+void GraphicsPictureItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	painter->drawPixmap(m_localRect.toRect(), m_picture);
+}
+
+bool GraphicsPictureItem::SaveToXml(QXmlStreamWriter *xml)
+{
+	return true;
+}
+
+bool GraphicsPictureItem::LoadFromXml(QXmlStreamReader *xml)
 {
 	return true;
 }

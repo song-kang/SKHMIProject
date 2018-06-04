@@ -63,6 +63,7 @@
     </property>
     <addaction name="actionZoomin"/>
     <addaction name="actionZoomout"/>
+    <addaction name="actionZoomorg"/>
    </widget>
    <widget class="QMenu" name="menuTool">
     <property name="title">
@@ -212,6 +213,7 @@
    </attribute>
    <addaction name="actionZoomin"/>
    <addaction name="actionZoomout"/>
+   <addaction name="actionZoomorg"/>
   </widget>
   <widget class="QToolBar" name="shapeToolBar">
    <property name="windowTitle">
@@ -698,6 +700,18 @@
    </property>
    <property name="toolTip">
     <string>图像</string>
+   </property>
+  </action>
+  <action name="actionZoomorg">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/zoomorg</normaloff>:/images/zoomorg</iconset>
+   </property>
+   <property name="text">
+    <string>原始尺寸</string>
+   </property>
+   <property name="toolTip">
+    <string>原始尺寸</string>
    </property>
   </action>
  </widget>
