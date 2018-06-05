@@ -1,4 +1,5 @@
 #include "drawobj.h"
+#include "drawscene.h"
 
 ///////////////////////// ShapeMimeData /////////////////////////
 ShapeMimeData::ShapeMimeData(QList<QGraphicsItem *> items)

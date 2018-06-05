@@ -37,6 +37,7 @@ public:
 
     void Move(qreal x, qreal y);
     void SetState(SelectionHandleState st);
+	void SetBorderColor(QColor c) { m_borderColor = c; update(); }
 	int  GetDirect() const { return m_direct; }
 
 protected:

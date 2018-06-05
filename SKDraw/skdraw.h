@@ -57,6 +57,9 @@ private slots:
 	void SlotZoomout();
 	void SlotZoomorg();
 	void SlotAddShape();
+	void SlotAlign();
+	void SlotBringToFront();
+	void SlotSendToBack();
 
 	void SlotItemSelected();
 	void SlotItemAdded(QGraphicsItem *item);

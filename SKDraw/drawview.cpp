@@ -24,7 +24,6 @@ DrawView::DrawView(QGraphicsScene *scene)
 	m_bMouseTranslate = false;
 	m_scale = 1.0;
 	m_zoomDelta = 0.1;
-	m_zoomCount = 0;
 
 	connect(horizontalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
 	connect(verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
@@ -178,7 +177,6 @@ void DrawView::ZoomIn()
 	scale(1+m_zoomDelta, 1+m_zoomDelta);
 	m_scale *= 1+m_zoomDelta;
 
-	m_zoomCount += 1;
 	UpdateRuler();
 }
 
@@ -187,32 +185,14 @@ void DrawView::ZoomOut()
 	scale(1/(1+m_zoomDelta), 1/(1+m_zoomDelta));
 	m_scale *= 1/(1+m_zoomDelta);
 
-	m_zoomCount -= 1;
 	UpdateRuler();
 }
 
 void DrawView::ZoomOrg()
 {
-	if (m_zoomCount == 0)
-		return;
+	resetMatrix();
+	m_scale = 1.;
 
-	for (int i = 0; 
-		 m_zoomCount > 0 ? i < m_zoomCount : i > m_zoomCount; 
-		 m_zoomCount > 0 ? i++ : i--)
-	{
-		if (m_zoomCount > 0)
-		{
-			scale(1/(1+m_zoomDelta), 1/(1+m_zoomDelta));
-			m_scale *= 1/(1+m_zoomDelta);
-		}
-		else
-		{
-			scale(1+m_zoomDelta, 1+m_zoomDelta);
-			m_scale *= 1+m_zoomDelta;
-		}
-	}
-
-	m_zoomCount = 0;
 	UpdateRuler();
 }
 

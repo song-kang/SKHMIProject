@@ -250,22 +250,106 @@ DrawRotationTool::DrawRotationTool()
 
 DrawRotationTool::~DrawRotationTool()
 {
-
+	
 }
 
 void DrawRotationTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
+	DrawTool::mousePressEvent(event, scene);
 
+	if (event->button() != Qt::LeftButton)
+		return;
+
+	if (!m_bHoverSizer)
+		scene->MouseEvent(event);
+
+	QList<QGraphicsItem *> items = scene->selectedItems();
+	if (items.count() == 1)
+	{
+		AbstractShape * item = qgraphicsitem_cast<AbstractShape*>(items.first());
+		if (item != 0)
+		{
+			m_nDragHandle = item->CollidesWithHandle(event->scenePos());
+			if (m_nDragHandle != eHandleNone)
+			{
+				QPointF origin = item->mapToScene(item->boundingRect().center());
+				qreal len_y = c_last.y() - origin.y();
+				qreal len_x = c_last.x() - origin.x();
+				m_lastAngle = atan2(len_y, len_x) * 180 / 3.1415926;
+				m_oldAngle = item->rotation();
+				m_selectMode = eModeRotate;
+			}
+			else
+			{
+				c_drawShape = eDrawSelection;
+				((DrawView*)scene->GetView())->GetApp()->UpdateActions();
+				c_selectTool.mousePressEvent(event,scene);
+			}
+		}
+	}
 }
 
 void DrawRotationTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
+	DrawTool::mouseMoveEvent(event,scene);
 
+	AbstractShape *item = NULL;
+	QList<QGraphicsItem *> items = scene->selectedItems();
+	if (items.count() == 1)
+	{
+		item = qgraphicsitem_cast<AbstractShape*>(items.first());
+		if (item != NULL && m_nDragHandle != eHandleNone && m_selectMode == eModeRotate)
+		{
+			QPointF origin = item->mapToScene(item->boundingRect().center());
+			qreal len_y = c_last.y() - origin.y();
+			qreal len_x = c_last.x() - origin.x();
+			qreal angle = atan2(len_y, len_x) * 180 / 3.1415926;
+			
+			angle = m_oldAngle + int(angle - m_lastAngle) ;
+
+			if (angle > 360)
+				angle -= 360;
+			if (angle < -360)
+				angle += 360;
+
+			item->setRotation(angle);
+			qDebug() << len_y << ","<< len_x <<","<< m_lastAngle<<","<< angle;
+			SetCursor(scene,QCursor((QPixmap(":/images/rotate"))));
+		}
+		else if (item)
+		{
+			int handle = item->CollidesWithHandle(event->scenePos());
+			if (handle != eHandleNone)
+			{
+				SetCursor(scene,QCursor((QPixmap(":/images/rotate"))));
+				m_bHoverSizer = true;
+			}
+			else
+			{
+				SetCursor(scene,Qt::ArrowCursor);
+				m_bHoverSizer = false;
+			}
+		}
+	}
+
+	scene->MouseEvent(event);
 }
 
 void DrawRotationTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
+	DrawTool::mouseReleaseEvent(event,scene);
 
+	if (event->button() != Qt::LeftButton)
+		return;
+
+	//emit scene->itemRotate(item, m_oldAngle);
+
+	SetCursor(scene,Qt::ArrowCursor);
+	m_selectMode = eModeNone;
+	m_nDragHandle = eHandleNone;
+	m_lastAngle = 0;
+	m_bHoverSizer = false;
+	scene->MouseEvent(event);
 }
 
 ///////////////////////// DrawRectTool /////////////////////////

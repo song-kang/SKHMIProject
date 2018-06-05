@@ -80,7 +80,9 @@ public:
 	virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene);
 
 public:
+	qreal m_oldAngle;
 	qreal m_lastAngle;
+	
 };
 
 ///////////////////////// DrawRectTool ////////////////////////

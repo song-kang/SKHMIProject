@@ -3,8 +3,8 @@
 
 #include "skhead.h"
 #include "sizehandle.h"
-#include "drawscene.h"
 
+class DrawScene;
 class ShapeMimeData : public QMimeData
 {
 	Q_OBJECT
@@ -153,7 +153,7 @@ public:
 	~GraphicsItem();
 
 	enum { Type = UserType + 1 };
-	int  GetType() const { return Type; }
+	virtual int type() const { return Type; }
 
 public:
 	virtual void UpdateHandles();

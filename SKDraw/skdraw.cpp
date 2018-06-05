@@ -66,6 +66,21 @@ void SKDraw::InitSlot()
 	connect(ui.actionText,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionPicture,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 
+	connect(ui.actionLeft,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+	connect(ui.actionRight,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+	connect(ui.actionTop,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+	connect(ui.actionBottom,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+	connect(ui.actionVCenter,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+	connect(ui.actionHCenter,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+	connect(ui.actionVSpace,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+	connect(ui.actionHSpace,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+	connect(ui.actionHeight,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+	connect(ui.actionWidth,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+	connect(ui.actionSize,SIGNAL(triggered()),this,SLOT(SlotAlign()));
+
+	connect(ui.actionfront,SIGNAL(triggered()),this,SLOT(SlotBringToFront()));
+	connect(ui.actionback,SIGNAL(triggered()),this,SLOT(SlotSendToBack()));
+
 	connect(m_app, SIGNAL(SigKeyUp()), this, SLOT(SlotKeyUp()));
 	connect(m_app, SIGNAL(SigKeyDown()), this, SLOT(SlotKeyDown()));
 	connect(m_app, SIGNAL(SigKeyLeft()), this, SLOT(SlotKeyLeft()));
@@ -252,6 +267,68 @@ void SKDraw::SlotAddShape()
 	UpdateActions();
 }
 
+void SKDraw::SlotAlign()
+{
+	if (sender() == ui.actionLeft)
+		m_pScene->Align(eAlignLeft);
+	else if (sender() == ui.actionRight)
+		m_pScene->Align(eAlignRight);
+	else if (sender() == ui.actionTop)
+		m_pScene->Align(eAlignTop);
+	else if (sender() == ui.actionBottom)
+		m_pScene->Align(eAlignBottom);
+	else if (sender() == ui.actionVCenter)
+		m_pScene->Align(eAlignVCenter);
+	else if (sender() == ui.actionHCenter)
+		m_pScene->Align(eAlignHCenter);
+	else if (sender() == ui.actionVSpace)
+		m_pScene->Align(eAlignVSpace);
+	else if (sender()==ui.actionHSpace)
+		m_pScene->Align(eAlignHSpace);
+	else if (sender() == ui.actionHeight)
+		m_pScene->Align(eAlignHeight);
+	else if (sender() == ui.actionWidth)
+		m_pScene->Align(eAlignWidth);
+	else if (sender () == ui.actionSize)
+		m_pScene->Align(eAlignSize);
+}
+
+void SKDraw::SlotBringToFront()
+{
+	if (m_pScene->selectedItems().isEmpty() || m_pScene->selectedItems().count() != 1)
+		return;
+
+	QGraphicsItem *selectedItem = m_pScene->selectedItems().first();
+
+	qreal zValue = 0;
+	QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
+	foreach (QGraphicsItem *item, overlapItems)
+	{
+		if (item->zValue() >= zValue && item->type() == GraphicsItem::Type)
+			zValue = item->zValue() + 0.1;
+	}
+
+	selectedItem->setZValue(zValue);
+}
+
+void SKDraw::SlotSendToBack()
+{
+	if (m_pScene->selectedItems().isEmpty() || m_pScene->selectedItems().count() != 1)
+		return;
+
+	QGraphicsItem *selectedItem = m_pScene->selectedItems().first();
+
+	qreal zValue = 0;
+	QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
+	foreach (QGraphicsItem *item, overlapItems)
+	{
+		if (item->zValue() <= zValue && item->type() == GraphicsItem::Type)
+			zValue = item->zValue() - 0.1;
+	}
+
+	selectedItem->setZValue(zValue);
+}
+
 void SKDraw::UpdateActions()
 {
 	ui.actionNew->setEnabled(m_pScene ? false : true);
@@ -264,12 +341,12 @@ void SKDraw::UpdateActions()
 
 	ui.actionSelect->setEnabled(m_pScene);
 	ui.actionSelectArea->setEnabled(m_pScene);
+	ui.actionRotate->setEnabled(m_pScene);
 	ui.actionLine->setEnabled(m_pScene);
 	ui.actionRectangle->setEnabled(m_pScene);
 	ui.actionRoundRect->setEnabled(m_pScene);
 	ui.actionEllipse->setEnabled(m_pScene);
 	ui.actionCircle->setEnabled(m_pScene);
-	ui.actionRotate->setEnabled(m_pScene);
 	ui.actionPolygon->setEnabled(m_pScene);
 	ui.actionPolyline->setEnabled(m_pScene);
 	ui.actionText->setEnabled(m_pScene);
@@ -280,12 +357,12 @@ void SKDraw::UpdateActions()
 
 	ui.actionSelect->setChecked(DrawTool::c_drawShape == eDrawSelection);
 	ui.actionSelectArea->setChecked(DrawTool::c_drawShape == eDrawSelectionArea);
+	ui.actionRotate->setChecked(DrawTool::c_drawShape == eDrawRotation);
 	ui.actionLine->setChecked(DrawTool::c_drawShape == eDrawLine);
 	ui.actionRectangle->setChecked(DrawTool::c_drawShape == eDrawRectangle);
 	ui.actionRoundRect->setChecked(DrawTool::c_drawShape == eDrawRoundrect);
 	ui.actionEllipse->setChecked(DrawTool::c_drawShape == eDrawEllipse);
 	ui.actionCircle->setChecked(DrawTool::c_drawShape == eDrawCircle);
-	ui.actionRotate->setChecked(DrawTool::c_drawShape == eDrawRotation);
 	ui.actionPolygon->setChecked(DrawTool::c_drawShape == eDrawPolygon);
 	ui.actionPolyline->setChecked(DrawTool::c_drawShape == eDrawPolyline);
 	ui.actionText->setChecked(DrawTool::c_drawShape == eDrawText);
@@ -293,6 +370,34 @@ void SKDraw::UpdateActions()
 
 	ui.actionUndo->setEnabled(m_pUndoStack->canUndo());
 	ui.actionRedo->setEnabled(m_pUndoStack->canRedo());
+
+	ui.actionLeft->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+	ui.actionRight->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+	ui.actionTop->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+	ui.actionBottom->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+	ui.actionVCenter->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+	ui.actionHCenter->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+	ui.actionVSpace->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+	ui.actionHSpace->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+	ui.actionWidth->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+	ui.actionHeight->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+	ui.actionSize->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1 && m_pScene->GetAlignItem());
+
+	ui.actionfront->setEnabled(false);
+	ui.actionback->setEnabled(false);
+	if (m_pScene && m_pScene->selectedItems().count() == 1)
+	{
+		QGraphicsItem *selectedItem = m_pScene->selectedItems().first();
+		QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
+		foreach (QGraphicsItem *item, overlapItems)
+		{
+			if (item->type() == GraphicsItem::Type)
+			{
+				ui.actionfront->setEnabled(true);
+				ui.actionback->setEnabled(true);
+			}
+		}
+	}
 }
 
 DrawView* SKDraw::CreateView()
@@ -316,13 +421,6 @@ DrawView* SKDraw::CreateView()
 
 void SKDraw::SlotItemSelected()
 {
-	QList<QGraphicsItem*> l = m_pScene->selectedItems();
-	if (l.count() > 0 && l.first()->isSelected())
-	{
-		QGraphicsItem *item = m_pScene->selectedItems().first();
-		int a = 0;
-	}
-
 	UpdateActions();
 }
 

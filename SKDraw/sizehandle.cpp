@@ -19,7 +19,6 @@ SizeHandleRect::SizeHandleRect(QGraphicsItem *parent, int direct, bool control)
 {
     this->setAcceptHoverEvents(true);
     setFlag(QGraphicsItem::ItemIgnoresTransformations,true);
-
     hide();
 }
 
@@ -33,7 +32,6 @@ void SizeHandleRect::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     painter->save();
     painter->setPen(QPen(Qt::white, Qt::SolidLine));
     painter->setBrush(QBrush(m_borderColor));
-	//painter->setBrush(Qt::NoBrush);
     painter->setRenderHint(QPainter::Antialiasing,false);
 
     if (m_controlPoint)
@@ -66,7 +64,7 @@ void SizeHandleRect::SetState(SelectionHandleState st)
         break;
     }
 
-    m_borderColor = Qt::black;
+    //m_borderColor = Qt::black;
     m_state = st;
 }
 
@@ -77,16 +75,16 @@ void SizeHandleRect::Move(qreal x, qreal y)
 
 void SizeHandleRect::hoverEnterEvent(QGraphicsSceneHoverEvent *e)
 {
-    m_borderColor = Qt::blue;
-    update();
+    //m_borderColor = Qt::black;
+    //update();
 
     QGraphicsRectItem::hoverEnterEvent(e);
 }
 
 void SizeHandleRect::hoverLeaveEvent(QGraphicsSceneHoverEvent *e)
 {
-    m_borderColor = Qt::white;
-    update();
+    //m_borderColor = Qt::black;
+    //update();
 
     QGraphicsRectItem::hoverLeaveEvent(e);
 }

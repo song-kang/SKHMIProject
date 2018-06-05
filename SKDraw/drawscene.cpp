@@ -40,10 +40,40 @@ void GridTool::PaintGrid(QPainter *painter, const QRect &rect)
 	painter->restore();
 }
 
+///////////////////////// BBoxSort /////////////////////////
+class BBoxSort
+{
+public:
+	BBoxSort( QGraphicsItem * item , const QRectF & rect , eAlignType alignType )
+		:item_(item),box(rect),align(alignType)
+	{
+		min_ = alignType == eAlignHSpace ? box.topLeft().x() : box.topLeft().y();
+		max_ = alignType == eAlignHSpace ? box.bottomRight().x() : box.bottomRight().y();
+		extent_ = alignType == eAlignHSpace ? box.width() : box.height();
+		anchor = min_*0.5 + max_ * 0.5;
+	}
+	qreal min() { return min_; }
+	qreal max() { return max_; }
+	qreal extent() { return extent_; }
+	QGraphicsItem * item_;
+	qreal anchor;
+	qreal min_;
+	qreal max_;
+	qreal extent_;
+	QRectF box;
+	eAlignType align ;
+};
+
+bool operator < (const BBoxSort &a, const BBoxSort &b)
+{
+	return (a.anchor < b.anchor);
+}
+
 ///////////////////////// DrawScene /////////////////////////
 DrawScene::DrawScene(QObject *parent)
 	: QGraphicsScene(parent)
 {
+	m_app = (SKDraw*)parent;
 	m_pView = NULL;
 	m_pGrid = new GridTool();
 
@@ -55,6 +85,9 @@ DrawScene::DrawScene(QObject *parent)
 	setBackgroundBrush(Qt::darkGray);
 
 	m_dx = m_dy = 0;
+	m_pAlignItem = NULL;
+
+	connect(this, SIGNAL(selectionChanged()), this, SLOT(SlotSelectionChanged()));
 }
 
 DrawScene::~DrawScene()
@@ -159,4 +192,177 @@ void DrawScene::keyReleaseEvent(QKeyEvent *e)
 	//	emit itemMoved(NULL, QPointF(m_dx,m_dy));
 
 	m_dx = m_dy = 0;
+}
+
+void DrawScene::SlotSelectionChanged()
+{
+	QList<QGraphicsItem*> l = selectedItems();
+	if (l.count() == 0)
+	{
+		SetAlignItem(NULL);
+	}
+	else if (l.count() == 1 && l.first()->isSelected())
+	{
+		AbstractShape *sp = qgraphicsitem_cast<AbstractShape*>(l.first());
+		if (sp == m_pAlignItem)
+			SetAlignItem(NULL);
+		else
+		{
+			SetAlignItem(sp);
+			for (Handles::iterator it = sp->m_handles.begin(); it != sp->m_handles.end(); ++it)
+				(*it)->SetBorderColor(Qt::black);
+		}
+	}
+	else if (l.count() > 1)
+	{
+		bool bFind = false;
+		foreach (QGraphicsItem *item, selectedItems())
+		{
+			AbstractShape *sp = qgraphicsitem_cast<AbstractShape*>(item);
+			if (sp != m_pAlignItem)
+			{
+				for (Handles::iterator it = sp->m_handles.begin(); it != sp->m_handles.end(); ++it)
+					(*it)->SetBorderColor(Qt::gray);
+			}
+			bFind = true;
+		}
+
+		if (!bFind && m_pAlignItem)
+			clearSelection();
+	}
+
+}
+
+void DrawScene::Align(eAlignType alignType)
+{
+	if (!m_pAlignItem)
+		return;
+
+	QRectF rectref = m_pAlignItem->mapRectToScene(m_pAlignItem->boundingRect());
+	int nLeft, nRight, nTop, nBottom;
+	nLeft = nRight = rectref.center().x();
+	nTop = nBottom = rectref.center().y();
+	QPointF pt = rectref.center();
+	qreal width = m_pAlignItem->GetWidth();
+	qreal height = m_pAlignItem->GetHeight();
+
+	if (alignType == eAlignHSpace || alignType == eAlignVSpace)
+	{
+		std::vector<BBoxSort> sorted;
+		foreach (QGraphicsItem *item , selectedItems())
+		{
+			QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
+			if (g)
+				continue;
+
+			sorted.push_back(BBoxSort(item,item->mapRectToScene(item->boundingRect()),alignType));
+		}
+
+		std::sort(sorted.begin(), sorted.end());
+
+		unsigned int len = sorted.size();
+		bool changed = false;
+		float dist = (sorted.back().max()-sorted.front().min());
+		float span = 0;
+		for (unsigned int i = 0; i < len; i++)
+			span += sorted[i].extent();
+
+		float step = (dist - span) / (len - 1);
+		float pos = sorted.front().min();
+		for (std::vector<BBoxSort>::iterator it(sorted.begin()); it < sorted.end(); ++it)
+		{
+			QPointF t;
+			if (alignType == eAlignHSpace)
+				t.setX( pos - it->min() );
+			else
+				t.setY(pos - it->min());
+
+			it->item_->moveBy(t.x(),t.y());
+			//emit itemMoved(it->item_, t);
+			changed = true;
+
+			pos += it->extent();
+			pos += step;
+		}
+	}
+	else
+	{
+		foreach (QGraphicsItem *item, selectedItems())
+		{
+			QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
+			if (g)
+				continue;
+
+			QRectF rectItem = item->mapRectToScene(item->boundingRect());
+			QPointF ptNew = rectItem.center();
+			switch (alignType)
+			{
+			case eAlignTop:
+				ptNew.setY(nTop + (rectItem.height()-rectref.height())/2);
+				break;
+			case eAlignHCenter:
+				ptNew.setY(pt.y());
+				break;
+			case eAlignVCenter:
+				ptNew.setX(pt.x());
+				break;
+			case eAlignBottom:
+				ptNew.setY(nBottom - (rectItem.height()-rectref.height())/2);
+				break;
+			case eAlignLeft:
+				ptNew.setX(nLeft - (rectref.width()-rectItem.width())/2);
+				break;
+			case eAlignRight:
+				ptNew.setX(nRight + (rectref.width()-rectItem.width())/2);
+				break;
+			case eAlignSize:
+				{
+					AbstractShape * aitem = qgraphicsitem_cast<AbstractShape*>(item);
+					if ( aitem ){
+						qreal fx = width / aitem->GetWidth();
+						qreal fy = height / aitem->GetHeight();
+						if ( fx == 1.0 && fy == 1.0 ) break;
+						aitem->Stretch(eHandleRightBottom,fx,fy,aitem->Opposite(eHandleRightBottom));
+						aitem->UpdateCoordinate();
+						//emit itemResize(aitem, eHandleRightBottom, QPointF(fx,fy));
+					}
+				}
+				break;
+			case eAlignWidth:
+				{
+					AbstractShape * aitem = qgraphicsitem_cast<AbstractShape*>(item);
+					if ( aitem ){
+						qreal fx = width / aitem->GetWidth();
+						if ( fx == 1.0 ) break;
+						aitem->Stretch(eHandleRight,fx,1,aitem->Opposite(eHandleRight));
+						aitem->UpdateCoordinate();
+						//emit itemResize(aitem, eHandleRight, QPointF(fx,1));
+					}
+				}
+				break;
+
+			case eAlignHeight:
+				{
+					AbstractShape * aitem = qgraphicsitem_cast<AbstractShape*>(item);
+					if ( aitem ){
+
+						qreal fy = height / aitem->GetHeight();
+						if (fy == 1.0 ) break ;
+						aitem->Stretch(eHandleBottom,1,fy,aitem->Opposite(eHandleBottom));
+						aitem->UpdateCoordinate();
+						//emit itemResize(aitem, eHandleBottom, QPointF(1,fy));
+					}
+				}
+				break;
+			}
+
+			QPointF ptLast= rectItem.center();
+			QPointF ptMove = ptNew - ptLast;
+			if ( !ptMove.isNull())
+			{
+				item->moveBy(ptMove.x(), ptMove.y());
+				//emit itemMoved(item,ptMove);
+			}
+		}
+	}
 }

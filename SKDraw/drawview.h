@@ -15,6 +15,7 @@ public:
 
 	void SetApp(SKDraw *app) { m_app = app; }
 	void SetMouseTranslate(bool b) { m_bMouseTranslate = b; }
+	SKDraw* GetApp() { return m_app; }
 
 public:
 	void ZoomIn();
@@ -39,7 +40,6 @@ private:
 	bool m_bMouseTranslate;
 	qreal m_scale;
 	qreal m_zoomDelta;
-	int	m_zoomCount;
 
 private:
 	void UpdateRuler();

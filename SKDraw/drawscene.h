@@ -2,6 +2,22 @@
 #define DRAWSCENE_H
 
 #include "skhead.h"
+#include "drawobj.h"
+
+enum eAlignType
+{
+	eAlignLeft=0,
+	eAlignRight,
+	eAlignTop,
+	eAlignBottom,
+	eAlignVCenter,
+	eAlignHCenter,
+	eAlignVSpace,
+	eAlignHSpace,
+	eAlignHeight,
+	eAlignWidth,
+	eAlignSize,
+};
 
 ///////////////////////// GridTool /////////////////////////
 class GridTool
@@ -22,6 +38,7 @@ private:
 };
 
 ///////////////////////// DrawScene /////////////////////////
+class SKDraw;
 class DrawTool;
 class DrawScene : public QGraphicsScene
 {
@@ -38,8 +55,13 @@ public:
 	void SetWidth(int w) { m_iWidth = w; }
 	void SetHeight(int h) { m_iHeight = h; }
 	void SetPressShift(bool b) { m_bPressShift = b; }
+	void SetAlignItem(AbstractShape *shape) { m_pAlignItem = shape; }
+
 	bool GetPressShift() { return m_bPressShift; }
-	QGraphicsView *GetView() { return m_pView; }
+	QGraphicsView* GetView() { return m_pView; }
+	AbstractShape* GetAlignItem() { return m_pAlignItem; }
+
+	void Align(eAlignType alignType);
 
 public:
 	void MouseEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -63,12 +85,20 @@ private:
 	qreal m_dy;
 	bool m_bMoved;
 
+	AbstractShape *m_pAlignItem;
+
 signals:
 	void itemAdded(QGraphicsItem *item);
 	void itemMoved(QGraphicsItem *item, const QPointF &oldPosition);
 	void itemRotate(QGraphicsItem *item, const qreal oldAngle);
 	void itemResize(QGraphicsItem *item , int handle, const QPointF &scale);
 	void itemControl(QGraphicsItem *item , int handle, const QPointF &newPos, const QPointF &lastPos_);
+
+private slots:
+	void SlotSelectionChanged();
+
+private:
+	SKDraw *m_app;
 	
 };
 
