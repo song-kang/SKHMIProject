@@ -1012,3 +1012,261 @@ bool GraphicsPictureItem::LoadFromXml(QXmlStreamReader *xml)
 {
 	return true;
 }
+
+///////////////////////// GraphicsItemGroup /////////////////////////
+GraphicsItemGroup::GraphicsItemGroup(QGraphicsItem *parent)
+	:AbstractShapeType <QGraphicsItemGroup>(parent),
+	m_parent(parent)
+{
+	m_itemsBoundingRect = QRectF();
+	m_handles.reserve(eHandleLeft);
+	for (int i = eHandleLeftTop; i <= eHandleLeft; i++)
+	{
+		SizeHandleRect *shr = new SizeHandleRect(this, i);
+		m_handles.push_back(shr);
+	}
+
+	setFlag(QGraphicsItem::ItemIsMovable, true);
+	setFlag(QGraphicsItem::ItemIsSelectable, true);
+	setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+	this->setAcceptHoverEvents(true);
+}
+
+GraphicsItemGroup::~GraphicsItemGroup()
+{
+
+}
+
+void GraphicsItemGroup::Stretch( int handle, double sx, double sy, const QPointF &origin)
+{
+	QTransform trans;
+	switch (handle) 
+	{
+	case eHandleRight:
+	case eHandleLeft:
+		sy = 1;
+		break;
+	case eHandleTop:
+	case eHandleBottom:
+		sx = 1;
+		break;
+	default:
+		break;
+	}
+
+	foreach (QGraphicsItem *item, childItems())
+	{
+		AbstractShape * ab = qgraphicsitem_cast<AbstractShape*>(item);
+		if (ab && !qgraphicsitem_cast<SizeHandleRect*>(ab))
+			ab->Stretch(handle,sx,sy,ab->mapFromParent(origin));
+	}
+
+	trans.translate(origin.x(),origin.y());
+	trans.scale(sx,sy);
+	trans.translate(-origin.x(),-origin.y());
+
+	prepareGeometryChange();
+	m_itemsBoundingRect = trans.mapRect(m_initialRect);
+	m_width = m_itemsBoundingRect.width();
+	m_height = m_itemsBoundingRect.height();
+	UpdateHandles();
+}
+
+void GraphicsItemGroup::UpdateCoordinate()
+{
+	QPointF pt1,pt2,delta;
+	if (m_itemsBoundingRect.isNull())
+		m_itemsBoundingRect = QGraphicsItemGroup::boundingRect();
+
+	m_initialRect = m_itemsBoundingRect;
+	m_width = m_itemsBoundingRect.width();
+	m_height = m_itemsBoundingRect.height();
+	
+	pt1 = mapToScene(transformOriginPoint());
+	pt2 = mapToScene(m_itemsBoundingRect.center());
+	delta = pt1 - pt2;
+	setTransform(transform().translate(delta.x(),delta.y()));
+	setTransformOriginPoint(m_itemsBoundingRect.center());
+	moveBy(-delta.x(), -delta.y());
+
+	foreach (QGraphicsItem *item, childItems())
+	{
+		AbstractShape *ab = qgraphicsitem_cast<AbstractShape*>(item);
+		if (ab && !qgraphicsitem_cast<SizeHandleRect*>(ab))
+			ab->UpdateCoordinate();
+	}
+
+	UpdateHandles();
+}
+
+void GraphicsItemGroup::UpdateHandles()
+{
+	const QRectF geom = this->boundingRect();
+	for (Handles::iterator it = m_handles.begin(); it != m_handles.end(); it++)
+	{
+		SizeHandleRect *handle = *it;
+		switch (handle->GetDirect()) 
+		{
+		case eHandleLeftTop:
+			handle->Move(geom.x(), geom.y());
+			break;
+		case eHandleTop:
+			handle->Move(geom.x() + geom.width() / 2, geom.y());
+			break;
+		case eHandleRightTop:
+			handle->Move(geom.x() + geom.width(), geom.y());
+			break;
+		case eHandleRight:
+			handle->Move(geom.x() + geom.width(), geom.y() + geom.height() / 2);
+			break;
+		case eHandleRightBottom:
+			handle->Move(geom.x() + geom.width(), geom.y() + geom.height());
+			break;
+		case eHandleBottom:
+			handle->Move(geom.x() + geom.width() / 2, geom.y() + geom.height());
+			break;
+		case eHandleLeftBottom:
+			handle->Move(geom.x(), geom.y() + geom.height());
+			break;
+		case eHandleLeft:
+			handle->Move(geom.x(), geom.y() + geom.height() / 2);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+QGraphicsItem* GraphicsItemGroup::Duplicate()
+{
+	GraphicsItemGroup *item = NULL;
+	QList<QGraphicsItem*> copylist = DuplicateItems();
+
+	item = CreateGroup(copylist);
+	item->m_width = m_width;
+	item->m_height = m_height;
+	item->setPos(pos().x(),pos().y());
+	item->SetPen(GetPen());
+	item->SetBrush(GetBrush());
+	item->setTransform(transform());
+	item->setTransformOriginPoint(transformOriginPoint());
+	item->setRotation(rotation());
+	item->setScale(scale());
+	item->setZValue(zValue()+0.1);
+	item->UpdateCoordinate();
+
+	return item;
+}
+
+QRectF GraphicsItemGroup::boundingRect() const
+{
+	return m_itemsBoundingRect;
+}
+
+bool GraphicsItemGroup::SaveToXml(QXmlStreamWriter *xml)
+{
+	return true;
+}
+
+bool GraphicsItemGroup::LoadFromXml(QXmlStreamReader *xml)
+{
+	return true;
+}
+
+GraphicsItemGroup* GraphicsItemGroup::CreateGroup(const QList<QGraphicsItem *> &items) const
+{
+	QList<QGraphicsItem *> ancestors;
+	int n = 0;
+	QPointF pt = items.first()->pos();
+	if (!items.isEmpty())
+	{
+		QGraphicsItem *parent = items.at(n++);
+		while ((parent = parent->parentItem()))
+			ancestors.append(parent);
+	}
+
+	QGraphicsItem *commonAncestor = 0;
+	if (!ancestors.isEmpty())
+	{
+		while (n < items.size())
+		{
+			int commonIndex = -1;
+			QGraphicsItem *parent = items.at(n++);
+			do
+			{
+				int index = ancestors.indexOf(parent, qMax(0, commonIndex));
+				if (index != -1)
+				{
+					commonIndex = index;
+					break;
+				}
+			} while ((parent = parent->parentItem()));
+
+			if (commonIndex == -1)
+			{
+				commonAncestor = 0;
+				break;
+			}
+
+			commonAncestor = ancestors.at(commonIndex);
+		}
+	}
+
+	GraphicsItemGroup *group = new GraphicsItemGroup(commonAncestor);
+	foreach (QGraphicsItem *item, items)
+	{
+		item->setSelected(false);
+		QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
+		if (!g)
+			group->addToGroup(item);
+	}
+
+	return group;
+}
+
+QList<QGraphicsItem*> GraphicsItemGroup::DuplicateItems() const
+{
+	QList<QGraphicsItem*> copylist ;
+	foreach (QGraphicsItem *shape, childItems())
+	{
+		AbstractShape *ab = qgraphicsitem_cast<AbstractShape*>(shape);
+		if (ab && !qgraphicsitem_cast<SizeHandleRect*>(ab))
+		{
+			QGraphicsItem * cp = ab->Duplicate();
+			copylist.append(cp);
+		}
+	}
+
+	return copylist;
+}
+
+QVariant GraphicsItemGroup::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
+{
+	if (change == QGraphicsItem::ItemSelectedHasChanged)
+	{
+        QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(parentItem());
+        if (!g)
+		{
+            SetState(value.toBool() ? eSelectionHandleActive : eSelectionHandleOff);
+		}
+        else
+		{
+            setSelected(false);
+            return QVariant::fromValue<bool>(false);
+        }
+
+        if(value.toBool())
+            UpdateCoordinate();
+    }
+
+    return QGraphicsItemGroup::itemChange(change, value);
+}
+
+void GraphicsItemGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+
+	if (option->state & QStyle::State_Selected)
+		DrawOutline(painter);
+}

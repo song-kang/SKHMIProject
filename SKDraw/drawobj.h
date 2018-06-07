@@ -22,6 +22,7 @@ private:
 
 typedef std::vector<SizeHandleRect*> Handles;
 
+///////////////////////// AbstractShapeType /////////////////////////
 template <typename BaseType = QGraphicsItem>
 class AbstractShapeType : public BaseType
 {
@@ -363,6 +364,49 @@ public:
 
 public:
 	QPixmap m_picture;
+
+};
+
+///////////////////////// GraphicsItemGroup /////////////////////////
+class GraphicsItemGroup : public QObject,
+	public AbstractShapeType <QGraphicsItemGroup>
+{
+	Q_OBJECT
+
+public:
+	explicit GraphicsItemGroup(QGraphicsItem *parent = 0);
+	~GraphicsItemGroup();
+
+	enum { Type = UserType + 2 };
+	int  type() const { return Type; }
+	
+public:
+	virtual void Move(const QPointF & point) {};
+	virtual void Control(int dir, const QPointF & delta) {};
+	virtual void Stretch( int handle, double sx, double sy, const QPointF &origin);
+	virtual void UpdateCoordinate();
+	virtual void UpdateHandles();
+	virtual QString DisplayName() const { return tr("×éºÏÍ¼Ôª"); }
+	virtual QGraphicsItem *Duplicate();
+	virtual QRectF boundingRect() const;
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+protected:
+	QGraphicsItem *m_parent;
+	QRectF m_itemsBoundingRect;
+	QRectF m_initialRect;
+
+protected:
+	GraphicsItemGroup *CreateGroup(const QList<QGraphicsItem *> &items) const;
+	QList<QGraphicsItem*> DuplicateItems() const;
+	
+	virtual QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value);
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+
+signals:
+	void SigSelectedChange(QGraphicsItem *item);
 
 };
 

@@ -62,6 +62,7 @@ public:
 	AbstractShape* GetAlignItem() { return m_pAlignItem; }
 
 	void Align(eAlignType alignType);
+	GraphicsItemGroup* CreateGroup(const QList<QGraphicsItem *> &items, bool isAdd = true);
 
 public:
 	void MouseEvent(QGraphicsSceneMouseEvent *mouseEvent);

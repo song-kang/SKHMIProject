@@ -66,3 +66,102 @@ void RemoveShapeCommand::redo()
 			m_pScene->removeItem(item);
 	}
 }
+
+///////////////////////// GroupShapeCommand /////////////////////////
+GroupShapeCommand::GroupShapeCommand(QGraphicsItemGroup *group, QGraphicsScene *graphicsScene, QUndoCommand *parent)
+	: QUndoCommand(parent)
+{
+	m_pScene = graphicsScene;
+	m_pItemGroup = group;
+	m_listItem = group->childItems();
+	b_undo = false;
+}
+
+GroupShapeCommand::~GroupShapeCommand()
+{
+
+}
+
+void GroupShapeCommand::undo()
+{
+	m_pItemGroup->setSelected(false);
+
+	QList<QGraphicsItem*> plist = m_pItemGroup->childItems();
+	foreach (QGraphicsItem *item, plist)
+	{
+		item->setSelected(true);
+		m_pItemGroup->removeFromGroup(item);
+	}
+
+	m_pScene->removeItem(m_pItemGroup);
+	m_pScene->update();
+	b_undo = true;
+}
+
+void GroupShapeCommand::redo()
+{
+	if (b_undo)
+	{
+		foreach (QGraphicsItem *item, m_listItem)
+		{
+			item->setSelected(false);
+			QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
+			if (!g)
+				m_pItemGroup->addToGroup(item);
+		}
+	}
+
+	m_pItemGroup->setSelected(true);
+	if (m_pItemGroup->scene() == NULL)
+		m_pScene->addItem(m_pItemGroup);
+
+	m_pScene->update();
+}
+
+///////////////////////// UnGroupShapeCommand /////////////////////////
+UnGroupShapeCommand::UnGroupShapeCommand(QGraphicsItemGroup *group, QGraphicsScene *graphicsScene, QUndoCommand *parent)
+	:QUndoCommand(parent)
+{
+	m_pScene = graphicsScene;
+	m_pItemGroup = group;
+	m_listItem = group->childItems();
+}
+
+UnGroupShapeCommand::~UnGroupShapeCommand()
+{
+	delete m_pItemGroup;
+}
+
+void UnGroupShapeCommand::undo()
+{
+	foreach (QGraphicsItem *item, m_listItem)
+	{
+		item->setSelected(false);
+		QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
+		if (!g)
+			m_pItemGroup->addToGroup(item);
+	}
+
+	m_pItemGroup->setSelected(true);
+	if (m_pItemGroup->scene() == NULL)
+		m_pScene->addItem(m_pItemGroup);
+
+	m_pScene->update();
+}
+
+void UnGroupShapeCommand::redo()
+{
+	m_pItemGroup->setSelected(false);
+	foreach (QGraphicsItem *item, m_pItemGroup->childItems())
+	{
+		item->setSelected(true);
+		m_pItemGroup->removeFromGroup(item);
+
+		AbstractShape *ab = qgraphicsitem_cast<AbstractShape*>(item);
+		if (ab && !qgraphicsitem_cast<SizeHandleRect*>(ab))
+			ab->UpdateCoordinate();
+	}
+
+	m_pScene->removeItem(m_pItemGroup);
+	m_pScene->update();
+}

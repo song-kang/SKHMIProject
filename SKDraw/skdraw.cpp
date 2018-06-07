@@ -81,6 +81,9 @@ void SKDraw::InitSlot()
 	connect(ui.actionfront,SIGNAL(triggered()),this,SLOT(SlotBringToFront()));
 	connect(ui.actionback,SIGNAL(triggered()),this,SLOT(SlotSendToBack()));
 
+	connect(ui.actionGroup,SIGNAL(triggered()),this,SLOT(SlotGroup()));
+	connect(ui.actionUngroup,SIGNAL(triggered()),this,SLOT(SlotUngroup()));
+
 	connect(m_app, SIGNAL(SigKeyUp()), this, SLOT(SlotKeyUp()));
 	connect(m_app, SIGNAL(SigKeyDown()), this, SLOT(SlotKeyDown()));
 	connect(m_app, SIGNAL(SigKeyLeft()), this, SLOT(SlotKeyLeft()));
@@ -329,6 +332,28 @@ void SKDraw::SlotSendToBack()
 	selectedItem->setZValue(zValue);
 }
 
+void SKDraw::SlotGroup()
+{
+	QList<QGraphicsItem *> selectedItems = m_pScene->selectedItems();
+	if (selectedItems.count() > 1)
+	{
+		GraphicsItemGroup *group = m_pScene->CreateGroup(selectedItems);
+		QUndoCommand *groupCommand = new GroupShapeCommand(group,m_pScene);
+		m_pUndoStack->push(groupCommand);
+	}
+}
+
+void SKDraw::SlotUngroup()
+{
+	QGraphicsItem *selectedItem = m_pScene->selectedItems().first();
+	GraphicsItemGroup *group = dynamic_cast<GraphicsItemGroup*>(selectedItem);
+	if (group)
+	{
+		QUndoCommand *unGroupCommand = new UnGroupShapeCommand(group, m_pScene);
+		m_pUndoStack->push(unGroupCommand);
+	}
+}
+
 void SKDraw::UpdateActions()
 {
 	ui.actionNew->setEnabled(m_pScene ? false : true);
@@ -398,6 +423,9 @@ void SKDraw::UpdateActions()
 			}
 		}
 	}
+
+	ui.actionGroup->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1);
+	ui.actionUngroup->setEnabled(m_pScene && m_pScene->selectedItems().count() == 1 && dynamic_cast<GraphicsItemGroup*>(m_pScene->selectedItems().first()));
 }
 
 DrawView* SKDraw::CreateView()

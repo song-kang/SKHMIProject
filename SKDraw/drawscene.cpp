@@ -2,8 +2,8 @@
 #include "drawtool.h"
 #include "skdraw.h"
 
-#define DEFAULT_WIDTH		800
-#define DEFAULT_HEIGHT		600
+#define DEFAULT_WIDTH		1366
+#define DEFAULT_HEIGHT		768
 
 ///////////////////////// GridTool /////////////////////////
 GridTool::GridTool(const QSize &grid , const QSize &space)
@@ -365,4 +365,59 @@ void DrawScene::Align(eAlignType alignType)
 			}
 		}
 	}
+}
+
+GraphicsItemGroup* DrawScene::CreateGroup(const QList<QGraphicsItem *> &items, bool isAdd)
+{
+	QList<QGraphicsItem *> ancestors;
+	int n = 0;
+	QPointF pt = items.first()->pos();
+	if (!items.isEmpty())
+	{
+		QGraphicsItem *parent = items.at(n++);
+		while ((parent = parent->parentItem()))
+			ancestors.append(parent);
+	}
+
+	QGraphicsItem *commonAncestor = 0;
+	if (!ancestors.isEmpty())
+	{
+		while (n < items.size())
+		{
+			int commonIndex = -1;
+			QGraphicsItem *parent = items.at(n++);
+			do
+			{
+				int index = ancestors.indexOf(parent, qMax(0, commonIndex));
+				if (index != -1)
+				{
+					commonIndex = index;
+					break;
+				}
+			} while ((parent = parent->parentItem()));
+
+			if (commonIndex == -1)
+			{
+				commonAncestor = 0;
+				break;
+			}
+
+			commonAncestor = ancestors.at(commonIndex);
+		}
+	}
+
+	GraphicsItemGroup *group = new GraphicsItemGroup(commonAncestor);
+	if (!commonAncestor && isAdd )
+		addItem(group);
+
+	foreach (QGraphicsItem *item, items)
+	{
+		item->setSelected(false);
+		QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
+		if (!g)
+			group->addToGroup(item);
+	}
+
+	group->UpdateCoordinate();
+	return group;
 }

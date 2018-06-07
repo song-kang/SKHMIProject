@@ -60,6 +60,8 @@ private slots:
 	void SlotAlign();
 	void SlotBringToFront();
 	void SlotSendToBack();
+	void SlotGroup();
+	void SlotUngroup();
 
 	void SlotItemSelected();
 	void SlotItemAdded(QGraphicsItem *item);
