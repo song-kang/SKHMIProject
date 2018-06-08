@@ -20,6 +20,7 @@
 *.error
 *.warn
 *.opensdf
+*.moc
 moc*.cpp
 ui_*.h
 qrc_*.cpp

@@ -12,7 +12,11 @@ AddShapeCommand::AddShapeCommand(QGraphicsItem *item, QGraphicsScene *scene, QUn
 AddShapeCommand::~AddShapeCommand()
 {
 	if (m_pItem)
-		delete m_pItem;
+	{
+		GraphicsItemGroup *group = dynamic_cast<GraphicsItemGroup*>(m_pItem);
+		if (group->type() != GraphicsItemGroup::Type)
+			delete m_pItem;
+	}
 }
 
 void AddShapeCommand::undo()

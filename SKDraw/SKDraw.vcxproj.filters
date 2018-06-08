@@ -33,6 +33,12 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Source Files\qtpropertybrowser">
+      <UniqueIdentifier>{4d771592-fb54-44b5-9728-828750187220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\qtpropertybrowser">
+      <UniqueIdentifier>{d3c13519-546e-4964-8610-5eb3862c02a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -101,6 +107,81 @@
     <ClCompile Include="commands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="qtpropertybrowser\qtbuttonpropertybrowser.cpp">
+      <Filter>Source Files\qtpropertybrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="qtpropertybrowser\qtgroupboxpropertybrowser.cpp">
+      <Filter>Source Files\qtpropertybrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="qtpropertybrowser\qtpropertybrowser.cpp">
+      <Filter>Source Files\qtpropertybrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="qtpropertybrowser\qtpropertybrowserutils.cpp">
+      <Filter>Source Files\qtpropertybrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="qtpropertybrowser\qtvariantproperty.cpp">
+      <Filter>Source Files\qtpropertybrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtbuttonpropertybrowser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtbuttonpropertybrowser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qteditorfactory.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qteditorfactory.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtgroupboxpropertybrowser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtgroupboxpropertybrowser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtpropertybrowser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtpropertybrowser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtpropertybrowserutils_p.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtpropertybrowserutils_p.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtpropertymanager.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtpropertymanager.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qttreepropertybrowser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qttreepropertybrowser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtvariantproperty.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtvariantproperty.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_qtpropertybrowser.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="qtpropertybrowser\qtpropertymanager.cpp">
+      <Filter>Source Files\qtpropertybrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="qtpropertybrowser\qttreepropertybrowser.cpp">
+      <Filter>Source Files\qtpropertybrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="qtpropertybrowser\qteditorfactory.cpp">
+      <Filter>Source Files\qtpropertybrowser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="skdraw.h">
@@ -129,6 +210,51 @@
     </CustomBuild>
     <CustomBuild Include="commands.h">
       <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\Debug\qteditorfactory.moc">
+      <Filter>Generated Files\Debug</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\Release\qteditorfactory.moc">
+      <Filter>Generated Files\Release</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\Debug\qtpropertymanager.moc">
+      <Filter>Generated Files\Debug</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\Release\qtpropertymanager.moc">
+      <Filter>Generated Files\Release</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\Debug\qttreepropertybrowser.moc">
+      <Filter>Generated Files\Debug</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\Release\qttreepropertybrowser.moc">
+      <Filter>Generated Files\Release</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qtpropertybrowser\qtbuttonpropertybrowser.h">
+      <Filter>Header Files\qtpropertybrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qtpropertybrowser\qteditorfactory.h">
+      <Filter>Header Files\qtpropertybrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qtpropertybrowser\qtgroupboxpropertybrowser.h">
+      <Filter>Header Files\qtpropertybrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qtpropertybrowser\qtpropertybrowser.h">
+      <Filter>Header Files\qtpropertybrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qtpropertybrowser\qtpropertybrowserutils_p.h">
+      <Filter>Header Files\qtpropertybrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qtpropertybrowser\qtpropertymanager.h">
+      <Filter>Header Files\qtpropertybrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qtpropertybrowser\qttreepropertybrowser.h">
+      <Filter>Header Files\qtpropertybrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qtpropertybrowser\qtvariantproperty.h">
+      <Filter>Header Files\qtpropertybrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qtpropertybrowser\qtpropertybrowser.qrc">
+      <Filter>Resource Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
