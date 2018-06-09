@@ -30,27 +30,41 @@ public:
 	explicit AbstractShapeType(QGraphicsItem * parent = 0)
 		:BaseType(parent)
 	{
+		m_penWidth = 1.0;
+		m_penStyle = Qt::SolidLine;
 		m_pen = QPen(Qt::white);
-		m_pen.setWidthF(1.0);
-		m_brush = QBrush(Qt::NoBrush);
-		m_width = m_height = 0.0;
+		m_pen.setWidthF(m_penWidth);
+		m_pen.setStyle(m_penStyle);
+
+		m_brushStyle = Qt::NoBrush;
+		m_brush = QBrush(m_brushStyle);
+
+		m_width = 0.0;
+		m_height = 0.0;
 	}
 	virtual ~AbstractShapeType(){}
 
 	QPen   GetPen() const { return m_pen; }
 	QColor GetPenColor() const { return m_pen.color(); }
+	qreal  GetPenWidth() const { return m_penWidth; }
+	Qt::PenStyle GetPenStyle() const { return m_penStyle; }
 	QBrush GetBrush() const { return m_brush; }
 	QColor GetBrushColor() const { return m_brush.color(); }
+	Qt::BrushStyle GetBrushStyle() const { return m_brush.style(); }
 	qreal  GetWidth() const { return m_width ; }
 	qreal  GetHeight() const {return m_height;}
 	QRectF GetRect() const { return m_localRect; }
 
 	void SetPen(const QPen & pen) { m_pen = pen; }
-	void SetPenColor(const QColor & color) { m_pen.setColor(color); }
-	void SetBrush( const QBrush & brush ) { m_brush = brush ; }
-	void SetBrushColor( const QColor & color ) { m_brush.setColor(color);}
+	void SetPenColor(const QColor & color) { m_pen.setColor(color); update(); }
+	void SetPenWidth(const qreal width) { m_pen.setWidthF(width); update(); }
+	void SetPenStyle(const Qt::PenStyle style) { m_pen.setStyle(style); update(); }
+	void SetBrush(const QBrush & brush ) { m_brush = brush ; }
+	void SetBrushColor(const QColor & color ) { m_brush.setColor(color); update(); }
+	void SetBrushStyle(const Qt::BrushStyle style) { m_brush.setStyle(style); update(); }
 	void SetWidth(qreal width) { m_width = width; UpdateCoordinate(); }
 	void SetHeight(qreal height) { m_height = height; UpdateCoordinate(); }
+	void SetRect(QRectF rect) { m_localRect = rect; }
 
 	void SetState(SelectionHandleState st)
 	{
@@ -121,8 +135,12 @@ public:
 	}
 
 public:
-	QPen   m_pen ;
+	QPen   m_pen;
+	qreal  m_penWidth;
+	Qt::PenStyle m_penStyle;
 	QBrush m_brush;
+	Qt::BrushStyle m_brushStyle;
+
 	qreal  m_width;
 	qreal  m_height;
 	QRectF m_localRect;
@@ -149,6 +167,15 @@ class GraphicsItem : public QObject, public AbstractShapeType <QGraphicsItem>
 {
 	Q_OBJECT
 
+	Q_PROPERTY(QPointF Position READ pos WRITE setPos)
+	Q_PROPERTY(qreal Width READ GetWidth WRITE SetWidth)
+	Q_PROPERTY(qreal Height READ GetHeight WRITE SetHeight)
+	Q_PROPERTY(QColor PenColor READ GetPenColor WRITE SetPenColor)
+	Q_PROPERTY(qreal PenWidth READ GetPenWidth WRITE SetPenWidth)
+	Q_PROPERTY(Qt::PenStyle PenStyle READ GetPenStyle WRITE SetPenStyle)
+	Q_PROPERTY(QColor BrushColor READ GetBrushColor WRITE SetBrushColor)
+	Q_PROPERTY(Qt::BrushStyle BrushStyle READ GetBrushStyle WRITE SetBrushStyle)
+
 public:
 	GraphicsItem(QGraphicsItem * parent);
 	~GraphicsItem();
@@ -156,10 +183,16 @@ public:
 	enum { Type = UserType + 1 };
 	virtual int type() const { return Type; }
 
+	void SetScene(DrawScene *scene) { m_pScene = scene; }
+	DrawScene* GetScene() { return m_pScene; }
+
 public:
 	virtual void UpdateHandles();
 	virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value);
+
+private:
+	DrawScene *m_pScene;
 
 signals:
 	void SigSelectedChange(QGraphicsItem *item);
@@ -172,9 +205,6 @@ class GraphicsPolygonItem : public GraphicsItem
 public:
 	GraphicsPolygonItem(QGraphicsItem * parent = 0);
 	~GraphicsPolygonItem();
-
-	void SetScene(DrawScene *scene) { m_pScene = scene; }
-	DrawScene* GetScene() { return m_pScene; }
 
 public:
 	virtual void Move(const QPointF &point);
@@ -197,9 +227,6 @@ public:
 public:
 	QPolygonF m_points;
 	QPolygonF m_initialPoints;
-
-private:
-	DrawScene *m_pScene;
 
 };
 
@@ -251,14 +278,22 @@ public:
 ///////////////////////// GraphicsRectItem /////////////////////////
 class GraphicsRectItem : public GraphicsItem
 {
+	Q_OBJECT
+
+	Q_PROPERTY(QSize RoundRadius READ GetRound WRITE SetRound)
+
 public:
 	GraphicsRectItem(const QRect &rect, bool isRound = false, QGraphicsItem * parent = 0);
 	~GraphicsRectItem();
 
-	void SetScene(DrawScene *scene) { m_pScene = scene; }
-	void SetRx(qreal r) { m_rx = r; }
-	void SetRy(qreal r) { m_ry = r; }
-	DrawScene* GetScene() { return m_pScene; }
+	//void SetScene(DrawScene *scene) { m_pScene = scene; }
+	void SetRound(QSize size) { m_round = size; }
+	//void SetRx(qreal r) { m_rx = r; }
+	//void SetRy(qreal r) { m_ry = r; }
+	//DrawScene* GetScene() { return m_pScene; }
+	QSize GetRound() { return m_round; }
+	//qreal GetRx() { return m_rx; }
+	//qreal GetRy() { return m_ry; }
 	QRectF GetLocalRect() const { return m_localRect; }
 
 public:
@@ -278,14 +313,15 @@ public:
 
 public:
 	bool m_isRound;
-	qreal m_rx;
-	qreal m_ry;
+	//qreal m_rx;
+	//qreal m_ry;
+	QSize m_round;
 	QRectF m_initialRect;
 	QPointF m_opposite;
 	QPointF m_originPoint;
 
-private:
-	DrawScene *m_pScene;
+//private:
+//	DrawScene *m_pScene;
 
 };
 
@@ -317,6 +353,10 @@ public:
 ///////////////////////// GraphicsTextItem /////////////////////////
 class GraphicsTextItem :public GraphicsRectItem
 {
+	Q_OBJECT
+
+	Q_PROPERTY(QString Text READ GetText WRITE SetText)
+
 public:
 	GraphicsTextItem(const QRect &rect, QGraphicsItem *parent = 0);
 	~GraphicsTextItem();

@@ -162,6 +162,19 @@
          <string notr="true">1</string>
         </property>
        </column>
+       <column>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>1</string>
+        </property>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
@@ -179,9 +192,6 @@
      <property name="margin">
       <number>0</number>
      </property>
-     <item row="0" column="0">
-      <widget class="QTableView" name="tableView"/>
-     </item>
     </layout>
    </widget>
   </widget>

@@ -65,6 +65,9 @@ public:
 	QPointF m_initialPositions;
 	QPointF m_opposite;
 	//GraphicsItemGroup *selLayer;
+
+private:
+	void UpdatePropertyEditor(DrawScene *scene, GraphicsItem *item);
 };
 
 ///////////////////////// DrawRotationTool ////////////////////////

@@ -181,8 +181,11 @@ void DrawScene::keyPressEvent(QKeyEvent *e)
 	m_dy += dy;
 	if (m_bMoved)
 	{
-		foreach (QGraphicsItem *item, selectedItems()) 
+		foreach (QGraphicsItem *item, selectedItems())
+		{
 			item->moveBy(dx,dy);
+			((DrawView*)m_pView)->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)item)->metaObject());
+		}
 	}
 }
 

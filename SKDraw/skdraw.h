@@ -7,6 +7,7 @@
 #include "drawtool.h"
 #include "drawscene.h"
 #include "drawview.h"
+#include "propertyeditor.h"
 
 class SKDraw : public QMainWindow
 {
@@ -20,6 +21,7 @@ public:
 	void Start();
 
 	void SetApp(SKBaseWidget *app) { m_app = app; }
+	PropertyEditor* GetPropertyEditor() { return m_pPropertyEditor; }
 
 public:
 	void UpdateActions();
@@ -27,11 +29,13 @@ public:
 private:
 	Ui::SKDrawClass ui;
 
-	SKBaseWidget *m_app;
-	DrawView	 *m_pView;
-	DrawScene	 *m_pScene;
-	QUndoStack   *m_pUndoStack;
-	QMenu		 *m_pEditMenu;
+	SKBaseWidget	*m_app;
+	DrawView		*m_pView;
+	DrawScene		*m_pScene;
+	QUndoStack		*m_pUndoStack;
+	QMenu			*m_pEditMenu;
+	QObject			*m_pControlledObject;
+	PropertyEditor	*m_pPropertyEditor;
 
 private:
 	void Init();

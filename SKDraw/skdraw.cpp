@@ -28,6 +28,9 @@ void SKDraw::Init()
 	m_pEditMenu->addAction(ui.actionCopy);
 	m_pEditMenu->addAction(ui.actionPaste);
 
+	m_pPropertyEditor = new PropertyEditor(this);
+	ui.dockWidgetProperty->setWidget(m_pPropertyEditor);
+
 	UpdateActions();
 }
 
@@ -449,6 +452,16 @@ DrawView* SKDraw::CreateView()
 
 void SKDraw::SlotItemSelected()
 {
+	QList<QGraphicsItem*> l = m_pScene->selectedItems();
+	if (l.count() == 1 && l.first()->isSelected())
+	{
+		QGraphicsItem *item = l.first();
+		m_pControlledObject = dynamic_cast<QObject*>(item);
+		m_pPropertyEditor->SetObject(m_pControlledObject);
+	}
+	else
+		m_pPropertyEditor->Clear();
+
 	UpdateActions();
 }
 

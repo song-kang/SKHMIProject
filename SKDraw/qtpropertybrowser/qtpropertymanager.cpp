@@ -3493,7 +3493,7 @@ void QtSizePropertyManager::initializeProperty(QtProperty *property)
     d_ptr->m_values[property] = QtSizePropertyManagerPrivate::Data();
 
     QtProperty *wProp = d_ptr->m_intPropertyManager->addProperty();
-    wProp->setPropertyName(tr("Width"));
+    wProp->setPropertyName(tr("宽度"));
     d_ptr->m_intPropertyManager->setValue(wProp, 0);
     d_ptr->m_intPropertyManager->setMinimum(wProp, 0);
     d_ptr->m_propertyToW[property] = wProp;
@@ -3501,7 +3501,7 @@ void QtSizePropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(wProp);
 
     QtProperty *hProp = d_ptr->m_intPropertyManager->addProperty();
-    hProp->setPropertyName(tr("Height"));
+    hProp->setPropertyName(tr("高度"));
     d_ptr->m_intPropertyManager->setValue(hProp, 0);
     d_ptr->m_intPropertyManager->setMinimum(hProp, 0);
     d_ptr->m_propertyToH[property] = hProp;
@@ -6418,7 +6418,7 @@ void QtColorPropertyManager::initializeProperty(QtProperty *property)
     d_ptr->m_values[property] = val;
 
     QtProperty *rProp = d_ptr->m_intPropertyManager->addProperty();
-    rProp->setPropertyName(tr("Red"));
+    rProp->setPropertyName(tr("红"));
     d_ptr->m_intPropertyManager->setValue(rProp, val.red());
     d_ptr->m_intPropertyManager->setRange(rProp, 0, 0xFF);
     d_ptr->m_propertyToR[property] = rProp;
@@ -6426,7 +6426,7 @@ void QtColorPropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(rProp);
 
     QtProperty *gProp = d_ptr->m_intPropertyManager->addProperty();
-    gProp->setPropertyName(tr("Green"));
+    gProp->setPropertyName(tr("绿"));
     d_ptr->m_intPropertyManager->setValue(gProp, val.green());
     d_ptr->m_intPropertyManager->setRange(gProp, 0, 0xFF);
     d_ptr->m_propertyToG[property] = gProp;
@@ -6434,7 +6434,7 @@ void QtColorPropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(gProp);
 
     QtProperty *bProp = d_ptr->m_intPropertyManager->addProperty();
-    bProp->setPropertyName(tr("Blue"));
+    bProp->setPropertyName(tr("蓝"));
     d_ptr->m_intPropertyManager->setValue(bProp, val.blue());
     d_ptr->m_intPropertyManager->setRange(bProp, 0, 0xFF);
     d_ptr->m_propertyToB[property] = bProp;
@@ -6442,7 +6442,7 @@ void QtColorPropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(bProp);
 
     QtProperty *aProp = d_ptr->m_intPropertyManager->addProperty();
-    aProp->setPropertyName(tr("Alpha"));
+    aProp->setPropertyName(tr("透明度"));
     d_ptr->m_intPropertyManager->setValue(aProp, val.alpha());
     d_ptr->m_intPropertyManager->setRange(aProp, 0, 0xFF);
     d_ptr->m_propertyToA[property] = aProp;

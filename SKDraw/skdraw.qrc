@@ -41,5 +41,25 @@
         <file alias="text">Resources/images/text.png</file>
         <file alias="picture">Resources/images/picture.png</file>
         <file alias="zoomorg">Resources/images/zoomorg.png</file>
+        <file alias="BDiagPattern">Resources/images/BDiagPattern.png</file>
+        <file alias="CrossPattern">Resources/images/CrossPattern.png</file>
+        <file alias="Dense1Pattern">Resources/images/Dense1Pattern.png</file>
+        <file alias="Dense2Pattern">Resources/images/Dense2Pattern.png</file>
+        <file alias="Dense3Pattern">Resources/images/Dense3Pattern.png</file>
+        <file alias="Dense4Pattern">Resources/images/Dense4Pattern.png</file>
+        <file alias="Dense5Pattern">Resources/images/Dense5Pattern.png</file>
+        <file alias="Dense6Pattern">Resources/images/Dense6Pattern.png</file>
+        <file alias="Dense7Pattern">Resources/images/Dense7Pattern.png</file>
+        <file alias="DiagCrossPattern">Resources/images/DiagCrossPattern.png</file>
+        <file alias="FDiagPattern">Resources/images/FDiagPattern.png</file>
+        <file alias="HorPattern">Resources/images/HorPattern.png</file>
+        <file alias="VerPattern">Resources/images/VerPattern.png</file>
+        <file alias="none">Resources/images/none.png</file>
+        <file alias="SolidPattern">Resources/images/SolidPattern.png</file>
+        <file alias="DashDotDotLine">Resources/images/DashDotDotLine.png</file>
+        <file alias="DashDotLine">Resources/images/DashDotLine.png</file>
+        <file alias="DashLine">Resources/images/DashLine.png</file>
+        <file alias="DotLine">Resources/images/DotLine.png</file>
+        <file alias="SolidLine">Resources/images/SolidLine.png</file>
     </qresource>
 </RCC>

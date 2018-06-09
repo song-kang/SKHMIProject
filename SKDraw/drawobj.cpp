@@ -1,5 +1,7 @@
 #include "drawobj.h"
 #include "drawscene.h"
+#include "drawview.h"
+#include "skdraw.h"
 
 ///////////////////////// ShapeMimeData /////////////////////////
 ShapeMimeData::ShapeMimeData(QList<QGraphicsItem *> items)
@@ -38,6 +40,8 @@ GraphicsItem::GraphicsItem(QGraphicsItem *parent)
 		SizeHandleRect *shr = new SizeHandleRect(this, i);
 		m_handles.push_back(shr);
 	}
+
+	m_pScene = NULL;
 }
 
 GraphicsItem::~GraphicsItem()
@@ -111,7 +115,6 @@ QVariant GraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, cons
 GraphicsPolygonItem::GraphicsPolygonItem(QGraphicsItem *parent)
 	:GraphicsItem(parent)
 {
-	m_pScene = NULL;
 	SetBrush(Qt::green);
 }
 
@@ -569,7 +572,9 @@ GraphicsRectItem::GraphicsRectItem(const QRect &rect, bool isRound, QGraphicsIte
 	:GraphicsItem(parent)
 	,m_isRound(isRound)
 {
-	m_rx = m_ry = 5;
+	//m_rx = m_ry = 5;
+	m_round.setWidth(5);
+	m_round.setHeight(5);
 	m_localRect = rect;
 	m_initialRect = rect;
 	m_width = rect.width();
@@ -689,7 +694,8 @@ QPainterPath GraphicsRectItem::Shape() const
 	QPainterPath path;
 
 	if (m_isRound)
-		path.addRoundedRect(m_localRect,m_rx,m_ry);
+		//path.addRoundedRect(m_localRect,m_rx,m_ry);
+		path.addRoundedRect(m_localRect,m_round.width(),m_round.height());
 	else
 		path.addRect(m_localRect);
 
@@ -702,7 +708,8 @@ void GraphicsRectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	painter->setBrush(GetBrush());
 
 	if (m_isRound)
-		painter->drawRoundedRect(m_localRect,m_rx,m_ry);
+		//painter->drawRoundedRect(m_localRect,m_rx,m_ry);
+		painter->drawRoundedRect(m_localRect,m_round.width(),m_round.height());
 	else
 		painter->drawRect(m_localRect.toRect());
 }

@@ -221,11 +221,13 @@ void DrawSelectTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScen
 		AbstractShape *item = qgraphicsitem_cast<AbstractShape*>(items.first());
 		if (item != 0  && m_selectMode == eModeMove && c_last != c_down)
 		{
+			UpdatePropertyEditor(scene, (GraphicsItem*)items.at(0));
 			item->setPos(m_initialPositions + c_last - c_down);
 			//emit scene->itemMoved(item , c_last - c_down );
 		}
 		else if (item !=0 && (m_selectMode == eModeSize || m_selectMode == eModeEditor) && c_last != c_down)
 		{
+			UpdatePropertyEditor(scene, (GraphicsItem*)items.at(0));
 			item->UpdateCoordinate();
 		}
 	}
@@ -239,6 +241,11 @@ void DrawSelectTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScen
 	m_bHoverSizer = false;
 	m_opposite = QPointF();
 	scene->MouseEvent(event);
+}
+
+void DrawSelectTool::UpdatePropertyEditor(DrawScene *scene, GraphicsItem *item)
+{
+	((DrawView*)scene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(item->metaObject());
 }
 
 ///////////////////////// DrawRotationTool /////////////////////////
@@ -402,6 +409,7 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 		}
 
 		scene->addItem(m_pItem);
+		m_pItem->SetScene(scene);
 		m_pItem->setPos(event->scenePos());
 
 		if (c_drawShape == eDrawText || c_drawShape == eDrawPicture)
