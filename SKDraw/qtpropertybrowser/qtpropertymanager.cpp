@@ -2661,7 +2661,7 @@ void QtLocalePropertyManager::initializeProperty(QtProperty *property)
     metaEnumProvider()->localeToIndex(val.language(), val.country(), &langIdx, &countryIdx);
 
     QtProperty *languageProp = d_ptr->m_enumPropertyManager->addProperty();
-    languageProp->setPropertyName(tr("Language"));
+    languageProp->setPropertyName(tr("语言"));
     d_ptr->m_enumPropertyManager->setEnumNames(languageProp, metaEnumProvider()->languageEnumNames());
     d_ptr->m_enumPropertyManager->setValue(languageProp, langIdx);
     d_ptr->m_propertyToLanguage[property] = languageProp;
@@ -2669,7 +2669,7 @@ void QtLocalePropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(languageProp);
 
     QtProperty *countryProp = d_ptr->m_enumPropertyManager->addProperty();
-    countryProp->setPropertyName(tr("Country"));
+    countryProp->setPropertyName(tr("国家"));
     d_ptr->m_enumPropertyManager->setEnumNames(countryProp, metaEnumProvider()->countryEnumNames(val.language()));
     d_ptr->m_enumPropertyManager->setValue(countryProp, countryIdx);
     d_ptr->m_propertyToCountry[property] = countryProp;
@@ -3891,7 +3891,7 @@ void QtSizeFPropertyManager::initializeProperty(QtProperty *property)
     d_ptr->m_values[property] = QtSizeFPropertyManagerPrivate::Data();
 
     QtProperty *wProp = d_ptr->m_doublePropertyManager->addProperty();
-    wProp->setPropertyName(tr("Width"));
+    wProp->setPropertyName(tr("宽度"));
     d_ptr->m_doublePropertyManager->setDecimals(wProp, decimals(property));
     d_ptr->m_doublePropertyManager->setValue(wProp, 0);
     d_ptr->m_doublePropertyManager->setMinimum(wProp, 0);
@@ -3900,7 +3900,7 @@ void QtSizeFPropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(wProp);
 
     QtProperty *hProp = d_ptr->m_doublePropertyManager->addProperty();
-    hProp->setPropertyName(tr("Height"));
+    hProp->setPropertyName(tr("高度"));
     d_ptr->m_doublePropertyManager->setDecimals(hProp, decimals(property));
     d_ptr->m_doublePropertyManager->setValue(hProp, 0);
     d_ptr->m_doublePropertyManager->setMinimum(hProp, 0);
@@ -4287,7 +4287,7 @@ void QtRectPropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(yProp);
 
     QtProperty *wProp = d_ptr->m_intPropertyManager->addProperty();
-    wProp->setPropertyName(tr("Width"));
+    wProp->setPropertyName(tr("宽度"));
     d_ptr->m_intPropertyManager->setValue(wProp, 0);
     d_ptr->m_intPropertyManager->setMinimum(wProp, 0);
     d_ptr->m_propertyToW[property] = wProp;
@@ -4295,7 +4295,7 @@ void QtRectPropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(wProp);
 
     QtProperty *hProp = d_ptr->m_intPropertyManager->addProperty();
-    hProp->setPropertyName(tr("Height"));
+    hProp->setPropertyName(tr("高度"));
     d_ptr->m_intPropertyManager->setValue(hProp, 0);
     d_ptr->m_intPropertyManager->setMinimum(hProp, 0);
     d_ptr->m_propertyToH[property] = hProp;
@@ -4755,7 +4755,7 @@ void QtRectFPropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(yProp);
 
     QtProperty *wProp = d_ptr->m_doublePropertyManager->addProperty();
-    wProp->setPropertyName(tr("Width"));
+    wProp->setPropertyName(tr("宽度"));
     d_ptr->m_doublePropertyManager->setDecimals(wProp, decimals(property));
     d_ptr->m_doublePropertyManager->setValue(wProp, 0);
     d_ptr->m_doublePropertyManager->setMinimum(wProp, 0);
@@ -4764,7 +4764,7 @@ void QtRectFPropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(wProp);
 
     QtProperty *hProp = d_ptr->m_doublePropertyManager->addProperty();
-    hProp->setPropertyName(tr("Height"));
+    hProp->setPropertyName(tr("高度"));
     d_ptr->m_doublePropertyManager->setDecimals(hProp, decimals(property));
     d_ptr->m_doublePropertyManager->setValue(hProp, 0);
     d_ptr->m_doublePropertyManager->setMinimum(hProp, 0);
@@ -6092,7 +6092,7 @@ void QtFontPropertyManager::initializeProperty(QtProperty *property)
     d_ptr->m_values[property] = val;
 
     QtProperty *familyProp = d_ptr->m_enumPropertyManager->addProperty();
-    familyProp->setPropertyName(tr("Family"));
+    familyProp->setPropertyName(tr("字体名称"));
     if (d_ptr->m_familyNames.empty())
         d_ptr->m_familyNames = fontDatabase()->families();
     d_ptr->m_enumPropertyManager->setEnumNames(familyProp, d_ptr->m_familyNames);
@@ -6105,7 +6105,7 @@ void QtFontPropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(familyProp);
 
     QtProperty *pointSizeProp = d_ptr->m_intPropertyManager->addProperty();
-    pointSizeProp->setPropertyName(tr("Point Size"));
+    pointSizeProp->setPropertyName(tr("字体大小"));
     d_ptr->m_intPropertyManager->setValue(pointSizeProp, val.pointSize());
     d_ptr->m_intPropertyManager->setMinimum(pointSizeProp, 1);
     d_ptr->m_propertyToPointSize[property] = pointSizeProp;
@@ -6113,35 +6113,35 @@ void QtFontPropertyManager::initializeProperty(QtProperty *property)
     property->addSubProperty(pointSizeProp);
 
     QtProperty *boldProp = d_ptr->m_boolPropertyManager->addProperty();
-    boldProp->setPropertyName(tr("Bold"));
+    boldProp->setPropertyName(tr("粗体"));
     d_ptr->m_boolPropertyManager->setValue(boldProp, val.bold());
     d_ptr->m_propertyToBold[property] = boldProp;
     d_ptr->m_boldToProperty[boldProp] = property;
     property->addSubProperty(boldProp);
 
     QtProperty *italicProp = d_ptr->m_boolPropertyManager->addProperty();
-    italicProp->setPropertyName(tr("Italic"));
+    italicProp->setPropertyName(tr("斜体"));
     d_ptr->m_boolPropertyManager->setValue(italicProp, val.italic());
     d_ptr->m_propertyToItalic[property] = italicProp;
     d_ptr->m_italicToProperty[italicProp] = property;
     property->addSubProperty(italicProp);
 
     QtProperty *underlineProp = d_ptr->m_boolPropertyManager->addProperty();
-    underlineProp->setPropertyName(tr("Underline"));
+    underlineProp->setPropertyName(tr("下划线"));
     d_ptr->m_boolPropertyManager->setValue(underlineProp, val.underline());
     d_ptr->m_propertyToUnderline[property] = underlineProp;
     d_ptr->m_underlineToProperty[underlineProp] = property;
     property->addSubProperty(underlineProp);
 
     QtProperty *strikeOutProp = d_ptr->m_boolPropertyManager->addProperty();
-    strikeOutProp->setPropertyName(tr("Strikeout"));
+    strikeOutProp->setPropertyName(tr("删除线"));
     d_ptr->m_boolPropertyManager->setValue(strikeOutProp, val.strikeOut());
     d_ptr->m_propertyToStrikeOut[property] = strikeOutProp;
     d_ptr->m_strikeOutToProperty[strikeOutProp] = property;
     property->addSubProperty(strikeOutProp);
 
     QtProperty *kerningProp = d_ptr->m_boolPropertyManager->addProperty();
-    kerningProp->setPropertyName(tr("Kerning"));
+    kerningProp->setPropertyName(tr("字距调整"));
     d_ptr->m_boolPropertyManager->setValue(kerningProp, val.kerning());
     d_ptr->m_propertyToKerning[property] = kerningProp;
     d_ptr->m_kerningToProperty[kerningProp] = property;

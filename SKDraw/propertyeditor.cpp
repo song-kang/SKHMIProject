@@ -1,4 +1,5 @@
 #include "propertyeditor.h"
+#include "drawobj.h"
 
 PropertyEditor::PropertyEditor(QWidget *parent)
 	: QWidget(parent)
@@ -34,15 +35,20 @@ PropertyEditor::~PropertyEditor()
 void PropertyEditor::InitMap()
 {
 	m_mapTranslate.insert("Text", "文本");
+	m_mapTranslate.insert("Font", "字体");
 	m_mapTranslate.insert("Width", "宽度");
 	m_mapTranslate.insert("Height", "高度");
 	m_mapTranslate.insert("Position", "位置");
+	m_mapTranslate.insert("Scale", "缩放比例");
+	m_mapTranslate.insert("Tooltip", "提示信息");
+	m_mapTranslate.insert("Rotation", "旋转角度");
 	m_mapTranslate.insert("PenColor", "画笔颜色");
 	m_mapTranslate.insert("PenWidth", "画笔粗细");
 	m_mapTranslate.insert("PenStyle", "画笔风格");
 	m_mapTranslate.insert("BrushColor", "画刷颜色");
 	m_mapTranslate.insert("BrushStyle", "画刷风格");
 	m_mapTranslate.insert("RoundRadius", "圆角半径");
+	
 }
 
 void PropertyEditor::SlotValueChanged(QtProperty *property, int value)
@@ -56,7 +62,7 @@ void PropertyEditor::SlotValueChanged(QtProperty *property, int value)
 	if (metaProperty.isEnumType())
 		metaProperty.write(m_pObject, value);
 
-	UpdateProperties(metaObject);
+	//UpdateProperties(metaObject);
 }
 
 void PropertyEditor::SlotValueChanged(QtProperty *property, const QVariant &value)
@@ -70,7 +76,7 @@ void PropertyEditor::SlotValueChanged(QtProperty *property, const QVariant &valu
 	if (!metaProperty.isEnumType())
 		metaProperty.write(m_pObject, value);
 
-	UpdateProperties(metaObject);
+	//UpdateProperties(metaObject);
 }
 
 void PropertyEditor::Clear()
@@ -111,6 +117,9 @@ void PropertyEditor::AddProperties(const QMetaObject *metaObject)
 		QtVariantProperty *subProperty = NULL;
 
 		QMetaProperty metaProperty = metaObject->property(idx);
+		if (!IsVisibleProperty(metaProperty.name()))
+			continue;
+
 		int type = metaProperty.userType();
 		if (metaProperty.isEnumType())
 		{
@@ -160,13 +169,83 @@ void PropertyEditor::UpdateProperties(const QMetaObject *metaObject)
 	for (int idx = metaObject->propertyOffset(); idx < metaObject->propertyCount(); idx++)
 	{
 		QMetaProperty metaProperty = metaObject->property(idx);
+		if (!IsVisibleProperty(metaProperty.name()))
+			continue;
+
+		QString a = metaProperty.name();
+		int b = metaProperty.read(m_pObject).toInt();
+
 		if (m_classToIndexToProperty.contains(metaObject) && m_classToIndexToProperty[metaObject].contains(idx))
 		{
 			QtVariantProperty *subProperty = m_classToIndexToProperty[metaObject][idx];
+			
 			if (!metaProperty.isEnumType())
 				subProperty->setValue(metaProperty.read(m_pObject));
 		}
 	}
+}
+
+bool PropertyEditor::IsVisibleProperty(QString property)
+{
+	if (property == "Position" || property == "Width" || property == "Height" || property == "Scale" || property == "Tooltip" || property == "Rotation")
+		return true;
+
+	QString shape = ((GraphicsItem*)m_pObject)->GetName();
+	if (shape == "多边形图元")
+	{
+		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle")
+			return true;
+		else
+			return false;
+	}
+	else if (shape == "线段图元" || shape == "折线图元")
+	{
+		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle")
+			return true;
+		else
+			return false;
+	}
+	else if (shape == "圆角矩形图元")
+	{
+		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle" || property == "RoundRadius")
+			return true;
+		else
+			return false;
+	}
+	else if (shape == "矩形图元")
+	{
+		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle")
+			return true;
+		else
+			return false;
+	}
+	else if (shape == "圆形图元")
+	{
+		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle")
+			return true;
+		else
+			return false;
+	}
+	else if (shape == "椭圆形图元")
+	{
+		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle")
+			return true;
+		else
+			return false;
+	}
+	else if (shape == "文字图元")
+	{
+		if (property == "PenColor" || property == "Text" || property == "Font" || property == "TextOption")
+			return true;
+		else
+			return false;
+	}
+	else if (shape == "图像图元")
+	{
+		return false;
+	}
+
+	return false;
 }
 
 void PropertyEditor::EnumEditor(int index, QString name, QStringList &enumNames, QMap<int, QIcon> &enumIcons)

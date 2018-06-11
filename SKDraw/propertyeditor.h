@@ -39,6 +39,7 @@ private:
 	QMap<QString, QString> m_mapTranslate;
 
 private:
+	bool IsVisibleProperty(QString property);
 	void EnumEditor(int index, QString name, QStringList &enumNames, QMap<int, QIcon> &enumIcons);
 
 private slots:

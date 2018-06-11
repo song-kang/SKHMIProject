@@ -85,6 +85,9 @@ public:
 public:
 	qreal m_oldAngle;
 	qreal m_lastAngle;
+
+private:
+	void UpdatePropertyEditor(DrawScene *scene, GraphicsItem *item);
 	
 };
 

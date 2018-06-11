@@ -30,24 +30,19 @@ public:
 	explicit AbstractShapeType(QGraphicsItem * parent = 0)
 		:BaseType(parent)
 	{
-		m_penWidth = 1.0;
-		m_penStyle = Qt::SolidLine;
-		m_pen = QPen(Qt::white);
-		m_pen.setWidthF(m_penWidth);
-		m_pen.setStyle(m_penStyle);
-
-		m_brushStyle = Qt::NoBrush;
-		m_brush = QBrush(m_brushStyle);
-
 		m_width = 0.0;
 		m_height = 0.0;
+		m_pen = QPen(Qt::white);
+		m_pen.setWidthF(1.0);
+		m_pen.setStyle(Qt::SolidLine);
+		m_brush = QBrush(Qt::NoBrush);
 	}
 	virtual ~AbstractShapeType(){}
 
 	QPen   GetPen() const { return m_pen; }
 	QColor GetPenColor() const { return m_pen.color(); }
-	qreal  GetPenWidth() const { return m_penWidth; }
-	Qt::PenStyle GetPenStyle() const { return m_penStyle; }
+	qreal  GetPenWidth() const { return m_pen.widthF(); }
+	Qt::PenStyle GetPenStyle() const { return m_pen.style(); }
 	QBrush GetBrush() const { return m_brush; }
 	QColor GetBrushColor() const { return m_brush.color(); }
 	Qt::BrushStyle GetBrushStyle() const { return m_brush.style(); }
@@ -59,7 +54,7 @@ public:
 	void SetPenColor(const QColor & color) { m_pen.setColor(color); update(); }
 	void SetPenWidth(const qreal width) { m_pen.setWidthF(width); update(); }
 	void SetPenStyle(const Qt::PenStyle style) { m_pen.setStyle(style); update(); }
-	void SetBrush(const QBrush & brush ) { m_brush = brush ; }
+	void SetBrush(const QBrush & brush ) { m_brush = brush; }
 	void SetBrushColor(const QColor & color ) { m_brush.setColor(color); update(); }
 	void SetBrushStyle(const Qt::BrushStyle style) { m_brush.setStyle(style); update(); }
 	void SetWidth(qreal width) { m_width = width; UpdateCoordinate(); }
@@ -136,11 +131,7 @@ public:
 
 public:
 	QPen   m_pen;
-	qreal  m_penWidth;
-	Qt::PenStyle m_penStyle;
 	QBrush m_brush;
-	Qt::BrushStyle m_brushStyle;
-
 	qreal  m_width;
 	qreal  m_height;
 	QRectF m_localRect;
@@ -170,6 +161,9 @@ class GraphicsItem : public QObject, public AbstractShapeType <QGraphicsItem>
 	Q_PROPERTY(QPointF Position READ pos WRITE setPos)
 	Q_PROPERTY(qreal Width READ GetWidth WRITE SetWidth)
 	Q_PROPERTY(qreal Height READ GetHeight WRITE SetHeight)
+	Q_PROPERTY(qreal Scale READ GetScale WRITE SetScale)
+	Q_PROPERTY(qreal Rotation READ GetRotation WRITE SetRotation)
+	Q_PROPERTY(QString Tooltip READ GetTooltip WRITE SetTooltip)
 	Q_PROPERTY(QColor PenColor READ GetPenColor WRITE SetPenColor)
 	Q_PROPERTY(qreal PenWidth READ GetPenWidth WRITE SetPenWidth)
 	Q_PROPERTY(Qt::PenStyle PenStyle READ GetPenStyle WRITE SetPenStyle)
@@ -184,7 +178,16 @@ public:
 	virtual int type() const { return Type; }
 
 	void SetScene(DrawScene *scene) { m_pScene = scene; }
+	void SetName(QString name) { m_sName = name; }
+	void SetScale(qreal val) { setScale(val); }
+	void SetTooltip(QString tip) { setToolTip(tip); }
+	void SetRotation(qreal angle) { setRotation(angle); }
+
 	DrawScene* GetScene() { return m_pScene; }
+	QString GetName() { return m_sName; }
+	qreal GetScale() { return scale(); }
+	QString GetTooltip() { return toolTip(); }
+	qreal GetRotation() { return rotation(); }
 
 public:
 	virtual void UpdateHandles();
@@ -193,6 +196,7 @@ public:
 
 private:
 	DrawScene *m_pScene;
+	QString m_sName;
 
 signals:
 	void SigSelectedChange(QGraphicsItem *item);
@@ -212,7 +216,6 @@ public:
 	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
 	virtual void UpdateHandles();
 	virtual void UpdateCoordinate();
-	virtual QString DisplayName() const { return tr("多边形图元"); }	
 	virtual QGraphicsItem* Duplicate();
 
 	virtual QRectF boundingRect() const;
@@ -240,8 +243,7 @@ public:
 public:
 	virtual void Control(int direct, const QPointF &delta);
 	virtual void UpdateHandles();
-	virtual int HandleCount() const { return m_handles.size() + eHandleLeft; }
-	virtual QString DisplayName() const { return tr("线段图元"); }	
+	virtual int HandleCount() const { return m_handles.size() + eHandleLeft; }	
 	virtual QGraphicsItem* Duplicate();
 
 	virtual QPainterPath Shape() const;
@@ -263,7 +265,6 @@ public:
 
 public:
 	virtual void Control(int direct, const QPointF &delta);
-	virtual QString DisplayName() const { return tr("折线图元"); }
 	virtual QGraphicsItem *Duplicate();
 
 	virtual QPainterPath Shape() const;
@@ -286,14 +287,8 @@ public:
 	GraphicsRectItem(const QRect &rect, bool isRound = false, QGraphicsItem * parent = 0);
 	~GraphicsRectItem();
 
-	//void SetScene(DrawScene *scene) { m_pScene = scene; }
-	void SetRound(QSize size) { m_round = size; }
-	//void SetRx(qreal r) { m_rx = r; }
-	//void SetRy(qreal r) { m_ry = r; }
-	//DrawScene* GetScene() { return m_pScene; }
+	void SetRound(QSize size) { m_round = size; update(); }
 	QSize GetRound() { return m_round; }
-	//qreal GetRx() { return m_rx; }
-	//qreal GetRy() { return m_ry; }
 	QRectF GetLocalRect() const { return m_localRect; }
 
 public:
@@ -301,7 +296,6 @@ public:
 	virtual void Control(int dir, const QPointF & delta);
 	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
 	virtual void UpdateCoordinate();
-	virtual QString DisplayName();
 	virtual QGraphicsItem *Duplicate();
 
 	virtual QRectF boundingRect() const;
@@ -313,15 +307,10 @@ public:
 
 public:
 	bool m_isRound;
-	//qreal m_rx;
-	//qreal m_ry;
 	QSize m_round;
 	QRectF m_initialRect;
 	QPointF m_opposite;
 	QPointF m_originPoint;
-
-//private:
-//	DrawScene *m_pScene;
 
 };
 
@@ -335,7 +324,6 @@ public:
 public:
 	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
 	virtual void UpdateHandles();
-	virtual QString DisplayName();
 	virtual QGraphicsItem *Duplicate();
 	
 	virtual QRectF boundingRect() const;
@@ -356,13 +344,14 @@ class GraphicsTextItem :public GraphicsRectItem
 	Q_OBJECT
 
 	Q_PROPERTY(QString Text READ GetText WRITE SetText)
+	Q_PROPERTY(QFont Font READ GetFont WRITE SetFont)
 
 public:
 	GraphicsTextItem(const QRect &rect, QGraphicsItem *parent = 0);
 	~GraphicsTextItem();
 
-	void SetFont(QFont font) { m_font = font; }
-	void SetText(QString text) { m_text = text; }
+	void SetFont(QFont font) { m_font = font; update(); }
+	void SetText(QString text) { m_text = text; update(); }
 	void SetOption(QTextOption option) { m_option = option; }
 	QFont GetFont() { return m_font; }
 	QString GetText() { return m_text; }
@@ -370,7 +359,6 @@ public:
 
 public:
 	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
-	virtual QString DisplayName() { return tr("文字图元"); }
 	virtual QGraphicsItem *Duplicate();
 
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -394,7 +382,6 @@ public:
 
 public:
 	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
-	virtual QString DisplayName() { return tr("图像图元"); }
 	virtual QGraphicsItem *Duplicate();
 
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

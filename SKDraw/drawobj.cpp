@@ -116,6 +116,7 @@ GraphicsPolygonItem::GraphicsPolygonItem(QGraphicsItem *parent)
 	:GraphicsItem(parent)
 {
 	SetBrush(Qt::green);
+	SetName("多边形图元");
 }
 
 GraphicsPolygonItem::~GraphicsPolygonItem()
@@ -302,6 +303,8 @@ GraphicsLineItem::GraphicsLineItem(QGraphicsItem *parent)
 	for (Handles::iterator it = m_handles.begin(); it != m_handles.end(); ++it)
 		delete (*it);
 	m_handles.clear();
+
+	SetName("线段图元");
 }
 
 GraphicsLineItem::~GraphicsLineItem()
@@ -438,7 +441,7 @@ bool GraphicsLineItem::LoadFromXml(QXmlStreamReader *xml)
 GraphicsPolygonLineItem::GraphicsPolygonLineItem(QGraphicsItem *parent)
 	:GraphicsPolygonItem(parent)
 {
-
+	SetName("折线图元");
 }
 
 GraphicsPolygonLineItem::~GraphicsPolygonLineItem()
@@ -572,7 +575,6 @@ GraphicsRectItem::GraphicsRectItem(const QRect &rect, bool isRound, QGraphicsIte
 	:GraphicsItem(parent)
 	,m_isRound(isRound)
 {
-	//m_rx = m_ry = 5;
 	m_round.setWidth(5);
 	m_round.setHeight(5);
 	m_localRect = rect;
@@ -582,6 +584,11 @@ GraphicsRectItem::GraphicsRectItem(const QRect &rect, bool isRound, QGraphicsIte
 	m_originPoint = QPointF(0,0);
 
 	SetBrush(Qt::green);
+
+	if (isRound)
+		SetName("圆角矩形图元");
+	else
+		SetName("矩形图元");
 }
 
 GraphicsRectItem::~GraphicsRectItem()
@@ -653,18 +660,6 @@ void GraphicsRectItem::UpdateCoordinate()
 	m_initialRect = m_localRect;
 }
 
-QString GraphicsRectItem::DisplayName()
-{
-	QString name;
-
-	if (m_isRound)
-		name = tr("圆角矩形图元");
-	else
-		name = tr("矩形图元");
-
-	return name;
-}
-
 QGraphicsItem* GraphicsRectItem::Duplicate()
 {
 	GraphicsRectItem * item = new GraphicsRectItem(m_localRect.toRect(), m_isRound);
@@ -694,7 +689,6 @@ QPainterPath GraphicsRectItem::Shape() const
 	QPainterPath path;
 
 	if (m_isRound)
-		//path.addRoundedRect(m_localRect,m_rx,m_ry);
 		path.addRoundedRect(m_localRect,m_round.width(),m_round.height());
 	else
 		path.addRect(m_localRect);
@@ -708,7 +702,6 @@ void GraphicsRectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	painter->setBrush(GetBrush());
 
 	if (m_isRound)
-		//painter->drawRoundedRect(m_localRect,m_rx,m_ry);
 		painter->drawRoundedRect(m_localRect,m_round.width(),m_round.height());
 	else
 		painter->drawRect(m_localRect.toRect());
@@ -729,7 +722,10 @@ GraphicsEllipseItem::GraphicsEllipseItem(const QRect &rect, bool isCircle, QGrap
 	:GraphicsRectItem(rect, parent)
 	,m_isCircle(isCircle)
 {
-	
+	if (isCircle)
+		SetName("圆形图元");
+	else
+		SetName("椭圆形图元");
 }
 
 GraphicsEllipseItem::~GraphicsEllipseItem()
@@ -777,18 +773,6 @@ void GraphicsEllipseItem::Stretch(int handle, double sx, double sy, const QPoint
 void GraphicsEllipseItem::UpdateHandles()
 {
 	GraphicsItem::UpdateHandles();
-}
-
-QString GraphicsEllipseItem::DisplayName()
-{
-	QString name;
-
-	if (m_isCircle)
-		name = tr("圆形图元");
-	else
-		name = tr("椭圆形图元");
-
-	return name;
 }
 
 QGraphicsItem* GraphicsEllipseItem::Duplicate()
@@ -846,9 +830,24 @@ bool GraphicsEllipseItem::LoadFromXml(QXmlStreamReader *xml)
 GraphicsTextItem::GraphicsTextItem(const QRect &rect, QGraphicsItem *parent)
 	:GraphicsRectItem(rect, parent)
 {
-	SetPen(QPen(Qt::blue));
+	SetPen(QPen(QColor(0, 255, 255)));
 	m_text = "文字";
 	setToolTip(m_text);
+
+	m_font.setFamily("宋体");							//字体
+	m_font.setPointSize(16);							//大小
+	m_font.setBold(false);								//粗体
+	m_font.setItalic(false);							//斜体
+	m_font.setUnderline(false);							//设置下划线
+	m_font.setOverline(false);							//设置上划线
+	m_font.setCapitalization(QFont::SmallCaps);			//设置字母大小写
+	m_font.setLetterSpacing(QFont::AbsoluteSpacing, 2);	//设置字符间距
+
+	m_option.setAlignment(Qt::AlignCenter);
+	//m_option.setWrapMode(QTextOption::NoWrap);
+	m_option.setWrapMode(QTextOption::WordWrap);
+
+	SetName("文字图元");
 }
 
 GraphicsTextItem::~GraphicsTextItem()
@@ -910,23 +909,8 @@ QGraphicsItem* GraphicsTextItem::Duplicate()
 
 void GraphicsTextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-	QFont font;
-	font.setFamily("Microsoft YaHei");					//字体
-	font.setPointSize(16);								//大小
-	font.setBold(true);									//粗体
-	font.setItalic(false);								//斜体
-	font.setUnderline(false);							//设置下划线
-	font.setOverline(false);							//设置上划线
-	font.setCapitalization(QFont::SmallCaps);			//设置字母大小写
-	font.setLetterSpacing(QFont::AbsoluteSpacing, 2);	//设置字符间距
-
-	m_option.setAlignment(Qt::AlignCenter);
-	//m_option.setWrapMode(QTextOption::NoWrap);
-	m_option.setWrapMode(QTextOption::WordWrap);
-
-	painter->setFont(font);
+	painter->setFont(m_font);
 	painter->setPen(GetPen());
-	painter->setBrush(GetBrush());
 	painter->drawText(m_localRect, m_text, m_option);
 
 	if (option->state & QStyle::State_Selected)
@@ -953,6 +937,8 @@ GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QPixmap &pix, QGraph
 	m_localRect.setWidth(m_width);
 	m_localRect.setHeight(m_height);
 	m_initialRect = m_localRect;
+
+	SetName("图像图元");
 }
 
 GraphicsPictureItem::~GraphicsPictureItem()

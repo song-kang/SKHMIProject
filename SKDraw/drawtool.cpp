@@ -351,12 +351,26 @@ void DrawRotationTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawSc
 
 	//emit scene->itemRotate(item, m_oldAngle);
 
+	AbstractShape *item = NULL;
+	QList<QGraphicsItem *> items = scene->selectedItems();
+	if (items.count() == 1)
+	{
+		item = qgraphicsitem_cast<AbstractShape*>(items.first());
+		if (item != NULL && m_nDragHandle != eHandleNone && m_selectMode == eModeRotate)
+			UpdatePropertyEditor(scene, (GraphicsItem*)items.at(0));
+	}
+
 	SetCursor(scene,Qt::ArrowCursor);
 	m_selectMode = eModeNone;
 	m_nDragHandle = eHandleNone;
 	m_lastAngle = 0;
 	m_bHoverSizer = false;
 	scene->MouseEvent(event);
+}
+
+void DrawRotationTool::UpdatePropertyEditor(DrawScene *scene, GraphicsItem *item)
+{
+	((DrawView*)scene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(item->metaObject());
 }
 
 ///////////////////////// DrawRectTool /////////////////////////
