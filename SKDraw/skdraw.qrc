@@ -61,5 +61,8 @@
         <file alias="DashLine">Resources/images/DashLine.png</file>
         <file alias="DotLine">Resources/images/DotLine.png</file>
         <file alias="SolidLine">Resources/images/SolidLine.png</file>
+        <file alias="bold">Resources/images/bold.png</file>
+        <file alias="italic">Resources/images/italic.png</file>
+        <file alias="underline">Resources/images/underline.png</file>
     </qresource>
 </RCC>

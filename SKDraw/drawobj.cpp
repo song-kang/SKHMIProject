@@ -830,19 +830,10 @@ bool GraphicsEllipseItem::LoadFromXml(QXmlStreamReader *xml)
 GraphicsTextItem::GraphicsTextItem(const QRect &rect, QGraphicsItem *parent)
 	:GraphicsRectItem(rect, parent)
 {
-	SetPen(QPen(QColor(0, 255, 255)));
 	m_text = "文字";
-	setToolTip(m_text);
 
-	m_font.setFamily("宋体");							//字体
-	m_font.setPointSize(16);							//大小
-	m_font.setBold(false);								//粗体
-	m_font.setItalic(false);							//斜体
-	m_font.setUnderline(false);							//设置下划线
-	m_font.setOverline(false);							//设置上划线
-	m_font.setCapitalization(QFont::SmallCaps);			//设置字母大小写
-	m_font.setLetterSpacing(QFont::AbsoluteSpacing, 2);	//设置字符间距
-
+	//m_font.setCapitalization(QFont::SmallCaps);			//设置字母大小写
+	//m_font.setLetterSpacing(QFont::AbsoluteSpacing, 2);	//设置字符间距
 	m_option.setAlignment(Qt::AlignCenter);
 	//m_option.setWrapMode(QTextOption::NoWrap);
 	m_option.setWrapMode(QTextOption::WordWrap);

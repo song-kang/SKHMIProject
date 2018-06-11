@@ -406,7 +406,7 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 		else if (c_drawShape == eDrawCircle)
 			m_pItem = new GraphicsEllipseItem(QRect(1, 1, 1, 1), true);
 		else if (c_drawShape == eDrawText)
-			m_pItem = new GraphicsTextItem(QRect(0, 0, 50, 25));
+			m_pItem = new GraphicsTextItem(QRect(0, 0, 80, 25));
 		else if (c_drawShape == eDrawPicture)
 		{
 			QString f = QFileDialog::getOpenFileName(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png)"));
@@ -430,6 +430,9 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 		{
 			m_pItem->setSelected(true);
 			m_pItem->UpdateCoordinate();
+			((GraphicsTextItem*)m_pItem)->SetFont(((DrawView*)scene->GetView())->GetApp()->GetFont());
+			((GraphicsTextItem*)m_pItem)->SetFontColor(((DrawView*)scene->GetView())->GetApp()->GetFontColor());
+			((DrawView*)scene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
 			m_selectMode = eModeNone;
 			m_pItem = NULL;
 			SetCursor(scene,Qt::ArrowCursor);

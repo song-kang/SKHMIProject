@@ -31,6 +31,39 @@ void SKDraw::Init()
 	m_pPropertyEditor = new PropertyEditor(this);
 	ui.dockWidgetProperty->setWidget(m_pPropertyEditor);
 
+	m_pFontComboBox = new QFontComboBox(this);
+	m_pFontComboBox->setCurrentFont(QFont("ËÎÌå"));
+	m_pFontSizeComboBox = new QComboBox(this);
+	m_pFontSizeComboBox->setEditable(false);
+	m_pFontSizeComboBox->setEditable(true);
+	for (int i = 6,j = 0; j < 7; i++,j++)
+		m_pFontSizeComboBox->addItem(QString().setNum(i));
+	for (int i = 14,j = 0; j < 8; i = i + 2,j++)
+		m_pFontSizeComboBox->addItem(QString().setNum(i));
+	m_pFontSizeComboBox->addItem(QString().setNum(36));
+	m_pFontSizeComboBox->addItem(QString().setNum(48));
+	m_pFontSizeComboBox->addItem(QString().setNum(72));
+	m_pFontSizeComboBox->setCurrentIndex(8);
+	m_pFontColorBtn = new QPushButton("",this);
+	m_pFontColorBtn->setFixedWidth(28);
+	m_pFontColorBtn->setFlat(false);
+	m_pFontColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg("#00FFFF"));
+	ui.fontToolBar->addWidget(m_pFontComboBox);
+	ui.fontToolBar->addWidget(m_pFontSizeComboBox);
+	ui.fontToolBar->addAction(ui.actionBold);
+	ui.fontToolBar->addAction(ui.actionItalic);
+	ui.fontToolBar->addAction(ui.actionUnderline);
+	ui.fontToolBar->addWidget(m_pFontColorBtn);
+
+	m_font = m_pFontComboBox->currentFont();
+	m_font.setPointSize(m_pFontSizeComboBox->currentText().toInt());
+	m_font.setBold(ui.actionBold->isChecked());
+	m_font.setItalic(ui.actionItalic->isChecked());
+	m_font.setUnderline(ui.actionItalic->isChecked());
+	m_fontColor.setNamedColor("#00FFFF");
+
+	//propertyToolBar
+
 	UpdateActions();
 }
 
@@ -86,6 +119,13 @@ void SKDraw::InitSlot()
 
 	connect(ui.actionGroup,SIGNAL(triggered()),this,SLOT(SlotGroup()));
 	connect(ui.actionUngroup,SIGNAL(triggered()),this,SLOT(SlotUngroup()));
+
+	connect(m_pFontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(SlotCurrentFontChanged(QFont)));
+	connect(m_pFontSizeComboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(SlotFontSizeChanged(QString)));
+	connect(ui.actionBold,SIGNAL(triggered()),this,SLOT(SlotBold()));
+	connect(ui.actionItalic,SIGNAL(triggered()),this,SLOT(SlotItalic()));
+	connect(ui.actionUnderline,SIGNAL(triggered()),this,SLOT(SlotUnderline()));
+	connect(m_pFontColorBtn,SIGNAL(clicked()),this,SLOT(SlotBtnFontColor()));
 
 	connect(m_app, SIGNAL(SigKeyUp()), this, SLOT(SlotKeyUp()));
 	connect(m_app, SIGNAL(SigKeyDown()), this, SLOT(SlotKeyDown()));
@@ -354,6 +394,48 @@ void SKDraw::SlotUngroup()
 	{
 		QUndoCommand *unGroupCommand = new UnGroupShapeCommand(group, m_pScene);
 		m_pUndoStack->push(unGroupCommand);
+	}
+}
+
+void SKDraw::SlotCurrentFontChanged(QFont font)
+{
+	m_font = font;
+	m_font.setPointSize(m_pFontSizeComboBox->currentText().toInt());
+	SlotBold();
+	SlotItalic();
+	SlotUnderline();
+}
+
+void SKDraw::SlotFontSizeChanged(QString size)
+{
+	m_font.setPointSize(size.toInt());
+}
+
+void SKDraw::SlotBold()
+{
+	ui.actionBold->setChecked(ui.actionBold->isChecked());
+	m_font.setBold(ui.actionBold->isChecked());
+}
+
+void SKDraw::SlotItalic()
+{
+	ui.actionItalic->setChecked(ui.actionItalic->isChecked());
+	m_font.setItalic(ui.actionItalic->isChecked());
+}
+
+void SKDraw::SlotUnderline()
+{
+	ui.actionUnderline->setChecked(ui.actionUnderline->isChecked());
+	m_font.setUnderline(ui.actionUnderline->isChecked());
+}
+
+void SKDraw::SlotBtnFontColor()
+{
+	QColor color = QColorDialog::getColor(m_fontColor,this,tr("Ñ¡ÔñÑÕÉ«"));
+	if (color.isValid())
+	{
+		m_fontColor = color.name();
+		m_pFontColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg(m_fontColor.name()));
 	}
 }
 

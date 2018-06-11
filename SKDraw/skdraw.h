@@ -22,6 +22,8 @@ public:
 
 	void SetApp(SKBaseWidget *app) { m_app = app; }
 	PropertyEditor* GetPropertyEditor() { return m_pPropertyEditor; }
+	QFont GetFont() { return m_font; }
+	QColor GetFontColor() { return m_fontColor; }
 
 public:
 	void UpdateActions();
@@ -36,6 +38,12 @@ private:
 	QMenu			*m_pEditMenu;
 	QObject			*m_pControlledObject;
 	PropertyEditor	*m_pPropertyEditor;
+	QFontComboBox   *m_pFontComboBox;
+	QComboBox		*m_pFontSizeComboBox;
+	QPushButton		*m_pFontColorBtn;
+
+	QFont m_font;
+	QColor m_fontColor;
 
 private:
 	void Init();
@@ -66,6 +74,13 @@ private slots:
 	void SlotSendToBack();
 	void SlotGroup();
 	void SlotUngroup();
+
+	void SlotCurrentFontChanged(QFont font);
+	void SlotFontSizeChanged(QString size);
+	void SlotBold();
+	void SlotItalic();
+	void SlotUnderline();
+	void SlotBtnFontColor();
 
 	void SlotItemSelected();
 	void SlotItemAdded(QGraphicsItem *item);

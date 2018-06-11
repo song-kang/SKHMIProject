@@ -351,6 +351,7 @@ public:
 	~GraphicsTextItem();
 
 	void SetFont(QFont font) { m_font = font; update(); }
+	void SetFontColor(QColor c) { m_pen.setColor(c); update(); }
 	void SetText(QString text) { m_text = text; update(); }
 	void SetOption(QTextOption option) { m_option = option; }
 	QFont GetFont() { return m_font; }

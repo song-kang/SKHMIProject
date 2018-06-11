@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>869</width>
+    <width>903</width>
     <height>528</height>
    </rect>
   </property>
@@ -28,7 +28,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>869</width>
+     <width>903</width>
      <height>23</height>
     </rect>
    </property>
@@ -130,7 +130,7 @@
   </widget>
   <widget class="QToolBar" name="fileToolBar">
    <property name="windowTitle">
-    <string>文件</string>
+    <string>文件工具条</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -197,7 +197,7 @@
   </widget>
   <widget class="QToolBar" name="editToolBar">
    <property name="windowTitle">
-    <string>编辑</string>
+    <string>编辑工具条</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -207,13 +207,14 @@
    </attribute>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
+   <addaction name="separator"/>
    <addaction name="actionCut"/>
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
   </widget>
   <widget class="QToolBar" name="viewToolBar">
    <property name="windowTitle">
-    <string>视图</string>
+    <string>视图工具条</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -227,7 +228,7 @@
   </widget>
   <widget class="QToolBar" name="shapeToolBar">
    <property name="windowTitle">
-    <string>形状</string>
+    <string>形状工具条</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -251,9 +252,20 @@
    <addaction name="actionText"/>
    <addaction name="actionPicture"/>
   </widget>
+  <widget class="QToolBar" name="fontToolBar">
+   <property name="windowTitle">
+    <string>字体工具条</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
   <widget class="QToolBar" name="alignToolBar">
    <property name="windowTitle">
-    <string>排列</string>
+    <string>排列工具条</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -267,8 +279,10 @@
    <addaction name="actionBottom"/>
    <addaction name="actionVCenter"/>
    <addaction name="actionHCenter"/>
+   <addaction name="separator"/>
    <addaction name="actionVSpace"/>
    <addaction name="actionHSpace"/>
+   <addaction name="separator"/>
    <addaction name="actionHeight"/>
    <addaction name="actionWidth"/>
    <addaction name="actionSize"/>
@@ -277,6 +291,17 @@
    <addaction name="actionback"/>
    <addaction name="actionGroup"/>
    <addaction name="actionUngroup"/>
+  </widget>
+  <widget class="QToolBar" name="propertyToolBar">
+   <property name="windowTitle">
+    <string>画笔画刷工具条</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
   </widget>
   <action name="actionNew">
    <property name="icon">
@@ -722,6 +747,51 @@
    </property>
    <property name="toolTip">
     <string>原始尺寸</string>
+   </property>
+  </action>
+  <action name="actionBold">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/bold</normaloff>:/images/bold</iconset>
+   </property>
+   <property name="text">
+    <string>粗体</string>
+   </property>
+   <property name="toolTip">
+    <string>粗体</string>
+   </property>
+  </action>
+  <action name="actionItalic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/italic</normaloff>:/images/italic</iconset>
+   </property>
+   <property name="text">
+    <string>斜体</string>
+   </property>
+   <property name="toolTip">
+    <string>斜体</string>
+   </property>
+  </action>
+  <action name="actionUnderline">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/underline</normaloff>:/images/underline</iconset>
+   </property>
+   <property name="text">
+    <string>下划线</string>
+   </property>
+   <property name="toolTip">
+    <string>下划线</string>
    </property>
   </action>
  </widget>
