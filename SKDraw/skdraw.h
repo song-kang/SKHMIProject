@@ -24,6 +24,8 @@ public:
 	PropertyEditor* GetPropertyEditor() { return m_pPropertyEditor; }
 	QFont GetFont() { return m_font; }
 	QColor GetFontColor() { return m_fontColor; }
+	QPen GetPen() { return m_pen; }
+	QBrush GetBrush() { return m_brush; }
 
 public:
 	void UpdateActions();
@@ -41,9 +43,16 @@ private:
 	QFontComboBox   *m_pFontComboBox;
 	QComboBox		*m_pFontSizeComboBox;
 	QPushButton		*m_pFontColorBtn;
+	QComboBox		*m_pPenStyleComboBox;
+	QComboBox		*m_pPenWidthComboBox;
+	QComboBox		*m_pBrushStyleComboBox;
+	QPushButton		*m_pPenColorBtn;
+	QPushButton		*m_pBrushColorBtn;
 
 	QFont m_font;
 	QColor m_fontColor;
+	QPen m_pen;
+	QBrush m_brush;
 
 private:
 	void Init();
@@ -81,6 +90,12 @@ private slots:
 	void SlotItalic();
 	void SlotUnderline();
 	void SlotBtnFontColor();
+
+	void SlotPenStyleChanged(QString val);
+	void SlotPenWidthChanged(QString val);
+	void SlotBrushStyleChanged(QString val);
+	void SlotBtnPentColor();
+	void SlotBtnBrushColor();
 
 	void SlotItemSelected();
 	void SlotItemAdded(QGraphicsItem *item);

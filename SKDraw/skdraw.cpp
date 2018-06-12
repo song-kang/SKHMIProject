@@ -34,8 +34,8 @@ void SKDraw::Init()
 	m_pFontComboBox = new QFontComboBox(this);
 	m_pFontComboBox->setCurrentFont(QFont("宋体"));
 	m_pFontSizeComboBox = new QComboBox(this);
+	m_pFontSizeComboBox->setToolTip(m_pFontSizeComboBox->tr("字体大小"));
 	m_pFontSizeComboBox->setEditable(false);
-	m_pFontSizeComboBox->setEditable(true);
 	for (int i = 6,j = 0; j < 7; i++,j++)
 		m_pFontSizeComboBox->addItem(QString().setNum(i));
 	for (int i = 14,j = 0; j < 8; i = i + 2,j++)
@@ -50,9 +50,11 @@ void SKDraw::Init()
 	m_pFontColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg("#00FFFF"));
 	ui.fontToolBar->addWidget(m_pFontComboBox);
 	ui.fontToolBar->addWidget(m_pFontSizeComboBox);
+	ui.fontToolBar->addSeparator();
 	ui.fontToolBar->addAction(ui.actionBold);
 	ui.fontToolBar->addAction(ui.actionItalic);
 	ui.fontToolBar->addAction(ui.actionUnderline);
+	ui.fontToolBar->addSeparator();
 	ui.fontToolBar->addWidget(m_pFontColorBtn);
 
 	m_font = m_pFontComboBox->currentFont();
@@ -62,7 +64,110 @@ void SKDraw::Init()
 	m_font.setUnderline(ui.actionItalic->isChecked());
 	m_fontColor.setNamedColor("#00FFFF");
 
-	//propertyToolBar
+	m_pPenStyleComboBox = new QComboBox(this);
+	m_pPenStyleComboBox->setToolTip(m_pPenStyleComboBox->tr("线型"));
+	m_pPenStyleComboBox->setEditable(false);
+	m_pPenStyleComboBox->setIconSize(QSize(160,20));
+	m_pPenStyleComboBox->setMinimumWidth(160);
+	for (int pos = Qt::NoPen; pos < Qt::CustomDashLine; pos++)
+	{
+		QPixmap pix(150,20);
+		pix.fill(Qt::white);
+		QPainter painter(&pix);
+		if (pos == Qt::NoPen)
+		{
+			QFont f("宋体");
+			f.setPointSize(10);
+			QTextOption o;
+			o.setAlignment(Qt::AlignCenter);
+			QPen pen(Qt::black);
+			painter.setPen(pen);
+			painter.setFont(QFont("宋体"));
+			painter.drawText(QRect(2,3,148,16),"无线条",o);
+		}
+		else
+		{
+			QBrush brush(Qt::black);
+			QPen pen(brush,1.5,(Qt::PenStyle)pos);
+			painter.setPen(pen);
+			painter.drawLine(2,10,148,10);
+		}
+		m_pPenStyleComboBox->addItem(QIcon(pix),QString("%1").arg(pos),pos);
+	}
+	m_pPenStyleComboBox->setCurrentIndex(1);
+	m_pen.setStyle((Qt::PenStyle)1);
+
+	m_pPenWidthComboBox = new QComboBox(this);
+	m_pPenWidthComboBox->setToolTip(m_pPenStyleComboBox->tr("线宽"));
+	m_pPenWidthComboBox->setEditable(false);
+	m_pPenWidthComboBox->setIconSize(QSize(160,20));
+	m_pPenWidthComboBox->setMinimumWidth(160);
+	for (int pos = 1; pos <= 10; pos++)
+	{
+		QPixmap pix(150,20);
+		pix.fill(Qt::white);
+		QBrush brush(Qt::black);
+		QPen pen(brush,pos,Qt::SolidLine);
+		QPainter painter(&pix);
+		painter.setPen(pen);
+		painter.drawLine(2,10,148,10);
+		m_pPenWidthComboBox->addItem(QIcon(pix),QString("%1").arg(pos),pos);
+	}
+	m_pPenWidthComboBox->setCurrentIndex(0);
+	m_pen.setWidthF(1.0);
+
+	m_pBrushStyleComboBox = new QComboBox(this);
+	m_pBrushStyleComboBox->setToolTip(m_pPenStyleComboBox->tr("画刷类型"));
+	m_pBrushStyleComboBox->setEditable(false);
+	m_pBrushStyleComboBox->setIconSize(QSize(160,20));
+	m_pBrushStyleComboBox->setMinimumWidth(160);
+	for (int pos = Qt::NoBrush; pos <= Qt::DiagCrossPattern; pos++)
+	{
+		QPixmap pix(150,20);
+		pix.fill(Qt::white);
+		QPainter painter(&pix);
+		if (pos == Qt::NoBrush)
+		{
+			QFont f("宋体");
+			f.setPointSize(10);
+			QTextOption o;
+			o.setAlignment(Qt::AlignCenter);
+			QPen pen(Qt::black);
+			painter.setPen(pen);
+			painter.setFont(QFont("宋体"));
+			painter.drawText(QRect(2,3,148,16),"无填充",o);
+		}
+		else
+		{
+			QBrush brush(Qt::black,(Qt::BrushStyle)pos);
+			QPen pen(brush,16);
+			painter.setPen(pen);
+			painter.drawLine(2,10,148,10);
+		}
+		m_pBrushStyleComboBox->addItem(QIcon(pix),QString("%1").arg(pos),pos);
+	}
+	m_pBrushStyleComboBox->setCurrentIndex(1);
+	m_brush.setStyle((Qt::BrushStyle)1);
+
+	m_pPenColorBtn = new QPushButton("",this);
+	m_pPenColorBtn->setFixedWidth(28);
+	m_pPenColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg("#FFFFFF"));
+	m_pen.setColor("#FFFFFF");
+
+	m_pBrushColorBtn = new QPushButton("",this);
+	m_pBrushColorBtn->setFixedWidth(28);
+	m_pBrushColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg("#008000"));
+	m_brush.setColor("#008000");
+
+	ui.propertyToolBar->addWidget(m_pPenStyleComboBox);
+	ui.propertyToolBar->addSeparator();
+	ui.propertyToolBar->addWidget(m_pPenWidthComboBox);
+	ui.propertyToolBar->addSeparator();
+	ui.propertyToolBar->addWidget(m_pPenColorBtn);
+	ui.propertyToolBar->addSeparator();
+	ui.propertyToolBar->addWidget(m_pBrushStyleComboBox);
+	ui.propertyToolBar->addSeparator();
+	ui.propertyToolBar->addWidget(m_pBrushColorBtn);
 
 	UpdateActions();
 }
@@ -126,6 +231,12 @@ void SKDraw::InitSlot()
 	connect(ui.actionItalic,SIGNAL(triggered()),this,SLOT(SlotItalic()));
 	connect(ui.actionUnderline,SIGNAL(triggered()),this,SLOT(SlotUnderline()));
 	connect(m_pFontColorBtn,SIGNAL(clicked()),this,SLOT(SlotBtnFontColor()));
+
+	connect(m_pPenStyleComboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(SlotPenStyleChanged(QString)));
+	connect(m_pPenWidthComboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(SlotPenWidthChanged(QString)));
+	connect(m_pBrushStyleComboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(SlotBrushStyleChanged(QString)));
+	connect(m_pPenColorBtn,SIGNAL(clicked()),this,SLOT(SlotBtnPentColor()));
+	connect(m_pBrushColorBtn,SIGNAL(clicked()),this,SLOT(SlotBtnBrushColor()));
 
 	connect(m_app, SIGNAL(SigKeyUp()), this, SLOT(SlotKeyUp()));
 	connect(m_app, SIGNAL(SigKeyDown()), this, SLOT(SlotKeyDown()));
@@ -436,6 +547,41 @@ void SKDraw::SlotBtnFontColor()
 	{
 		m_fontColor = color.name();
 		m_pFontColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg(m_fontColor.name()));
+	}
+}
+
+void SKDraw::SlotPenStyleChanged(QString val)
+{
+	m_pen.setStyle((Qt::PenStyle)(val.toInt()));
+}
+
+void SKDraw::SlotPenWidthChanged(QString val)
+{
+	m_pen.setWidthF(val.toInt());
+}
+
+void SKDraw::SlotBrushStyleChanged(QString val)
+{
+	m_brush.setStyle((Qt::BrushStyle)(val.toInt()));
+}
+
+void SKDraw::SlotBtnPentColor()
+{
+	QColor color = QColorDialog::getColor(m_fontColor,this,tr("选择颜色"));
+	if (color.isValid())
+	{
+		m_pen.setColor(color.name());
+		m_pPenColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg(color.name()));
+	}
+}
+
+void SKDraw::SlotBtnBrushColor()
+{
+	QColor color = QColorDialog::getColor(m_fontColor,this,tr("选择颜色"));
+	if (color.isValid())
+	{
+		m_brush.setColor(color.name());
+		m_pBrushColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg(color.name()));
 	}
 }
 

@@ -35,6 +35,8 @@ public:
 		m_pen = QPen(Qt::white);
 		m_pen.setWidthF(1.0);
 		m_pen.setStyle(Qt::SolidLine);
+		m_pen.setJoinStyle(Qt::RoundJoin);
+		m_pen.setCapStyle(Qt::RoundCap);
 		m_brush = QBrush(Qt::NoBrush);
 	}
 	virtual ~AbstractShapeType(){}

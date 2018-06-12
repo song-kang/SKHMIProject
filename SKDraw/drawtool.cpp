@@ -430,9 +430,12 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 		{
 			m_pItem->setSelected(true);
 			m_pItem->UpdateCoordinate();
-			((GraphicsTextItem*)m_pItem)->SetFont(((DrawView*)scene->GetView())->GetApp()->GetFont());
-			((GraphicsTextItem*)m_pItem)->SetFontColor(((DrawView*)scene->GetView())->GetApp()->GetFontColor());
-			((DrawView*)scene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
+			if (c_drawShape == eDrawText)
+			{
+				((GraphicsTextItem*)m_pItem)->SetFont(((DrawView*)scene->GetView())->GetApp()->GetFont());
+				((GraphicsTextItem*)m_pItem)->SetFontColor(((DrawView*)scene->GetView())->GetApp()->GetFontColor());
+				((DrawView*)scene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
+			}
 			m_selectMode = eModeNone;
 			m_pItem = NULL;
 			SetCursor(scene,Qt::ArrowCursor);
@@ -442,6 +445,8 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 		c_down += QPoint(2, 2);
 		m_selectMode = eModeSize;
 		m_nDragHandle = eHandleRightBottom;
+		m_pItem->SetPen(((DrawView*)scene->GetView())->GetApp()->GetPen());
+		m_pItem->SetBrush(((DrawView*)scene->GetView())->GetApp()->GetBrush());
 	}
 	else
 	{
@@ -530,6 +535,9 @@ void DrawPolygonTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene
 		m_pItem->setPos(event->scenePos());
 		m_pItem->AddPoint(c_down);
 		m_nPoints++;
+
+		m_pItem->SetPen(((DrawView*)scene->GetView())->GetApp()->GetPen());
+		m_pItem->SetBrush(((DrawView*)scene->GetView())->GetApp()->GetBrush());
 	}
 	else if (c_drawShape == eDrawLine)
 	{
