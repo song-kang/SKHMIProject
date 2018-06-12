@@ -59,12 +59,19 @@ private:
 	void InitUi();
 	DrawView* CreateView();
 
+signals:
+	void SigClose();
+
 public slots:
 	void SlotKeyEscape();
 
 private slots:
 	void SlotNew();
+	void SlotOpen();
+	void SlotSave();
+	void SlotSaveas();
 	void SlotClose();
+	void SlotExit();
 
 	void SlotCopy();
 	void SlotCut();

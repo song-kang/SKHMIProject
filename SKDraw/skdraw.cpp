@@ -182,7 +182,11 @@ void SKDraw::InitUi()
 void SKDraw::InitSlot()
 {
 	connect(ui.actionNew,SIGNAL(triggered()),this,SLOT(SlotNew()));
+	connect(ui.actionOpen,SIGNAL(triggered()),this,SLOT(SlotOpen()));
+	connect(ui.actionSave,SIGNAL(triggered()),this,SLOT(SlotSave()));
+	connect(ui.actionSaveas,SIGNAL(triggered()),this,SLOT(SlotSaveas()));
 	connect(ui.actionClose,SIGNAL(triggered()),this,SLOT(SlotClose()));
+	connect(ui.actionExit,SIGNAL(triggered()),this,SLOT(SlotExit()));
 
 	connect(ui.actionCopy,SIGNAL(triggered()),this,SLOT(SlotCopy()));
 	connect(ui.actionCut,SIGNAL(triggered()),this,SLOT(SlotCut()));
@@ -269,14 +273,37 @@ void SKDraw::SlotNew()
 	UpdateActions();
 }
 
+void SKDraw::SlotOpen()
+{
+
+}
+
+void SKDraw::SlotSave()
+{
+
+}
+
+void SKDraw::SlotSaveas()
+{
+
+}
+
 void SKDraw::SlotClose()
 {
+	m_pPropertyEditor->Clear();
 	delete m_pView;
 	delete m_pScene;
 	m_pView = NULL;
 	m_pScene = NULL;
 
 	UpdateActions();
+}
+
+void SKDraw::SlotExit()
+{
+	int ret = QMessageBox::question(NULL,tr("询问"),tr("确认退出？"),tr("退出"),tr("取消"));
+	if (ret == 0)
+		SigClose();
 }
 
 void SKDraw::SlotCopy()
@@ -594,7 +621,8 @@ void SKDraw::UpdateActions()
 {
 	ui.actionNew->setEnabled(m_pScene ? false : true);
 	ui.actionOpen->setEnabled(m_pScene ? false : true);
-	ui.actionClose->setEnabled(m_pScene);
+	ui.actionSave->setEnabled(m_pScene);
+	ui.actionSaveas->setEnabled(m_pScene);
 	ui.actionClose->setEnabled(m_pScene);
 
 	ui.actionCopy->setEnabled(m_pScene && m_pScene->selectedItems().count() > 0);
