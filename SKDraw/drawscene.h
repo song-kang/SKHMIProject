@@ -27,6 +27,7 @@ public:
 	~GridTool();
 
 	void SetBackColor(QColor c) { m_backColor = c; }
+	QColor GetBackColor() { return m_backColor; }
 
 public:
 	void PaintGrid(QPainter *painter, const QRect &rect);
@@ -60,6 +61,9 @@ public:
 	bool GetPressShift() { return m_bPressShift; }
 	QGraphicsView* GetView() { return m_pView; }
 	AbstractShape* GetAlignItem() { return m_pAlignItem; }
+	int GetWidth() { return m_iWidth; }
+	int GetHeight() { return m_iHeight; }
+	GridTool* GetGridTool() { return m_pGrid; }
 
 	void Align(eAlignType alignType);
 	GraphicsItemGroup* CreateGroup(const QList<QGraphicsItem *> &items, bool isAdd = true);

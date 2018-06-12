@@ -2,8 +2,8 @@
 #include "drawtool.h"
 #include "skdraw.h"
 
-#define DEFAULT_WIDTH		1366
-#define DEFAULT_HEIGHT		768
+#define DEFAULT_WIDTH		1880
+#define DEFAULT_HEIGHT		960
 
 ///////////////////////// GridTool /////////////////////////
 GridTool::GridTool(const QSize &grid , const QSize &space)
@@ -50,7 +50,7 @@ public:
 		min_ = alignType == eAlignHSpace ? box.topLeft().x() : box.topLeft().y();
 		max_ = alignType == eAlignHSpace ? box.bottomRight().x() : box.bottomRight().y();
 		extent_ = alignType == eAlignHSpace ? box.width() : box.height();
-		anchor = min_*0.5 + max_ * 0.5;
+		anchor = min_ * 0.5 + max_ * 0.5;
 	}
 	qreal min() { return min_; }
 	qreal max() { return max_; }

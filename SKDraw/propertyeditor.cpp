@@ -1,5 +1,6 @@
 #include "propertyeditor.h"
 #include "drawobj.h"
+#include "drawscene.h"
 
 PropertyEditor::PropertyEditor(QWidget *parent)
 	: QWidget(parent)
@@ -17,14 +18,18 @@ PropertyEditor::PropertyEditor(QWidget *parent)
 	layout->addWidget(m_pBrowser);
 
 	m_pEnumManager = new QtEnumPropertyManager(this);
-	m_pVariantmanager = new QtVariantPropertyManager(this);
+	m_pVariantManager = new QtVariantPropertyManager(this);
+	m_pCustomManager = new QtVariantPropertyManager(this);
 	QtEnumEditorFactory *enumFactory = new QtEnumEditorFactory(this);
 	QtVariantEditorFactory *variantFactory = new QtVariantEditorFactory(this);
+	QtVariantEditorFactory *customFactory = new QtVariantEditorFactory(this);
 	m_pBrowser->setFactoryForManager(m_pEnumManager, enumFactory);
-	m_pBrowser->setFactoryForManager(m_pVariantmanager, variantFactory);
+	m_pBrowser->setFactoryForManager(m_pVariantManager, variantFactory);
+	m_pBrowser->setFactoryForManager(m_pCustomManager, customFactory);
 
 	connect(m_pEnumManager, SIGNAL(valueChanged(QtProperty *, int)), this, SLOT(SlotValueChanged(QtProperty *, int)));
-	connect(m_pVariantmanager, SIGNAL(valueChanged(QtProperty *, const QVariant &)), this, SLOT(SlotValueChanged(QtProperty *, const QVariant &)));
+	connect(m_pVariantManager, SIGNAL(valueChanged(QtProperty *, const QVariant &)), this, SLOT(SlotValueChanged(QtProperty *, const QVariant &)));
+	connect(m_pCustomManager, SIGNAL(valueChanged(QtProperty *, const QVariant &)), this, SLOT(SlotCustomValueChanged(QtProperty *, const QVariant &)));
 }
 
 PropertyEditor::~PropertyEditor()
@@ -48,7 +53,6 @@ void PropertyEditor::InitMap()
 	m_mapTranslate.insert("BrushColor", "»­Ë¢ÑÕÉ«");
 	m_mapTranslate.insert("BrushStyle", "»­Ë¢·ç¸ñ");
 	m_mapTranslate.insert("RoundRadius", "Ô²½Ç°ë¾¶");
-	
 }
 
 void PropertyEditor::SlotValueChanged(QtProperty *property, int value)
@@ -61,8 +65,6 @@ void PropertyEditor::SlotValueChanged(QtProperty *property, int value)
 	QMetaProperty metaProperty = metaObject->property(idx);
 	if (metaProperty.isEnumType())
 		metaProperty.write(m_pObject, value);
-
-	//UpdateProperties(metaObject);
 }
 
 void PropertyEditor::SlotValueChanged(QtProperty *property, const QVariant &value)
@@ -75,8 +77,26 @@ void PropertyEditor::SlotValueChanged(QtProperty *property, const QVariant &valu
 	QMetaProperty metaProperty = metaObject->property(idx);
 	if (!metaProperty.isEnumType())
 		metaProperty.write(m_pObject, value);
+}
 
-	//UpdateProperties(metaObject);
+void PropertyEditor::SlotCustomValueChanged(QtProperty *property, const QVariant &value)
+{
+	QString name = property->propertyName();
+	if (name == "»­·ù¿í¶È")
+	{
+		m_pScene->SetWidth(value.toInt());
+		m_pScene->setSceneRect(QRectF(0, 0, m_pScene->GetWidth(), m_pScene->GetHeight()));
+	}
+	else if (name == "»­·ù¸ß¶È")
+	{
+		m_pScene->SetHeight(value.toInt());
+		m_pScene->setSceneRect(QRectF(0, 0, m_pScene->GetWidth(), m_pScene->GetHeight()));
+	}
+	else if (name == "±³¾°É«")
+	{
+		QString a = value.toString();
+		m_pScene->GetGridTool()->SetBackColor(value.toString());
+	}
 }
 
 void PropertyEditor::Clear()
@@ -102,6 +122,25 @@ void PropertyEditor::SetObject(QObject *object)
 		return;
 
 	AddProperties(m_pObject->metaObject());
+}
+
+void PropertyEditor::SetBackground()
+{
+	QtVariantProperty *subProperty = m_pCustomManager->addProperty(QVariant::Int, tr("»­·ù¿í¶È"));
+	subProperty->setValue(m_pScene->GetWidth());
+	m_pCustomManager->setAttribute(subProperty, "maximum", 10000);
+	m_pCustomManager->setAttribute(subProperty, "minimum", 100);
+	AddCustomProperty(subProperty);
+
+	subProperty = m_pCustomManager->addProperty(QVariant::Int,tr("»­·ù¸ß¶È"));
+	subProperty->setValue(m_pScene->GetHeight());
+	m_pCustomManager->setAttribute(subProperty, "maximum", 10000);
+	m_pCustomManager->setAttribute(subProperty, "minimum", 100);
+	AddCustomProperty(subProperty);
+
+	subProperty = m_pCustomManager->addProperty(QVariant::Color,tr("±³¾°É«"));
+	subProperty->setValue(m_pScene->GetGridTool()->GetBackColor());
+	AddCustomProperty(subProperty);
 }
 
 void PropertyEditor::AddProperties(const QMetaObject *metaObject)
@@ -132,9 +171,9 @@ void PropertyEditor::AddProperties(const QMetaObject *metaObject)
 			m_pEnumManager->setEnumNames(enumProperty, enumNames);
 			m_pEnumManager->setEnumIcons(enumProperty, enumIcons);
 		}
-		else if (m_pVariantmanager->isPropertyTypeSupported(type))
+		else if (m_pVariantManager->isPropertyTypeSupported(type))
 		{
-			subProperty = m_pVariantmanager->addProperty(type, m_mapTranslate.value(metaProperty.name()));
+			subProperty = m_pVariantManager->addProperty(type, m_mapTranslate.value(metaProperty.name()));
 		}
 
 		QtBrowserItem *item = NULL;
@@ -157,6 +196,13 @@ void PropertyEditor::AddProperties(const QMetaObject *metaObject)
 		m_classToIndexToProperty[metaObject][idx] = subProperty;
 		((QtTreePropertyBrowser*)m_pBrowser)->setExpanded(item,false);
 	}
+}
+
+void PropertyEditor::AddCustomProperty(QtVariantProperty *property)
+{
+	QtBrowserItem *item = m_pBrowser->addProperty(property);
+	((QtTreePropertyBrowser*)m_pBrowser)->setExpanded(item,false);
+	m_lstTopLevelProperties.append(property);
 }
 
 void PropertyEditor::UpdateProperties(const QMetaObject *metaObject)

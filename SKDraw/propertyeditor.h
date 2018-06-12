@@ -8,6 +8,7 @@
 #include "qttreepropertybrowser.h"
 #include "qtvariantproperty.h"
 
+class DrawScene;
 class PropertyEditor : public QWidget
 {
 	Q_OBJECT
@@ -21,14 +22,18 @@ public:
 public:
 	QtAbstractPropertyBrowser *m_pBrowser;
 	QtEnumPropertyManager	  *m_pEnumManager;
-	QtVariantPropertyManager  *m_pVariantmanager;
+	QtVariantPropertyManager  *m_pVariantManager;
+	QtVariantPropertyManager  *m_pCustomManager;
 
 public:
 	void Clear();
 	void SetObject(QObject *object);
+	void SetBackground();
+	void SetScene(DrawScene *scene) { m_pScene = scene; }
 	QObject* GetObject() const { return m_pObject; }
 
 	void AddProperties(const QMetaObject *metaObject);
+	void AddCustomProperty(QtVariantProperty *property);
 	void UpdateProperties(const QMetaObject *metaObject);
 
 private:
@@ -37,6 +42,7 @@ private:
 	QMap<QtProperty *, int> m_propertyToIndex;
 	QMap<const QMetaObject*, QMap<int, QtVariantProperty*>> m_classToIndexToProperty;
 	QMap<QString, QString> m_mapTranslate;
+	DrawScene *m_pScene;
 
 private:
 	bool IsVisibleProperty(QString property);
@@ -45,6 +51,7 @@ private:
 private slots:
 	void SlotValueChanged(QtProperty *property, int value);
 	void SlotValueChanged(QtProperty *property, const QVariant &value);
+	void SlotCustomValueChanged(QtProperty *property, const QVariant &value);
 	
 };
 

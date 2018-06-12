@@ -153,6 +153,8 @@ void SKDraw::Init()
 	m_pPenColorBtn->setFixedWidth(28);
 	m_pPenColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg("#FFFFFF"));
 	m_pen.setColor("#FFFFFF");
+	m_pen.setJoinStyle(Qt::RoundJoin);
+	m_pen.setCapStyle(Qt::RoundCap);
 
 	m_pBrushColorBtn = new QPushButton("",this);
 	m_pBrushColorBtn->setFixedWidth(28);
@@ -260,6 +262,9 @@ void SKDraw::SlotNew()
 	DrawView *view = CreateView();
 	ui.gridLayoutCentral->addWidget(view);
 	view->show();
+
+	m_pPropertyEditor->SetScene(m_pScene);
+	m_pPropertyEditor->SetBackground();
 
 	UpdateActions();
 }
@@ -680,6 +685,8 @@ DrawView* SKDraw::CreateView()
 
 void SKDraw::SlotItemSelected()
 {
+	m_pPropertyEditor->Clear();
+
 	QList<QGraphicsItem*> l = m_pScene->selectedItems();
 	if (l.count() == 1 && l.first()->isSelected())
 	{
@@ -688,7 +695,7 @@ void SKDraw::SlotItemSelected()
 		m_pPropertyEditor->SetObject(m_pControlledObject);
 	}
 	else
-		m_pPropertyEditor->Clear();
+		m_pPropertyEditor->SetBackground();
 
 	UpdateActions();
 }
