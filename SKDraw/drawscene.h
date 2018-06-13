@@ -45,6 +45,8 @@ class DrawScene : public QGraphicsScene
 {
 	Q_OBJECT
 
+	friend class DrawSelectTool;
+	friend class DrawRotationTool;
 	friend class DrawRectTool;
 	friend class DrawPolygonTool;
 
@@ -93,11 +95,11 @@ private:
 	AbstractShape *m_pAlignItem;
 
 signals:
-	void itemAdded(QGraphicsItem *item);
-	void itemMoved(QGraphicsItem *item, const QPointF &oldPosition);
-	void itemRotate(QGraphicsItem *item, const qreal oldAngle);
-	void itemResize(QGraphicsItem *item , int handle, const QPointF &scale);
-	void itemControl(QGraphicsItem *item , int handle, const QPointF &newPos, const QPointF &lastPos_);
+	void SigItemAdded(QGraphicsItem *item);
+	void SigItemMoved(QGraphicsItem *item, const QPointF &oldPosition);
+	void SigItemRotate(QGraphicsItem *item, const qreal oldAngle);
+	void SigItemResize(QGraphicsItem *item , int handle, const QPointF &scale);
+	void SigItemControl(QGraphicsItem *item , int handle, const QPointF &newPos, const QPointF &lastPos_);
 
 private slots:
 	void SlotSelectionChanged();

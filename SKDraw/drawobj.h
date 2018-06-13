@@ -82,6 +82,67 @@ public:
 		return eHandleNone;
 	}
 
+	int SwapHandle(int handle, const QPointF& scale ) const
+	{
+		int dir = eHandleNone;
+		if ( scale.x() < 0 || scale.y() < 0 )
+		{
+			switch (handle)
+			{
+			case eHandleRightTop:
+				if (scale.x() < 0 && scale.y() < 0)
+					dir = eHandleLeftBottom;
+				else if (scale.x() > 0 && scale.y() < 0)
+					dir = eHandleRightBottom;
+				else
+					dir = eHandleLeftTop;
+				break;
+			case eHandleRightBottom:
+				if (scale.x() < 0 && scale.y() < 0)
+					dir = eHandleLeftTop;
+				else if (scale.x() > 0 && scale.y() < 0)
+					dir = eHandleRightTop;
+				else
+					dir = eHandleLeftBottom;
+				break;
+			case eHandleLeftBottom:
+				if (scale.x() < 0 && scale.y() < 0)
+					dir = eHandleRightTop;
+				else if ( scale.x() > 0 && scale.y() < 0)
+					dir = eHandleLeftTop;
+				else
+					dir = eHandleRightBottom;
+				break;
+			case eHandleLeftTop:
+				if (scale.x() < 0 && scale.y() < 0)
+					dir = eHandleRightBottom;
+				else if (scale.x() > 0 && scale.y() < 0)
+					dir = eHandleLeftBottom;
+				else
+					dir = eHandleRightTop;
+				break;
+			case eHandleRight:
+				if (scale.x() < 0)
+					dir = eHandleLeft;
+				break;
+			case eHandleLeft:
+				if (scale.x() < 0)
+					dir = eHandleRight;
+				break;
+			case eHandleTop:
+				if (scale.y()<0)
+					dir = eHandleBottom;
+				break;
+			case eHandleBottom:
+				if (scale.y()<0)
+					dir = eHandleTop;
+				break;
+			}
+		}
+
+		return dir;
+	}
+
 	QPointF Opposite(int handle)
 	{
 		QPointF pt;

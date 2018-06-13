@@ -54,6 +54,8 @@ private:
 	QPen m_pen;
 	QBrush m_brush;
 
+	QLabel *m_pLabelLogo;
+
 private:
 	void Init();
 	void InitUi();
@@ -108,8 +110,8 @@ private slots:
 	void SlotItemAdded(QGraphicsItem *item);
 	void SlotItemMoved(QGraphicsItem *item, const QPointF &oldPosition);
 	void SlotItemRotate(QGraphicsItem *item, const qreal oldAngle);
-	void SlotItemResize(QGraphicsItem *item,int, const QPointF &scale);
-	void SlotItemControl(QGraphicsItem *item,int, const QPointF &newPos, const QPointF &lastPos_);
+	void SlotItemResize(QGraphicsItem *item, int handle, const QPointF &scale);
+	void SlotItemControl(QGraphicsItem *item,int handle, const QPointF &newPos, const QPointF &lastPos_);
 	void SlotPositionChanged(int x, int y);
 
 	void SlotKeyUp();

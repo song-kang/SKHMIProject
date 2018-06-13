@@ -167,12 +167,12 @@ void DrawSelectTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *
 				double sx = new_delta.x() / initial_delta.x();
 				double sy = new_delta.y() / initial_delta.y();
 				item->Stretch(m_nDragHandle, sx, sy, m_opposite);
-				//emit scene->itemResize(item,m_nDragHandle,QPointF(sx,sy));
+				emit scene->SigItemResize(item, m_nDragHandle, QPointF(sx,sy));
 			} 
 			else if (m_nDragHandle > eHandleLeft && m_selectMode == eModeEditor)
 			{
 				item->Control(m_nDragHandle,c_last);
-				//emit scene->itemControl(item,m_nDragHandle,c_last,c_down);
+				emit scene->SigItemControl(item, m_nDragHandle, c_last, c_down);
 			}
 			else if (m_nDragHandle == eHandleNone)
 			{
@@ -223,7 +223,7 @@ void DrawSelectTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScen
 		{
 			UpdatePropertyEditor(scene, (GraphicsItem*)items.at(0));
 			item->setPos(m_initialPositions + c_last - c_down);
-			//emit scene->itemMoved(item , c_last - c_down );
+			emit scene->SigItemMoved(item, c_last - c_down);
 		}
 		else if (item !=0 && (m_selectMode == eModeSize || m_selectMode == eModeEditor) && c_last != c_down)
 		{
@@ -233,7 +233,7 @@ void DrawSelectTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScen
 	}
 	else if (items.count() > 1 && m_selectMode == eModeMove && c_last != c_down)
 	{
-		//emit scene->itemMoved(NULL , c_last - c_down );
+		emit scene->SigItemMoved(NULL, c_last - c_down);
 	}
 
 	m_selectMode = eModeNone;
@@ -320,7 +320,6 @@ void DrawRotationTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene
 				angle += 360;
 
 			item->setRotation(angle);
-			qDebug() << len_y << ","<< len_x <<","<< m_lastAngle<<","<< angle;
 			SetCursor(scene,QCursor((QPixmap(":/images/rotate"))));
 		}
 		else if (item)
@@ -349,8 +348,6 @@ void DrawRotationTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawSc
 	if (event->button() != Qt::LeftButton)
 		return;
 
-	//emit scene->itemRotate(item, m_oldAngle);
-
 	AbstractShape *item = NULL;
 	QList<QGraphicsItem *> items = scene->selectedItems();
 	if (items.count() == 1)
@@ -358,6 +355,7 @@ void DrawRotationTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawSc
 		item = qgraphicsitem_cast<AbstractShape*>(items.first());
 		if (item != NULL && m_nDragHandle != eHandleNone && m_selectMode == eModeRotate)
 			UpdatePropertyEditor(scene, (GraphicsItem*)items.at(0));
+		emit scene->SigItemRotate(item, m_oldAngle);
 	}
 
 	SetCursor(scene,Qt::ArrowCursor);
@@ -437,6 +435,7 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 				((DrawView*)scene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
 			}
 			m_selectMode = eModeNone;
+			emit scene->SigItemAdded(m_pItem);
 			m_pItem = NULL;
 			SetCursor(scene,Qt::ArrowCursor);
 			return;
@@ -460,7 +459,7 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 			m_pItem->setSelected(true);
 			m_pItem->UpdateCoordinate();
 			m_selectMode = eModeNone;
-			//emit scene->itemAdded(m_pItem);
+			emit scene->SigItemAdded(m_pItem);
 		}
 
 		m_pItem = NULL;
@@ -489,7 +488,7 @@ void DrawRectTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *sc
 			double sx = new_delta.x() / initial_delta.x();
 			double sy = new_delta.y() / initial_delta.y();
 			m_pItem->Stretch(m_nDragHandle, sx, sy, m_opposite);
-			//emit scene->itemResize(item,m_nDragHandle,QPointF(sx,sy));
+			emit scene->SigItemResize(m_pItem, m_nDragHandle, QPointF(sx,sy));
 		}
 	}
 }
@@ -543,7 +542,7 @@ void DrawPolygonTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene
 	{
 		m_pItem->EndPoint(event->scenePos());
 		m_pItem->setSelected(true);
-		//emit scene->itemAdded(m_pItem);
+		emit scene->SigItemAdded(m_pItem);
 		m_pItem = NULL;
 		
 		m_selectMode = eModeNone;
@@ -580,7 +579,7 @@ void DrawPolygonTool::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event, Dra
 	m_pItem->EndPoint(event->scenePos());
 	m_pItem->UpdateCoordinate();
 	m_pItem->setSelected(true);
-	//emit scene->itemAdded(m_pItem);
+	emit scene->SigItemAdded(m_pItem);
 	m_pItem = NULL;
 
 	m_selectMode = eModeNone;

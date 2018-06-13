@@ -191,8 +191,8 @@ void DrawScene::keyPressEvent(QKeyEvent *e)
 
 void DrawScene::keyReleaseEvent(QKeyEvent *e)
 {
-	//if (m_bMoved && selectedItems().count() > 0)
-	//	emit itemMoved(NULL, QPointF(m_dx,m_dy));
+	if (m_bMoved && selectedItems().count() > 0)
+		emit SigItemMoved(NULL, QPointF(m_dx,m_dy));
 
 	m_dx = m_dy = 0;
 }
@@ -276,12 +276,12 @@ void DrawScene::Align(eAlignType alignType)
 		{
 			QPointF t;
 			if (alignType == eAlignHSpace)
-				t.setX( pos - it->min() );
+				t.setX(pos - it->min());
 			else
 				t.setY(pos - it->min());
 
 			it->item_->moveBy(t.x(),t.y());
-			//emit itemMoved(it->item_, t);
+			emit SigItemMoved(it->item_, t);
 			changed = true;
 
 			pos += it->extent();
@@ -327,7 +327,7 @@ void DrawScene::Align(eAlignType alignType)
 						if ( fx == 1.0 && fy == 1.0 ) break;
 						aitem->Stretch(eHandleRightBottom,fx,fy,aitem->Opposite(eHandleRightBottom));
 						aitem->UpdateCoordinate();
-						//emit itemResize(aitem, eHandleRightBottom, QPointF(fx,fy));
+						emit SigItemResize(aitem, eHandleRightBottom, QPointF(fx,fy));
 					}
 				}
 				break;
@@ -339,11 +339,10 @@ void DrawScene::Align(eAlignType alignType)
 						if ( fx == 1.0 ) break;
 						aitem->Stretch(eHandleRight,fx,1,aitem->Opposite(eHandleRight));
 						aitem->UpdateCoordinate();
-						//emit itemResize(aitem, eHandleRight, QPointF(fx,1));
+						emit SigItemResize(aitem, eHandleRight, QPointF(fx,1));
 					}
 				}
 				break;
-
 			case eAlignHeight:
 				{
 					AbstractShape * aitem = qgraphicsitem_cast<AbstractShape*>(item);
@@ -353,7 +352,7 @@ void DrawScene::Align(eAlignType alignType)
 						if (fy == 1.0 ) break ;
 						aitem->Stretch(eHandleBottom,1,fy,aitem->Opposite(eHandleBottom));
 						aitem->UpdateCoordinate();
-						//emit itemResize(aitem, eHandleBottom, QPointF(1,fy));
+						emit SigItemResize(aitem, eHandleBottom, QPointF(1,fy));
 					}
 				}
 				break;
@@ -361,10 +360,10 @@ void DrawScene::Align(eAlignType alignType)
 
 			QPointF ptLast= rectItem.center();
 			QPointF ptMove = ptNew - ptLast;
-			if ( !ptMove.isNull())
+			if (!ptMove.isNull())
 			{
 				item->moveBy(ptMove.x(), ptMove.y());
-				//emit itemMoved(item,ptMove);
+				emit SigItemMoved(item, ptMove);
 			}
 		}
 	}
@@ -410,7 +409,7 @@ GraphicsItemGroup* DrawScene::CreateGroup(const QList<QGraphicsItem *> &items, b
 	}
 
 	GraphicsItemGroup *group = new GraphicsItemGroup(commonAncestor);
-	if (!commonAncestor && isAdd )
+	if (!commonAncestor && isAdd)
 		addItem(group);
 
 	foreach (QGraphicsItem *item, items)

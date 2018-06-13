@@ -77,4 +77,91 @@ private:
 
 };
 
+///////////////////////// MoveShapeCommand /////////////////////////
+class MoveShapeCommand : public QUndoCommand
+{
+public:
+	MoveShapeCommand(QGraphicsScene *graphicsScene, const QPointF &delta, QUndoCommand *parent = 0);
+	MoveShapeCommand(QGraphicsItem *item, const QPointF &delta , QUndoCommand *parent = 0);
+	~MoveShapeCommand();
+
+protected:
+	void undo() ;
+	void redo() ;
+
+private:
+	bool m_bMoved;
+	QPointF m_delta;
+	QGraphicsItem  *m_pItem;
+	QGraphicsScene *m_pScene;
+	QList<QGraphicsItem *> m_listItem;
+
+};
+
+///////////////////////// RotateShapeCommand /////////////////////////
+class RotateShapeCommand : public QUndoCommand
+{
+public:
+	RotateShapeCommand(QGraphicsItem *item, const qreal oldAngle, QUndoCommand *parent = 0);
+	~RotateShapeCommand();
+
+protected:
+	void undo() ;
+	void redo() ;
+
+private:
+	QGraphicsItem *m_pItem;
+	qreal m_oldAngle;
+	qreal m_newAngle;
+};
+
+///////////////////////// ResizeShapeCommand /////////////////////////
+class ResizeShapeCommand : public QUndoCommand
+{
+public:
+	enum { Id = 1234, };
+	ResizeShapeCommand(QGraphicsItem * item, int handle, const QPointF& scale, QUndoCommand *parent = 0 );
+	~ResizeShapeCommand();
+
+protected:
+	void undo() ;
+	void redo() ;
+
+public:
+	bool mergeWith(const QUndoCommand *command) ;
+	int id() const  { return Id; }
+
+private:
+	QGraphicsItem *m_pItem;
+	int handle_;
+	int opposite_;
+	QPointF scale_;
+	bool bResized;
+};
+
+///////////////////////// ControlShapeCommand /////////////////////////
+class ControlShapeCommand : public QUndoCommand
+{
+public:
+	enum { Id = 1235, };
+	ControlShapeCommand(QGraphicsItem * item, int handle, const QPointF& newPos, const QPointF& lastPos, QUndoCommand *parent = 0);
+	~ControlShapeCommand();
+
+protected:
+	void undo() ;
+	void redo() ;
+
+public:
+	bool mergeWith(const QUndoCommand *command) ;
+	int id() const  { return Id; }
+
+private:
+	QGraphicsItem  *m_pItem;
+	int handle_;
+	QPointF lastPos_;
+	QPointF newPos_;
+	bool bControled;
+
+};
+
 #endif // COMMANDS_H

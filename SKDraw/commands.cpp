@@ -1,5 +1,6 @@
 #include "commands.h"
 
+static QMap<int, int> c_mapPtr;
 ///////////////////////// AddShapeCommand /////////////////////////
 AddShapeCommand::AddShapeCommand(QGraphicsItem *item, QGraphicsScene *scene, QUndoCommand *parent)
 	: QUndoCommand(parent)
@@ -13,9 +14,11 @@ AddShapeCommand::~AddShapeCommand()
 {
 	if (m_pItem)
 	{
-		GraphicsItemGroup *group = dynamic_cast<GraphicsItemGroup*>(m_pItem);
-		if (group && group->type() != GraphicsItemGroup::Type)
+		if (c_mapPtr.value((int)m_pItem) == 0)
+		{
+			c_mapPtr.insert((int)m_pItem, (int)m_pItem);
 			delete m_pItem;
+		}
 	}
 }
 
@@ -45,13 +48,19 @@ RemoveShapeCommand::RemoveShapeCommand(QGraphicsScene *scene, QUndoCommand *pare
 RemoveShapeCommand::~RemoveShapeCommand()
 {
 	foreach (QGraphicsItem *item, m_listItem)
-		delete item;
+	{
+		if (c_mapPtr.value((int)item) == 0)
+		{
+			c_mapPtr.insert((int)item, (int)item);
+			delete item;
+		}
+	}
 	m_listItem.clear();
 }
 
 void RemoveShapeCommand::undo()
 {
-	foreach (QGraphicsItem *item, m_listItem)
+	foreach (QGraphicsItem *item, m_pScene->selectedItems())
 	{
 		QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
 		if (!g)
@@ -63,7 +72,7 @@ void RemoveShapeCommand::undo()
 
 void RemoveShapeCommand::redo()
 {
-	foreach (QGraphicsItem *item, m_listItem)
+	foreach (QGraphicsItem *item, m_pScene->selectedItems())
 	{
 		QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
 		if (!g)
@@ -83,7 +92,20 @@ GroupShapeCommand::GroupShapeCommand(QGraphicsItemGroup *group, QGraphicsScene *
 
 GroupShapeCommand::~GroupShapeCommand()
 {
+	//foreach (QGraphicsItem *item, m_listItem)
+	//{
+	//	if (c_mapPtr.value((int)item) == 0)
+	//	{
+	//		c_mapPtr.insert((int)item, (int)item);
+	//		delete item;
+	//	}
+	//}
 
+	if (c_mapPtr.value((int)m_pItemGroup) == 0)
+	{
+		c_mapPtr.insert((int)m_pItemGroup, (int)m_pItemGroup);
+		delete m_pItemGroup;
+	}
 }
 
 void GroupShapeCommand::undo()
@@ -133,7 +155,20 @@ UnGroupShapeCommand::UnGroupShapeCommand(QGraphicsItemGroup *group, QGraphicsSce
 
 UnGroupShapeCommand::~UnGroupShapeCommand()
 {
-	delete m_pItemGroup;
+	//foreach (QGraphicsItem *item, m_listItem)
+	//{
+	//	if (c_mapPtr.value((int)item) == 0)
+	//	{
+	//		c_mapPtr.insert((int)item, (int)item);
+	//		delete item;
+	//	}
+	//}
+
+	if (c_mapPtr.value((int)m_pItemGroup) == 0)
+	{
+		c_mapPtr.insert((int)m_pItemGroup, (int)m_pItemGroup);
+		delete m_pItemGroup;
+	}
 }
 
 void UnGroupShapeCommand::undo()
@@ -156,7 +191,7 @@ void UnGroupShapeCommand::undo()
 void UnGroupShapeCommand::redo()
 {
 	m_pItemGroup->setSelected(false);
-	foreach (QGraphicsItem *item, m_pItemGroup->childItems())
+	foreach (QGraphicsItem *item, m_listItem)
 	{
 		item->setSelected(true);
 		m_pItemGroup->removeFromGroup(item);
@@ -168,4 +203,221 @@ void UnGroupShapeCommand::redo()
 
 	m_pScene->removeItem(m_pItemGroup);
 	m_pScene->update();
+}
+
+///////////////////////// MoveShapeCommand /////////////////////////
+MoveShapeCommand::MoveShapeCommand(QGraphicsScene *graphicsScene, const QPointF &delta, QUndoCommand *parent)
+	: QUndoCommand(parent)
+{
+	m_pItem = NULL;
+	m_listItem = graphicsScene->selectedItems();
+	m_pScene = graphicsScene;
+	m_delta = delta;
+	m_bMoved = true;
+}
+
+MoveShapeCommand::MoveShapeCommand(QGraphicsItem *item, const QPointF &delta, QUndoCommand *parent)
+	: QUndoCommand(parent)
+{
+	m_pScene = 0;
+	m_pItem = item;
+	m_delta = delta;
+	m_bMoved = true;
+}
+
+MoveShapeCommand::~MoveShapeCommand()
+{
+
+}
+
+void MoveShapeCommand::undo()
+{
+	if (m_pItem)
+	{
+		m_pItem->moveBy(-m_delta.x(),-m_delta.y());
+	}
+	else if (m_listItem.count() > 0)
+	{
+		foreach (QGraphicsItem *item, m_listItem)
+			item->moveBy(-m_delta.x(),-m_delta.y());
+	}
+
+	m_bMoved = false;
+}
+
+void MoveShapeCommand::redo()
+{
+	if (!m_bMoved)
+	{
+		if (m_pItem)
+		{
+			m_pItem->moveBy(m_delta.x(),m_delta.y());
+			m_pItem->scene()->update();
+		}
+		else if (m_listItem.count() > 0)
+		{
+			foreach (QGraphicsItem *item, m_listItem)
+				item->moveBy(m_delta.x(),m_delta.y());
+			m_pScene->update();
+		}
+	}
+}
+
+///////////////////////// RotateShapeCommand /////////////////////////
+RotateShapeCommand::RotateShapeCommand(QGraphicsItem *item, const qreal oldAngle, QUndoCommand *parent)
+	:QUndoCommand(parent)
+{
+	m_pItem = item;
+	m_oldAngle = oldAngle;
+	m_newAngle = item->rotation();
+}
+
+RotateShapeCommand::~RotateShapeCommand()
+{
+
+}
+
+void RotateShapeCommand::undo()
+{
+	m_pItem->setRotation(m_oldAngle);
+	m_pItem->scene()->update();
+}
+
+void RotateShapeCommand::redo()
+{
+	m_pItem->setRotation(m_newAngle);
+	m_pItem->update();
+}
+
+///////////////////////// ResizeShapeCommand /////////////////////////
+ResizeShapeCommand::ResizeShapeCommand(QGraphicsItem *item, int handle, const QPointF& scale, QUndoCommand *parent)
+{
+	m_pItem = item;
+	handle_ = handle;
+	scale_  = QPointF(scale);
+	opposite_ = eHandleNone;
+	bResized = true;       
+}
+
+ResizeShapeCommand::~ResizeShapeCommand()
+{
+
+}
+
+void ResizeShapeCommand::undo()
+{
+	int handle = handle_;
+	AbstractShape *item = qgraphicsitem_cast<AbstractShape*>(m_pItem);
+	if (item)
+	{
+		if (eHandleNone != opposite_)
+			handle = opposite_;
+
+		item->Stretch(handle, 1./scale_.x(), 1./scale_.y(), item->Opposite(handle));
+		item->UpdateCoordinate();
+		item->update();
+	}
+
+	bResized = false;
+}
+
+void ResizeShapeCommand::redo()
+{
+	int handle = handle_;
+	if (!bResized)
+	{
+		AbstractShape *item = qgraphicsitem_cast<AbstractShape*>(m_pItem);
+		if (item)
+		{
+			item->Stretch(handle, scale_.x(), scale_.y(), item->Opposite(handle));
+			item->UpdateCoordinate();
+			item->update();
+		}
+	}
+}
+
+bool ResizeShapeCommand::mergeWith(const QUndoCommand *command)
+{
+	if (command->id() != ResizeShapeCommand::Id)
+		return false;
+
+	const ResizeShapeCommand *cmd = static_cast<const ResizeShapeCommand *>(command);
+
+	QGraphicsItem *item = cmd->m_pItem;
+	if (m_pItem != item)
+		return false;
+
+	if (cmd->handle_ != handle_)
+		return false;
+
+	AbstractShape * ab = qgraphicsitem_cast<AbstractShape*>(item);
+
+	opposite_ = ab->SwapHandle(cmd->handle_, cmd->scale_);
+
+	handle_ = cmd->handle_;
+	scale_ = cmd->scale_;
+
+	return true;
+}
+
+///////////////////////// ControlShapeCommand /////////////////////////
+ControlShapeCommand::ControlShapeCommand(QGraphicsItem *item, int handle, const QPointF& newPos, const QPointF& lastPos, QUndoCommand *parent)
+{
+	m_pItem = item;
+	handle_ = handle;
+	lastPos_  = QPointF(lastPos) ;
+	newPos_ = QPointF(newPos);
+	bControled = true;
+}
+
+ControlShapeCommand::~ControlShapeCommand()
+{
+
+}
+
+void ControlShapeCommand::undo()
+{
+	AbstractShape *item = qgraphicsitem_cast<AbstractShape*>(m_pItem);
+	if (item)
+	{
+		item->Control(handle_,lastPos_);
+		item->UpdateCoordinate();
+		item->update();
+	}
+
+	bControled = false;
+}
+
+void ControlShapeCommand::redo()
+{
+	if (!bControled)
+	{
+		AbstractShape *item = qgraphicsitem_cast<AbstractShape*>(m_pItem);
+		if (item)
+		{
+			item->Control(handle_,newPos_);
+			item->UpdateCoordinate();
+			item->update();
+		}
+	}
+}
+
+bool ControlShapeCommand::mergeWith(const QUndoCommand *command)
+{
+	if (command->id() != ControlShapeCommand::Id)
+		return false;
+
+	const ControlShapeCommand *cmd = static_cast<const ControlShapeCommand *>(command);
+	QGraphicsItem *item = cmd->m_pItem;
+
+	if (m_pItem != item )
+		return false;
+	if ( cmd->handle_ != handle_ )
+		return false;
+
+	handle_ = cmd->handle_;
+	lastPos_ = cmd->lastPos_;
+	newPos_  = cmd->newPos_;
+
+	return true;
 }

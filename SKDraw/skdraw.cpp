@@ -1,4 +1,4 @@
-#include "skdraw.h"
+ï»¿#include "skdraw.h"
 #include "commands.h"
 
 SKDraw::SKDraw(QWidget *parent, Qt::WFlags flags)
@@ -32,9 +32,9 @@ void SKDraw::Init()
 	ui.dockWidgetProperty->setWidget(m_pPropertyEditor);
 
 	m_pFontComboBox = new QFontComboBox(this);
-	m_pFontComboBox->setCurrentFont(QFont("ËÎÌå"));
+	m_pFontComboBox->setCurrentFont(QFont("å®‹ä½“"));
 	m_pFontSizeComboBox = new QComboBox(this);
-	m_pFontSizeComboBox->setToolTip(m_pFontSizeComboBox->tr("×ÖÌå´óĞ¡"));
+	m_pFontSizeComboBox->setToolTip(m_pFontSizeComboBox->tr("å­—ä½“å¤§å°"));
 	m_pFontSizeComboBox->setEditable(false);
 	for (int i = 6,j = 0; j < 7; i++,j++)
 		m_pFontSizeComboBox->addItem(QString().setNum(i));
@@ -65,7 +65,7 @@ void SKDraw::Init()
 	m_fontColor.setNamedColor("#00FFFF");
 
 	m_pPenStyleComboBox = new QComboBox(this);
-	m_pPenStyleComboBox->setToolTip(m_pPenStyleComboBox->tr("ÏßĞÍ"));
+	m_pPenStyleComboBox->setToolTip(m_pPenStyleComboBox->tr("çº¿å‹"));
 	m_pPenStyleComboBox->setEditable(false);
 	m_pPenStyleComboBox->setIconSize(QSize(160,20));
 	m_pPenStyleComboBox->setMinimumWidth(160);
@@ -76,14 +76,14 @@ void SKDraw::Init()
 		QPainter painter(&pix);
 		if (pos == Qt::NoPen)
 		{
-			QFont f("ËÎÌå");
+			QFont f("å®‹ä½“");
 			f.setPointSize(10);
 			QTextOption o;
 			o.setAlignment(Qt::AlignCenter);
 			QPen pen(Qt::black);
 			painter.setPen(pen);
-			painter.setFont(QFont("ËÎÌå"));
-			painter.drawText(QRect(2,3,148,16),"ÎŞÏßÌõ",o);
+			painter.setFont(QFont("å®‹ä½“"));
+			painter.drawText(QRect(2,3,148,16),"æ— çº¿æ¡",o);
 		}
 		else
 		{
@@ -98,7 +98,7 @@ void SKDraw::Init()
 	m_pen.setStyle((Qt::PenStyle)1);
 
 	m_pPenWidthComboBox = new QComboBox(this);
-	m_pPenWidthComboBox->setToolTip(m_pPenStyleComboBox->tr("Ïß¿í"));
+	m_pPenWidthComboBox->setToolTip(m_pPenStyleComboBox->tr("çº¿å®½"));
 	m_pPenWidthComboBox->setEditable(false);
 	m_pPenWidthComboBox->setIconSize(QSize(160,20));
 	m_pPenWidthComboBox->setMinimumWidth(160);
@@ -117,7 +117,7 @@ void SKDraw::Init()
 	m_pen.setWidthF(1.0);
 
 	m_pBrushStyleComboBox = new QComboBox(this);
-	m_pBrushStyleComboBox->setToolTip(m_pPenStyleComboBox->tr("»­Ë¢ÀàĞÍ"));
+	m_pBrushStyleComboBox->setToolTip(m_pPenStyleComboBox->tr("ç”»åˆ·ç±»å‹"));
 	m_pBrushStyleComboBox->setEditable(false);
 	m_pBrushStyleComboBox->setIconSize(QSize(160,20));
 	m_pBrushStyleComboBox->setMinimumWidth(160);
@@ -128,14 +128,14 @@ void SKDraw::Init()
 		QPainter painter(&pix);
 		if (pos == Qt::NoBrush)
 		{
-			QFont f("ËÎÌå");
+			QFont f("å®‹ä½“");
 			f.setPointSize(10);
 			QTextOption o;
 			o.setAlignment(Qt::AlignCenter);
 			QPen pen(Qt::black);
 			painter.setPen(pen);
-			painter.setFont(QFont("ËÎÌå"));
-			painter.drawText(QRect(2,3,148,16),"ÎŞÌî³ä",o);
+			painter.setFont(QFont("å®‹ä½“"));
+			painter.drawText(QRect(2,3,148,16),"æ— å¡«å……",o);
 		}
 		else
 		{
@@ -177,6 +177,25 @@ void SKDraw::Init()
 void SKDraw::InitUi()
 {
 	setStyleSheet(tr("QWidget#%1{background:rgb(240,240,240,255);}").arg(objectName()));
+
+	QPixmap pix(300,50);
+	pix.fill(Qt::transparent);
+	QFont f("Microsoft Yahei");
+	f.setPointSize(30);
+	f.setBold(true);
+	QTextOption o;
+	o.setAlignment(Qt::AlignCenter);
+	QPen pen(Qt::darkGray);
+
+	QPainter painter(&pix);
+	painter.setPen(pen);
+	painter.setFont(f);
+	painter.drawText(QRect(2,3,298,47),tr("å›¾å½¢ç¼–è¾‘å™¨"),o);
+	m_pLabelLogo = new QLabel(this);
+	m_pLabelLogo->setStyleSheet("background:transparent;");
+	m_pLabelLogo->setPixmap(pix);
+	ui.gridLayoutCentral->addWidget(m_pLabelLogo,0,0,0,0,Qt::AlignCenter);
+	statusBar()->showMessage(tr("æ¬¢è¿ä½¿ç”¨å›¾å½¢ç¼–è¾‘å™¨"));
 }
 
 void SKDraw::InitSlot()
@@ -296,12 +315,13 @@ void SKDraw::SlotClose()
 	m_pView = NULL;
 	m_pScene = NULL;
 
+	statusBar()->showMessage(tr("æ¬¢è¿ä½¿ç”¨å›¾å½¢ç¼–è¾‘å™¨"));
 	UpdateActions();
 }
 
 void SKDraw::SlotExit()
 {
-	int ret = QMessageBox::question(NULL,tr("Ñ¯ÎÊ"),tr("È·ÈÏÍË³ö£¿"),tr("ÍË³ö"),tr("È¡Ïû"));
+	int ret = QMessageBox::question(NULL,tr("è¯¢é—®"),tr("ç¡®è®¤é€€å‡ºï¼Ÿ"),tr("é€€å‡º"),tr("å–æ¶ˆ"));
 	if (ret == 0)
 		SigClose();
 }
@@ -574,7 +594,7 @@ void SKDraw::SlotUnderline()
 
 void SKDraw::SlotBtnFontColor()
 {
-	QColor color = QColorDialog::getColor(m_fontColor,this,tr("Ñ¡ÔñÑÕÉ«"));
+	QColor color = QColorDialog::getColor(m_fontColor,this,tr("é€‰æ‹©é¢œè‰²"));
 	if (color.isValid())
 	{
 		m_fontColor = color.name();
@@ -599,7 +619,7 @@ void SKDraw::SlotBrushStyleChanged(QString val)
 
 void SKDraw::SlotBtnPentColor()
 {
-	QColor color = QColorDialog::getColor(m_fontColor,this,tr("Ñ¡ÔñÑÕÉ«"));
+	QColor color = QColorDialog::getColor(m_fontColor,this,tr("é€‰æ‹©é¢œè‰²"));
 	if (color.isValid())
 	{
 		m_pen.setColor(color.name());
@@ -609,7 +629,7 @@ void SKDraw::SlotBtnPentColor()
 
 void SKDraw::SlotBtnBrushColor()
 {
-	QColor color = QColorDialog::getColor(m_fontColor,this,tr("Ñ¡ÔñÑÕÉ«"));
+	QColor color = QColorDialog::getColor(m_fontColor,this,tr("é€‰æ‹©é¢œè‰²"));
 	if (color.isValid())
 	{
 		m_brush.setColor(color.name());
@@ -643,6 +663,7 @@ void SKDraw::UpdateActions()
 
 	ui.actionZoomin->setEnabled(m_pScene);
 	ui.actionZoomout->setEnabled(m_pScene);
+	ui.actionZoomorg->setEnabled(m_pScene);
 
 	ui.actionSelect->setChecked(DrawTool::c_drawShape == eDrawSelection);
 	ui.actionSelectArea->setChecked(DrawTool::c_drawShape == eDrawSelectionArea);
@@ -695,12 +716,12 @@ void SKDraw::UpdateActions()
 DrawView* SKDraw::CreateView()
 {
 	m_pScene = new DrawScene(this);
-	connect(m_pScene, SIGNAL(selectionChanged()),											 this, SLOT(SlotItemSelected()));
-	connect(m_pScene, SIGNAL(itemAdded(QGraphicsItem*)),									 this, SLOT(SlotItemAdded(QGraphicsItem*)));
-	connect(m_pScene, SIGNAL(itemMoved(QGraphicsItem*,QPointF)),							 this, SLOT(SlotItemMoved(QGraphicsItem*,QPointF)));
-	connect(m_pScene, SIGNAL(itemRotate(QGraphicsItem*,qreal)),								 this, SLOT(SlotItemRotate(QGraphicsItem*,qreal)));
-	connect(m_pScene, SIGNAL(itemResize(QGraphicsItem*,int,const QPointF&)),				 this, SLOT(SlotItemResize(QGraphicsItem*,int,QPointF)));
-	connect(m_pScene, SIGNAL(itemControl(QGraphicsItem*,int,const QPointF&,const QPointF&)), this, SLOT(SlotItemControl(QGraphicsItem*,int,QPointF,QPointF)));
+	connect(m_pScene, SIGNAL(selectionChanged()), this, SLOT(SlotItemSelected()));
+	connect(m_pScene, SIGNAL(SigItemAdded(QGraphicsItem*)), this, SLOT(SlotItemAdded(QGraphicsItem*)));
+	connect(m_pScene, SIGNAL(SigItemMoved(QGraphicsItem*, QPointF)), this, SLOT(SlotItemMoved(QGraphicsItem*, QPointF)));
+	connect(m_pScene, SIGNAL(SigItemRotate(QGraphicsItem*, qreal)),	 this, SLOT(SlotItemRotate(QGraphicsItem*, qreal)));
+	connect(m_pScene, SIGNAL(SigItemResize(QGraphicsItem*, int, const QPointF&)), this, SLOT(SlotItemResize(QGraphicsItem*, int, QPointF)));
+	connect(m_pScene, SIGNAL(SigItemControl(QGraphicsItem*, int, const QPointF&, const QPointF&)), this, SLOT(SlotItemControl(QGraphicsItem*, int, QPointF, QPointF)));
 
 	m_pView = new DrawView(m_pScene);
 	m_pView->SetApp(this);
@@ -722,8 +743,14 @@ void SKDraw::SlotItemSelected()
 		m_pControlledObject = dynamic_cast<QObject*>(item);
 		m_pPropertyEditor->SetObject(m_pControlledObject);
 	}
-	else
+	else if (l.count() == 0)
+	{
 		m_pPropertyEditor->SetBackground();
+	}
+	else
+	{
+		m_pPropertyEditor->Clear();
+	}
 
 	UpdateActions();
 }
@@ -736,27 +763,39 @@ void SKDraw::SlotItemAdded(QGraphicsItem *item)
 
 void SKDraw::SlotItemMoved(QGraphicsItem *item, const QPointF &oldPosition)
 {
-
+	if (item)
+	{
+		QUndoCommand *moveCommand = new MoveShapeCommand(item, oldPosition);
+		m_pUndoStack->push(moveCommand);
+	}
+	else
+	{
+		QUndoCommand *moveCommand = new MoveShapeCommand(m_pScene, oldPosition);
+		m_pUndoStack->push(moveCommand);
+	}
 }
 
 void SKDraw::SlotItemRotate(QGraphicsItem *item, const qreal oldAngle)
 {
-
+	QUndoCommand *rotateCommand = new RotateShapeCommand(item, oldAngle);
+	m_pUndoStack->push(rotateCommand);
 }
 
-void SKDraw::SlotItemResize(QGraphicsItem *item,int, const QPointF &scale)
+void SKDraw::SlotItemResize(QGraphicsItem *item, int handle, const QPointF &scale)
 {
-
+	QUndoCommand *resizeCommand = new ResizeShapeCommand(item, handle, scale );
+	m_pUndoStack->push(resizeCommand);
 }
 
-void SKDraw::SlotItemControl(QGraphicsItem *item,int, const QPointF &newPos, const QPointF &lastPos_)
+void SKDraw::SlotItemControl(QGraphicsItem *item, int handle, const QPointF &newPos, const QPointF &lastPos_)
 {
-
+	QUndoCommand *controlCommand = new ControlShapeCommand(item, handle, newPos, lastPos_);
+	m_pUndoStack->push(controlCommand);
 }
 
 void SKDraw::SlotPositionChanged(int x, int y)
 {
-	statusBar()->showMessage(tr("×ø±ê£¨%1,%2£©").arg(x).arg(y));
+	statusBar()->showMessage(tr("åæ ‡ï¼ˆ%1,%2ï¼‰").arg(x).arg(y));
 }
 
 void SKDraw::SlotKeyUp()

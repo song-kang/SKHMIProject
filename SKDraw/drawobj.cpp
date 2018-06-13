@@ -230,6 +230,7 @@ QGraphicsItem* GraphicsPolygonItem::Duplicate()
 	item->setRotation(rotation());
 	item->setScale(scale());
 	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
 	item->UpdateCoordinate();
 
 	return item;
@@ -372,6 +373,7 @@ QGraphicsItem* GraphicsLineItem::Duplicate()
 	item->setRotation(rotation());
 	item->setScale(scale());
 	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
 	item->UpdateHandles();
 
 	return item;
@@ -502,6 +504,7 @@ QGraphicsItem* GraphicsPolygonLineItem::Duplicate()
 	item->setRotation(rotation());
 	item->setScale(scale());
 	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
 	item->UpdateCoordinate();
 	item->UpdateHandles();
 
@@ -674,6 +677,7 @@ QGraphicsItem* GraphicsRectItem::Duplicate()
 	item->setRotation(rotation());
 	item->setScale(scale());
 	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
 	item->UpdateCoordinate();
 
 	return item;
@@ -789,6 +793,7 @@ QGraphicsItem* GraphicsEllipseItem::Duplicate()
 	item->setRotation(rotation());
 	item->setScale(scale());
 	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
 	item->UpdateCoordinate();
 
 	return item;
@@ -893,6 +898,7 @@ QGraphicsItem* GraphicsTextItem::Duplicate()
 	item->setRotation(rotation());
 	item->setScale(scale());
 	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
 	item->UpdateCoordinate();
 
 	return item;
@@ -977,6 +983,7 @@ QGraphicsItem* GraphicsPictureItem::Duplicate()
 	item->setRotation(rotation());
 	item->setScale(scale());
 	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
 	item->UpdateCoordinate();
 
 	return item;

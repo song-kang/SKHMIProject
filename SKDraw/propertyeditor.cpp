@@ -218,9 +218,6 @@ void PropertyEditor::UpdateProperties(const QMetaObject *metaObject)
 		if (!IsVisibleProperty(metaProperty.name()))
 			continue;
 
-		QString a = metaProperty.name();
-		int b = metaProperty.read(m_pObject).toInt();
-
 		if (m_classToIndexToProperty.contains(metaObject) && m_classToIndexToProperty[metaObject].contains(idx))
 		{
 			QtVariantProperty *subProperty = m_classToIndexToProperty[metaObject][idx];
@@ -233,6 +230,9 @@ void PropertyEditor::UpdateProperties(const QMetaObject *metaObject)
 
 bool PropertyEditor::IsVisibleProperty(QString property)
 {
+	if (m_pObject == NULL)
+		return true;
+
 	if (property == "Position" || property == "Width" || property == "Height" || property == "Scale" || property == "Tooltip" || property == "Rotation")
 		return true;
 
