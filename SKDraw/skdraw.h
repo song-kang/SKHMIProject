@@ -55,6 +55,7 @@ private:
 	QBrush m_brush;
 
 	QLabel *m_pLabelLogo;
+	bool m_isClose;
 
 private:
 	void Init();

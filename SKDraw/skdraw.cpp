@@ -171,6 +171,7 @@ void SKDraw::Init()
 	ui.propertyToolBar->addSeparator();
 	ui.propertyToolBar->addWidget(m_pBrushColorBtn);
 
+	m_isClose = true;
 	UpdateActions();
 }
 
@@ -289,6 +290,7 @@ void SKDraw::SlotNew()
 	m_pPropertyEditor->SetScene(m_pScene);
 	m_pPropertyEditor->SetBackground();
 
+	m_isClose = false;
 	UpdateActions();
 }
 
@@ -309,6 +311,11 @@ void SKDraw::SlotSaveas()
 
 void SKDraw::SlotClose()
 {
+	int ret = QMessageBox::question(NULL,tr("询问"),tr("确认关闭？"),tr("关闭"),tr("取消"));
+	if (ret != 0)
+		return;
+
+	m_isClose = true;
 	m_pPropertyEditor->Clear();
 	m_pUndoStack->clear();
 	delete m_pView;
@@ -744,7 +751,7 @@ void SKDraw::SlotItemSelected()
 		m_pControlledObject = dynamic_cast<QObject*>(item);
 		m_pPropertyEditor->SetObject(m_pControlledObject);
 	}
-	else if (l.count() == 0)
+	else if (l.count() == 0 && !m_isClose)
 	{
 		m_pPropertyEditor->SetBackground();
 	}
