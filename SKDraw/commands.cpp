@@ -60,7 +60,7 @@ RemoveShapeCommand::~RemoveShapeCommand()
 
 void RemoveShapeCommand::undo()
 {
-	foreach (QGraphicsItem *item, m_pScene->selectedItems())
+	foreach (QGraphicsItem *item, m_listItem)
 	{
 		QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
 		if (!g)
@@ -72,7 +72,7 @@ void RemoveShapeCommand::undo()
 
 void RemoveShapeCommand::redo()
 {
-	foreach (QGraphicsItem *item, m_pScene->selectedItems())
+	foreach (QGraphicsItem *item, m_listItem)
 	{
 		QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
 		if (!g)

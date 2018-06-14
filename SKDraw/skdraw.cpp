@@ -310,6 +310,7 @@ void SKDraw::SlotSaveas()
 void SKDraw::SlotClose()
 {
 	m_pPropertyEditor->Clear();
+	m_pUndoStack->clear();
 	delete m_pView;
 	delete m_pScene;
 	m_pView = NULL;
@@ -759,6 +760,7 @@ void SKDraw::SlotItemAdded(QGraphicsItem *item)
 {
 	QUndoCommand *addCommand = new AddShapeCommand(item, item->scene());
 	m_pUndoStack->push(addCommand);
+	UpdateActions();
 }
 
 void SKDraw::SlotItemMoved(QGraphicsItem *item, const QPointF &oldPosition)

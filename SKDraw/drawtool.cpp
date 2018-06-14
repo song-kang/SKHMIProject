@@ -488,7 +488,6 @@ void DrawRectTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *sc
 			double sx = new_delta.x() / initial_delta.x();
 			double sy = new_delta.y() / initial_delta.y();
 			m_pItem->Stretch(m_nDragHandle, sx, sy, m_opposite);
-			emit scene->SigItemResize(m_pItem, m_nDragHandle, QPointF(sx,sy));
 		}
 	}
 }
