@@ -1,6 +1,9 @@
 #include "propertyeditor.h"
 #include "drawobj.h"
 #include "drawscene.h"
+#include "drawview.h"
+#include "commands.h"
+#include "skdraw.h"
 
 PropertyEditor::PropertyEditor(QWidget *parent)
 	: QWidget(parent)
@@ -57,26 +60,50 @@ void PropertyEditor::InitMap()
 
 void PropertyEditor::SlotValueChanged(QtProperty *property, int value)
 {
-	if (!m_propertyToIndex.contains(property))
+	if (!m_pObject || !m_propertyToIndex.contains(property))
 		return;
 
 	int idx = m_propertyToIndex.value(property);
 	const QMetaObject *metaObject = m_pObject->metaObject();
 	QMetaProperty metaProperty = metaObject->property(idx);
 	if (metaProperty.isEnumType())
+	{
+		QPen pen = ((GraphicsItem*)m_pObject)->GetPen();
+		QBrush brush = ((GraphicsItem*)m_pObject)->GetBrush();
+		
 		metaProperty.write(m_pObject, value);
+
+		PropertyCommand(property, value, pen);
+		PropertyCommand(property, value, brush);
+		
+	}
 }
 
 void PropertyEditor::SlotValueChanged(QtProperty *property, const QVariant &value)
 {
-	if (!m_propertyToIndex.contains(property))
+	if (!m_pObject || !m_propertyToIndex.contains(property))
 		return;
 
 	int idx = m_propertyToIndex.value(property);
 	const QMetaObject *metaObject = m_pObject->metaObject();
 	QMetaProperty metaProperty = metaObject->property(idx);
 	if (!metaProperty.isEnumType())
+	{
+		QPen pen = ((GraphicsItem*)m_pObject)->GetPen();
+		QBrush brush = ((GraphicsItem*)m_pObject)->GetBrush();
+		qreal scale = ((GraphicsItem*)m_pObject)->scale();
+		QFont font;
+		if (((GraphicsItem*)m_pObject)->GetName() == "文字图元")
+			font = ((GraphicsTextItem*)m_pObject)->GetFont();
+
 		metaProperty.write(m_pObject, value);
+
+		PropertyCommand(property, value, pen);
+		PropertyCommand(property, value, brush);
+		PropertyCommand(property, value, scale);
+		if (((GraphicsItem*)m_pObject)->GetName() == "文字图元")
+			PropertyCommand(property, value, font);
+	}
 }
 
 void PropertyEditor::SlotCustomValueChanged(QtProperty *property, const QVariant &value)
@@ -183,6 +210,7 @@ void PropertyEditor::AddProperties(const QMetaObject *metaObject)
 			subProperty->setValue(metaProperty.read(m_pObject));
 			m_lstTopLevelProperties.append(subProperty);
 			item = m_pBrowser->addProperty(subProperty);
+			m_classToIndexToProperty[metaObject][idx] = subProperty;
 		}
 
 		if (enumProperty)
@@ -191,9 +219,10 @@ void PropertyEditor::AddProperties(const QMetaObject *metaObject)
 			m_pEnumManager->setValue(enumProperty, metaProperty.read(m_pObject).toInt());
 			m_lstTopLevelProperties.append(enumProperty);
 			item = m_pBrowser->addProperty(enumProperty);
+			m_classToIndexToEnumProperty[metaObject][idx] = enumProperty;
 		}
 
-		m_classToIndexToProperty[metaObject][idx] = subProperty;
+		//m_classToIndexToProperty[metaObject][idx] = subProperty;
 		((QtTreePropertyBrowser*)m_pBrowser)->setExpanded(item,false);
 	}
 }
@@ -221,10 +250,16 @@ void PropertyEditor::UpdateProperties(const QMetaObject *metaObject)
 		if (m_classToIndexToProperty.contains(metaObject) && m_classToIndexToProperty[metaObject].contains(idx))
 		{
 			QtVariantProperty *subProperty = m_classToIndexToProperty[metaObject][idx];
-			
 			if (!metaProperty.isEnumType())
 				subProperty->setValue(metaProperty.read(m_pObject));
 		}
+		else if (m_classToIndexToEnumProperty.contains(metaObject) && m_classToIndexToEnumProperty[metaObject].contains(idx))
+		{
+			QtProperty *enumProperty = m_classToIndexToEnumProperty[metaObject][idx];
+			if (metaProperty.isEnumType())
+				m_pEnumManager->setValue(enumProperty, metaProperty.read(m_pObject).toInt());
+		}
+		
 	}
 }
 
@@ -400,5 +435,102 @@ void PropertyEditor::EnumEditor(int index, QString name, QStringList &enumNames,
 	{
 		enumNames.append("交叉对角线");
 		enumIcons.insert(index, QIcon(":/images/DiagCrossPattern"));
+	}
+}
+
+void PropertyEditor::PropertyCommand(QtProperty *property, const QVariant &value, QPen oldPen)
+{
+	SKDraw *draw = ((DrawView*)(m_pScene->GetView()))->GetApp();
+	if (!draw)
+		return;
+
+	QString name = property->propertyName();
+	if (name == "画笔粗细")
+	{
+		qreal penWidth = oldPen.widthF();
+		if (penWidth != value.toReal())
+		{
+			QUndoCommand *penCommand = new PenPropertyCommand((GraphicsItem*)m_pObject, oldPen);
+			draw->GetUndoStack()->push(penCommand);
+		}
+	}
+	else if (name == "画笔颜色")
+	{
+		QColor color = oldPen.color();
+		if (color != value.value<QColor>())
+		{
+			QUndoCommand *command = new PenPropertyCommand((GraphicsItem*)m_pObject, oldPen);
+			draw->GetUndoStack()->push(command);
+		}
+	}
+	else if (name == "画笔风格")
+	{
+		Qt::PenStyle style = oldPen.style();
+		if (style != (Qt::PenStyle)value.toInt())
+		{
+			QUndoCommand *command = new PenPropertyCommand((GraphicsItem*)m_pObject, oldPen);
+			draw->GetUndoStack()->push(command);
+		}
+	}
+}
+
+void PropertyEditor::PropertyCommand(QtProperty *property, const QVariant &value, QBrush oldBrush)
+{
+	SKDraw *draw = ((DrawView*)(m_pScene->GetView()))->GetApp();
+	if (!draw)
+		return;
+
+	QString name = property->propertyName();
+	if (name == "画刷颜色")
+	{
+		QColor color = oldBrush.color();
+		if (color != value.value<QColor>())
+		{
+			QUndoCommand *command = new BrushPropertyCommand((GraphicsItem*)m_pObject, oldBrush);
+			draw->GetUndoStack()->push(command);
+		}
+	}
+	else if (name == "画刷风格")
+	{
+		Qt::BrushStyle style = oldBrush.style();
+		if (style != (Qt::BrushStyle)value.toInt())
+		{
+			QUndoCommand *command = new BrushPropertyCommand((GraphicsItem*)m_pObject, oldBrush);
+			draw->GetUndoStack()->push(command);
+		}
+	}
+}
+
+void PropertyEditor::PropertyCommand(QtProperty *property, const QVariant &value, QFont oldFont)
+{
+	SKDraw *draw = ((DrawView*)(m_pScene->GetView()))->GetApp();
+	if (!draw)
+		return;
+
+	QString name = property->propertyName();
+	if (name == "字体")
+	{
+		if (oldFont != value.value<QFont>())
+		{
+			QUndoCommand *command = new FontPropertyCommand((GraphicsItem*)m_pObject, oldFont);
+			draw->GetUndoStack()->push(command);
+		}
+	}
+}
+
+void PropertyEditor::PropertyCommand(QtProperty *property, const QVariant &value, qreal oldScale)
+{
+	SKDraw *draw = ((DrawView*)(m_pScene->GetView()))->GetApp();
+	if (!draw)
+		return;
+
+	QString name = property->propertyName();
+	if (name == "缩放比例")
+	{
+		if (oldScale != value.toReal())
+		{
+			QUndoCommand *command = new ScalePropertyCommand((GraphicsItem*)m_pObject, oldScale);
+			draw->GetUndoStack()->push(command);
+		}
 	}
 }

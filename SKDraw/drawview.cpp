@@ -24,6 +24,7 @@ DrawView::DrawView(QGraphicsScene *scene)
 	m_bMouseTranslate = false;
 	m_scale = 1.0;
 	m_zoomDelta = 0.1;
+	m_isUntitled = true;
 
 	connect(horizontalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
 	connect(verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
@@ -214,4 +215,57 @@ void DrawView::UpdateRuler()
 	double upper_y = factor * (viewbox.bottom() - RULER_SIZE - offset.y()) * -1;
 	m_pVerRuler->setRange(lower_y, upper_y, upper_y - lower_y);
 	m_pVerRuler->update();
+}
+
+bool DrawView::Save()
+{
+	if (m_isUntitled)
+		return SaveAs();
+	else if (!m_sFileName.isEmpty())
+		return SaveFile(m_sFileName);
+
+	return false;
+}
+
+bool DrawView::SaveAs()
+{
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"), m_sFileName);
+	if (fileName.isEmpty())
+		return false;
+
+	return SaveFile(fileName);
+}
+
+bool DrawView::SaveFile(const QString fileName)
+{
+	QFile file(fileName);
+	if (!file.open(QFile::WriteOnly | QFile::Text))
+	{
+		QMessageBox::warning(this, tr("告警"), tr("文件【%1】写模式打开失败\n%2.").arg(fileName).arg(file.errorString()));
+		return false;
+	}
+
+	QXmlStreamWriter xml(&file);
+	xml.setAutoFormatting(true);
+	xml.writeStartDocument();
+	xml.writeDTD("<!DOCTYPE SKDRAW>");
+	xml.writeStartElement("canvas");
+	xml.writeAttribute("width",QString("%1").arg(scene()->width()));
+	xml.writeAttribute("height",QString("%1").arg(scene()->height()));
+	xml.writeAttribute("color",QString("%1").arg(((DrawScene*)m_pScene)->GetGridTool()->GetBackColor().name()));
+	foreach (QGraphicsItem *item , scene()->items())
+	{
+		AbstractShape *ab = qgraphicsitem_cast<AbstractShape*>(item);
+		QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
+		if (ab &&!qgraphicsitem_cast<SizeHandleRect*>(ab) && !g)
+			ab->SaveToXml(&xml);
+	}
+	xml.writeEndElement();
+	xml.writeEndDocument();
+
+	m_sFileName = QFileInfo(fileName).canonicalFilePath();
+	m_isUntitled = false;
+	m_app->GetApp()->SetWindowTitle("SKDraw - " + tr("%1").arg(fileName));
+
+	return true;
 }

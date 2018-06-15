@@ -17,6 +17,10 @@ public:
 	void SetMouseTranslate(bool b) { m_bMouseTranslate = b; }
 	SKDraw* GetApp() { return m_app; }
 
+	bool Save();
+	bool SaveAs();
+	bool SaveFile(const QString fileName);
+
 public:
 	void ZoomIn();
 	void ZoomOut();
@@ -40,6 +44,8 @@ private:
 	bool m_bMouseTranslate;
 	qreal m_scale;
 	qreal m_zoomDelta;
+	bool m_isUntitled;
+	QString m_sFileName;
 
 private:
 	void UpdateRuler();

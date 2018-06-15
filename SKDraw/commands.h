@@ -63,7 +63,7 @@ private:
 class UnGroupShapeCommand : public QUndoCommand
 {
 public:
-	explicit UnGroupShapeCommand( QGraphicsItemGroup *group, QGraphicsScene *graphicsScene, QUndoCommand *parent = 0);
+	explicit UnGroupShapeCommand(QGraphicsItemGroup *group, QGraphicsScene *graphicsScene, QUndoCommand *parent = 0);
 	~UnGroupShapeCommand();
 
 protected:
@@ -81,8 +81,8 @@ private:
 class MoveShapeCommand : public QUndoCommand
 {
 public:
-	MoveShapeCommand(QGraphicsScene *graphicsScene, const QPointF &delta, QUndoCommand *parent = 0);
-	MoveShapeCommand(QGraphicsItem *item, const QPointF &delta , QUndoCommand *parent = 0);
+	MoveShapeCommand(DrawScene *scene, const QPointF &delta, QUndoCommand *parent = 0);
+	MoveShapeCommand(DrawScene *scene, QGraphicsItem *item, const QPointF &delta , QUndoCommand *parent = 0);
 	~MoveShapeCommand();
 
 protected:
@@ -93,7 +93,7 @@ private:
 	bool m_bMoved;
 	QPointF m_delta;
 	QGraphicsItem  *m_pItem;
-	QGraphicsScene *m_pScene;
+	DrawScene *m_pScene;
 	QList<QGraphicsItem *> m_listItem;
 
 };
@@ -102,7 +102,7 @@ private:
 class RotateShapeCommand : public QUndoCommand
 {
 public:
-	RotateShapeCommand(QGraphicsItem *item, const qreal oldAngle, QUndoCommand *parent = 0);
+	RotateShapeCommand(DrawScene *scene, QGraphicsItem *item, const qreal oldAngle, QUndoCommand *parent = 0);
 	~RotateShapeCommand();
 
 protected:
@@ -110,9 +110,11 @@ protected:
 	void redo() ;
 
 private:
+	DrawScene *m_pScene;
 	QGraphicsItem *m_pItem;
 	qreal m_oldAngle;
 	qreal m_newAngle;
+
 };
 
 ///////////////////////// ResizeShapeCommand /////////////////////////
@@ -120,7 +122,7 @@ class ResizeShapeCommand : public QUndoCommand
 {
 public:
 	enum { Id = 1234, };
-	ResizeShapeCommand(QGraphicsItem * item, int handle, const QPointF& scale, QUndoCommand *parent = 0 );
+	ResizeShapeCommand(DrawScene *scene, QGraphicsItem * item, int handle, const QPointF& scale, QUndoCommand *parent = 0 );
 	~ResizeShapeCommand();
 
 protected:
@@ -132,11 +134,13 @@ public:
 	int id() const  { return Id; }
 
 private:
+	DrawScene *m_pScene;
 	QGraphicsItem *m_pItem;
 	int handle_;
 	int opposite_;
 	QPointF scale_;
 	bool bResized;
+
 };
 
 ///////////////////////// ControlShapeCommand /////////////////////////
@@ -144,7 +148,7 @@ class ControlShapeCommand : public QUndoCommand
 {
 public:
 	enum { Id = 1235, };
-	ControlShapeCommand(QGraphicsItem * item, int handle, const QPointF& newPos, const QPointF& lastPos, QUndoCommand *parent = 0);
+	ControlShapeCommand(DrawScene *scene, QGraphicsItem * item, int handle, const QPointF& newPos, const QPointF& lastPos, QUndoCommand *parent = 0);
 	~ControlShapeCommand();
 
 protected:
@@ -156,11 +160,88 @@ public:
 	int id() const  { return Id; }
 
 private:
+	DrawScene *m_pScene;
 	QGraphicsItem  *m_pItem;
 	int handle_;
 	QPointF lastPos_;
 	QPointF newPos_;
 	bool bControled;
+
+};
+
+///////////////////////// PenPropertyCommand /////////////////////////
+class PenPropertyCommand : public QUndoCommand
+{
+public:
+	PenPropertyCommand(GraphicsItem *item, const QPen oldPen, QUndoCommand *parent = 0);
+	~PenPropertyCommand();
+
+protected:
+	void undo() ;
+	void redo() ;
+
+private:
+	DrawScene *m_pScene;
+	GraphicsItem *m_pItem;
+	QPen m_oldPen;
+	QPen m_newPen;
+
+};
+
+///////////////////////// BrushPropertyCommand /////////////////////////
+class BrushPropertyCommand : public QUndoCommand
+{
+public:
+	BrushPropertyCommand(GraphicsItem *item, const QBrush oldBrush, QUndoCommand *parent = 0);
+	~BrushPropertyCommand();
+
+protected:
+	void undo() ;
+	void redo() ;
+
+private:
+	DrawScene *m_pScene;
+	GraphicsItem *m_pItem;
+	QBrush m_oldBrush;
+	QBrush m_newBrush;
+
+};
+
+///////////////////////// FontPropertyCommand /////////////////////////
+class FontPropertyCommand : public QUndoCommand
+{
+public:
+	FontPropertyCommand(GraphicsItem *item, const QFont oldFont, QUndoCommand *parent = 0);
+	~FontPropertyCommand();
+
+protected:
+	void undo() ;
+	void redo() ;
+
+private:
+	DrawScene *m_pScene;
+	GraphicsItem *m_pItem;
+	QFont m_oldFont;
+	QFont m_newFont;
+
+};
+
+///////////////////////// ScalePropertyCommand /////////////////////////
+class ScalePropertyCommand : public QUndoCommand
+{
+public:
+	ScalePropertyCommand(GraphicsItem *item, const qreal oldScale, QUndoCommand *parent = 0);
+	~ScalePropertyCommand();
+
+protected:
+	void undo() ;
+	void redo() ;
+
+private:
+	DrawScene *m_pScene;
+	GraphicsItem *m_pItem;
+	qreal m_oldScale;
+	qreal m_newScale;
 
 };
 

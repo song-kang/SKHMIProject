@@ -9,6 +9,7 @@
 #include "qtvariantproperty.h"
 
 class DrawScene;
+class DrawView;
 class PropertyEditor : public QWidget
 {
 	Q_OBJECT
@@ -41,12 +42,17 @@ private:
 	QList<QtProperty*> m_lstTopLevelProperties;
 	QMap<QtProperty *, int> m_propertyToIndex;
 	QMap<const QMetaObject*, QMap<int, QtVariantProperty*>> m_classToIndexToProperty;
+	QMap<const QMetaObject*, QMap<int, QtProperty*>> m_classToIndexToEnumProperty;
 	QMap<QString, QString> m_mapTranslate;
 	DrawScene *m_pScene;
 
 private:
 	bool IsVisibleProperty(QString property);
 	void EnumEditor(int index, QString name, QStringList &enumNames, QMap<int, QIcon> &enumIcons);
+	void PropertyCommand(QtProperty *property, const QVariant &value, QPen oldPen);
+	void PropertyCommand(QtProperty *property, const QVariant &value, QBrush oldBrush);
+	void PropertyCommand(QtProperty *property, const QVariant &value, QFont oldFont);
+	void PropertyCommand(QtProperty *property, const QVariant &value, qreal oldScale);
 
 private slots:
 	void SlotValueChanged(QtProperty *property, int value);

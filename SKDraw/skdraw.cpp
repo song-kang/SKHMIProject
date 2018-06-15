@@ -301,7 +301,7 @@ void SKDraw::SlotOpen()
 
 void SKDraw::SlotSave()
 {
-
+	m_pView->Save();
 }
 
 void SKDraw::SlotSaveas()
@@ -324,6 +324,8 @@ void SKDraw::SlotClose()
 	m_pScene = NULL;
 
 	statusBar()->showMessage(tr("欢迎使用图形编辑器"));
+	m_app->SetWindowTitle("SKDraw");
+
 	UpdateActions();
 }
 
@@ -774,7 +776,7 @@ void SKDraw::SlotItemMoved(QGraphicsItem *item, const QPointF &oldPosition)
 {
 	if (item)
 	{
-		QUndoCommand *moveCommand = new MoveShapeCommand(item, oldPosition);
+		QUndoCommand *moveCommand = new MoveShapeCommand(m_pScene, item, oldPosition);
 		m_pUndoStack->push(moveCommand);
 	}
 	else
@@ -786,19 +788,19 @@ void SKDraw::SlotItemMoved(QGraphicsItem *item, const QPointF &oldPosition)
 
 void SKDraw::SlotItemRotate(QGraphicsItem *item, const qreal oldAngle)
 {
-	QUndoCommand *rotateCommand = new RotateShapeCommand(item, oldAngle);
+	QUndoCommand *rotateCommand = new RotateShapeCommand(m_pScene, item, oldAngle);
 	m_pUndoStack->push(rotateCommand);
 }
 
 void SKDraw::SlotItemResize(QGraphicsItem *item, int handle, const QPointF &scale)
 {
-	QUndoCommand *resizeCommand = new ResizeShapeCommand(item, handle, scale );
+	QUndoCommand *resizeCommand = new ResizeShapeCommand(m_pScene, item, handle, scale );
 	m_pUndoStack->push(resizeCommand);
 }
 
 void SKDraw::SlotItemControl(QGraphicsItem *item, int handle, const QPointF &newPos, const QPointF &lastPos_)
 {
-	QUndoCommand *controlCommand = new ControlShapeCommand(item, handle, newPos, lastPos_);
+	QUndoCommand *controlCommand = new ControlShapeCommand(m_pScene, item, handle, newPos, lastPos_);
 	m_pUndoStack->push(controlCommand);
 }
 

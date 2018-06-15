@@ -1,4 +1,6 @@
 #include "commands.h"
+#include "drawview.h"
+#include "skdraw.h"
 
 static QMap<int, int> c_mapPtr;
 ///////////////////////// AddShapeCommand /////////////////////////
@@ -206,20 +208,20 @@ void UnGroupShapeCommand::redo()
 }
 
 ///////////////////////// MoveShapeCommand /////////////////////////
-MoveShapeCommand::MoveShapeCommand(QGraphicsScene *graphicsScene, const QPointF &delta, QUndoCommand *parent)
+MoveShapeCommand::MoveShapeCommand(DrawScene *scene, const QPointF &delta, QUndoCommand *parent)
 	: QUndoCommand(parent)
 {
 	m_pItem = NULL;
-	m_listItem = graphicsScene->selectedItems();
-	m_pScene = graphicsScene;
+	m_listItem = scene->selectedItems();
+	m_pScene = scene;
 	m_delta = delta;
 	m_bMoved = true;
 }
 
-MoveShapeCommand::MoveShapeCommand(QGraphicsItem *item, const QPointF &delta, QUndoCommand *parent)
+MoveShapeCommand::MoveShapeCommand(DrawScene *scene, QGraphicsItem *item, const QPointF &delta, QUndoCommand *parent)
 	: QUndoCommand(parent)
 {
-	m_pScene = 0;
+	m_pScene = scene;
 	m_pItem = item;
 	m_delta = delta;
 	m_bMoved = true;
@@ -235,6 +237,7 @@ void MoveShapeCommand::undo()
 	if (m_pItem)
 	{
 		m_pItem->moveBy(-m_delta.x(),-m_delta.y());
+		((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)m_pItem)->metaObject());
 	}
 	else if (m_listItem.count() > 0)
 	{
@@ -252,6 +255,7 @@ void MoveShapeCommand::redo()
 		if (m_pItem)
 		{
 			m_pItem->moveBy(m_delta.x(),m_delta.y());
+			((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)m_pItem)->metaObject());
 			m_pItem->scene()->update();
 		}
 		else if (m_listItem.count() > 0)
@@ -264,9 +268,10 @@ void MoveShapeCommand::redo()
 }
 
 ///////////////////////// RotateShapeCommand /////////////////////////
-RotateShapeCommand::RotateShapeCommand(QGraphicsItem *item, const qreal oldAngle, QUndoCommand *parent)
+RotateShapeCommand::RotateShapeCommand(DrawScene *scene, QGraphicsItem *item, const qreal oldAngle, QUndoCommand *parent)
 	:QUndoCommand(parent)
 {
+	m_pScene = scene;
 	m_pItem = item;
 	m_oldAngle = oldAngle;
 	m_newAngle = item->rotation();
@@ -281,17 +286,20 @@ void RotateShapeCommand::undo()
 {
 	m_pItem->setRotation(m_oldAngle);
 	m_pItem->scene()->update();
+	((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)m_pItem)->metaObject());
 }
 
 void RotateShapeCommand::redo()
 {
 	m_pItem->setRotation(m_newAngle);
 	m_pItem->update();
+	((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)m_pItem)->metaObject());
 }
 
 ///////////////////////// ResizeShapeCommand /////////////////////////
-ResizeShapeCommand::ResizeShapeCommand(QGraphicsItem *item, int handle, const QPointF& scale, QUndoCommand *parent)
+ResizeShapeCommand::ResizeShapeCommand(DrawScene *scene, QGraphicsItem *item, int handle, const QPointF& scale, QUndoCommand *parent)
 {
+	m_pScene = scene;
 	m_pItem = item;
 	handle_ = handle;
 	scale_  = QPointF(scale);
@@ -316,6 +324,7 @@ void ResizeShapeCommand::undo()
 		item->Stretch(handle, 1./scale_.x(), 1./scale_.y(), item->Opposite(handle));
 		item->UpdateCoordinate();
 		item->update();
+		((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)m_pItem)->metaObject());
 	}
 
 	bResized = false;
@@ -332,6 +341,7 @@ void ResizeShapeCommand::redo()
 			item->Stretch(handle, scale_.x(), scale_.y(), item->Opposite(handle));
 			item->UpdateCoordinate();
 			item->update();
+			((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)m_pItem)->metaObject());
 		}
 	}
 }
@@ -361,8 +371,9 @@ bool ResizeShapeCommand::mergeWith(const QUndoCommand *command)
 }
 
 ///////////////////////// ControlShapeCommand /////////////////////////
-ControlShapeCommand::ControlShapeCommand(QGraphicsItem *item, int handle, const QPointF& newPos, const QPointF& lastPos, QUndoCommand *parent)
+ControlShapeCommand::ControlShapeCommand(DrawScene *scene, QGraphicsItem *item, int handle, const QPointF& newPos, const QPointF& lastPos, QUndoCommand *parent)
 {
+	m_pScene = scene;
 	m_pItem = item;
 	handle_ = handle;
 	lastPos_  = QPointF(lastPos) ;
@@ -383,6 +394,7 @@ void ControlShapeCommand::undo()
 		item->Control(handle_,lastPos_);
 		item->UpdateCoordinate();
 		item->update();
+		((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)m_pItem)->metaObject());
 	}
 
 	bControled = false;
@@ -398,6 +410,7 @@ void ControlShapeCommand::redo()
 			item->Control(handle_,newPos_);
 			item->UpdateCoordinate();
 			item->update();
+			((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)m_pItem)->metaObject());
 		}
 	}
 }
@@ -420,4 +433,128 @@ bool ControlShapeCommand::mergeWith(const QUndoCommand *command)
 	newPos_  = cmd->newPos_;
 
 	return true;
+}
+
+///////////////////////// PenPropertyCommand /////////////////////////
+PenPropertyCommand::PenPropertyCommand(GraphicsItem *item, const QPen oldPen, QUndoCommand *parent)
+	:QUndoCommand(parent)
+{
+	m_pScene = item->GetScene();
+	m_pItem = item;
+	m_oldPen = oldPen;
+	m_newPen = item->GetPen();
+}
+
+PenPropertyCommand::~PenPropertyCommand()
+{
+
+}
+
+void PenPropertyCommand::undo()
+{
+	m_pItem->SetPen(m_oldPen);
+	m_pItem->update();
+
+	((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
+}
+
+void PenPropertyCommand::redo()
+{
+	m_pItem->SetPen(m_newPen);
+	m_pItem->update();
+
+	((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
+}
+
+///////////////////////// BrushPropertyCommand /////////////////////////
+BrushPropertyCommand::BrushPropertyCommand(GraphicsItem *item, const QBrush oldBrush, QUndoCommand *parent)
+	:QUndoCommand(parent)
+{
+	m_pScene = item->GetScene();
+	m_pItem = item;
+	m_oldBrush = oldBrush;
+	m_newBrush = item->GetBrush();
+}
+
+BrushPropertyCommand::~BrushPropertyCommand()
+{
+
+}
+
+void BrushPropertyCommand::undo()
+{
+	m_pItem->SetBrush(m_oldBrush);
+	m_pItem->update();
+
+	((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
+}
+
+void BrushPropertyCommand::redo()
+{
+	m_pItem->SetBrush(m_newBrush);
+	m_pItem->update();
+
+	((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
+}
+
+///////////////////////// FontPropertyCommand /////////////////////////
+FontPropertyCommand::FontPropertyCommand(GraphicsItem *item, const QFont oldFont, QUndoCommand *parent)
+	:QUndoCommand(parent)
+{
+	m_pScene = item->GetScene();
+	m_pItem = item;
+	m_oldFont = oldFont;
+	m_newFont = ((GraphicsTextItem*)item)->GetFont();
+}
+
+FontPropertyCommand::~FontPropertyCommand()
+{
+
+}
+
+void FontPropertyCommand::undo()
+{
+	((GraphicsTextItem*)m_pItem)->SetFont(m_oldFont);
+	m_pItem->update();
+
+	((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
+}
+
+void FontPropertyCommand::redo()
+{
+	((GraphicsTextItem*)m_pItem)->SetFont(m_newFont);
+	m_pItem->update();
+
+	((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
+}
+
+///////////////////////// ScalePropertyCommand /////////////////////////
+ScalePropertyCommand::ScalePropertyCommand(GraphicsItem *item, const qreal oldScale, QUndoCommand *parent)
+	:QUndoCommand(parent)
+{
+	m_pScene = item->GetScene();
+	m_pItem = item;
+	m_oldScale = oldScale;
+	m_newScale = item->scale();
+}
+
+ScalePropertyCommand::~ScalePropertyCommand()
+{
+
+}
+
+void ScalePropertyCommand::undo()
+{
+	m_pItem->setScale(m_oldScale);
+	m_pItem->update();
+
+	((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
+}
+
+void ScalePropertyCommand::redo()
+{
+	m_pItem->setScale(m_newScale);
+	m_pItem->update();
+
+	((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(m_pItem->metaObject());
 }

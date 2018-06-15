@@ -22,6 +22,8 @@ public:
 
 	void SetApp(SKBaseWidget *app) { m_app = app; }
 	PropertyEditor* GetPropertyEditor() { return m_pPropertyEditor; }
+	SKBaseWidget* GetApp() { return m_app; }
+	QUndoStack* GetUndoStack() { return m_pUndoStack; }
 	QFont GetFont() { return m_font; }
 	QColor GetFontColor() { return m_fontColor; }
 	QPen GetPen() { return m_pen; }
