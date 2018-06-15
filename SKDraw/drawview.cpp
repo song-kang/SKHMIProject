@@ -326,15 +326,21 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 		if (xml->name() == tr("rect"))
 			item = new GraphicsRectItem(QRect(0,0,0,0));
 		else if (xml->name() == tr("roundrect"))
-			item = new GraphicsRectItem(QRect(0,0,0,0),true);
-		//else if (xml->name() == tr("ellipse"))
-		//	item = new GraphicsEllipseItem(QRect(0,0,1,1));
-		//else if (xml->name()==tr("polygon"))
-		//	item = new GraphicsPolygonItem();
-		//else if (xml->name() == tr("polyline"))
-		//	item = new GraphicsBezier(false);
-		//else if (xml->name() == tr("line"))
-		//	item = new GraphicsLineItem();
+			item = new GraphicsRectItem(QRect(0,0,0,0), true);
+		else if (xml->name() == tr("ellipse"))
+			item = new GraphicsEllipseItem(QRect(0,0,0,0));
+		else if (xml->name() == tr("circle"))
+			item = new GraphicsEllipseItem(QRect(0,0,0,0), true);
+		else if (xml->name() == tr("text"))
+			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
+		//else if (xml->name() == tr("picture"))
+		//	item = new GraphicsPictureItem(QRect(0,0,0,0), pix);
+		else if (xml->name()==tr("polygon"))
+			item = new GraphicsPolygonItem();
+		else if (xml->name()==tr("polyline"))
+			item = new GraphicsPolygonLineItem();
+		else if (xml->name() == tr("line"))
+			item = new GraphicsLineItem();
 		//else if (xml->name() == tr("group"))
 		//	item =qgraphicsitem_cast<AbstractShape*>(loadGroupFromXML(xml));
 		else

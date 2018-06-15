@@ -163,7 +163,6 @@ bool GraphicsItem::WriteBaseAttributes(QXmlStreamWriter *xml)
 GraphicsPolygonItem::GraphicsPolygonItem(QGraphicsItem *parent)
 	:GraphicsItem(parent)
 {
-	SetBrush(Qt::green);
 	SetName("多边形图元");
 }
 
@@ -337,11 +336,40 @@ void GraphicsPolygonItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 
 bool GraphicsPolygonItem::SaveToXml(QXmlStreamWriter *xml)
 {
+	xml->writeStartElement("polygon");
+	WriteBaseAttributes(xml);
+	for (int i = 0 ; i < m_points.count(); i++)
+	{
+		xml->writeStartElement("point");
+		xml->writeAttribute("x",QString("%1").arg(m_points[i].x()));
+		xml->writeAttribute("y",QString("%1").arg(m_points[i].y()));
+		xml->writeEndElement();
+	}
+
+	xml->writeEndElement();
 	return true;
 }
 
 bool GraphicsPolygonItem::LoadFromXml(QXmlStreamReader *xml)
 {
+	ReadBaseAttributes(xml);
+	while(xml->readNextStartElement())
+	{
+		if (xml->name() == "point")
+		{
+			qreal x = xml->attributes().value("x").toString().toDouble();
+			qreal y = xml->attributes().value("y").toString().toDouble();
+			m_points.append(QPointF(x,y));
+			int dir = m_points.count();
+			SizeHandleRect *shr = new SizeHandleRect(this, dir + eHandleLeft, true);
+			m_handles.push_back(shr);
+			xml->skipCurrentElement();
+		}
+		else
+			xml->skipCurrentElement();
+	}
+
+	UpdateCoordinate();
 	return true;
 }
 
@@ -479,11 +507,40 @@ void GraphicsLineItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
 bool GraphicsLineItem::SaveToXml(QXmlStreamWriter *xml)
 {
+	xml->writeStartElement("line");
+	WriteBaseAttributes(xml);
+	for (int i = 0 ; i < m_points.count(); i++)
+	{
+		xml->writeStartElement("point");
+		xml->writeAttribute("x",QString("%1").arg(m_points[i].x()));
+		xml->writeAttribute("y",QString("%1").arg(m_points[i].y()));
+		xml->writeEndElement();
+	}
+
+	xml->writeEndElement();
 	return true;
 }
 
 bool GraphicsLineItem::LoadFromXml(QXmlStreamReader *xml)
 {
+	ReadBaseAttributes(xml);
+	while(xml->readNextStartElement())
+	{
+		if (xml->name()=="point")
+		{
+			qreal x = xml->attributes().value("x").toString().toDouble();
+			qreal y = xml->attributes().value("y").toString().toDouble();
+			m_points.append(QPointF(x,y));
+			int dir = m_points.count();
+			SizeHandleRect *shr = new SizeHandleRect(this, dir + eHandleLeft, true);
+			m_handles.push_back(shr);
+			xml->skipCurrentElement();
+		}
+		else
+			xml->skipCurrentElement();
+	}
+
+	UpdateHandles();
 	return true;
 }
 
@@ -613,11 +670,40 @@ void GraphicsPolygonLineItem::paint(QPainter *painter, const QStyleOptionGraphic
 
 bool GraphicsPolygonLineItem::SaveToXml(QXmlStreamWriter *xml)
 {
+	xml->writeStartElement("polyline");
+	WriteBaseAttributes(xml);
+	for (int i = 0 ; i < m_points.count(); i++)
+	{
+		xml->writeStartElement("point");
+		xml->writeAttribute("x",QString("%1").arg(m_points[i].x()));
+		xml->writeAttribute("y",QString("%1").arg(m_points[i].y()));
+		xml->writeEndElement();
+	}
+
+	xml->writeEndElement();
 	return true;
 }
 
 bool GraphicsPolygonLineItem::LoadFromXml(QXmlStreamReader *xml)
 {
+	ReadBaseAttributes(xml);
+	while(xml->readNextStartElement())
+	{
+		if (xml->name() == "point")
+		{
+			qreal x = xml->attributes().value("x").toString().toDouble();
+			qreal y = xml->attributes().value("y").toString().toDouble();
+			m_points.append(QPointF(x,y));
+			int dir = m_points.count();
+			SizeHandleRect *shr = new SizeHandleRect(this, dir + eHandleLeft, true);
+			m_handles.push_back(shr);
+			xml->skipCurrentElement();
+		}
+		else
+			xml->skipCurrentElement();
+	}
+
+	UpdateCoordinate();
 	return true;
 }
 
@@ -633,8 +719,6 @@ GraphicsRectItem::GraphicsRectItem(const QRect &rect, bool isRound, QGraphicsIte
 	m_width = rect.width();
 	m_height = rect.height();
 	m_originPoint = QPointF(0,0);
-
-	SetBrush(Qt::green);
 
 	if (isRound)
 		SetName("圆角矩形图元");
@@ -890,11 +974,22 @@ void GraphicsEllipseItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 
 bool GraphicsEllipseItem::SaveToXml(QXmlStreamWriter *xml)
 {
+	if (m_isCircle)
+		xml->writeStartElement(tr("circle"));
+	else
+		xml->writeStartElement(tr("ellipse"));
+
+	WriteBaseAttributes(xml);
+	xml->writeEndElement();
 	return true;
 }
 
 bool GraphicsEllipseItem::LoadFromXml(QXmlStreamReader *xml)
 {
+	ReadBaseAttributes(xml);
+	xml->skipCurrentElement();
+
+	UpdateCoordinate();
 	return true;
 }
 
@@ -983,11 +1078,36 @@ void GraphicsTextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
 bool GraphicsTextItem::SaveToXml(QXmlStreamWriter *xml)
 {
+	xml->writeStartElement("text");
+	WriteBaseAttributes(xml);
+
+	xml->writeAttribute(tr("desc"),QString("%1").arg(m_text));
+	xml->writeAttribute(tr("family"),QString("%1").arg(m_font.family()));
+	xml->writeAttribute(tr("pointSize"),QString("%1").arg(m_font.pointSize()));
+	xml->writeAttribute(tr("bold"),QString("%1").arg(m_font.bold()));
+	xml->writeAttribute(tr("italic"),QString("%1").arg(m_font.italic()));
+	xml->writeAttribute(tr("underline"),QString("%1").arg(m_font.underline()));
+	xml->writeAttribute(tr("strikeOut"),QString("%1").arg(m_font.strikeOut()));
+	xml->writeAttribute(tr("kerning"),QString("%1").arg(m_font.kerning()));
+
+	xml->writeEndElement();
 	return true;
 }
 
 bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
 {
+	ReadBaseAttributes(xml);
+	m_text = xml->attributes().value(tr("desc")).toString();
+	m_font.setFamily(xml->attributes().value(tr("family")).toString());
+	m_font.setPointSize(xml->attributes().value(tr("pointSize")).toString().toInt());
+	m_font.setBold(xml->attributes().value(tr("bold")).toString().toInt());
+	m_font.setItalic(xml->attributes().value(tr("italic")).toString().toInt());
+	m_font.setUnderline(xml->attributes().value(tr("underline")).toString().toInt());
+	m_font.setStrikeOut(xml->attributes().value(tr("strikeOut")).toString().toInt());
+	m_font.setKerning(xml->attributes().value(tr("kerning")).toString().toInt());
+	
+	xml->skipCurrentElement();
+	UpdateCoordinate();
 	return true;
 }
 
