@@ -229,7 +229,7 @@ bool DrawView::Save()
 
 bool DrawView::SaveAs()
 {
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"), m_sFileName);
+	QString fileName = QFileDialog::getSaveFileName(this, tr("保存"), m_sFileName, "*.sdw");
 	if (fileName.isEmpty())
 		return false;
 
@@ -253,6 +253,7 @@ bool DrawView::SaveFile(const QString fileName)
 	xml.writeAttribute("width",QString("%1").arg(scene()->width()));
 	xml.writeAttribute("height",QString("%1").arg(scene()->height()));
 	xml.writeAttribute("color",QString("%1").arg(((DrawScene*)m_pScene)->GetGridTool()->GetBackColor().name()));
+	xml.writeAttribute("alpha",QString("%1").arg(((DrawScene*)m_pScene)->GetGridTool()->GetBackColor().alpha()));
 	foreach (QGraphicsItem *item , scene()->items())
 	{
 		AbstractShape *ab = qgraphicsitem_cast<AbstractShape*>(item);
@@ -266,6 +267,87 @@ bool DrawView::SaveFile(const QString fileName)
 	m_sFileName = QFileInfo(fileName).canonicalFilePath();
 	m_isUntitled = false;
 	m_app->GetApp()->SetWindowTitle("SKDraw - " + tr("%1").arg(fileName));
+
+	return true;
+}
+
+bool DrawView::LoadFile(const QString fileName)
+{
+	if (fileName == m_sFileName)
+		return true;
+
+	QFile file(fileName);
+	if (!file.open(QFile::ReadOnly | QFile::Text))
+	{
+		QMessageBox::warning(this, tr("告警"), tr("文件【%1】读模式打开失败\n%2.").arg(fileName).arg(file.errorString()));
+		return false;
+	}
+
+	QXmlStreamReader xml(&file);
+	if (xml.readNextStartElement())
+	{
+		if (xml.name() == tr("canvas"))
+		{
+			QColor color;
+			color.setNamedColor(xml.attributes().value(tr("color")).toString());
+			color.setAlpha(xml.attributes().value(tr("alpha")).toString().toInt());
+			int width = xml.attributes().value(tr("width")).toString().toInt();
+			int height = xml.attributes().value(tr("height")).toString().toInt();
+			((DrawScene*)m_pScene)->GetGridTool()->SetBackColor(color);
+			((DrawScene*)m_pScene)->SetWidth(width);
+			((DrawScene*)m_pScene)->SetHeight(height);
+			scene()->setSceneRect(0,0,width,height);
+			if (!LoadCanvas(&xml))
+				return false;
+
+			m_app->GetPropertyEditor()->Clear();
+			m_app->GetPropertyEditor()->SetBackground();
+		}
+	}
+
+	m_sFileName = QFileInfo(fileName).canonicalFilePath();
+	m_isUntitled = false;
+	m_app->GetApp()->SetWindowTitle("SKDraw - " + tr("%1").arg(fileName));
+
+	return true;
+}
+
+bool DrawView::LoadCanvas(QXmlStreamReader *xml)
+{
+	if (!xml->isStartElement() || xml->name() != "canvas")
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("文件格式异常"));
+		return false;
+	}
+
+	while (xml->readNextStartElement())
+	{
+		AbstractShape * item = NULL;
+		if (xml->name() == tr("rect"))
+			item = new GraphicsRectItem(QRect(0,0,0,0));
+		else if (xml->name() == tr("roundrect"))
+			item = new GraphicsRectItem(QRect(0,0,0,0),true);
+		//else if (xml->name() == tr("ellipse"))
+		//	item = new GraphicsEllipseItem(QRect(0,0,1,1));
+		//else if (xml->name()==tr("polygon"))
+		//	item = new GraphicsPolygonItem();
+		//else if (xml->name() == tr("polyline"))
+		//	item = new GraphicsBezier(false);
+		//else if (xml->name() == tr("line"))
+		//	item = new GraphicsLineItem();
+		//else if (xml->name() == tr("group"))
+		//	item =qgraphicsitem_cast<AbstractShape*>(loadGroupFromXML(xml));
+		else
+			xml->skipCurrentElement();
+
+		if (item && item->LoadFromXml(xml))
+		{
+			((GraphicsItem*)item)->SetScene((DrawScene*)m_pScene);
+			scene()->addItem(item);
+		}
+		else if (item)
+			delete item;
+	}
 
 	return true;
 }

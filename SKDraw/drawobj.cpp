@@ -111,6 +111,54 @@ QVariant GraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, cons
     return QGraphicsItem::itemChange(change, value);
 }
 
+bool GraphicsItem::ReadBaseAttributes(QXmlStreamReader *xml)
+{
+	qreal x = xml->attributes().value(tr("x")).toString().toDouble();
+	qreal y = xml->attributes().value(tr("y")).toString().toDouble();
+	m_width = xml->attributes().value("width").toString().toDouble();
+	m_height = xml->attributes().value("height").toString().toDouble();
+	setZValue(xml->attributes().value("z").toString().toDouble());
+	setRotation(xml->attributes().value("rotate").toString().toDouble());
+	setScale(xml->attributes().value("scale").toString().toDouble());
+	setToolTip(xml->attributes().value("tooltip").toString());
+	setPos(x,y);
+
+	QColor color;
+	color.setNamedColor(xml->attributes().value("penColor").toString());
+	color.setAlpha(xml->attributes().value("penAlpha").toString().toInt());
+	m_pen.setColor(color);
+	m_pen.setWidthF(xml->attributes().value("penWidth").toString().toDouble());
+	m_pen.setStyle((Qt::PenStyle)xml->attributes().value("penStyle").toString().toInt());
+
+	color.setNamedColor(xml->attributes().value("brushColor").toString());
+	color.setAlpha(xml->attributes().value("brushAlpha").toString().toInt());
+	m_brush.setColor(color);
+	m_brush.setStyle((Qt::BrushStyle)xml->attributes().value("brushStyle").toString().toInt());
+
+	return true;
+}
+
+bool GraphicsItem::WriteBaseAttributes(QXmlStreamWriter *xml)
+{
+	xml->writeAttribute(tr("x"),QString("%1").arg(pos().x()));
+	xml->writeAttribute(tr("y"),QString("%1").arg(pos().y()));
+	xml->writeAttribute(tr("z"),QString("%1").arg(zValue()));
+	xml->writeAttribute(tr("width"),QString("%1").arg(m_width));
+	xml->writeAttribute(tr("height"),QString("%1").arg(m_height));
+	xml->writeAttribute(tr("rotate"),QString("%1").arg(rotation()));
+	xml->writeAttribute(tr("scale"),QString("%1").arg(scale()));
+	xml->writeAttribute(tr("tooltip"),QString("%1").arg(toolTip()));
+	xml->writeAttribute(tr("penColor"),QString("%1").arg(GetPen().color().name()));
+	xml->writeAttribute(tr("penAlpha"),QString("%1").arg(GetPen().color().alpha()));
+	xml->writeAttribute(tr("penWidth"),QString("%1").arg(GetPen().widthF()));
+	xml->writeAttribute(tr("penStyle"),QString("%1").arg(GetPen().style()));
+	xml->writeAttribute(tr("brushColor"),QString("%1").arg(GetBrush().color().name()));
+	xml->writeAttribute(tr("brushAlpha"),QString("%1").arg(GetBrush().color().alpha()));
+	xml->writeAttribute(tr("brushStyle"),QString("%1").arg(GetBrush().style()));
+
+	return true;
+}
+
 ///////////////////////// GraphicsPolygonItem /////////////////////////
 GraphicsPolygonItem::GraphicsPolygonItem(QGraphicsItem *parent)
 	:GraphicsItem(parent)
@@ -713,11 +761,30 @@ void GraphicsRectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
 bool GraphicsRectItem::SaveToXml(QXmlStreamWriter *xml)
 {
+	if (m_isRound)
+	{
+		xml->writeStartElement(tr("roundrect"));
+		xml->writeAttribute(tr("rx"),QString("%1").arg(m_round.width()));
+		xml->writeAttribute(tr("ry"),QString("%1").arg(m_round.height()));
+	}
+	else
+		xml->writeStartElement(tr("rect"));
+
+	WriteBaseAttributes(xml);
+	xml->writeEndElement();
 	return true;
 }
 
 bool GraphicsRectItem::LoadFromXml(QXmlStreamReader *xml)
 {
+	m_isRound = (xml->name() == tr("roundrect"));
+	if ( m_isRound )
+		m_round = QSize(xml->attributes().value(tr("rx")).toString().toDouble(), xml->attributes().value(tr("ry")).toString().toDouble());
+
+	ReadBaseAttributes(xml);
+	UpdateCoordinate();
+	xml->skipCurrentElement();
+
 	return true;
 }
 

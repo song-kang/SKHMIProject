@@ -20,6 +20,7 @@ public:
 	bool Save();
 	bool SaveAs();
 	bool SaveFile(const QString fileName);
+	bool LoadFile(const QString fileName);
 
 public:
 	void ZoomIn();
@@ -49,6 +50,7 @@ private:
 
 private:
 	void UpdateRuler();
+	bool LoadCanvas(QXmlStreamReader *xml);
 
 signals:
 	void SigPositionChanged(int x ,int y);

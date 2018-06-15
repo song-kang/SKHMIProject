@@ -122,7 +122,7 @@ void PropertyEditor::SlotCustomValueChanged(QtProperty *property, const QVariant
 	else if (name == "背景色")
 	{
 		QString a = value.toString();
-		m_pScene->GetGridTool()->SetBackColor(value.toString());
+		m_pScene->GetGridTool()->SetBackColor(value.value<QColor>());
 	}
 }
 
@@ -409,12 +409,12 @@ void PropertyEditor::EnumEditor(int index, QString name, QStringList &enumNames,
 	else if (name == "HorPattern")
 	{
 		enumNames.append("水平线");
-		enumIcons.insert(index, QIcon(":/images/VerPattern"));
+		enumIcons.insert(index, QIcon(":/images/HorPattern"));
 	}
 	else if (name == "VerPattern")
 	{
 		enumNames.append("垂直线");
-		enumIcons.insert(index, QIcon(":/images/HorPattern"));
+		enumIcons.insert(index, QIcon(":/images/VerPattern"));
 	}
 	else if (name == "CrossPattern")
 	{

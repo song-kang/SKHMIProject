@@ -160,22 +160,12 @@
       <widget class="QTreeWidget" name="treeWidgetSence">
        <column>
         <property name="text">
-         <string notr="true">1</string>
+         <string>连接数据库失败</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignHCenter|AlignVCenter|AlignCenter</set>
         </property>
        </column>
-       <column>
-        <property name="text">
-         <string>2</string>
-        </property>
-       </column>
-       <item>
-        <property name="text">
-         <string>1</string>
-        </property>
-        <property name="text">
-         <string>1</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>

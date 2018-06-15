@@ -278,7 +278,7 @@ void SKDraw::InitSlot()
 
 void SKDraw::Start()
 {
-	SlotNew();
+	//SlotNew();
 }
 
 void SKDraw::SlotNew()
@@ -296,7 +296,14 @@ void SKDraw::SlotNew()
 
 void SKDraw::SlotOpen()
 {
+	QString fileName = QFileDialog::getOpenFileName(this, tr("打开"), NULL, "*.sdw");
+	if (!fileName.isEmpty()) 
+	{
+		if (!m_pScene)
+			SlotNew();
 
+		m_pView->LoadFile(fileName);
+	}
 }
 
 void SKDraw::SlotSave()

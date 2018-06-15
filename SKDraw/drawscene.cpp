@@ -82,7 +82,7 @@ DrawScene::DrawScene(QObject *parent)
 	SetPressShift(false);
 
 	setSceneRect(QRectF(0, 0, m_iWidth, m_iHeight));
-	setBackgroundBrush(Qt::darkGray);
+	setBackgroundBrush(QBrush("#013E53"));
 
 	m_dx = m_dy = 0;
 	m_pAlignItem = NULL;

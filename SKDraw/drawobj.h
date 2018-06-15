@@ -261,6 +261,10 @@ private:
 	DrawScene *m_pScene;
 	QString m_sName;
 
+public:
+	bool ReadBaseAttributes(QXmlStreamReader *xml);
+	bool WriteBaseAttributes(QXmlStreamWriter *xml);
+
 signals:
 	void SigSelectedChange(QGraphicsItem *item);
 
