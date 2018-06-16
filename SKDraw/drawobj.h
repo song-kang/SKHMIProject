@@ -445,7 +445,7 @@ public:
 class GraphicsPictureItem :public GraphicsRectItem
 {
 public:
-	GraphicsPictureItem(const QRect &rect, QPixmap &pix, QGraphicsItem *parent = 0);
+	GraphicsPictureItem(const QRect &rect, QString fileName, QGraphicsItem *parent = 0);
 	~GraphicsPictureItem();
 
 public:
@@ -459,6 +459,7 @@ public:
 
 public:
 	QPixmap m_picture;
+	QString m_fileName;
 
 };
 

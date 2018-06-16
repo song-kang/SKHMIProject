@@ -408,11 +408,8 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 		else if (c_drawShape == eDrawPicture)
 		{
 			QString f = QFileDialog::getOpenFileName(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png)"));
-			if (!f.isEmpty())
-			{
-				QPixmap pix(f);
-				m_pItem = new GraphicsPictureItem(QRect(0, 0, 0, 0), pix);
-			}
+			if (!f.isEmpty() && SavePicture(f))
+				m_pItem = new GraphicsPictureItem(QRect(0, 0, 0, 0), QFileInfo(f).fileName());
 			else
 			{
 				SetCursor(scene,Qt::ArrowCursor);
@@ -495,6 +492,36 @@ void DrawRectTool::mouseMoveEvent(QGraphicsSceneMouseEvent *event, DrawScene *sc
 void DrawRectTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScene *scene)
 {
 	DrawTool::mouseReleaseEvent(event, scene);
+}
+
+bool DrawRectTool::SavePicture(QString &fileName)
+{
+	QString dir = Common::GetCurrentAppPath() + "../picture/";
+	if (!Common::FolderExists(dir) && !Common::CreateFolder(dir))
+		return false;
+
+	if (QFileInfo(fileName).absolutePath() == QFileInfo(dir).absolutePath())
+		return true;
+
+	QString path = dir + QFileInfo(fileName).fileName();
+	if (Common::FileExists(path))
+	{
+		int ret = QMessageBox::question(NULL,tr("询问"),tr("文件已经存在，是否覆盖？"),tr("是"),tr("否"));
+		if (ret == 0)
+		{
+			if (QFile::remove(path))
+				return QFile::copy(fileName, path);
+			else
+			{
+				QMessageBox::warning(NULL,tr("告警"),tr("文件覆盖失败？"));
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	return QFile::copy(fileName, path);
 }
 
 ///////////////////////// DrawPolygonTool /////////////////////////

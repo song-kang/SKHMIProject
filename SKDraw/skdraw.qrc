@@ -64,5 +64,6 @@
         <file alias="bold">Resources/images/bold.png</file>
         <file alias="italic">Resources/images/italic.png</file>
         <file alias="underline">Resources/images/underline.png</file>
+        <file alias="fileWarn">Resources/images/fileWarn.png</file>
     </qresource>
 </RCC>

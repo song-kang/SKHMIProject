@@ -106,6 +106,9 @@ public:
 public:
 	GraphicsItem *m_pItem;
 	QPointF m_opposite;
+
+private:
+	bool SavePicture(QString &fileName);
 };
 
 ///////////////////////// DrawPolygonTool ////////////////////////

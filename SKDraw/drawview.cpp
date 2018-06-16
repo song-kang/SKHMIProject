@@ -333,8 +333,8 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 			item = new GraphicsEllipseItem(QRect(0,0,0,0), true);
 		else if (xml->name() == tr("text"))
 			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
-		//else if (xml->name() == tr("picture"))
-		//	item = new GraphicsPictureItem(QRect(0,0,0,0), pix);
+		else if (xml->name() == tr("picture"))
+			item = new GraphicsPictureItem(QRect(0, 0, 0, 0), QString::null);
 		else if (xml->name()==tr("polygon"))
 			item = new GraphicsPolygonItem();
 		else if (xml->name()==tr("polyline"))

@@ -1112,12 +1112,13 @@ bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsPictureItem /////////////////////////
-GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QPixmap &pix, QGraphicsItem *parent)
+GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QString fileName, QGraphicsItem *parent)
 	:GraphicsRectItem(rect, parent),
-	m_picture(pix)
+	m_fileName(fileName)
 {
-	m_width = pix.width();
-	m_height = pix.height();
+	m_picture.load(Common::GetCurrentAppPath() + "../picture/" + fileName);
+	m_width = m_picture.width();
+	m_height = m_picture.height();
 	m_localRect.setWidth(m_width);
 	m_localRect.setHeight(m_height);
 	m_initialRect = m_localRect;
@@ -1158,7 +1159,7 @@ void GraphicsPictureItem::Stretch(int handle, double sx, double sy, const QPoint
 
 QGraphicsItem* GraphicsPictureItem::Duplicate()
 {
-	GraphicsPictureItem * item = new GraphicsPictureItem(m_localRect.toRect(), m_picture);
+	GraphicsPictureItem *item = new GraphicsPictureItem(m_localRect.toRect(), m_fileName);
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
@@ -1183,11 +1184,27 @@ void GraphicsPictureItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 
 bool GraphicsPictureItem::SaveToXml(QXmlStreamWriter *xml)
 {
+	xml->writeStartElement("picture");
+	WriteBaseAttributes(xml);
+	xml->writeAttribute(tr("name"),QString("%1").arg(m_fileName));
+	xml->writeEndElement();
 	return true;
 }
 
 bool GraphicsPictureItem::LoadFromXml(QXmlStreamReader *xml)
 {
+	ReadBaseAttributes(xml);
+	m_fileName = xml->attributes().value(tr("name")).toString();
+	if (!m_fileName.isEmpty())
+	{
+		if (Common::FileExists(Common::GetCurrentAppPath() + "../picture/" + m_fileName))
+			m_picture.load(Common::GetCurrentAppPath() + "../picture/" + m_fileName);
+		else
+			m_picture.load(Common::GetCurrentAppPath() + "../picture/fileWarn.png");
+	}
+
+	xml->skipCurrentElement();
+	UpdateCoordinate();
 	return true;
 }
 

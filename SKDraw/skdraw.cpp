@@ -19,6 +19,7 @@ void SKDraw::Init()
 {
 	m_pView = NULL;
 	m_pScene = NULL;
+	m_isClose = true;
 	m_pUndoStack = new QUndoStack(this);
 	m_pEditMenu = new QMenu(this);
 	m_pEditMenu->addAction(ui.actionSelect);
@@ -171,7 +172,13 @@ void SKDraw::Init()
 	ui.propertyToolBar->addSeparator();
 	ui.propertyToolBar->addWidget(m_pBrushColorBtn);
 
-	m_isClose = true;
+	QString dir = Common::GetCurrentAppPath() + "../picture/";
+	if (!Common::FolderExists(dir))
+		Common::CreateFolder(dir);
+	QString path = dir + "fileWarn.png";
+	if (!Common::FileExists(path))
+		QFile::copy(":/images/fileWarn", path);
+
 	UpdateActions();
 }
 
