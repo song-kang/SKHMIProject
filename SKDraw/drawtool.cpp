@@ -506,7 +506,9 @@ bool DrawRectTool::SavePicture(QString &fileName)
 	QString path = dir + QFileInfo(fileName).fileName();
 	if (Common::FileExists(path))
 	{
-		int ret = QMessageBox::question(NULL,tr("询问"),tr("文件已经存在，是否覆盖？"),tr("是"),tr("否"));
+		int ret = QMessageBox::question(NULL,tr("询问"),
+			tr("文件【%1】已经存在，是否覆盖？\n注意：覆盖将用现选图片，不覆盖将用原图片").arg(QFileInfo(fileName).fileName()),
+			tr("是"),tr("否"));
 		if (ret == 0)
 		{
 			if (QFile::remove(path))

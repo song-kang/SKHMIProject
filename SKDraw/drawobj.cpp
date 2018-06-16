@@ -801,6 +801,7 @@ QGraphicsItem* GraphicsRectItem::Duplicate()
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
+	item->SetScene(GetScene());
 	item->setPos(pos().x(), pos().y());
 	item->SetPen(GetPen());
 	item->SetBrush(GetBrush());
@@ -936,6 +937,7 @@ QGraphicsItem* GraphicsEllipseItem::Duplicate()
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
+	item->SetScene(GetScene());
 	item->setPos(pos().x(), pos().y());
 	item->SetPen(GetPen());
 	item->SetBrush(GetBrush());
@@ -1049,6 +1051,7 @@ QGraphicsItem* GraphicsTextItem::Duplicate()
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
+	item->SetScene(GetScene());
 	item->setPos(pos().x(), pos().y());
 	item->SetPen(GetPen());
 	item->SetBrush(GetBrush());
@@ -1163,6 +1166,7 @@ QGraphicsItem* GraphicsPictureItem::Duplicate()
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
+	item->SetScene(GetScene());
 	item->setPos(pos().x(), pos().y());
 	item->SetPen(GetPen());
 	item->SetBrush(GetBrush());
@@ -1360,6 +1364,24 @@ QRectF GraphicsItemGroup::boundingRect() const
 
 bool GraphicsItemGroup::SaveToXml(QXmlStreamWriter *xml)
 {
+	xml->writeStartElement("group");
+	xml->writeAttribute(tr("x"),QString("%1").arg(pos().x()));
+	xml->writeAttribute(tr("y"),QString("%1").arg(pos().y()));
+	xml->writeAttribute(tr("rotate"),QString("%1").arg(rotation()));
+
+	foreach (QGraphicsItem *item, childItems())
+	{
+		removeFromGroup(item);
+		AbstractShape * ab = qgraphicsitem_cast<AbstractShape*>(item);
+		if (ab && !qgraphicsitem_cast<SizeHandleRect*>(ab))
+		{
+			ab->UpdateCoordinate();
+			ab->SaveToXml(xml);
+		}
+		addToGroup(item);
+	}
+
+	xml->writeEndElement();
 	return true;
 }
 

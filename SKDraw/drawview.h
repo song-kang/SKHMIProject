@@ -3,6 +3,7 @@
 
 #include "skhead.h"
 #include "rulebar.h"
+#include "drawobj.h"
 
 class SKDraw;
 class DrawView : public QGraphicsView
@@ -51,6 +52,7 @@ private:
 private:
 	void UpdateRuler();
 	bool LoadCanvas(QXmlStreamReader *xml);
+	GraphicsItemGroup* LoadGroupFromXML(QXmlStreamReader *xml);
 
 signals:
 	void SigPositionChanged(int x ,int y);

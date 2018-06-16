@@ -341,8 +341,8 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 			item = new GraphicsPolygonLineItem();
 		else if (xml->name() == tr("line"))
 			item = new GraphicsLineItem();
-		//else if (xml->name() == tr("group"))
-		//	item =qgraphicsitem_cast<AbstractShape*>(loadGroupFromXML(xml));
+		else if (xml->name() == tr("group"))
+			item =qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(xml));
 		else
 			xml->skipCurrentElement();
 
@@ -356,4 +356,60 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 	}
 
 	return true;
+}
+
+GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
+{
+	QList<QGraphicsItem*> items;
+	qreal angle = xml->attributes().value(tr("rotate")).toString().toDouble();
+	while (xml->readNextStartElement())
+	{
+		AbstractShape * item = NULL;
+		if (xml->name() == tr("rect"))
+			item = new GraphicsRectItem(QRect(0,0,0,0));
+		else if (xml->name() == tr("roundrect"))
+			item = new GraphicsRectItem(QRect(0,0,0,0), true);
+		else if (xml->name() == tr("ellipse"))
+			item = new GraphicsEllipseItem(QRect(0,0,0,0));
+		else if (xml->name() == tr("circle"))
+			item = new GraphicsEllipseItem(QRect(0,0,0,0), true);
+		else if (xml->name() == tr("text"))
+			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
+		else if (xml->name() == tr("picture"))
+			item = new GraphicsPictureItem(QRect(0, 0, 0, 0), QString::null);
+		else if (xml->name()==tr("polygon"))
+			item = new GraphicsPolygonItem();
+		else if (xml->name()==tr("polyline"))
+			item = new GraphicsPolygonLineItem();
+		else if (xml->name() == tr("line"))
+			item = new GraphicsLineItem();
+		else if (xml->name() == tr("group"))
+			item =qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(xml));
+		else
+			xml->skipCurrentElement();
+
+		if (item && item->LoadFromXml(xml))
+		{
+			((GraphicsItem*)item)->SetScene((DrawScene*)m_pScene);
+			scene()->addItem(item);
+			items.append(item);	
+		}
+		else if (item)
+			delete item;
+	}
+
+	if (items.count() > 0)
+	{
+		DrawScene *s = dynamic_cast<DrawScene*>(scene());
+		GraphicsItemGroup *group = s->CreateGroup(items,false);
+		if (group)
+		{
+			group->setRotation(angle);
+			group->UpdateCoordinate();
+		}
+
+		return group;
+	}
+
+	return NULL;
 }
