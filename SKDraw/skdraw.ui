@@ -317,7 +317,7 @@
           <x>0</x>
           <y>0</y>
           <width>256</width>
-          <height>163</height>
+          <height>169</height>
          </rect>
         </property>
         <attribute name="label">
@@ -331,6 +331,9 @@
           <widget class="QListWidget" name="listWidgetDQ">
            <property name="viewMode">
             <enum>QListView::IconMode</enum>
+           </property>
+           <property name="modelColumn">
+            <number>0</number>
            </property>
           </widget>
          </item>

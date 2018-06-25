@@ -205,6 +205,11 @@ void SKDraw::InitUi()
 	m_pLabelLogo->setPixmap(pix);
 	ui.gridLayoutCentral->addWidget(m_pLabelLogo,0,0,0,0,Qt::AlignCenter);
 	statusBar()->showMessage(tr("欢迎使用图形编辑器"));
+
+	ui.listWidgetDQ->setMovement(QListView::Static);
+	ui.listWidgetDQ->setResizeMode(QListView::Adjust);
+	tabifyDockWidget(ui.dockWidgetSence,ui.dockWidgetItem);
+	ui.dockWidgetSence->raise();
 }
 
 void SKDraw::InitSlot()
