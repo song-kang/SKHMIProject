@@ -239,6 +239,7 @@ public:
 
 	enum { Type = UserType + 1 };
 	virtual int type() const { return Type; }
+	void Image(QPainter *painter, QPointF point);
 
 	void SetScene(DrawScene *scene) { m_pScene = scene; }
 	void SetName(QString name) { m_sName = name; }
@@ -475,6 +476,7 @@ public:
 
 	enum { Type = UserType + 2 };
 	int  type() const { return Type; }
+	QPixmap Image();
 	
 public:
 	virtual void Move(const QPointF & point) {};

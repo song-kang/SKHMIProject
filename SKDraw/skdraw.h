@@ -58,10 +58,12 @@ private:
 
 	QLabel *m_pLabelLogo;
 	bool m_isClose;
+	bool m_isInitSymbols;
 
 private:
 	void Init();
 	void InitUi();
+	void InitSymbols();
 	DrawView* CreateView();
 
 signals:
@@ -127,6 +129,7 @@ private slots:
 	void SlotReleaseKeyShift();
 
 	void SlotMouseRightButton(QPoint p);
+	void SlotSymbolsDQClicked(QListWidgetItem *item);
 
 };
 

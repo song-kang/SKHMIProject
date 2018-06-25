@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SKDRAW>
+<canvas width="20" height="48" color="#000000" alpha="255">
+    <group x="10.0434" y="24.257" rotate="0">
+        <rect x="10.0434" y="24.3585" z="0" width="17.6807" height="35.9553" rotate="0" scale="1" tooltip="" penColor="#00ff00" penAlpha="255" penWidth="1" penStyle="1" brushColor="#ff0000" brushAlpha="255" brushStyle="0"/>
+        <circle x="10.0434" y="6.3" z="0" width="4" height="4" rotate="0" scale="1" tooltip="" penColor="#ffff00" penAlpha="255" penWidth="1" penStyle="1" brushColor="#00ff00" brushAlpha="255" brushStyle="1"/>
+        <circle x="10.0434" y="42.2139" z="0.2" width="4" height="4" rotate="0" scale="1" tooltip="" penColor="#ffff00" penAlpha="255" penWidth="1" penStyle="1" brushColor="#00ff00" brushAlpha="255" brushStyle="1"/>
+    </group>
+</canvas>

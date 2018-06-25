@@ -22,6 +22,7 @@ public:
 	bool SaveAs();
 	bool SaveFile(const QString fileName);
 	bool LoadFile(const QString fileName);
+	void SetSymbolName(QString name) { m_sSymbolName = name; }
 
 public:
 	void ZoomIn();
@@ -48,14 +49,18 @@ private:
 	qreal m_zoomDelta;
 	bool m_isUntitled;
 	QString m_sFileName;
+	QString m_sSymbolName;
 
 private:
 	void UpdateRuler();
 	bool LoadCanvas(QXmlStreamReader *xml);
+	void LoadSymbol(QPoint point);
+
+public:
 	GraphicsItemGroup* LoadGroupFromXML(QXmlStreamReader *xml);
 
 signals:
-	void SigPositionChanged(int x ,int y);
+	void SigPositionChanged(int x, int y);
 	void SigMouseRightButton(QPoint p);
 
 private:

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SKDRAW>
+<canvas width="16" height="48" color="#000000" alpha="255">
+    <group x="8.45824" y="23.7075" rotate="0">
+        <circle x="5.57628" y="5.23455" z="0" width="4" height="4" rotate="0" scale="1" tooltip="" penColor="#ff0000" penAlpha="255" penWidth="1" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="0"/>
+        <line x="9.93517" y="22.7864" z="0" width="8.81008" height="22.9245" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="1" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
+            <point x="-4.40504" y="-11.4623"/>
+            <point x="4.40504" y="11.4623"/>
+        </line>
+        <circle x="5.57628" y="8.26125" z="0.1" width="6" height="6" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="1" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="0"/>
+        <circle x="5.57628" y="42.1804" z="0.2" width="4" height="4" rotate="0" scale="1" tooltip="" penColor="#ff0000" penAlpha="255" penWidth="1" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="0"/>
+        <circle x="5.57628" y="39.2071" z="0.3" width="6" height="6" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="1" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="0"/>
+    </group>
+</canvas>

@@ -8,8 +8,6 @@ DrawView::DrawView(QGraphicsScene *scene)
 	m_pScene = scene;
 
 	setRenderHint(QPainter::Antialiasing);
-	//setTransform(transform().scale(1,-1)); //原点改为左下方
-
 	//setCacheMode(QGraphicsView::CacheBackground);
 	//setOptimizationFlags(QGraphicsView::DontSavePainterState);
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
@@ -144,7 +142,7 @@ void DrawView::mousePressEvent(QMouseEvent *event)
 	}
 	else if (event->button() == Qt::RightButton)
 	{
-		SigMouseRightButton(event->pos());
+		SigMouseRightButton(mapToGlobal(event->pos()));
 	}
 
 	QGraphicsView::mousePressEvent(event);
@@ -157,6 +155,8 @@ void DrawView::mouseReleaseEvent(QMouseEvent *event)
 		m_bMouseTranslate = false;
 		setCursor(Qt::ArrowCursor);
 	}
+
+	LoadSymbol(event->pos());
 
 	QGraphicsView::mouseReleaseEvent(event);
 }
@@ -322,7 +322,7 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 
 	while (xml->readNextStartElement())
 	{
-		AbstractShape * item = NULL;
+		AbstractShape *item = NULL;
 		if (xml->name() == tr("rect"))
 			item = new GraphicsRectItem(QRect(0,0,0,0));
 		else if (xml->name() == tr("roundrect"))
@@ -342,7 +342,7 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 		else if (xml->name() == tr("line"))
 			item = new GraphicsLineItem();
 		else if (xml->name() == tr("group"))
-			item =qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(xml));
+			item = qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(xml));
 		else
 			xml->skipCurrentElement();
 
@@ -384,7 +384,7 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 		else if (xml->name() == tr("line"))
 			item = new GraphicsLineItem();
 		else if (xml->name() == tr("group"))
-			item =qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(xml));
+			item = qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(xml));
 		else
 			xml->skipCurrentElement();
 
@@ -412,4 +412,33 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 	}
 
 	return NULL;
+}
+
+void DrawView::LoadSymbol(QPoint point)
+{
+	if (m_sSymbolName.isEmpty())
+		return;
+
+	QFile file(m_sSymbolName);
+	if (file.open(QFile::ReadOnly | QFile::Text))
+	{
+		QXmlStreamReader xml(&file);
+		if (xml.readNextStartElement() && xml.name() == "canvas")
+		{
+			if (xml.readNextStartElement() && xml.name() == "group")
+			{
+				AbstractShape *item = qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(&xml));
+				if (item && item->LoadFromXml(&xml))
+				{
+					item->setPos(mapToScene(point));
+					((GraphicsItem*)item)->SetScene((DrawScene*)m_pScene);
+					scene()->addItem(item);
+				}
+				else if (item)
+					delete item;
+			}
+		}
+	}
+
+	m_sSymbolName = QString::null;
 }

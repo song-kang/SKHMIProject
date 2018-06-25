@@ -49,6 +49,14 @@ GraphicsItem::~GraphicsItem()
 
 }
 
+void GraphicsItem::Image(QPainter *painter, QPointF point)
+{
+	QPointF p = pos() - point;
+	painter->translate(p.x(),p.y());
+	paint(painter,NULL);
+	painter->translate(-p.x(),-p.y());
+}
+
 void GraphicsItem::UpdateHandles()
 {
 	const QRectF geom = this->boundingRect();
@@ -1236,6 +1244,26 @@ GraphicsItemGroup::~GraphicsItemGroup()
 
 }
 
+QPixmap GraphicsItemGroup::Image()
+{
+	QPixmap pixmap(GetWidth(), GetHeight());
+	pixmap.fill(Qt::transparent);
+	QPainter painter(&pixmap);
+
+	foreach (QGraphicsItem *shape, childItems())
+	{
+		AbstractShape *ab = qgraphicsitem_cast<AbstractShape*>(shape);
+		if (ab && !qgraphicsitem_cast<SizeHandleRect*>(ab))
+		{
+			painter.translate(GetWidth()/2, GetHeight()/2);
+			((GraphicsItem*)ab)->Image(&painter,pos());
+			painter.translate(-GetWidth()/2, -GetHeight()/2);
+		}
+	}
+
+	return pixmap;
+}
+
 void GraphicsItemGroup::Stretch( int handle, double sx, double sy, const QPointF &origin)
 {
 	QTransform trans;
@@ -1484,6 +1512,6 @@ void GraphicsItemGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
 
-	if (option->state & QStyle::State_Selected)
+	if (option && (option->state & QStyle::State_Selected))
 		DrawOutline(painter);
 }

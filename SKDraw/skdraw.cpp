@@ -20,6 +20,7 @@ void SKDraw::Init()
 	m_pView = NULL;
 	m_pScene = NULL;
 	m_isClose = true;
+	m_isInitSymbols = false;
 	m_pUndoStack = new QUndoStack(this);
 	m_pEditMenu = new QMenu(this);
 	m_pEditMenu->addAction(ui.actionSelect);
@@ -271,6 +272,8 @@ void SKDraw::InitSlot()
 	connect(m_pPenColorBtn,SIGNAL(clicked()),this,SLOT(SlotBtnPentColor()));
 	connect(m_pBrushColorBtn,SIGNAL(clicked()),this,SLOT(SlotBtnBrushColor()));
 
+	connect(ui.listWidgetDQ,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(SlotSymbolsDQClicked(QListWidgetItem*)));
+
 	connect(m_app, SIGNAL(SigKeyUp()), this, SLOT(SlotKeyUp()));
 	connect(m_app, SIGNAL(SigKeyDown()), this, SLOT(SlotKeyDown()));
 	connect(m_app, SIGNAL(SigKeyLeft()), this, SLOT(SlotKeyLeft()));
@@ -281,6 +284,38 @@ void SKDraw::InitSlot()
 	connect(m_app, SIGNAL(SigReleaseKeyShift()), this, SLOT(SlotReleaseKeyShift()));
 	connect(m_app, SIGNAL(SigKeyEscape()), this, SLOT(SlotKeyEscape()));
 	//connect(m_app, SIGNAL(SigMouseRightButton(QPoint)), this, SLOT(SlotMouseRightButton(QPoint)));
+}
+
+void SKDraw::InitSymbols()
+{
+	QDir dir(Common::GetCurrentAppPath()+"../symbols");
+	QString path = dir.absolutePath();
+	QStringList nameFilters;  
+	nameFilters << "*.sdw";  
+	QStringList nameList = dir.entryList(nameFilters, QDir::Files | QDir::Readable, QDir::Name);
+	if (nameList.count() <= 0)
+		return;
+
+	foreach (QString name, nameList)
+	{
+		QFile file(Common::GetCurrentAppPath()+"../symbols/"+name);
+		if (!file.open(QFile::ReadOnly | QFile::Text))
+			continue;
+
+		QXmlStreamReader xml(&file);
+		if (!xml.readNextStartElement() || xml.name() != "canvas")
+			continue;
+
+		if (!xml.readNextStartElement() || xml.name() != "group")
+			continue;
+
+		GraphicsItemGroup *grp = m_pView->LoadGroupFromXML(&xml);
+		QPixmap pix = grp->Image();
+		QListWidgetItem *item = new QListWidgetItem(QIcon(pix),tr("%1").arg(name.split(".").at(0)));
+		item->setToolTip(tr("文件名称：%1\n文件位置：%2").arg(name).arg(path+"/"+name));
+		ui.listWidgetDQ->addItem(item);
+		delete grp;
+	}
 }
 
 void SKDraw::Start()
@@ -298,6 +333,12 @@ void SKDraw::SlotNew()
 	m_pPropertyEditor->SetBackground();
 
 	m_isClose = false;
+	if (!m_isInitSymbols)
+	{
+		InitSymbols();
+		m_isInitSymbols = true;
+	}
+
 	UpdateActions();
 }
 
@@ -899,5 +940,16 @@ void SKDraw::SlotKeyEscape()
 
 void SKDraw::SlotMouseRightButton(QPoint p)
 {
-	m_pEditMenu->popup(p + QPoint(276,136));
+	m_pEditMenu->popup(p + QPoint(18,18));
+}
+
+void SKDraw::SlotSymbolsDQClicked(QListWidgetItem *item)
+{
+	if (!m_pView)
+		SlotNew();
+
+	QPixmap pix = item->icon().pixmap(300, 300);
+	QCursor cursor(pix);
+	m_pView->setCursor(cursor);
+	m_pView->SetSymbolName(item->toolTip().split("文件位置：").at(1));
 }

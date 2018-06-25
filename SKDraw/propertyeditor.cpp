@@ -156,13 +156,13 @@ void PropertyEditor::SetBackground()
 	QtVariantProperty *subProperty = m_pCustomManager->addProperty(QVariant::Int, tr("»­·ù¿í¶È"));
 	subProperty->setValue(m_pScene->GetWidth());
 	m_pCustomManager->setAttribute(subProperty, "maximum", 10000);
-	m_pCustomManager->setAttribute(subProperty, "minimum", 100);
+	m_pCustomManager->setAttribute(subProperty, "minimum", 10);
 	AddCustomProperty(subProperty);
 
 	subProperty = m_pCustomManager->addProperty(QVariant::Int,tr("»­·ù¸ß¶È"));
 	subProperty->setValue(m_pScene->GetHeight());
 	m_pCustomManager->setAttribute(subProperty, "maximum", 10000);
-	m_pCustomManager->setAttribute(subProperty, "minimum", 100);
+	m_pCustomManager->setAttribute(subProperty, "minimum", 10);
 	AddCustomProperty(subProperty);
 
 	subProperty = m_pCustomManager->addProperty(QVariant::Color,tr("±³¾°É«"));
