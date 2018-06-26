@@ -12,13 +12,13 @@ DrawView::DrawView(QGraphicsScene *scene)
 	//setOptimizationFlags(QGraphicsView::DontSavePainterState);
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setViewport(new QWidget);
 
-	m_pHorRuler = new QtRuleBar(Qt::Horizontal,this,this);
-	m_pVerRuler = new QtRuleBar(Qt::Vertical,this,this);
-	m_pBox = new QtCornerBox(this);
+	//m_pHorRuler = new QtRuleBar(Qt::Horizontal,this,this);
+	//m_pVerRuler = new QtRuleBar(Qt::Vertical,this,this);
+	//m_pBox = new QtCornerBox(this);
 	m_bMouseTranslate = false;
 	m_scale = 1.0;
 	m_zoomDelta = 0.1;
@@ -35,7 +35,7 @@ DrawView::~DrawView()
 
 void DrawView::SlotScrollBarValueChanged(int pos)
 {
-	UpdateRuler();
+	//UpdateRuler();
 }
 
 void DrawView::wheelEvent(QWheelEvent *event)
@@ -48,18 +48,19 @@ void DrawView::wheelEvent(QWheelEvent *event)
 
 void DrawView::resizeEvent(QResizeEvent *event)
 {
-	setViewportMargins(RULER_SIZE - 1, RULER_SIZE - 1, 0, 0);
+	//setViewportMargins(RULER_SIZE - 1, RULER_SIZE - 1, 0, 0);
+	setViewportMargins(1, 1, 1, 1);
 
-	m_pHorRuler->resize(this->size().width() - RULER_SIZE - 1, RULER_SIZE);
-	m_pHorRuler->move(RULER_SIZE, 0);
+	//m_pHorRuler->resize(this->size().width() - RULER_SIZE - 1, RULER_SIZE);
+	//m_pHorRuler->move(RULER_SIZE, 0);
 
-	m_pVerRuler->resize(RULER_SIZE, this->size().height() - RULER_SIZE - 1);
-	m_pVerRuler->move(0,RULER_SIZE);
+	//m_pVerRuler->resize(RULER_SIZE, this->size().height() - RULER_SIZE - 1);
+	//m_pVerRuler->move(0,RULER_SIZE);
 
-	m_pBox->resize(RULER_SIZE,RULER_SIZE);
-	m_pBox->move(0,0);
+	//m_pBox->resize(RULER_SIZE,RULER_SIZE);
+	//m_pBox->move(0,0);
 
-	UpdateRuler();
+	//UpdateRuler();
 
 	QGraphicsView::resizeEvent(event);
 }
@@ -111,8 +112,8 @@ void DrawView::keyReleaseEvent(QKeyEvent *event)
 
 void DrawView::mouseMoveEvent(QMouseEvent *event)
 {
-	m_pHorRuler->updatePosition(event->pos());
-	m_pVerRuler->updatePosition(event->pos());
+	//m_pHorRuler->updatePosition(event->pos());
+	//m_pVerRuler->updatePosition(event->pos());
 
 	QPointF pt = mapToScene(event->pos());
 	emit SigPositionChanged(pt.x(), pt.y());
@@ -150,13 +151,15 @@ void DrawView::mousePressEvent(QMouseEvent *event)
 
 void DrawView::mouseReleaseEvent(QMouseEvent *event)
 {
+	LoadSymbol(event->pos());
 	if (event->button() == Qt::LeftButton)
 	{
 		m_bMouseTranslate = false;
-		setCursor(Qt::ArrowCursor);
+		if (m_sSymbolName.isEmpty())
+			setCursor(Qt::ArrowCursor);
+		else
+			setCursor(m_cursorSymbol);
 	}
-
-	LoadSymbol(event->pos());
 
 	QGraphicsView::mouseReleaseEvent(event);
 }
@@ -170,7 +173,7 @@ void DrawView::Translate(QPointF delta)
 	QPoint newCenter(viewport()->rect().width() / 2 - delta.x(), viewport()->rect().height() / 2 - delta.y());
 	centerOn(mapToScene(newCenter));
 
-	UpdateRuler();
+	//UpdateRuler();
 }
 
 void DrawView::ZoomIn()
@@ -178,7 +181,7 @@ void DrawView::ZoomIn()
 	scale(1+m_zoomDelta, 1+m_zoomDelta);
 	m_scale *= 1+m_zoomDelta;
 
-	UpdateRuler();
+	//UpdateRuler();
 }
 
 void DrawView::ZoomOut()
@@ -186,7 +189,7 @@ void DrawView::ZoomOut()
 	scale(1/(1+m_zoomDelta), 1/(1+m_zoomDelta));
 	m_scale *= 1/(1+m_zoomDelta);
 
-	UpdateRuler();
+	//UpdateRuler();
 }
 
 void DrawView::ZoomOrg()
@@ -194,7 +197,7 @@ void DrawView::ZoomOrg()
 	resetMatrix();
 	m_scale = 1.;
 
-	UpdateRuler();
+	//UpdateRuler();
 }
 
 void DrawView::UpdateRuler()
@@ -208,13 +211,13 @@ void DrawView::UpdateRuler()
 	double factor = 1./transform().m11();
 	double lower_x = factor * (viewbox.left() - offset.x());
 	double upper_x = factor * (viewbox.right() - RULER_SIZE - offset.x());
-	m_pHorRuler->setRange(lower_x,upper_x, upper_x - lower_x);
-	m_pHorRuler->update();
+	//m_pHorRuler->setRange(lower_x,upper_x, upper_x - lower_x);
+	//m_pHorRuler->update();
 
 	double lower_y = factor * (viewbox.top() - offset.y()) * -1;
 	double upper_y = factor * (viewbox.bottom() - RULER_SIZE - offset.y()) * -1;
-	m_pVerRuler->setRange(lower_y, upper_y, upper_y - lower_y);
-	m_pVerRuler->update();
+	//m_pVerRuler->setRange(lower_y, upper_y, upper_y - lower_y);
+	//m_pVerRuler->update();
 }
 
 bool DrawView::Save()
@@ -439,6 +442,4 @@ void DrawView::LoadSymbol(QPoint point)
 			}
 		}
 	}
-
-	m_sSymbolName = QString::null;
 }

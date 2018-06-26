@@ -23,6 +23,7 @@ public:
 	bool SaveFile(const QString fileName);
 	bool LoadFile(const QString fileName);
 	void SetSymbolName(QString name) { m_sSymbolName = name; }
+	void SetSymbolCursor(QCursor cursor) { m_cursorSymbol = cursor; }
 
 public:
 	void ZoomIn();
@@ -50,6 +51,7 @@ private:
 	bool m_isUntitled;
 	QString m_sFileName;
 	QString m_sSymbolName;
+	QCursor m_cursorSymbol;
 
 private:
 	void UpdateRuler();

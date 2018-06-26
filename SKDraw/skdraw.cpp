@@ -543,6 +543,9 @@ void SKDraw::SlotAddShape()
 	if (sender() != ui.actionSelect && sender() != ui.actionSelectArea && sender() != ui.actionRotate)
 		m_pScene->clearSelection();
 
+	m_pView->setCursor(Qt::ArrowCursor);
+	m_pView->SetSymbolName(QString::null);
+
 	UpdateActions();
 }
 
@@ -717,6 +720,7 @@ void SKDraw::UpdateActions()
 
 	ui.actionCopy->setEnabled(m_pScene && m_pScene->selectedItems().count() > 0);
 	ui.actionCut->setEnabled(m_pScene && m_pScene->selectedItems().count() > 0);
+	ui.actionDelete->setEnabled(m_pScene && m_pScene->selectedItems().count() > 0);
 
 	ui.actionSelect->setEnabled(m_pScene);
 	ui.actionSelectArea->setEnabled(m_pScene);
@@ -917,6 +921,9 @@ void SKDraw::SlotReleaseKeyShift()
 
 void SKDraw::SlotKeyEscape()
 {
+	if (!m_pScene || !m_pView)
+		return;
+
 	DrawTool *tool = DrawTool::findTool(DrawTool::c_drawShape);
 	if (tool &&
 		(tool->m_drawShape == eDrawLine || tool->m_drawShape == eDrawPolyline || tool->m_drawShape == eDrawPolygon) &&
@@ -939,6 +946,8 @@ void SKDraw::SlotKeyEscape()
 	m_pScene->clearSelection();
 	DrawTool::c_drawShape = eDrawSelection;
 	m_pView->setDragMode(QGraphicsView::NoDrag);
+	m_pView->setCursor(Qt::ArrowCursor);
+	m_pView->SetSymbolName(QString::null);
 
 	UpdateActions();
 }
@@ -956,5 +965,9 @@ void SKDraw::SlotSymbolsDQClicked(QListWidgetItem *item)
 	QPixmap pix = item->icon().pixmap(300, 300);
 	QCursor cursor(pix);
 	m_pView->setCursor(cursor);
+	m_pView->SetSymbolCursor(cursor);
 	m_pView->SetSymbolName(item->toolTip().split("文件位置：").at(1));
+	m_pScene->clearSelection();
+	DrawTool::c_drawShape = eDrawSelection;
+	m_pView->setDragMode(QGraphicsView::NoDrag);
 }

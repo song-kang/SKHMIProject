@@ -142,6 +142,7 @@
    <addaction name="actionNew"/>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
+   <addaction name="actionClose"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidgetSence">
@@ -202,6 +203,7 @@
    <addaction name="actionCut"/>
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
+   <addaction name="actionDelete"/>
   </widget>
   <widget class="QToolBar" name="viewToolBar">
    <property name="windowTitle">
@@ -457,6 +459,10 @@
    </property>
   </action>
   <action name="actionDelete">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
+   </property>
    <property name="text">
     <string>删除(&amp;D)</string>
    </property>
@@ -711,6 +717,10 @@
    </property>
   </action>
   <action name="actionClose">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/close</normaloff>:/images/close</iconset>
+   </property>
    <property name="text">
     <string>关闭</string>
    </property>
