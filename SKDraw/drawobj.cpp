@@ -143,6 +143,19 @@ bool GraphicsItem::ReadBaseAttributes(QXmlStreamReader *xml)
 	m_brush.setColor(color);
 	m_brush.setStyle((Qt::BrushStyle)xml->attributes().value("brushStyle").toString().toInt());
 
+	m_iShowState = xml->attributes().value(tr("showst")).toString().toInt();
+	m_sLinkDB = xml->attributes().value(tr("linkdb")).toString();
+	m_sLinkScene = xml->attributes().value(tr("linkscene")).toString();
+
+	QString strval = xml->attributes().value(tr("showstyle")).toString();
+	if (!strval.isEmpty())
+	{
+		int index = 0;
+		QStringList list = strval.split(";");
+		foreach (QString s, list)
+			m_mapShowStyle.insert(index++, s);
+	}
+	
 	return true;
 }
 
@@ -163,6 +176,16 @@ bool GraphicsItem::WriteBaseAttributes(QXmlStreamWriter *xml)
 	xml->writeAttribute(tr("brushColor"),QString("%1").arg(GetBrush().color().name()));
 	xml->writeAttribute(tr("brushAlpha"),QString("%1").arg(GetBrush().color().alpha()));
 	xml->writeAttribute(tr("brushStyle"),QString("%1").arg(GetBrush().style()));
+	xml->writeAttribute(tr("showst"),QString("%1").arg(GetShowState()));
+	xml->writeAttribute(tr("linkdb"),QString("%1").arg(GetLinkDB()));
+	xml->writeAttribute(tr("linkscene"),QString("%1").arg(GetLinkScene()));
+
+	QString s;
+	QMap<int,QString>::const_iterator iter;
+	for (iter = m_mapShowStyle.constBegin(); iter != m_mapShowStyle.constEnd(); iter++)
+		s += iter.value() + ";";
+	s = s.left(s.length()-1);
+	xml->writeAttribute(tr("showstyle"),s);
 
 	return true;
 }
@@ -1396,11 +1419,13 @@ bool GraphicsItemGroup::SaveToXml(QXmlStreamWriter *xml)
 	xml->writeAttribute(tr("x"),QString("%1").arg(pos().x()));
 	xml->writeAttribute(tr("y"),QString("%1").arg(pos().y()));
 	xml->writeAttribute(tr("rotate"),QString("%1").arg(rotation()));
+	xml->writeAttribute(tr("linkdb"),QString("%1").arg(GetLinkDB()));
+	xml->writeAttribute(tr("linkscene"),QString("%1").arg(GetLinkScene()));
 
 	foreach (QGraphicsItem *item, childItems())
 	{
 		removeFromGroup(item);
-		AbstractShape * ab = qgraphicsitem_cast<AbstractShape*>(item);
+		AbstractShape *ab = qgraphicsitem_cast<AbstractShape*>(item);
 		if (ab && !qgraphicsitem_cast<SizeHandleRect*>(ab))
 		{
 			ab->UpdateCoordinate();

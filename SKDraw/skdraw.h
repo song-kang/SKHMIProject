@@ -32,6 +32,9 @@ public:
 public:
 	void UpdateActions();
 
+public:
+	SKBaseWidget *m_pLinkDataWidget;
+
 private:
 	Ui::SKDrawClass ui;
 
@@ -130,6 +133,8 @@ private slots:
 
 	void SlotMouseRightButton(QPoint p);
 	void SlotSymbolsDQClicked(QListWidgetItem *item);
+	void SlotLinkData();
+	void SlotLinkDataClose();
 
 };
 

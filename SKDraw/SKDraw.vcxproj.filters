@@ -191,6 +191,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_propertyeditor.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="shaprelate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_shaprelate.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_shaprelate.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="skdraw.h">
@@ -268,6 +277,12 @@
     <CustomBuild Include="propertyeditor.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="shaprelate.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="shaprelate.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_skdraw.h">
@@ -275,6 +290,9 @@
     </ClInclude>
     <ClInclude Include="sizehandle.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_shaprelate.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

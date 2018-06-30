@@ -1,5 +1,6 @@
 ﻿#include "skdraw.h"
 #include "commands.h"
+#include "shaprelate.h"
 
 SKDraw::SKDraw(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -21,6 +22,7 @@ void SKDraw::Init()
 	m_pScene = NULL;
 	m_isClose = true;
 	m_isInitSymbols = false;
+	m_pLinkDataWidget = NULL;
 	m_pUndoStack = new QUndoStack(this);
 	m_pEditMenu = new QMenu(this);
 	m_pEditMenu->addAction(ui.actionSelect);
@@ -278,6 +280,7 @@ void SKDraw::InitSlot()
 	connect(m_pBrushColorBtn,SIGNAL(clicked()),this,SLOT(SlotBtnBrushColor()));
 
 	connect(ui.listWidgetDQ,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(SlotSymbolsDQClicked(QListWidgetItem*)));
+	connect(ui.actionLinkData,SIGNAL(triggered()),this,SLOT(SlotLinkData()));
 
 	connect(m_app, SIGNAL(SigKeyUp()), this, SLOT(SlotKeyUp()));
 	connect(m_app, SIGNAL(SigKeyDown()), this, SLOT(SlotKeyDown()));
@@ -785,6 +788,7 @@ void SKDraw::UpdateActions()
 
 	ui.actionGroup->setEnabled(m_pScene && m_pScene->selectedItems().count() > 1);
 	ui.actionUngroup->setEnabled(m_pScene && m_pScene->selectedItems().count() == 1 && dynamic_cast<GraphicsItemGroup*>(m_pScene->selectedItems().first()));
+	ui.actionLinkData->setEnabled(m_pScene && m_pScene->selectedItems().count() == 1);
 }
 
 DrawView* SKDraw::CreateView()
@@ -970,4 +974,36 @@ void SKDraw::SlotSymbolsDQClicked(QListWidgetItem *item)
 	m_pScene->clearSelection();
 	DrawTool::c_drawShape = eDrawSelection;
 	m_pView->setDragMode(QGraphicsView::NoDrag);
+}
+
+void SKDraw::SlotLinkData()
+{
+	if (!m_pLinkDataWidget)
+	{
+		ShapRelate *sr = new ShapRelate(this);
+		sr->SetItem(m_pScene->selectedItems().first());
+		m_pLinkDataWidget = new SKBaseWidget(NULL,sr);
+		m_pLinkDataWidget->SetWindowsFlagsDialog();
+		m_pLinkDataWidget->SetWindowsModal();
+		m_pLinkDataWidget->SetWindowTitle("数据关联");
+#ifdef WIN32
+		m_pLinkDataWidget->SetWindowIcon(QIcon(":/images/dblink"));
+#else
+		m_pLinkDataWidget->SetWindowIcon(":/images/dblink");
+#endif
+		m_pLinkDataWidget->SetWindowFlags(0);
+		m_pLinkDataWidget->SetWindowSize(700,500);
+		m_pLinkDataWidget->SetIsDrag(true);
+		connect(m_pLinkDataWidget, SIGNAL(SigClose()), this, SLOT(SlotLinkDataClose()));
+	}
+
+	((ShapRelate*)m_pLinkDataWidget->GetCenterWidget())->Start();
+	m_pLinkDataWidget->Show();
+}
+
+void SKDraw::SlotLinkDataClose()
+{
+	disconnect(m_pLinkDataWidget, SIGNAL(SigClose()), this, SLOT(SlotLinkDataClose()));
+	delete m_pLinkDataWidget;
+	m_pLinkDataWidget = NULL;
 }

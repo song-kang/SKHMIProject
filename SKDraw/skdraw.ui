@@ -284,6 +284,8 @@
    <addaction name="actionback"/>
    <addaction name="actionGroup"/>
    <addaction name="actionUngroup"/>
+   <addaction name="separator"/>
+   <addaction name="actionLinkData"/>
   </widget>
   <widget class="QToolBar" name="propertyToolBar">
    <property name="windowTitle">
@@ -843,6 +845,15 @@
    </property>
    <property name="toolTip">
     <string>下划线</string>
+   </property>
+  </action>
+  <action name="actionLinkData">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/dblink</normaloff>:/images/dblink</iconset>
+   </property>
+   <property name="text">
+    <string>数据关联</string>
    </property>
   </action>
  </widget>

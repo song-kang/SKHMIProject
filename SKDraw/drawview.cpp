@@ -365,6 +365,8 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 {
 	QList<QGraphicsItem*> items;
 	qreal angle = xml->attributes().value(tr("rotate")).toString().toDouble();
+	QString linkdb = xml->attributes().value(tr("linkdb")).toString();
+	QString linkscene = xml->attributes().value(tr("linkscene")).toString();
 	while (xml->readNextStartElement())
 	{
 		AbstractShape * item = NULL;
@@ -408,6 +410,8 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 		if (group)
 		{
 			group->setRotation(angle);
+			group->SetLinkDB(linkdb);
+			group->SetLinkScene(linkscene);
 			group->UpdateCoordinate();
 		}
 

@@ -67,5 +67,7 @@
         <file alias="fileWarn">Resources/images/fileWarn.png</file>
         <file alias="close">Resources/images/close.png</file>
         <file alias="delete">Resources/images/delete.png</file>
+        <file alias="dblink">Resources/images/dblink.png</file>
+        <file alias="pictureLink">Resources/images/pictureLink.png</file>
     </qresource>
 </RCC>

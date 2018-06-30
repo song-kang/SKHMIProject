@@ -38,6 +38,8 @@ public:
 		m_pen.setJoinStyle(Qt::RoundJoin);
 		m_pen.setCapStyle(Qt::RoundCap);
 		m_brush = QBrush(Qt::NoBrush);
+		m_iShowState = -1;
+		m_iRealState = -1;
 	}
 	virtual ~AbstractShapeType(){}
 
@@ -51,6 +53,10 @@ public:
 	qreal  GetWidth() const { return m_width ; }
 	qreal  GetHeight() const {return m_height;}
 	QRectF GetRect() const { return m_localRect; }
+	qint32  GetShowState() { return m_iShowState; }
+	qint32 GetRealState() { return m_iRealState; }
+	QString GetLinkDB() { return m_sLinkDB; }
+	QString GetLinkScene() { return m_sLinkScene; }
 
 	void SetPen(const QPen & pen) { m_pen = pen; }
 	void SetPenColor(const QColor & color) { m_pen.setColor(color); update(); }
@@ -62,6 +68,10 @@ public:
 	void SetWidth(qreal width) { m_width = width; UpdateCoordinate(); }
 	void SetHeight(qreal height) { m_height = height; UpdateCoordinate(); }
 	void SetRect(QRectF rect) { m_localRect = rect; }
+	void SetShowState(qint32 state) { m_iShowState = state; }
+	void SetLinkDB(QString link) { m_sLinkDB = link; }
+	void SetRealState(qint32 state) { m_iRealState = state; }
+	void SetLinkScene(QString scene) { m_sLinkScene = scene; }
 
 	void SetState(SelectionHandleState st)
 	{
@@ -199,6 +209,10 @@ public:
 	qreal  m_height;
 	QRectF m_localRect;
 	Handles m_handles;
+	qint32 m_iShowState;
+	qint32 m_iRealState;
+	QString m_sLinkDB;
+	QString m_sLinkScene;
 
 public:
 	virtual void Move(const QPointF &point) = 0;
@@ -257,6 +271,9 @@ public:
 	virtual void UpdateHandles();
 	virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value);
+
+public:
+	QMap<int,QString> m_mapShowStyle;
 
 private:
 	DrawScene *m_pScene;
@@ -448,6 +465,8 @@ class GraphicsPictureItem :public GraphicsRectItem
 public:
 	GraphicsPictureItem(const QRect &rect, QString fileName, QGraphicsItem *parent = 0);
 	~GraphicsPictureItem();
+
+	QString GetFileName() { return m_fileName; }
 
 public:
 	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);

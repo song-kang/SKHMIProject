@@ -75,7 +75,6 @@ void PropertyEditor::SlotValueChanged(QtProperty *property, int value)
 
 		PropertyCommand(property, value, pen);
 		PropertyCommand(property, value, brush);
-		
 	}
 }
 
