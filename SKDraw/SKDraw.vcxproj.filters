@@ -200,6 +200,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_shaprelate.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="seldb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_seldb.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_seldb.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="skdraw.h">
@@ -283,6 +292,12 @@
     <CustomBuild Include="shaprelate.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="seldb.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="seldb.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_skdraw.h">
@@ -292,6 +307,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_shaprelate.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_seldb.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

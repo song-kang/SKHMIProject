@@ -1,6 +1,7 @@
 ﻿#include "skdraw.h"
 #include "commands.h"
 #include "shaprelate.h"
+#include "sk_database.h"
 
 SKDraw::SKDraw(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -9,6 +10,7 @@ SKDraw::SKDraw(QWidget *parent, Qt::WFlags flags)
 
 	Init();
 	InitUi();
+	InitDB();
 }
 
 SKDraw::~SKDraw()
@@ -21,6 +23,7 @@ void SKDraw::Init()
 	m_pView = NULL;
 	m_pScene = NULL;
 	m_isClose = true;
+	m_bDBSt = false;
 	m_isInitSymbols = false;
 	m_pLinkDataWidget = NULL;
 	m_pUndoStack = new QUndoStack(this);
@@ -212,6 +215,23 @@ void SKDraw::InitUi()
 	ui.listWidgetDQ->setResizeMode(QListView::Adjust);
 	tabifyDockWidget(ui.dockWidgetSence,ui.dockWidgetItem);
 	ui.dockWidgetSence->raise();
+}
+
+void SKDraw::InitDB()
+{
+#ifdef WIN32
+	if (!SK_DATABASE->Load(QCoreApplication::applicationDirPath().toStdString()+"\\..\\conf\\sys_database.xml"))
+#else
+	if (!SK_DATABASE->Load(QCoreApplication::applicationDirPath().toStdString()+"/../conf/sys_database.xml"))
+#endif
+		return;
+
+	SDatabase* pDb;
+	if ((pDb = DB->GetDatabasePool()->GetDatabase(true)) == NULL)
+		return;
+
+	m_bDBSt = true;
+	ui.treeWidgetSence->setHeaderLabel(tr("连接数据库成功"));
 }
 
 void SKDraw::InitSlot()

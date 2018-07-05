@@ -4,6 +4,7 @@
 #include "skhead.h"
 #include "ui_shaprelate.h"
 #include "skwidget.h"
+#include "skbasewidget.h"
 #include "drawobj.h"
 #include "qtpropertybrowser.h"
 #include "qtpropertymanager.h"
@@ -50,6 +51,7 @@ private slots:
 
 };
 
+class SKDraw;
 ///////////////////////// ShapRelate /////////////////////////
 class ShapRelate : public SKWidget
 {
@@ -76,6 +78,7 @@ public:
 	QFont m_font;
 	QString m_text;
 	QString m_picturePath;
+	SKBaseWidget *m_pSelDBWidget;
 
 protected:
 	virtual void paintEvent(QPaintEvent *);
@@ -94,9 +97,14 @@ signals:
 
 private slots:
 	void SlotOk();
+	void SlotCancel();
 	void SlotLinkDB();
+	void SlotSelDBClose();
 	void SlotLinkScene();
 	void SlotStateNumChanged(int index);
+
+private:
+	SKDraw *m_app;
 
 };
 

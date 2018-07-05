@@ -1,4 +1,6 @@
 #include "shaprelate.h"
+#include "skdraw.h"
+#include "seldb.h"
 
 ///////////////////////// PropertyState /////////////////////////
 PropertyState::PropertyState(QWidget *parent)
@@ -216,6 +218,8 @@ ShapRelate::ShapRelate(QWidget *parent)
 {
 	ui.setupUi(this);
 
+	m_app = (SKDraw *)parent;
+
 	Init();
 	InitUi();
 	InitSlot();
@@ -238,6 +242,7 @@ void ShapRelate::Init()
 	ui.comboBoxShowState->setEnabled(false);
 	ui.tabWidgetState->setEnabled(false);
 	ui.btnLinkDB->setEnabled(false);
+	m_pSelDBWidget = NULL;
 }
 
 void ShapRelate::InitUi()
@@ -248,6 +253,7 @@ void ShapRelate::InitUi()
 void ShapRelate::InitSlot()
 {
 	connect(ui.btnOk, SIGNAL(clicked()), this, SLOT(SlotOk()));
+	connect(ui.btnCancel, SIGNAL(clicked()), this, SLOT(SlotCancel()));
 	connect(ui.btnLinkDB, SIGNAL(clicked()), this, SLOT(SlotLinkDB()));
 	connect(ui.btnLinkScene, SIGNAL(clicked()), this, SLOT(SlotLinkScene()));
 	connect(ui.comboBoxStateNum, SIGNAL(currentIndexChanged(int)), this, SLOT(SlotStateNumChanged(int)));
@@ -492,6 +498,11 @@ void ShapRelate::SlotOk()
 	emit SigClose();
 }
 
+void ShapRelate::SlotCancel()
+{
+	emit SigClose();
+}
+
 void ShapRelate::OkGroup(QGraphicsItem *item)
 {
 	GraphicsItemGroup *group = (GraphicsItemGroup*)item;
@@ -511,7 +522,42 @@ void ShapRelate::OkGroup(QGraphicsItem *item)
 
 void ShapRelate::SlotLinkDB()
 {
+	if (!m_app->GetDBState())
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("数据库连接异常"));
+		return;
+	}
+	
+	if (!m_pSelDBWidget)
+	{
+		SelDB *sd = new SelDB(this);
+		sd->SetPoint(ui.lineEditLinkDB->text().trimmed());
+		m_pSelDBWidget = new SKBaseWidget(NULL,sd);
+		m_pSelDBWidget->SetWindowsFlagsDialog();
+		m_pSelDBWidget->SetWindowsModal();
+		m_pSelDBWidget->SetWindowTitle("选择数据");
+#ifdef WIN32
+		m_pSelDBWidget->SetWindowIcon(QIcon(":/images/dblink"));
+#else
+		m_pSelDBWidget->SetWindowIcon(":/images/dblink");
+#endif
+		m_pSelDBWidget->SetWindowFlags(0);
+		m_pSelDBWidget->SetWindowSize(900,600);
+		m_pSelDBWidget->SetIsDrag(true);
+		connect(m_pSelDBWidget, SIGNAL(SigClose()), this, SLOT(SlotSelDBClose()));
+	}
 
+	((SelDB*)m_pSelDBWidget->GetCenterWidget())->Start();
+	m_pSelDBWidget->Show();
+}
+
+void ShapRelate::SlotSelDBClose()
+{
+	ui.lineEditLinkDB->setText(((SelDB*)m_pSelDBWidget->GetCenterWidget())->GetPoint());
+
+	disconnect(m_pSelDBWidget, SIGNAL(SigClose()), this, SLOT(SlotLinkDataClose()));
+	delete m_pSelDBWidget;
+	m_pSelDBWidget = NULL;
 }
 
 void ShapRelate::SlotLinkScene()

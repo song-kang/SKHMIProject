@@ -28,6 +28,7 @@ public:
 	QColor GetFontColor() { return m_fontColor; }
 	QPen GetPen() { return m_pen; }
 	QBrush GetBrush() { return m_brush; }
+	bool GetDBState() { return m_bDBSt; }
 
 public:
 	void UpdateActions();
@@ -62,10 +63,12 @@ private:
 	QLabel *m_pLabelLogo;
 	bool m_isClose;
 	bool m_isInitSymbols;
+	bool m_bDBSt;
 
 private:
 	void Init();
 	void InitUi();
+	void InitDB();
 	void InitSymbols();
 	DrawView* CreateView();
 

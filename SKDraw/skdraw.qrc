@@ -69,5 +69,9 @@
         <file alias="delete">Resources/images/delete.png</file>
         <file alias="dblink">Resources/images/dblink.png</file>
         <file alias="pictureLink">Resources/images/pictureLink.png</file>
+        <file alias="cpu">Resources/images/cpu.png</file>
+        <file alias="device">Resources/images/device.png</file>
+        <file alias="ok">Resources/images/ok.png</file>
+        <file alias="reorder">Resources/images/reorder.png</file>
     </qresource>
 </RCC>
