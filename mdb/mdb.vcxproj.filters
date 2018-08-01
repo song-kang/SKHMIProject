@@ -11,22 +11,34 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MdbPluginApp.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="mdb_plugin.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MdbApplication.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MdbMgr.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MdbService.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="plugin.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="mdb_plugin.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MdbPluginApp.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+    <ClInclude Include="MdbApplication.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MdbMgr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MdbService.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="plugin.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

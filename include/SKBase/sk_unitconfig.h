@@ -5,6 +5,18 @@
 
 #define SK_UNITCONFIG CSKUnitconfig::GetPtr()
 
+class SK_BASE_EXPORT CSpUnit
+{
+public:
+	CSpUnit() {};
+	~CSpUnit() {};
+
+	int m_iUnitId;
+	SString m_sUnitCommIp;
+	SString m_sUnitName;
+	SString m_sUnitDesc;
+};
+
 class SK_BASE_EXPORT CSKUnitconfig
 {
 public:
@@ -18,12 +30,15 @@ public:
 	SString GetUnitName() { return m_sUnitName; }
 	SString GetUnitDesc() { return m_sUnitDesc; }
 	SString GetSystemType() { return m_sSystemType; }
+	SString GetUnitIp() { return m_sThisIp; }
 
-private:
+public:
 	int m_iUnitId;
 	SString m_sUnitName;
 	SString m_sUnitDesc;
 	SString m_sSystemType;
+	SString m_sThisIp;
+	SPtrList<CSpUnit> m_Units;
 
 };
 

@@ -2,7 +2,7 @@
 #define __SK_BASE_INC_H__
 
 #define SSP_DBUSED_MYSQL
-//#define SSP_DBUSED_ORACLE
+#define SSP_DBUSED_ORACLE
 
 #ifdef SSP_DBUSED_MYSQL
 #include "SMySQL.h"

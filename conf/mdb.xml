@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="GB2312"?>
+<mdb-define>
+	<table name="t_oe_element_state" sync_record="true">
+		<field name="ied_no" type="int" isnull="N" key="pk" default="'0' "/>
+		<field name="cpu_no" type="byte" isnull="N" key="pk" default="'0' "/>
+		<field name="group_no" type="short" isnull="N" key="pk" default="'0' "/>
+		<field name="entry" type="short" isnull="N" key="pk" default="'0' "/>
+		<field name="fun" type="short" isnull="Y" key="" default="'0'"/>
+		<field name="inf" type="short" isnull="Y" key="" default="'0'"/>
+		<field name="name" type="char(128)" isnull="Y" key="" default=""/>
+		<field name="type" type="byte" isnull="Y" key="" default="'0'"/>
+		<field name="evt_cls" type="short" isnull="Y" key="" default="'0'"/>
+		<field name="val_type" type="byte" isnull="Y" key="" default="'0'"/>
+		<field name="severity_level" type="byte" isnull="Y" key="" default="'0'"/>
+		<field name="on_dsc" type="char(8)" isnull="Y" key="" default=""/>
+		<field name="off_dsc" type="char(8)" isnull="Y" key="" default=""/>
+		<field name="unknown_desc" type="char(8)" isnull="Y" key="" default=""/>
+		<field name="inver" type="int" isnull="Y" key="" default="'0'"/>
+		<field name="current_val" type="byte" isnull="Y" key="" default="'0'"/>
+		<field name="measure_val" type="char(32)" isnull="Y" key="" default=""/>
+		<field name="soc" type="int" isnull="Y" key="" default=""/>
+		<field name="usec" type="int" isnull="Y" key="" default=""/>
+		<field name="mms_path" type="char(128)" isnull="Y" key="" default=""/>
+		<field name="details" type="char(256)" isnull="Y" key="" default=""/>
+	</table>
+</mdb-define>

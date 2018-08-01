@@ -20,8 +20,7 @@
 
 #include "SApplication.h"
 #include "SList.h"
-#include "ssp_database.h"
-#include "ssp_base.h"
+#include "sk_database.h"
 #include "mdb_plugin.h"
 
 #define OMS_ORACLE_DB
@@ -109,8 +108,9 @@ public:
 	Mdb_Run_Sql m_pRunSqlFun;
 	Mdb_Retrieve m_pMdbRetrieve;
 	Mdb_GetTableFields m_pMdbGetFields;
+
 private:
-	CSsp_Database *m_pDatabase;			//数据库配置文件
+	CSKDatabase *m_pDatabase;
 // 	SMdb *m_pMdb;
 // 	CMdbClient *m_pMdbClient;
 };

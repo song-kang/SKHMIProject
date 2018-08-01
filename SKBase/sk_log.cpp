@@ -62,7 +62,7 @@ bool CSKLog::Load(SString sPathFile)
 		SLog::setLogLevel(SLog::LOG_NONE);
 	else
 		SLog::setLogLevel(SLog::LOG_DEBUG);
-	if(pPrecommand->SearchNodeAttribute("concole","open").toLower() == "true")
+	if(pPrecommand->SearchNodeAttribute("console","open").toLower() == "true")
 		SLog::startLogToConsole();
 	else
 		SLog::stopLogToConsole();

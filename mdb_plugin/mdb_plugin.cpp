@@ -42,11 +42,11 @@ _SMDB_PLUGIN_LIB_EXPORT void Mdb_Plugin_Init(Mdb_Run_Sql pRunSqlFun,Mdb_Insert p
 {
  	CMdbPluginApplication app;
 	app.SetFork(false);
-	app.SetModuleDesc("UK9001内存库初始化插件(配置版)");
+	app.SetModuleDesc("内存库初始化插件(配置版)");
 	app.SetVersion(MOD_VERSION);
 	app.m_iUnitId = 1;
 	char* argv[1];
-	argv[0] = "libmdb_plugin";
+	argv[0] = "mdb_plugin";
 	app.m_pRunSqlFun = pRunSqlFun;
 	app.m_pMdbInsertFun = pInsertFun;
 	app.m_pMdbRetrieve = pRetrieveFun;

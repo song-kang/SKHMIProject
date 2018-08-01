@@ -21,6 +21,7 @@
 *.warn
 *.opensdf
 *.moc
+*.aps
 moc*.cpp
 ui_*.h
 qrc_*.cpp

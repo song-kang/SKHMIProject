@@ -11,22 +11,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MdbPluginApp.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="mdb_plugin.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitMgrApplication.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AgentEx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mcast_founder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="mdb_plugin.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MdbPluginApp.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+    <ClInclude Include="UnitMgrApplication.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AgentEx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mcast_founder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
