@@ -7,21 +7,24 @@ CSKDatabase::CSKDatabase()
 {
 	m_pHisMasterDbPools = NULL;
 	m_pHisSlaveDbPools = NULL;
+	m_pMdbDbPools = NULL;
 	m_iPoolSize = 3;
 	m_MasterDbType = m_SlaveDbType = DB_UNKNOWN;
 }
 
 CSKDatabase::~CSKDatabase()
 {
-	if(m_pHisMasterDbPools != NULL)
+	if (m_pHisMasterDbPools != NULL)
 		delete m_pHisMasterDbPools;
-	if(m_pHisSlaveDbPools != NULL)
+	if (m_pHisSlaveDbPools != NULL)
 		delete m_pHisSlaveDbPools;
+	if (m_pMdbDbPools != NULL)
+		delete m_pMdbDbPools;
 }
 
 CSKDatabase* CSKDatabase::GetPtr()
 {
-	if(g_pDatabase == NULL)
+	if (g_pDatabase == NULL)
 		g_pDatabase = new CSKDatabase();
 
 	return g_pDatabase;
@@ -37,7 +40,7 @@ bool CSKDatabase::Load(SString sPathFile)
 	SString hdb_ip;
 	int hdb_port=0;
 	SBaseConfig *pCfg = xml.SearchChild("master");
-	if(pCfg)
+	if (pCfg)
 	{
 		m_bMaster = true;
 		m_sMasterType		= pCfg->GetAttribute("type");//mysql/pgsql/oracle/dameng/mdb
@@ -53,7 +56,7 @@ bool CSKDatabase::Load(SString sPathFile)
 	}
 
 	pCfg = xml.SearchChild("slave");
-	if(pCfg)
+	if (pCfg)
 	{
 		m_bSlave = true;
 		m_sSlaveType		= pCfg->GetAttribute("type");//mysql/pgsql/oracle/dameng/mdb
@@ -68,26 +71,41 @@ bool CSKDatabase::Load(SString sPathFile)
 		m_bSlave = false;
 	}
 
+	pCfg = xml.SearchChild("mdb");
+	if (pCfg)
+	{
+		m_bMdb = true;
+		m_sMdbHostAddr		= pCfg->GetAttribute("hostaddr");
+		m_iMdbPort			= pCfg->GetAttributeI("port");
+		m_sMdbUser			= pCfg->GetAttribute("user");
+		m_sMdbPassword		= SApi::Decrypt_String(pCfg->GetAttribute("password"),UKDB_PWD_MASK);
+		m_sMdbDbName		= pCfg->GetAttribute("dbname");
+	}
+	else
+	{
+		m_bMdb = false;
+	}
+
 	bool bReload = false;
-	if(m_pHisMasterDbPools != NULL)
+	if (m_pHisMasterDbPools != NULL)
 		bReload = true;
 
-	SDatabasePool<SDatabase> *pHisMaster,*pHisSlave;
-	pHisMaster = pHisSlave = NULL;
-	if(m_bMaster == false)
+	SDatabasePool<SDatabase> *pHisMaster,*pHisSlave,*pMdb;
+	pHisMaster = pHisSlave = pMdb = NULL;
+	if (m_bMaster == false)
 	{
 		LOGFAULT("主数据库未配置!");
 		goto err;
 	}
 
 #ifdef SSP_DBUSED_MYSQL
-	if(m_sMasterType.toLower() == "mysql")
+	if (m_sMasterType.toLower() == "mysql")
 	{
 		m_MasterDbType = DB_MYSQL;
 		SDatabasePool<SMySQL> *pNewPool = new SDatabasePool<SMySQL>;
 		pHisMaster = (SDatabasePool<SDatabase> *) pNewPool;
 		pNewPool->SetParams(GetMasterConnectString());
-		if(!pNewPool->CreateDatabasePool(m_iPoolSize))
+		if (!pNewPool->CreateDatabasePool(m_iPoolSize))
 		{
 			delete pNewPool;
 			pHisMaster = NULL;
@@ -97,13 +115,13 @@ bool CSKDatabase::Load(SString sPathFile)
 	}
 #endif
 #ifdef SSP_DBUSED_ORACLE
-	else if(m_sMasterType.toLower() == "oracle")
+	else if (m_sMasterType.toLower() == "oracle")
 	{
 		m_MasterDbType = DB_ORACLE;
 		SDatabasePool<SOracle> *pNewPool = new SDatabasePool<SOracle>;
 		pHisMaster = (SDatabasePool<SDatabase> *) pNewPool;
 		pNewPool->SetParams(GetMasterConnectString());
-		if(!pNewPool->CreateDatabasePool(m_iPoolSize))
+		if (!pNewPool->CreateDatabasePool(m_iPoolSize))
 		{
 			delete pNewPool;
 			pHisMaster = NULL;
@@ -118,10 +136,10 @@ bool CSKDatabase::Load(SString sPathFile)
 		goto err;
 	}	
 
-	if(m_bSlave)
+	if (m_bSlave)
 	{
 #ifdef SSP_DBUSED_MYSQL
-		if(m_sSlaveType.toLower() == "mysql")
+		if (m_sSlaveType.toLower() == "mysql")
 		{
 			m_SlaveDbType = DB_MYSQL;
 			SDatabasePool<SMySQL> *pNewPool = new SDatabasePool<SMySQL>;
@@ -137,13 +155,13 @@ bool CSKDatabase::Load(SString sPathFile)
 		}
 #endif
 #ifdef SSP_DBUSED_ORACLE
-		else if(m_sSlaveType.toLower() == "oracle")
+		else if (m_sSlaveType.toLower() == "oracle")
 		{
 			m_SlaveDbType = DB_ORACLE;
 			SDatabasePool<SOracle> *pNewPool = new SDatabasePool<SOracle>;
 			pHisSlave = (SDatabasePool<SDatabase> *) pNewPool;
 			pNewPool->SetParams(GetMasterConnectString());
-			if(!pNewPool->CreateDatabasePool(m_iPoolSize))
+			if (!pNewPool->CreateDatabasePool(m_iPoolSize))
 			{
 				delete pNewPool;
 				pHisSlave = NULL;
@@ -159,26 +177,46 @@ bool CSKDatabase::Load(SString sPathFile)
 		}
 	}
 
+	if (m_bMdb)
+	{
+		SDatabasePool<SMdb> *pNewPool = new SDatabasePool<SMdb>;
+		pMdb = (SDatabasePool<SDatabase> *)pNewPool;		
+		pNewPool->SetParams(GetMdbConnectString());
+		if (!pNewPool->CreateDatabasePool(m_iPoolSize))
+		{
+			delete pNewPool;
+			pMdb = NULL;
+			LOGERROR("创建内存数据库连接池时失败");
+			goto err;
+		}
+	}
+
 	m_HisDbOper.SetDatabasePool(pHisMaster);
 	m_HisDbOper.SetSlaveDatabasePool(pHisSlave);
 	if(pHisSlave != NULL)
 		m_HisDbOper.Start();
+	m_MdbOper.SetDatabasePool(pMdb);
 
-	if(bReload)
+	if (bReload)
 	{
 		m_pOldHisMasterDbPools	= m_pHisMasterDbPools;
 		m_pOldHisSlaveDbPools	= m_pHisSlaveDbPools;
+		m_pOldMdbDbPools		= m_pMdbDbPools;
 		S_CREATE_THREAD(ThreadDelayFree,this);
 	}
 	m_pHisMasterDbPools = pHisMaster;
 	m_pHisSlaveDbPools = pHisSlave;
+	m_pMdbDbPools = pMdb;
+
 	return true;
 
 err:
-	if(pHisMaster != NULL)
+	if (pHisMaster != NULL)
 		delete pHisMaster;
-	if(pHisSlave != NULL)
+	if (pHisSlave != NULL)
 		delete pHisSlave;
+	if (pMdb != NULL)
+		delete pMdb;
 
 	return false;
 }
@@ -189,23 +227,29 @@ void* CSKDatabase::ThreadDelayFree(void *lp)
 	S_INTO_THREAD;
 	SApi::UsSleep(5000000);//5秒后释放
 
-	if(pThis->m_pOldHisMasterDbPools != NULL)
+	if (pThis->m_pOldHisMasterDbPools != NULL)
 	{
 		delete pThis->m_pOldHisMasterDbPools;
 		pThis->m_pOldHisMasterDbPools = NULL;
 	}
 
-	if(pThis->m_pOldHisSlaveDbPools	!= NULL)
+	if (pThis->m_pOldHisSlaveDbPools	!= NULL)
 	{
 		delete pThis->m_pOldHisSlaveDbPools;
 		pThis->m_pOldHisSlaveDbPools = NULL;
+	}
+
+	if (pThis->m_pOldMdbDbPools != NULL)
+	{
+		delete pThis->m_pOldMdbDbPools;
+		pThis->m_pOldMdbDbPools = NULL;
 	}
 
 	return NULL;
 }
 
 SString CSKDatabase::GetMasterConnectString()
-	{
+{
 	return SString::toFormat("hostaddr=%s;port=%d;user=%s;password=%s;dbname=%s;",
 		m_sMasterHostAddr.data(),
 		m_iMasterPort,
@@ -222,4 +266,27 @@ SString CSKDatabase::GetSlaveConnectString()
 		m_sSlaveUser.data(),
 		m_sSlavePassword.data(),
 		m_sSlaveDbName.data());
+}
+
+SString CSKDatabase::GetMdbConnectString()
+{
+	return SString::toFormat("hostaddr=%s;port=%d;user=%s;password=%s;dbname=%s;",
+		m_sMdbHostAddr.data(),
+		m_iMdbPort,
+		m_sMdbUser.data(),
+		m_sMdbPassword.data(),
+		m_sMdbDbName.data());
+}
+
+void CSKDatabase::RemoveAllMdbTrigger()
+{
+	if (m_pMdbDbPools == NULL)
+		return;
+
+	for (int i = 0; i < m_pMdbDbPools->GetPoolSize(); i++)
+	{
+		SMdb *pDb = (SMdb*)m_pMdbDbPools->GetDatabaseByIdx(i);
+		if (pDb != NULL)
+			pDb->GetMdbClient()->RemoveAllTrigger();
+	}
 }

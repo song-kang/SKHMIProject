@@ -41,11 +41,19 @@ void LoadThread::run()
 		return;
 	}
 
-	SDatabase* pDb;
+	SDatabase* pDb = NULL;
 	SigText(tr("测试连接数据库......"));
 	if ((pDb = DB->GetDatabasePool()->GetDatabase(true)) == NULL)
 	{
 		m_sError = tr("数据库连接测试失败！");
+		return;
+	}
+
+	pDb = NULL;
+	SigText(tr("测试连接内存数据库......"));
+	if ((pDb = MDB->GetDatabasePool()->GetDatabase(true)) == NULL)
+	{
+		m_sError = tr("内存数据库连接测试失败！");
 		return;
 	}
 

@@ -14,6 +14,7 @@
 #ifdef WIN32
   #ifdef _DEBUG
     #pragma comment(lib,"sbased.lib")
+	#pragma comment(lib,"sbase_mdbd.lib")
     #ifdef SSP_DBUSED_MYSQL
       #pragma comment(lib,"sbase_mysqld.lib")
     #endif
@@ -22,6 +23,7 @@
     #endif
   #else
     #pragma comment(lib,"sbase.lib")
+	#pragma comment(lib,"sbase_mdb.lib")
     #ifdef SSP_DBUSED_MYSQL
       #pragma comment(lib,"sbase_mysql.lib")
     #endif

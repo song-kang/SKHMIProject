@@ -19,6 +19,8 @@
 #define __VIEW_PLUGIN_DEMO2_H__
 
 #include "cbaseview.h"
+#include "sk_database.h"
+#include "SMdb.h"
 #include "ui_view_plugin_demo2.h"
 
 class view_plugin_demo2 : public CBaseView
@@ -34,8 +36,25 @@ public:
 		setStyleSheet(tr("QWidget#%1{background:rgb(%2,%3,%4,%5);}").arg(objectName()).arg(red).arg(yellow).arg(blue).arg(alpha));
 	}
 
+	//此接口函数须快速操作回调完毕，不可阻塞
+	static BYTE* OnMdbTrgCallback(void* cbParam,SString &sTable,eMdbTriggerType eType,int iTrgRows,int iRowSize,BYTE *pTrgData);
+	
 private:
 	Ui::view_plugin_demo2 ui;
+
+	CMdbClient *m_pMdbTrgClient;
+
+private:
+	void RegisterMdbTrigger()
+	{
+		m_pMdbTrgClient = ((SMdb*)MDB->GetDatabasePool()->GetDatabaseByIdx(MDB->GetDatabasePool()->GetPoolSize()-1))->GetMdbClient();
+		m_pMdbTrgClient->RegisterTriggerCallback(OnMdbTrgCallback,this,"t_oe_element_state",MDB_TRGFLG_UPDATE);
+	}
+
+	void RemoveMdbTrigger()
+	{
+		m_pMdbTrgClient->RemoveTriggerCallback(OnMdbTrgCallback,this,"t_oe_element_state",MDB_TRGFLG_UPDATE);
+	}
 };
 
 #endif // __VIEW_PLUGIN_DEMO2_H__
