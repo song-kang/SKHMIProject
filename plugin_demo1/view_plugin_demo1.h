@@ -36,8 +36,10 @@ public:
 		setStyleSheet(tr("QWidget#%1{background:rgb(%2,%3,%4,%5);}").arg(objectName()).arg(red).arg(yellow).arg(blue).arg(alpha));
 	}
 
-	//此接口函数须快速操作回调完毕，不可阻塞
+	//此处理函数必须尽量短小，快速返回，不可阻塞
 	static BYTE* OnMdbTrgCallback(void* cbParam,SString &sTable,eMdbTriggerType eType,int iTrgRows,int iRowSize,BYTE *pTrgData);
+	//代理消息处理接口，由派生类实现，处理函数必须尽量短小，快速返回
+	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
 
 private:
 	Ui::view_plugin_demo1 ui;
@@ -55,6 +57,8 @@ private:
 	{
 		m_pMdbTrgClient->RemoveTriggerCallback(OnMdbTrgCallback,this,"t_oe_element_state",MDB_TRGFLG_UPDATE);
 	}
+
+	void TestCommandSend();
 };
 
 #endif // __VIEW_PLUGIN_DEMO1_H__

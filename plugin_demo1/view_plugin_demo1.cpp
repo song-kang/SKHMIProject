@@ -24,6 +24,8 @@ view_plugin_demo1::view_plugin_demo1(QWidget *parent)
 
 	SetBackgroundColor();
 	RegisterMdbTrigger();
+
+	TestCommandSend();
 }
 
 view_plugin_demo1::~view_plugin_demo1()
@@ -51,4 +53,22 @@ BYTE* view_plugin_demo1::OnMdbTrgCallback(void* cbParam,SString &sTable,eMdbTrig
 	}
 	
 	return 0;
+}
+
+bool view_plugin_demo1::ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer,int iLength)
+{
+	return true;
+}
+
+void view_plugin_demo1::TestCommandSend()
+{
+	stuSpUnitAgentProcessId dst_id;
+	dst_id.m_iUnitId = 0;
+	dst_id.SetApplicationId(SP_UA_APPNO_AGENT);
+
+	bool ret = SApplication::GetPtr()->SendAgentMsg(&dst_id,SP_UA_MSG_REQ_GET_UNIT,SApplication::NewMsgSn());
+	if (!ret)
+	{
+		int b = 0;
+	}
 }

@@ -30,7 +30,7 @@ public:
 	SKGui();
 	~SKGui();
 
-	bool Begin();
+	bool Begin(char *argv[]);
 	bool BeginAgent();
 	void End();
 	static SKGui* GetPtr();

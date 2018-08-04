@@ -140,9 +140,9 @@ bool CUnitMgrApplication::ProcessTxtCmd(SString &sCmd,SString &sResult)
 	if(sCmd.length() == 0)
 	{
 		sResult =	
-			"get_units                      取所有的代理单元\r\n"
-			"get_procs                      取本单元所有的进程列表\r\n"
-			"get_pid <appid> [inst_id=0]    取指定类型的进程标识信息\r\n"
+			"cmd get_units                      取所有的代理单元\r\n"
+			"cmd get_procs                      取本单元所有的进程列表\r\n"
+			"cmd get_pid <appid> [inst_id=0]    取指定类型的进程标识信息\r\n"
 			"";
 		return true;
 	}

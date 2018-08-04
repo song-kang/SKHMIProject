@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	QTextCodec::setCodecForTr(codec);
 #endif
 
-	if (SK_GUI->Begin())
+	if (SK_GUI->Begin(argv))
 		a.exec();
 
 	SK_GUI->End();

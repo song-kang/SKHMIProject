@@ -5,8 +5,10 @@
 #include "cfunpoint.h"
 #include "cusers.h"
 
-#define HMI_NAME		"UK9000 HMI"
+#define HMI_NAME		"HMI界面主程序"
 #define HMI_VERSION		"1.0.0"
+#define HMI_DATE		"2014-05-20"	
+#define HMI_TIME		"12:36:00"
 #define MAX_SKIN		9
 
 SKGui *g_gui=NULL;
@@ -41,9 +43,8 @@ void SKGui::Init()
 	m_iSettings = NULL;
 	m_pPluginMgr = new CPluginMgr;
 	m_pListBaseView = new QList<CBaseView*>;
-
-	SetModuleDesc(m_sHmiName = HMI_NAME);
-	SetVersion(m_sHmiVersion = HMI_VERSION);
+	m_sHmiName = HMI_NAME;
+	m_sHmiVersion = HMI_VERSION;
 
 	QTime t= QTime::currentTime();
 	qsrand(t.msec()+t.second()*1000);
@@ -75,8 +76,25 @@ void SKGui::InitSettings(QString name)
 	}
 }
 
-bool SKGui::Begin()
+bool SKGui::Begin(char *argv[])
 {
+	SString sModule = argv[0];
+	if(sModule.findRev('/') >= 0)
+		sModule = sModule.mid(sModule.findRev('/')+1);
+	if(sModule.findRev('\\') >= 0)
+		sModule = sModule.mid(sModule.findRev('\\')+1);
+
+	SString err;
+	SString sModuleCrc = SApi::GenerateCRCByFile(sModule,err);
+	SString sModuleTime;
+	sModuleTime.sprintf("%s %s",HMI_DATE,HMI_TIME);
+
+	SetApplicationId(SP_UA_APPNO_USER);
+	SString sInfo;
+	sInfo.sprintf("name=%s;ver=%s;crc=%s;date=%s;",sModule.data(),m_sHmiVersion.data(),sModuleCrc.data(),sModuleTime.data());
+	SetModuleInfo(sInfo);
+	SetModuleDesc(m_sHmiName);
+
 	CInitWidget *wiget = new CInitWidget();
 	if (wiget)
 	{

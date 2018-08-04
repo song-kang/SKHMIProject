@@ -404,7 +404,7 @@ SString CSpUnitAgent::ProcessTelnetCmd(int &select_pid,SString &cmd)
 	}
 	if(cmd == "welcome")
 	{
-		sRet += "欢迎使用SDP/SSP代理TELNET客户端程序\r\n南京悠阔电气科技有限公司\r\n版本号:V"+m_pApp->GetModuleVer()+"\r\n登录时间:"+SDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+"\r\n";
+		sRet += "欢迎使用SDP/SSP代理TELNET客户端程序\r\n南京XXX科技有限公司\r\n版本号:V"+m_pApp->GetModuleVer()+"\r\n登录时间:"+SDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+"\r\n";
 		sRet += "请输入'help'查看操作命令详情!\r\n";
 	}
 	else if(cmd == "help")
