@@ -1248,6 +1248,7 @@ GraphicsItemGroup::GraphicsItemGroup(QGraphicsItem *parent)
 	:AbstractShapeType <QGraphicsItemGroup>(parent),
 	m_parent(parent)
 {
+#if 0	//组合图元关闭拉伸功能
 	m_itemsBoundingRect = QRectF();
 	m_handles.reserve(eHandleLeft);
 	for (int i = eHandleLeftTop; i <= eHandleLeft; i++)
@@ -1255,6 +1256,7 @@ GraphicsItemGroup::GraphicsItemGroup(QGraphicsItem *parent)
 		SizeHandleRect *shr = new SizeHandleRect(this, i);
 		m_handles.push_back(shr);
 	}
+#endif
 
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
