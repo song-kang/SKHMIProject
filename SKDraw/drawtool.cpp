@@ -89,6 +89,11 @@ DrawTool* DrawTool::findTool(DrawShape drawShape)
 	return 0;
 }
 
+void DrawTool::UpdatePropertyEditor(DrawScene *scene, GraphicsItem *item)
+{
+	((DrawView*)scene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(item->metaObject());
+}
+
 ///////////////////////// DrawSelectTool /////////////////////////
 DrawSelectTool::DrawSelectTool()
 	: DrawTool(eDrawSelection)
@@ -243,11 +248,6 @@ void DrawSelectTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScen
 	scene->MouseEvent(event);
 }
 
-void DrawSelectTool::UpdatePropertyEditor(DrawScene *scene, GraphicsItem *item)
-{
-	((DrawView*)scene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(item->metaObject());
-}
-
 ///////////////////////// DrawRotationTool /////////////////////////
 DrawRotationTool::DrawRotationTool()
 	: DrawTool(eDrawRotation)
@@ -366,11 +366,6 @@ void DrawRotationTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawSc
 	scene->MouseEvent(event);
 }
 
-void DrawRotationTool::UpdatePropertyEditor(DrawScene *scene, GraphicsItem *item)
-{
-	((DrawView*)scene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(item->metaObject());
-}
-
 ///////////////////////// DrawRectTool /////////////////////////
 DrawRectTool::DrawRectTool(DrawShape shape)
 	: DrawTool(shape)
@@ -457,6 +452,7 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 			m_pItem->UpdateCoordinate();
 			m_selectMode = eModeNone;
 			emit scene->SigItemAdded(m_pItem);
+			UpdatePropertyEditor(scene, m_pItem);
 		}
 
 		m_pItem = NULL;
@@ -571,6 +567,7 @@ void DrawPolygonTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene
 		m_pItem->EndPoint(event->scenePos());
 		m_pItem->setSelected(true);
 		emit scene->SigItemAdded(m_pItem);
+		UpdatePropertyEditor(scene, m_pItem);
 		m_pItem = NULL;
 		
 		m_selectMode = eModeNone;

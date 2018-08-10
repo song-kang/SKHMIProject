@@ -45,6 +45,9 @@ public:
 	static QPointF c_last;
 	static DrawShape c_drawShape;
 	static DrawTool* findTool(DrawShape drawShape);
+
+public:
+	void UpdatePropertyEditor(DrawScene *scene, GraphicsItem *item);
 };
 
 ///////////////////////// DrawSelectTool ////////////////////////
@@ -65,9 +68,6 @@ public:
 	QPointF m_initialPositions;
 	QPointF m_opposite;
 	//GraphicsItemGroup *selLayer;
-
-private:
-	void UpdatePropertyEditor(DrawScene *scene, GraphicsItem *item);
 };
 
 ///////////////////////// DrawRotationTool ////////////////////////
@@ -85,10 +85,6 @@ public:
 public:
 	qreal m_oldAngle;
 	qreal m_lastAngle;
-
-private:
-	void UpdatePropertyEditor(DrawScene *scene, GraphicsItem *item);
-	
 };
 
 ///////////////////////// DrawRectTool ////////////////////////
