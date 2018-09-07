@@ -872,7 +872,7 @@ void GraphicsRectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	if (m_isRound)
 		painter->drawRoundedRect(m_localRect,m_round.width(),m_round.height());
 	else
-		painter->drawRect(m_localRect.toRect());
+		painter->drawRect(m_localRect);
 }
 
 bool GraphicsRectItem::SaveToXml(QXmlStreamWriter *xml)

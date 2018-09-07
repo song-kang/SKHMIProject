@@ -978,7 +978,7 @@ void SKDraw::SlotKeyEscape()
 
 void SKDraw::SlotMouseRightButton(QPoint p)
 {
-	m_pEditMenu->popup(p + QPoint(18,18));
+	m_pEditMenu->popup(p/* + QPoint(18,18)*/);
 }
 
 void SKDraw::SlotSymbolsDQClicked(QListWidgetItem *item)

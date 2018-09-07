@@ -29,6 +29,12 @@ public:
 	}
 
 	virtual void SetBackgroundColor(int red = 240, int yellow = 240, int blue = 240, int alpha = 230)=0;
+	virtual int OnCommand(SString sCmd,SString &sResult) 
+	{
+		S_UNUSED(sCmd);
+		S_UNUSED(sResult);
+		return 0;
+	}
 
 private:
 	QString m_sPluginName;
