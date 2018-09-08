@@ -24,10 +24,47 @@
 #include "ui_view_plugin_drawer.h"
 #include "drawview.h"
 #include "drawscene.h"
+#include "mdb_def.h"
 
+struct stuOeElementStateQueue
+{
+	stuOeElementStateQueue()
+	{
+		soc = 0;
+		usec = 0;
+		memset(&stuState,0,sizeof(t_oe_element_state));
+	}
+	int soc;
+	int usec;
+	t_oe_element_state stuState;
+};
+
+//================= MDBThread ===================
+class MDBThread : public QThread
+{
+	Q_OBJECT
+
+public:
+	MDBThread(QObject *parent);
+	~MDBThread();
+
+	bool m_isRun;
+	bool m_isQuit;
+
+protected:
+	virtual void run();
+
+private:
+	view_plugin_drawer *m_app;
+
+};
+
+//================= view_plugin_drawer ===================
 class view_plugin_drawer : public CBaseView
 {
 	Q_OBJECT
+
+	friend class MDBThread;
 
 public:
 	view_plugin_drawer(QWidget *parent = 0);
@@ -52,6 +89,11 @@ private:
 	CMdbClient *m_pMdbTrgClient;
 	DrawView *m_pView;
 	DrawScene *m_pScene;
+	MDBThread *m_mdbThred;
+
+public:
+	QMutex m_queMutex;
+	QQueue<stuOeElementStateQueue> m_qOeElementState;
 	QMap<QString, QList<GraphicsItem *>*> m_mapLinkDB;
 
 private:

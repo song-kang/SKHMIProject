@@ -15,8 +15,53 @@
  *
  **/
 #include "view_plugin_drawer.h"
-#include "mdb_def.h"
 
+//================= MDBThread ===================
+MDBThread::MDBThread(QObject *parent)
+	: QThread(parent), m_isRun(true), m_isQuit(false)
+{
+	m_app = (view_plugin_drawer *)parent;
+}
+
+MDBThread::~MDBThread()
+{
+
+}
+
+void MDBThread::run()
+{
+	while(m_isRun)
+	{
+		m_app->m_queMutex.lock();
+		while (!m_app->m_qOeElementState.isEmpty())
+		{
+			stuOeElementStateQueue stu = m_app->m_qOeElementState.dequeue();
+			QString key = tr("t_oe_element_state::%1,%2,%3,%4::%5")
+				.arg(stu.stuState.ied_no).arg(stu.stuState.cpu_no).arg(stu.stuState.group_no).arg(stu.stuState.entry).arg(stu.stuState.name);
+			QMap<QString, QList<GraphicsItem *>*>::iterator it = m_app->m_mapLinkDB.find(key);
+			if (it == m_app->m_mapLinkDB.constEnd())
+			{
+				m_app->m_queMutex.unlock();
+				continue;
+			}
+
+			QList<GraphicsItem *> *itemList = it.value();
+			for (int i = 0; i < itemList->count(); i++)
+			{
+				GraphicsItem *item = itemList->at(i);
+				item->SetIsFlash(true);
+				item->SetShowState(stu.stuState.current_val);
+				item->SetStyleFromState(item->GetShowState());
+			}
+		}
+		m_app->m_queMutex.unlock();
+		msleep(100);
+	}
+
+	m_isQuit = true;
+}
+
+//================= view_plugin_drawer ===================
 view_plugin_drawer::view_plugin_drawer(QWidget *parent)
 : CBaseView(parent)
 {
@@ -24,6 +69,9 @@ view_plugin_drawer::view_plugin_drawer(QWidget *parent)
 
 	SetBackgroundColor();
 	RegisterMdbTrigger();
+
+	m_mdbThred = new MDBThread(this);
+	m_mdbThred->start();
 }
 
 view_plugin_drawer::~view_plugin_drawer()
@@ -33,6 +81,13 @@ view_plugin_drawer::~view_plugin_drawer()
 	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
 	for (it = m_mapLinkDB.constBegin(); it != m_mapLinkDB.constEnd(); it++)
 		delete it.value();
+
+	while(!m_mdbThred->m_isQuit)
+	{
+		SApi::UsSleep(10000);
+		m_mdbThred->m_isRun = false;	
+	}
+	m_qOeElementState.clear();
 }
 
 BYTE* view_plugin_drawer::OnMdbTrgCallback(void* cbParam,SString &sTable,eMdbTriggerType eType,int iTrgRows,int iRowSize,BYTE *pTrgData)
@@ -54,19 +109,12 @@ BYTE* view_plugin_drawer::OnMdbTrgCallback(void* cbParam,SString &sTable,eMdbTri
 			memset(&stuElemState,0,sizeof(t_oe_element_state));
 			memcpy(&stuElemState,pTrgData+i*sizeof(t_oe_element_state),sizeof(t_oe_element_state));
 
-			QString key = tr("t_oe_element_state::%1,%2,%3,%4::%5")
-				.arg(stuElemState.ied_no).arg(stuElemState.cpu_no).arg(stuElemState.group_no).arg(stuElemState.entry).arg(stuElemState.name);
-			QMap<QString, QList<GraphicsItem *>*>::iterator it = pThis->m_mapLinkDB.find(key);
-			if (it == pThis->m_mapLinkDB.constEnd())
-				continue;
-
-			QList<GraphicsItem *> *itemList = it.value();
-			for (int i = 0; i < itemList->count(); i++)
-			{
-				GraphicsItem *item = itemList->at(i);
-				item->SetIsFlash(true);
-				item->SetShowState(stuElemState.current_val);
-			}
+			stuOeElementStateQueue state;
+			SDateTime::getSystemTime(state.soc,state.usec);
+			memcpy(&state.stuState,&stuElemState,sizeof(t_oe_element_state));
+			pThis->m_queMutex.lock();
+			pThis->m_qOeElementState.enqueue(state);
+			pThis->m_queMutex.unlock();
 		}
 	}
 

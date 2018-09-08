@@ -70,6 +70,7 @@ public:
 	QString m_sLinkDB;
 	QString m_sLinkScene;
 	bool m_isFlash;
+	QMap<int,QString> m_mapShowStyle;
 
 public:
 	virtual bool LoadFromXml(QXmlStreamReader *xml) = 0;
@@ -107,14 +108,9 @@ public:
 
 public:
 	virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-
-protected:
 	virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 	virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 	virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
-
-public:
-	QMap<int,QString> m_mapShowStyle;
 
 private:
 	DrawScene *m_pScene;
@@ -123,9 +119,14 @@ private:
 public:
 	bool ReadBaseAttributes(QXmlStreamReader *xml);
 	bool WriteBaseAttributes(QXmlStreamWriter *xml);
+	void SetStyleFromState(int state);
 
 signals:
 	void SigSelectedChange(QGraphicsItem *item);
+	void SigAttribute(QString rotation,QString scale);
+
+private slots:
+	void SlotAttribute(QString rotation,QString scale);
 
 };
 
@@ -251,6 +252,9 @@ public:
 	virtual bool LoadFromXml(QXmlStreamReader *xml);
 
 public:
+	void SetStyle(QString sFont, QString text);
+
+public:
 	QFont m_font;
 	QString m_text;
 	QTextOption m_option;
@@ -307,6 +311,10 @@ protected:
 
 signals:
 	void SigSelectedChange(QGraphicsItem *item);
+	void SigAttribute(QString rotation,QString scale);
+
+private slots:
+	void SlotAttribute(QString rotation,QString scale);
 
 };
 

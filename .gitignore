@@ -32,3 +32,4 @@ SKBase/Debug/SKBased_manifest.rc
 *.unsuccessfulbuild
 conf/USER1
 conf/USER2
+*.fault

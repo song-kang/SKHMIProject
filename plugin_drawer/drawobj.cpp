@@ -11,6 +11,8 @@ GraphicsItem::GraphicsItem(QGraphicsItem *parent)
     setFlag(QGraphicsItem::ItemIsSelectable, true);
 
 	m_pScene = NULL;
+
+	connect(this, SIGNAL(SigAttribute(QString,QString)), this, SLOT(SlotAttribute(QString,QString)));
 }
 
 GraphicsItem::~GraphicsItem()
@@ -88,6 +90,61 @@ bool GraphicsItem::ReadBaseAttributes(QXmlStreamReader *xml)
 	}
 	
 	return true;
+}
+
+void GraphicsItem::SetStyleFromState(int state)
+{
+	QMap<int,QString>::iterator it = m_mapShowStyle.find(state);
+	if (it == m_mapShowStyle.constEnd())
+		return;
+
+	QColor color;
+	QString style = it.value();
+	QList<QString> l = style.split(":").at(1).split("|");
+	if (m_sName == "多边形图元" || m_sName == "圆角矩形图元" || m_sName == "矩形图元" || m_sName == "圆形图元" || m_sName == "椭圆形图元")
+	{
+		color.setNamedColor(l.at(0).split(",").at(0));
+		color.setAlpha(l.at(0).split(",").at(1).toInt());
+		m_pen.setColor(color);
+		m_pen.setWidthF(l.at(0).split(",").at(2).toDouble());
+		m_pen.setStyle((Qt::PenStyle)l.at(0).split(",").at(3).toInt());
+
+		color.setNamedColor(l.at(1).split(",").at(0));
+		color.setAlpha(l.at(1).split(",").at(1).toInt());
+		m_brush.setColor(color);
+		m_brush.setStyle((Qt::BrushStyle)l.at(1).split(",").at(2).toInt());
+
+		emit SigAttribute(l.at(2), l.at(3));
+	}
+	else if (m_sName == "线段图元" || m_sName == "折线图元")
+	{
+		color.setNamedColor(l.at(0).split(",").at(0));
+		color.setAlpha(l.at(0).split(",").at(1).toInt());
+		m_pen.setColor(color);
+		m_pen.setWidthF(l.at(0).split(",").at(2).toDouble());
+		m_pen.setStyle((Qt::PenStyle)l.at(0).split(",").at(3).toInt());
+
+		emit SigAttribute(l.at(1), l.at(2));
+	}
+	else if (m_sName == "文字图元")
+	{
+		color.setNamedColor(l.at(0).split(",").at(0));
+		color.setAlpha(l.at(0).split(",").at(1).toInt());
+		m_pen.setColor(color);
+
+		((GraphicsTextItem*)this)->SetStyle(l.at(1), l.at(2));
+
+		emit SigAttribute(l.at(3), l.at(4));
+	}
+	else if (m_sName == "图像图元")
+	{
+	}
+}
+
+void GraphicsItem::SlotAttribute(QString rotation,QString scale)
+{
+	setRotation(rotation.toDouble());
+	setScale(scale.toDouble());
 }
 
 ///////////////////////// GraphicsPolygonItem /////////////////////////
@@ -677,6 +734,18 @@ bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
 	return true;
 }
 
+void GraphicsTextItem::SetStyle(QString sFont, QString text)
+{
+	m_text = text;
+	m_font.setFamily(sFont.split(",").at(0));
+	m_font.setPointSize(sFont.split(",").at(1).toInt());
+	m_font.setBold(sFont.split(",").at(2).toInt());
+	m_font.setItalic(sFont.split(",").at(3).toInt());
+	m_font.setUnderline(sFont.split(",").at(4).toInt());
+	m_font.setStrikeOut(sFont.split(",").at(5).toInt());
+	m_font.setKerning(sFont.split(",").at(6).toInt());
+}
+
 ///////////////////////// GraphicsPictureItem /////////////////////////
 GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QString fileName, QGraphicsItem *parent)
 	:GraphicsRectItem(rect, parent),
@@ -840,6 +909,11 @@ GraphicsItemGroup* GraphicsItemGroup::CreateGroup(const QList<QGraphicsItem *> &
 }
 
 void GraphicsItemGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+
+}
+
+void GraphicsItemGroup::SlotAttribute(QString rotation,QString scale)
 {
 
 }

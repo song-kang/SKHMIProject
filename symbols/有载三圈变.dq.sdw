@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE SKDRAW>
 <canvas width="80" height="80" color="#000000" alpha="255">
-    <group x="39.9448" y="40.1784" rotate="0">
-        <line x="37.8946" y="20.5971" z="0" width="9.81048" height="9.15644" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
-            <point x="-4.90524" y="4.57822"/>
-            <point x="4.90524" y="-4.57822"/>
-        </line>
-        <line x="31.763" y="26.0118" z="0" width="52.159" height="20.602" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="1" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
+    <group x="39.9448" y="40.1784" rotate="0" linkdb="" linkscene="">
+        <line x="31.763" y="26.0118" z="0" width="52.159" height="20.602" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="1" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1" showst="0" linkdb="" linkscene="" showstyle="">
             <point x="-26.0795" y="10.301"/>
             <point x="26.0795" y="-10.301"/>
         </line>
-        <line x="28.4301" y="56.2419" z="0" width="10.1375" height="14.3887" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
+        <line x="37.8946" y="20.5971" z="0" width="9.81048" height="9.15644" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1" showst="0" linkdb="" linkscene="" showstyle="">
+            <point x="-4.90524" y="4.57822"/>
+            <point x="4.90524" y="-4.57822"/>
+        </line>
+        <line x="28.4301" y="56.2419" z="0" width="10.1375" height="14.3887" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1" showst="0" linkdb="" linkscene="" showstyle="">
             <point x="5.06875" y="-7.19435"/>
             <point x="-5.06875" y="7.19435"/>
         </line>
-        <line x="32.8258" y="32.0427" z="0" width="1.42109e-14" height="14.3887" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
+        <line x="32.8258" y="32.0427" z="0" width="1.42109e-14" height="14.3887" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1" showst="0" linkdb="" linkscene="" showstyle="">
             <point x="-7.10543e-15" y="-7.19435"/>
             <point x="7.10543e-15" y="7.19435"/>
         </line>
-        <line x="27.7571" y="20.5154" z="0" width="10.4645" height="9.31996" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
+        <line x="27.7571" y="20.5154" z="0" width="10.4645" height="9.31996" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1" showst="0" linkdb="" linkscene="" showstyle="">
             <point x="-5.23226" y="-4.65998"/>
             <point x="5.23226" y="4.65998"/>
         </line>
-        <line x="37.75" y="56.3236" z="0" width="8.50242" height="14.2252" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
+        <line x="37.75" y="56.3236" z="0" width="8.50242" height="14.2252" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1" showst="0" linkdb="" linkscene="" showstyle="">
             <point x="4.25121" y="7.1126"/>
             <point x="-4.25121" y="-7.1126"/>
         </line>
-        <circle x="32.8569" y="26.5637" z="0" width="36" height="36" rotate="0" scale="1" tooltip="" penColor="#bf2698" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="0"/>
-        <line x="32.8448" y="63.4362" z="0" width="18.3129" height="0" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
+        <circle x="32.8569" y="26.5637" z="0" width="36" height="36" rotate="0" scale="1" tooltip="" penColor="#bf2698" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="0" showst="-1" linkdb="t_oe_element_state::3,1,1,5::通道报警" linkscene="" showstyle="0:#00ff00,255,2,1|#008000,255,0|0|1;1:#ff0000,255,2,1|#008000,255,0|0|1"/>
+        <line x="32.8448" y="63.4362" z="0" width="18.3129" height="0" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1" showst="0" linkdb="" linkscene="" showstyle="">
             <point x="-9.15645" y="0"/>
             <point x="9.15645" y="0"/>
         </line>
-        <line x="51.8188" y="34.7146" z="0.2" width="10.4645" height="9.31996" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
+        <circle x="56.2061" y="39.8949" z="0.2" width="36" height="36" rotate="0" scale="1" tooltip="" penColor="#bf2698" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="0" showst="0" linkdb="" linkscene="" showstyle=""/>
+        <circle x="33.1839" y="53.7931" z="0.2" width="36" height="36" rotate="0" scale="1" tooltip="" penColor="#bf2698" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="0" showst="0" linkdb="" linkscene="" showstyle=""/>
+        <line x="51.8188" y="34.7146" z="0.2" width="10.4645" height="9.31996" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1" showst="0" linkdb="" linkscene="" showstyle="">
             <point x="-5.23226" y="-4.65998"/>
             <point x="5.23226" y="4.65998"/>
         </line>
-        <circle x="56.2061" y="39.8949" z="0.2" width="36" height="36" rotate="0" scale="1" tooltip="" penColor="#bf2698" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="0"/>
-        <circle x="33.1839" y="53.7931" z="0.2" width="36" height="36" rotate="0" scale="1" tooltip="" penColor="#bf2698" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="0"/>
-        <line x="56.8875" y="46.2419" z="0.2" width="2.84217e-14" height="14.3887" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
+        <line x="56.8875" y="46.2419" z="0.2" width="2.84217e-14" height="14.3887" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1" showst="0" linkdb="" linkscene="" showstyle="">
             <point x="-1.42109e-14" y="-7.19435"/>
             <point x="1.42109e-14" y="7.19435"/>
         </line>
-        <line x="61.9563" y="34.7963" z="0.2" width="9.81048" height="9.15644" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1">
+        <line x="61.9563" y="34.7963" z="0.2" width="9.81048" height="9.15644" rotate="0" scale="1" tooltip="" penColor="#0000ff" penAlpha="255" penWidth="2" penStyle="1" brushColor="#008000" brushAlpha="255" brushStyle="1" showst="0" linkdb="" linkscene="" showstyle="">
             <point x="-4.90524" y="4.57822"/>
             <point x="4.90524" y="-4.57822"/>
         </line>
