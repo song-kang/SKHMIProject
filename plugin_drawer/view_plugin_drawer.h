@@ -82,6 +82,7 @@ public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
 
 	void InsertMapLinkDB(QString key, GraphicsItem *item);
+	void InitDrawobj();
 
 private:
 	Ui::view_plugin_drawer ui;

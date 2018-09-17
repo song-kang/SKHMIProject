@@ -321,7 +321,10 @@ void ResizeShapeCommand::undo()
 		if (eHandleNone != opposite_)
 			handle = opposite_;
 
-		item->Stretch(handle, 1./scale_.x(), 1./scale_.y(), item->Opposite(handle));
+		if (((GraphicsItem*)item)->GetName() == "线段图元")
+			item->Stretch(eHandleRightBottom,1./scale_.x(), 1./scale_.y(),item->m_handles[1]->pos());
+		else
+			item->Stretch(handle, 1./scale_.x(), 1./scale_.y(), item->Opposite(handle));
 		item->UpdateCoordinate();
 		item->update();
 		((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)m_pItem)->metaObject());
@@ -338,7 +341,10 @@ void ResizeShapeCommand::redo()
 		AbstractShape *item = qgraphicsitem_cast<AbstractShape*>(m_pItem);
 		if (item)
 		{
-			item->Stretch(handle, scale_.x(), scale_.y(), item->Opposite(handle));
+			if (((GraphicsItem*)item)->GetName() == "线段图元")
+				item->Stretch(eHandleRightBottom,scale_.x(), scale_.y(),item->m_handles[1]->pos());
+			else
+				item->Stretch(handle, scale_.x(), scale_.y(), item->Opposite(handle));
 			item->UpdateCoordinate();
 			item->update();
 			((DrawView*)m_pScene->GetView())->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)m_pItem)->metaObject());

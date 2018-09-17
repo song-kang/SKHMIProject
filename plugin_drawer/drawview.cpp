@@ -14,6 +14,7 @@ DrawView::DrawView(QGraphicsScene *scene)
 	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setStyleSheet("background: transparent;border:0px");
 	setViewport(new QWidget);
 
 	m_bMouseTranslate = false;
@@ -308,6 +309,7 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 			delete item;
 	}
 
+	m_app->InitDrawobj();
 	return true;
 }
 

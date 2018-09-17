@@ -198,3 +198,40 @@ void view_plugin_drawer::InsertMapLinkDB(QString key, GraphicsItem *item)
 		itemList->append(item);
 	}
 }
+
+void view_plugin_drawer::InitDrawobj()
+{
+	int iVal;
+	SString sVal;
+	SString sql;
+	SRecordset rs;
+
+	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
+	for (it = m_mapLinkDB.constBegin(); it != m_mapLinkDB.constEnd(); it++)
+	{
+		QStringList l = it.key().split("::");
+		QStringList ll = l.at(1).split(",");
+		if (l.at(0) == "t_oe_element_state")
+		{
+			sql.sprintf("select current_val from t_oe_element_state where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
+				ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
+			iVal = DB->SelectIntoI(sql);
+
+			QList<GraphicsItem *> *listItem = it.value();
+			for (int i = 0; i < listItem->count(); i++)
+			{
+				GraphicsItem *item = listItem->at(i);
+				item->SetShowState(iVal);
+				item->SetStyleFromState(item->GetShowState());
+			}
+		}
+		else if (l.at(0) == "t_oe_element_general")
+		{
+			sql.sprintf("select current_val from t_oe_element_general where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
+				ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
+			sVal = DB->SelectInto(sql);
+		}
+		else
+			continue;
+	}
+}

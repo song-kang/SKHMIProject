@@ -321,7 +321,8 @@ void DrawScene::Align(eAlignType alignType)
 			case eAlignSize:
 				{
 					AbstractShape * aitem = qgraphicsitem_cast<AbstractShape*>(item);
-					if ( aitem ){
+					if (aitem && width != 0.0 && height != 0.0)
+					{
 						qreal fx = width / aitem->GetWidth();
 						qreal fy = height / aitem->GetHeight();
 						if ( fx == 1.0 && fy == 1.0 ) break;
@@ -334,10 +335,14 @@ void DrawScene::Align(eAlignType alignType)
 			case eAlignWidth:
 				{
 					AbstractShape * aitem = qgraphicsitem_cast<AbstractShape*>(item);
-					if ( aitem ){
+					if (aitem && width != 0.0)
+					{
 						qreal fx = width / aitem->GetWidth();
 						if ( fx == 1.0 ) break;
-						aitem->Stretch(eHandleRight,fx,1,aitem->Opposite(eHandleRight));
+						if (((GraphicsItem*)aitem)->GetName() == "线段图元")
+							aitem->Stretch(eHandleRightBottom,fx,1,aitem->m_handles[1]->pos());
+						else
+							aitem->Stretch(eHandleRight,fx,1,aitem->Opposite(eHandleRight));
 						aitem->UpdateCoordinate();
 						emit SigItemResize(aitem, eHandleRight, QPointF(fx,1));
 					}
@@ -346,11 +351,14 @@ void DrawScene::Align(eAlignType alignType)
 			case eAlignHeight:
 				{
 					AbstractShape * aitem = qgraphicsitem_cast<AbstractShape*>(item);
-					if ( aitem ){
-
+					if (aitem && height != 0.0)
+					{
 						qreal fy = height / aitem->GetHeight();
 						if (fy == 1.0 ) break ;
-						aitem->Stretch(eHandleBottom,1,fy,aitem->Opposite(eHandleBottom));
+						if (((GraphicsItem*)aitem)->GetName() == "线段图元")
+							aitem->Stretch(eHandleRightBottom,1,fy,aitem->m_handles[1]->pos());
+						else
+							aitem->Stretch(eHandleBottom,1,fy,aitem->Opposite(eHandleBottom));
 						aitem->UpdateCoordinate();
 						emit SigItemResize(aitem, eHandleBottom, QPointF(1,fy));
 					}
