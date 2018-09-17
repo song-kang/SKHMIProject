@@ -143,6 +143,7 @@ bool GraphicsItem::ReadBaseAttributes(QXmlStreamReader *xml)
 	m_brush.setColor(color);
 	m_brush.setStyle((Qt::BrushStyle)xml->attributes().value("brushStyle").toString().toInt());
 
+	m_iShowType = xml->attributes().value(tr("showtype")).toString().toInt();
 	m_iShowState = xml->attributes().value(tr("showst")).toString().toInt();
 	m_sLinkDB = xml->attributes().value(tr("linkdb")).toString();
 	m_sLinkScene = xml->attributes().value(tr("linkscene")).toString();
@@ -176,6 +177,7 @@ bool GraphicsItem::WriteBaseAttributes(QXmlStreamWriter *xml)
 	xml->writeAttribute(tr("brushColor"),QString("%1").arg(GetBrush().color().name()));
 	xml->writeAttribute(tr("brushAlpha"),QString("%1").arg(GetBrush().color().alpha()));
 	xml->writeAttribute(tr("brushStyle"),QString("%1").arg(GetBrush().style()));
+	xml->writeAttribute(tr("showtype"),QString("%1").arg(GetShowType()));
 	xml->writeAttribute(tr("showst"),QString("%1").arg(GetShowState()));
 	xml->writeAttribute(tr("linkdb"),QString("%1").arg(GetLinkDB()));
 	xml->writeAttribute(tr("linkscene"),QString("%1").arg(GetLinkScene()));
@@ -264,7 +266,31 @@ void GraphicsPolygonItem::UpdateHandles()
 void GraphicsPolygonItem::UpdateCoordinate()
 {
 	QPointF pt1,pt2,delta;
-	QPolygonF pts = mapToScene(m_points);
+	QPolygonF pts;
+	if (GetName() == "Ïß¶ÎÍ¼Ôª")
+	{
+		pt1 = m_points.at(0);
+		if (m_points.at(1).x() > m_points.at(0).x() && m_points.at(1).y() > m_points.at(0).y() ||
+			m_points.at(1).x() > m_points.at(0).x() && m_points.at(1).y() == m_points.at(0).y() ||
+			m_points.at(1).x() == m_points.at(0).x() && m_points.at(1).y() > m_points.at(0).y())
+			pt2 = m_points.at(0) + QPointF(m_width,m_height);
+		else if (m_points.at(1).x() < m_points.at(0).x()  && m_points.at(1).y() < m_points.at(0).y() ||
+				 m_points.at(1).x() < m_points.at(0).x()  && m_points.at(1).y() == m_points.at(0).y() ||
+				 m_points.at(1).x() == m_points.at(0).x() && m_points.at(1).y() < m_points.at(0).y()) 
+			pt2 = m_points.at(0) - QPointF(m_width,m_height);
+		else if (m_points.at(1).x() > m_points.at(0).x() && m_points.at(1).y() < m_points.at(0).y())
+			pt2 = QPointF(m_points.at(0).x() + m_width, m_points.at(0).y() - m_height);
+		else if (m_points.at(1).x() < m_points.at(0).x()  && m_points.at(1).y() > m_points.at(0).y())
+			pt2 = QPointF(m_points.at(0).x() - m_width, m_points.at(0).y() + m_height);
+		
+		m_points.clear();
+		m_points.append(pt1);
+		m_points.append(pt2);
+		pts = mapToScene(m_points);
+	}
+	else
+		pts = mapToScene(m_points);
+
 	if (parentItem() == NULL)
 	{
 		pt1 = mapToScene(transformOriginPoint());
