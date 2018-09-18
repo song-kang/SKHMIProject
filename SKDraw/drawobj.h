@@ -193,16 +193,16 @@ public:
 	void DrawOutline(QPainter *painter)
 	{
 		qreal itemPenWidth = GetPen().widthF();
-		const qreal pad = itemPenWidth / 2;
+		const qreal pad = 0;//itemPenWidth/2;
 		const qreal penWidth = 0;
 
 		painter->setPen(QPen(Qt::black, penWidth, Qt::SolidLine));
 		painter->setBrush(Qt::NoBrush);
-		painter->drawRect(boundingRect().adjusted(pad, pad, -pad, -pad));
+		painter->drawRect(boundingRect().adjusted(-pad, -pad, pad, pad));
 
 		painter->setPen(QPen(Qt::white, 0, Qt::DotLine));
 		painter->setBrush(Qt::NoBrush);
-		painter->drawRect(boundingRect().adjusted(pad, pad, -pad, -pad));
+		painter->drawRect(boundingRect().adjusted(-pad, -pad, pad, pad));
 	}
 
 public:
@@ -274,6 +274,9 @@ public:
 public:
 	virtual void UpdateHandles();
 	virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+	virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+	virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+	virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
 	virtual QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value);
 
 public:

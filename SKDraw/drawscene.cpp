@@ -128,6 +128,8 @@ void DrawScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void DrawScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+	QGraphicsScene::mouseMoveEvent(mouseEvent);
+
 	DrawTool *tool = DrawTool::findTool(DrawTool::c_drawShape);
 	if (tool)
 		tool->mouseMoveEvent(mouseEvent,this);
@@ -135,6 +137,8 @@ void DrawScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void DrawScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+	QGraphicsScene::mouseReleaseEvent(mouseEvent);
+
 	DrawTool *tool = DrawTool::findTool(DrawTool::c_drawShape);
 	if (tool)
 		tool->mouseReleaseEvent(mouseEvent,this);

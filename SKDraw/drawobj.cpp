@@ -100,6 +100,25 @@ void GraphicsItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	Q_UNUSED(event);
 }
 
+void GraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+	QGraphicsItem::hoverEnterEvent(event);
+}
+
+void GraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+	m_pScene->GetView()->setCursor(Qt::ArrowCursor);
+
+	QGraphicsItem::hoverLeaveEvent(event);
+}
+
+void GraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
+	m_pScene->GetView()->setCursor(Qt::PointingHandCursor);
+
+	QGraphicsItem::hoverMoveEvent(event);
+}
+
 QVariant GraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
 {
 	if (change == QGraphicsItem::ItemSelectedHasChanged)
@@ -389,6 +408,9 @@ void GraphicsPolygonItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 	painter->setPen(GetPen());
 	painter->setBrush(GetBrush());
 	painter->drawPolygon(m_points);
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
 }
 
 bool GraphicsPolygonItem::SaveToXml(QXmlStreamWriter *xml)
@@ -899,6 +921,9 @@ void GraphicsRectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 		painter->drawRoundedRect(m_localRect,m_round.width(),m_round.height());
 	else
 		painter->drawRect(m_localRect);
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
 }
 
 bool GraphicsRectItem::SaveToXml(QXmlStreamWriter *xml)
@@ -1029,6 +1054,9 @@ void GraphicsEllipseItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 	painter->setPen(GetPen());
 	painter->setBrush(GetBrush());
 	painter->drawEllipse(m_localRect);
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
 }
 
 bool GraphicsEllipseItem::SaveToXml(QXmlStreamWriter *xml)
@@ -1132,7 +1160,7 @@ void GraphicsTextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	painter->setPen(GetPen());
 	painter->drawText(m_localRect, m_text, m_option);
 
-	if (option->state & QStyle::State_Selected)
+	if (option && (option->state & QStyle::State_Selected))
 		DrawOutline(painter);
 }
 
