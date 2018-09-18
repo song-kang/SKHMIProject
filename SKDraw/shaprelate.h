@@ -101,6 +101,7 @@ private slots:
 	void SlotLinkDB();
 	void SlotSelDBClose();
 	void SlotLinkScene();
+	void SlotShowTypeChanged(int index);
 	void SlotStateNumChanged(int index);
 
 private:

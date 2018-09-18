@@ -78,7 +78,7 @@ void PropertyState::SetProperty(QString name)
 	{
 		SetPenProperty();
 	}
-	else if (name == "多边形图元" || name.contains("矩形图元") || name.contains("圆形图元"))
+	else if (name == "多边形图元" || name.contains("矩形图元") || name.contains("圆形图元") || name.contains("三角形图元") || name.contains("菱形图元"))
 	{
 		SetPenProperty();
 		SetBrushProperty();
@@ -239,6 +239,7 @@ void ShapRelate::Init()
 
 	ui.lineEditLinkDB->setReadOnly(true);
 	ui.lineEditLinkScene->setReadOnly(true);
+	ui.comboBoxStateNum->setEnabled(false);
 	ui.comboBoxShowState->setEnabled(false);
 	ui.tabWidgetState->setEnabled(false);
 	ui.btnLinkDB->setEnabled(false);
@@ -256,11 +257,17 @@ void ShapRelate::InitSlot()
 	connect(ui.btnCancel, SIGNAL(clicked()), this, SLOT(SlotCancel()));
 	connect(ui.btnLinkDB, SIGNAL(clicked()), this, SLOT(SlotLinkDB()));
 	connect(ui.btnLinkScene, SIGNAL(clicked()), this, SLOT(SlotLinkScene()));
+	connect(ui.comboBoxShowType, SIGNAL(currentIndexChanged(int)), this, SLOT(SlotShowTypeChanged(int)));
 	connect(ui.comboBoxStateNum, SIGNAL(currentIndexChanged(int)), this, SLOT(SlotStateNumChanged(int)));
 }
 
 void ShapRelate::Start()
 {
+	QStringList list;
+	list << "无类型" << "状态类型";
+	ui.comboBoxShowType->addItems(list);
+	ui.comboBoxShowType->setCurrentIndex(0);
+
 	if (((GraphicsItem*)m_pShape)->DisplayName() == "组合图元")
 	{
 		ui.comboBoxStateNum->setEnabled(false);
@@ -279,6 +286,7 @@ void ShapRelate::Start()
 	m_scale = ((GraphicsItem*)m_pShape)->GetScale();
 	if (m_sShapeName == "文字图元")
 	{
+		ui.comboBoxShowType->addItem("测量类型");
 		m_font = ((GraphicsTextItem*)m_pShape)->GetFont();
 		m_text = ((GraphicsTextItem*)m_pShape)->GetText();
 	}
@@ -289,6 +297,7 @@ void ShapRelate::Start()
 
 	int count = ((GraphicsItem*)m_pShape)->m_mapShowStyle.count();
 	ui.comboBoxStateNum->setCurrentIndex(count);
+	ui.comboBoxShowType->setCurrentIndex(((GraphicsItem*)m_pShape)->GetShowType());
 	ui.comboBoxShowState->setCurrentIndex(((GraphicsItem*)m_pShape)->GetShowState()+1);
 	ui.lineEditLinkDB->setText(((GraphicsItem*)m_pShape)->GetLinkDB());
 	ui.lineEditLinkScene->setText(((GraphicsItem*)m_pShape)->GetLinkScene());
@@ -297,6 +306,42 @@ void ShapRelate::Start()
 void ShapRelate::paintEvent(QPaintEvent *e)
 {
 	SKWidget::paintEvent(e);
+}
+
+void ShapRelate::SlotShowTypeChanged(int index)
+{
+	switch (index)
+	{
+	case 0: //无类型
+		ui.comboBoxStateNum->setEnabled(false);
+		ui.comboBoxStateNum->setCurrentIndex(0);
+		ui.comboBoxShowState->setEnabled(false);
+		ui.comboBoxShowState->clear();
+		ui.lineEditLinkDB->clear();
+		ui.btnLinkDB->setEnabled(false);
+		ui.tabWidgetState->setEnabled(false);
+		ui.tabWidgetState->clear();
+		break;
+	case 1: //状态类型
+		ui.comboBoxStateNum->setEnabled(true);
+		ui.comboBoxShowState->setEnabled(true);
+		ui.lineEditLinkDB->clear();
+		ui.btnLinkDB->setEnabled(true);
+		ui.tabWidgetState->setEnabled(true);
+		break;
+	case 2: //测量类型
+		ui.comboBoxStateNum->setEnabled(false);
+		ui.comboBoxStateNum->setCurrentIndex(0);
+		ui.comboBoxShowState->setEnabled(false);
+		ui.comboBoxShowState->clear();
+		ui.lineEditLinkDB->clear();
+		ui.btnLinkDB->setEnabled(true);
+		ui.tabWidgetState->setEnabled(true);
+		ui.tabWidgetState->clear();
+		break;
+	default:
+		break;
+	}
 }
 
 void ShapRelate::SlotStateNumChanged(int index)
@@ -313,7 +358,7 @@ void ShapRelate::SlotStateNumChanged(int index)
 	}
 
 	QStringList list;
-	list.append(tr("显示任意状态"));
+	list.append(tr("数据库初始状态"));
 	for (int i = 0; i < num; i++)
 		list.append(tr("显示状态%1").arg(i));
 	ui.comboBoxShowState->clear();
@@ -350,7 +395,8 @@ void ShapRelate::SlotStateNumChanged(int index)
 				ps->m_rotation = value.split(":").at(1).split("|").at(1).toFloat();
 				ps->m_scale = value.split(":").at(1).split("|").at(2).toFloat();
 			}
-			else if (m_sShapeName == "多边形图元" || m_sShapeName.contains("矩形图元") || m_sShapeName.contains("圆形图元"))
+			else if (m_sShapeName == "多边形图元" || m_sShapeName == "矩形图元" || m_sShapeName == "圆形图元" ||
+					 m_sShapeName == "三角形图元" || m_sShapeName == "菱形图元")
 			{
 				QString strPen = value.split(":").at(1).split("|").at(0);
 				QString strBrush = value.split(":").at(1).split("|").at(1);
@@ -456,6 +502,8 @@ void ShapRelate::SlotOk()
 	else
 		((GraphicsItem*)m_pShape)->SetShowState(-1);
 
+	((GraphicsItem*)m_pShape)->SetShowType(ui.comboBoxShowType->currentIndex());
+
 	((GraphicsItem*)m_pShape)->m_mapShowStyle.clear();
 	int count = ui.tabWidgetState->count();
 	for (int i = 0; i < count; i++)
@@ -471,7 +519,8 @@ void ShapRelate::SlotOk()
 			strProperty += tr("%1,%2,%3,%4|%5|%6")
 				.arg(ps->m_pen.color().name()).arg(ps->m_pen.color().alpha()).arg(ps->m_pen.widthF()).arg(ps->m_pen.style()).arg(ps->m_rotation).arg(ps->m_scale);
 		}
-		else if (m_sShapeName == "多边形图元" || m_sShapeName.contains("矩形图元") || m_sShapeName.contains("圆形图元"))
+		else if (m_sShapeName == "多边形图元" || m_sShapeName == "矩形图元" || m_sShapeName == "圆形图元" ||
+				 m_sShapeName == "三角形图元" || m_sShapeName == "菱形图元")
 		{
 			strProperty += tr("%1,%2,%3,%4|%5,%6,%7|%8|%9")
 				.arg(ps->m_pen.color().name()).arg(ps->m_pen.color().alpha()).arg(ps->m_pen.widthF()).arg(ps->m_pen.style())

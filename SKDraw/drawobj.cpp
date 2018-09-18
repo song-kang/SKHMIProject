@@ -582,6 +582,9 @@ void GraphicsLineItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	painter->setBrush(Qt::NoBrush);
 	if (m_points.size() > 1)
 		painter->drawLine(m_points.at(0),m_points.at(1));
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
 }
 
 bool GraphicsLineItem::SaveToXml(QXmlStreamWriter *xml)
@@ -745,6 +748,9 @@ void GraphicsPolygonLineItem::paint(QPainter *painter, const QStyleOptionGraphic
 	}
 
 	painter->drawPath(path);
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
 }
 
 bool GraphicsPolygonLineItem::SaveToXml(QXmlStreamWriter *xml)
@@ -1398,6 +1404,9 @@ QGraphicsItem* GraphicsPictureItem::Duplicate()
 void GraphicsPictureItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	painter->drawPixmap(m_localRect.toRect(), m_picture);
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
 }
 
 bool GraphicsPictureItem::SaveToXml(QXmlStreamWriter *xml)
