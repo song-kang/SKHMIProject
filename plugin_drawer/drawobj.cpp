@@ -602,6 +602,71 @@ bool GraphicsRectItem::LoadFromXml(QXmlStreamReader *xml)
 	return true;
 }
 
+///////////////////////// GraphicsTriangleItem /////////////////////////
+GraphicsTriangleItem::GraphicsTriangleItem(const QRect &rect, GraphicsRectItem *parent)
+	:GraphicsRectItem(rect, parent)
+{
+	SetName("三角形图元");
+}
+
+GraphicsTriangleItem::~GraphicsTriangleItem()
+{
+
+}
+
+void GraphicsTriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	painter->setPen(GetPen());
+	painter->setBrush(GetBrush());
+
+	m_points.clear();
+	m_points.append(QPointF(m_localRect.x()+m_localRect.width()/2,m_localRect.y()));
+	m_points.append(QPointF(m_localRect.x(),m_localRect.y()+m_localRect.height()));
+	m_points.append(QPointF(m_localRect.x()+m_localRect.width(),m_localRect.y()+m_localRect.height()));
+	painter->drawPolygon(m_points);
+}
+
+bool GraphicsTriangleItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	ReadBaseAttributes(xml);
+	UpdateCoordinate();
+	xml->skipCurrentElement();
+	return true;
+}
+
+///////////////////////// GraphicsRhombusItem /////////////////////////
+GraphicsRhombusItem::GraphicsRhombusItem(const QRect &rect, GraphicsRectItem *parent)
+	:GraphicsRectItem(rect, parent)
+{
+	SetName("菱形图元");
+}
+
+GraphicsRhombusItem::~GraphicsRhombusItem()
+{
+
+}
+
+void GraphicsRhombusItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	painter->setPen(GetPen());
+	painter->setBrush(GetBrush());
+
+	m_points.clear();
+	m_points.append(QPointF(m_localRect.x()+m_localRect.width()/2,m_localRect.y()));
+	m_points.append(QPointF(m_localRect.x(),m_localRect.y()+m_localRect.height()/2));
+	m_points.append(QPointF(m_localRect.x()+m_localRect.width()/2,m_localRect.y()+m_localRect.height()));
+	m_points.append(QPointF(m_localRect.x()+m_localRect.width(),m_localRect.y()+m_localRect.height()/2));
+	painter->drawPolygon(m_points);
+}
+
+bool GraphicsRhombusItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	ReadBaseAttributes(xml);
+	UpdateCoordinate();
+	xml->skipCurrentElement();
+	return true;
+}
+
 ///////////////////////// GraphicsEllipseItem /////////////////////////
 GraphicsEllipseItem::GraphicsEllipseItem(const QRect &rect, bool isCircle, QGraphicsItem *parent)
 	:GraphicsRectItem(rect, parent)

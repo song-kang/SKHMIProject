@@ -426,7 +426,7 @@ public:
 	QPolygonF m_points;
 };
 
-///////////////////////// GraphicsTriangleItem /////////////////////////
+///////////////////////// GraphicsRhombusItem /////////////////////////
 class GraphicsRhombusItem : public GraphicsRectItem
 {
 public:
