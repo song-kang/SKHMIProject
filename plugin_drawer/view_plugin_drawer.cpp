@@ -38,8 +38,8 @@ void MDBThread::run()
 			stuOeElementStateQueue stu = m_app->m_qOeElementState.dequeue();
 			QString key = tr("t_oe_element_state::%1,%2,%3,%4::%5")
 				.arg(stu.stuState.ied_no).arg(stu.stuState.cpu_no).arg(stu.stuState.group_no).arg(stu.stuState.entry).arg(stu.stuState.name);
-			QMap<QString, QList<GraphicsItem *>*>::iterator it = m_app->m_mapLinkDB.find(key);
-			if (it == m_app->m_mapLinkDB.constEnd())
+			QMap<QString, QList<GraphicsItem *>*>::iterator it = m_app->m_mapLinkDBState.find(key);
+			if (it == m_app->m_mapLinkDBState.constEnd())
 			{
 				m_app->m_queMutex.unlock();
 				continue;
@@ -79,7 +79,7 @@ view_plugin_drawer::~view_plugin_drawer()
 	RemoveMdbTrigger();
 
 	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
-	for (it = m_mapLinkDB.constBegin(); it != m_mapLinkDB.constEnd(); it++)
+	for (it = m_mapLinkDBState.constBegin(); it != m_mapLinkDBState.constEnd(); it++)
 		delete it.value();
 
 	while(!m_mdbThred->m_isQuit)
@@ -182,15 +182,34 @@ void view_plugin_drawer::SlotMouseRightButton(QPoint)
 	int a = 0;
 }
 
-void view_plugin_drawer::InsertMapLinkDB(QString key, GraphicsItem *item)
+void view_plugin_drawer::InsertMapLinkDBState(QString key, GraphicsItem *item)
 {
 	QList<GraphicsItem *> *itemList;
-	QMap<QString, QList<GraphicsItem *>*>::iterator it = m_mapLinkDB.find(key);
-	if (it == m_mapLinkDB.constEnd())
+
+	QMap<QString, QList<GraphicsItem *>*>::iterator it = m_mapLinkDBState.find(key);
+	if (it == m_mapLinkDBState.constEnd())
 	{
 		itemList = new QList<GraphicsItem *>;
 		itemList->append(item);
-		m_mapLinkDB.insert(key, itemList);
+		m_mapLinkDBState.insert(key, itemList);
+	}
+	else
+	{
+		itemList = it.value();
+		itemList->append(item);
+	}
+}
+
+void view_plugin_drawer::InsertMapLinkDBMeasure(QString key, GraphicsItem *item)
+{
+	QList<GraphicsItem *> *itemList;
+
+	QMap<QString, QList<GraphicsItem *>*>::iterator it = m_mapLinkDBMeasure.find(key);
+	if (it == m_mapLinkDBMeasure.constEnd())
+	{
+		itemList = new QList<GraphicsItem *>;
+		itemList->append(item);
+		m_mapLinkDBMeasure.insert(key, itemList);
 	}
 	else
 	{
@@ -201,37 +220,83 @@ void view_plugin_drawer::InsertMapLinkDB(QString key, GraphicsItem *item)
 
 void view_plugin_drawer::InitDrawobj()
 {
-	int iVal;
-	SString sVal;
 	SString sql;
-	SRecordset rs;
-
 	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
-	for (it = m_mapLinkDB.constBegin(); it != m_mapLinkDB.constEnd(); it++)
+	for (it = m_mapLinkDBState.constBegin(); it != m_mapLinkDBState.constEnd(); it++)
 	{
 		QStringList l = it.key().split("::");
 		QStringList ll = l.at(1).split(",");
-		if (l.at(0) == "t_oe_element_state")
-		{
-			sql.sprintf("select current_val from t_oe_element_state where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
-				ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
-			iVal = DB->SelectIntoI(sql);
+		sql.sprintf("select current_val from %s where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
+			l.at(0).toStdString().data(),ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
+		int iVal = DB->SelectIntoI(sql);
 
-			QList<GraphicsItem *> *listItem = it.value();
-			for (int i = 0; i < listItem->count(); i++)
-			{
-				GraphicsItem *item = listItem->at(i);
-				item->SetShowState(iVal);
-				item->SetStyleFromState(item->GetShowState());
-			}
-		}
-		else if (l.at(0) == "t_oe_element_general")
+		QList<GraphicsItem *> *listItem = it.value();
+		for (int i = 0; i < listItem->count(); i++)
 		{
-			sql.sprintf("select current_val from t_oe_element_general where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
-				ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
-			sVal = DB->SelectInto(sql);
+			GraphicsItem *item = listItem->at(i);
+			if (item->GetShowState() == -1) //如为数据库初始状态
+				item->SetShowState(iVal);
+			item->SetStyleFromState(item->GetShowState());
 		}
-		else
-			continue;
+	}
+
+	for (it = m_mapLinkDBMeasure.constBegin(); it != m_mapLinkDBMeasure.constEnd(); it++)
+	{
+		QStringList l = it.key().split("::");
+		QStringList ll = l.at(1).split(",");
+		sql.sprintf("select current_val from %s where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
+			l.at(0).toStdString().data(),ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
+		SString sVal = DB->SelectInto(sql);
+
+		QList<GraphicsItem *> *listItem = it.value();
+		for (int i = 0; i < listItem->count(); i++)
+		{
+			GraphicsItem *item = listItem->at(i);
+			if (item->GetName() == "文字图元")
+				((GraphicsTextItem*)item)->SetText(sVal.data());
+		}
+	}
+}
+
+void view_plugin_drawer::RefreshStateFromDB()
+{
+	SString sql;
+	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
+	for (it = m_mapLinkDBState.constBegin(); it != m_mapLinkDBState.constEnd(); it++)
+	{
+		QStringList l = it.key().split("::");
+		QStringList ll = l.at(1).split(",");
+		sql.sprintf("select current_val from %s where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
+			l.at(0).toStdString().data(),ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
+		int iVal = DB->SelectIntoI(sql);
+
+		QList<GraphicsItem *> *listItem = it.value();
+		for (int i = 0; i < listItem->count(); i++)
+		{
+			GraphicsItem *item = listItem->at(i);
+			item->SetShowState(iVal);
+		}
+	}
+}
+
+void view_plugin_drawer::RefreshMeasureFromDB()
+{
+	SString sql;
+	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
+	for (it = m_mapLinkDBMeasure.constBegin(); it != m_mapLinkDBMeasure.constEnd(); it++)
+	{
+		QStringList l = it.key().split("::");
+		QStringList ll = l.at(1).split(",");
+		sql.sprintf("select current_val from %s where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
+			l.at(0).toStdString().data(),ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
+		SString sVal = DB->SelectInto(sql);
+
+		QList<GraphicsItem *> *listItem = it.value();
+		for (int i = 0; i < listItem->count(); i++)
+		{
+			GraphicsItem *item = listItem->at(i);
+			if (item->GetName() == "文字图元")
+				((GraphicsTextItem*)item)->SetText(sVal.data());
+		}
 	}
 }

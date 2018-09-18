@@ -26,6 +26,10 @@
 #include "drawscene.h"
 #include "mdb_def.h"
 
+#define LINKDB_NONE			0
+#define LINKDB_STATE		1
+#define LINKDB_MEASURE		2
+
 struct stuOeElementStateQueue
 {
 	stuOeElementStateQueue()
@@ -81,8 +85,11 @@ public:
 	//代理消息处理接口，由派生类实现，处理函数必须尽量短小，快速返回
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
 
-	void InsertMapLinkDB(QString key, GraphicsItem *item);
 	void InitDrawobj();
+	void RefreshStateFromDB();
+	void RefreshMeasureFromDB();
+	void InsertMapLinkDBState(QString key, GraphicsItem *item);
+	void InsertMapLinkDBMeasure(QString key, GraphicsItem *item);
 
 private:
 	Ui::view_plugin_drawer ui;
@@ -95,7 +102,8 @@ private:
 public:
 	QMutex m_queMutex;
 	QQueue<stuOeElementStateQueue> m_qOeElementState;
-	QMap<QString, QList<GraphicsItem *>*> m_mapLinkDB;
+	QMap<QString, QList<GraphicsItem *>*> m_mapLinkDBState;
+	QMap<QString, QList<GraphicsItem *>*> m_mapLinkDBMeasure;
 
 private:
 	void RegisterMdbTrigger()

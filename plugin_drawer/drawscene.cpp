@@ -177,6 +177,7 @@ void DrawScene::SlotSelectionChanged()
 void DrawScene::SlotSwapIntervalTimer()
 {
 	m_bSwap = !m_bSwap;
+	m_app->RefreshMeasureFromDB();
 
 	m_pView->viewport()->update();
 }

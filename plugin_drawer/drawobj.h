@@ -21,6 +21,7 @@ public:
 		m_pen.setJoinStyle(Qt::RoundJoin);
 		m_pen.setCapStyle(Qt::RoundCap);
 		m_brush = QBrush(Qt::NoBrush);
+		m_iShowType = 0;
 		m_iShowState = -1;
 		m_iRealState = -1;
 		m_isFlash = false;
@@ -37,6 +38,7 @@ public:
 	qreal  GetWidth() const { return m_width ; }
 	qreal  GetHeight() const {return m_height;}
 	QRectF GetRect() const { return m_localRect; }
+	qint32 GetShowType() { return m_iShowType; }
 	qint32  GetShowState() { return m_iShowState; }
 	qint32 GetRealState() { return m_iRealState; }
 	QString GetLinkDB() { return m_sLinkDB; }
@@ -53,6 +55,7 @@ public:
 	void SetWidth(qreal width) { m_width = width; UpdateCoordinate(); }
 	void SetHeight(qreal height) { m_height = height; UpdateCoordinate(); }
 	void SetRect(QRectF rect) { m_localRect = rect; }
+	void SetShowType(qint32 type) { m_iShowType = type; }
 	void SetShowState(qint32 state) { m_iShowState = state; }
 	void SetLinkDB(QString link) { m_sLinkDB = link; }
 	void SetRealState(qint32 state) { m_iRealState = state; }
@@ -65,6 +68,7 @@ public:
 	qreal  m_width;
 	qreal  m_height;
 	QRectF m_localRect;
+	qint32 m_iShowType;
 	qint32 m_iShowState;
 	qint32 m_iRealState;
 	QString m_sLinkDB;

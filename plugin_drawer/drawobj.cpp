@@ -76,6 +76,7 @@ bool GraphicsItem::ReadBaseAttributes(QXmlStreamReader *xml)
 	m_brush.setColor(color);
 	m_brush.setStyle((Qt::BrushStyle)xml->attributes().value("brushStyle").toString().toInt());
 
+	m_iShowType = xml->attributes().value(tr("showtype")).toString().toInt();
 	m_iShowState = xml->attributes().value(tr("showst")).toString().toInt();
 	m_sLinkDB = xml->attributes().value(tr("linkdb")).toString();
 	m_sLinkScene = xml->attributes().value(tr("linkscene")).toString();
@@ -101,7 +102,8 @@ void GraphicsItem::SetStyleFromState(int state)
 	QColor color;
 	QString style = it.value();
 	QList<QString> l = style.split(":").at(1).split("|");
-	if (m_sName == "多边形图元" || m_sName == "圆角矩形图元" || m_sName == "矩形图元" || m_sName == "圆形图元" || m_sName == "椭圆形图元")
+	if (m_sName == "多边形图元" || m_sName == "圆角矩形图元" || m_sName == "矩形图元" || m_sName == "圆形图元" || m_sName == "椭圆形图元" ||
+		m_sName == "三角形图元" || m_sName == "菱形图元")
 	{
 		color.setNamedColor(l.at(0).split(",").at(0));
 		color.setAlpha(l.at(0).split(",").at(1).toInt());

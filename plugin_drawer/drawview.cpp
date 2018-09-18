@@ -306,8 +306,10 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 			((GraphicsItem*)item)->SetScene((DrawScene*)m_pScene);
 			scene()->addItem(item);
 
-			if (!item->GetLinkDB().isEmpty())
-				m_app->InsertMapLinkDB(item->GetLinkDB(),(GraphicsItem*)item);
+			if (item->GetShowType() == LINKDB_STATE && !item->GetLinkDB().isEmpty())
+				m_app->InsertMapLinkDBState(item->GetLinkDB(),(GraphicsItem*)item);
+			else if (item->GetShowType() == LINKDB_MEASURE && !item->GetLinkDB().isEmpty())
+				m_app->InsertMapLinkDBMeasure(item->GetLinkDB(),(GraphicsItem*)item);
 		}
 		else if (item)
 			delete item;
@@ -359,8 +361,10 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 			scene()->addItem(item);
 			items.append(item);
 
-			if (!item->GetLinkDB().isEmpty())
-				m_app->InsertMapLinkDB(item->GetLinkDB(),(GraphicsItem*)item);
+			if (item->GetShowType() == LINKDB_STATE && !item->GetLinkDB().isEmpty())
+				m_app->InsertMapLinkDBState(item->GetLinkDB(),(GraphicsItem*)item);
+			else if (item->GetShowType() == LINKDB_MEASURE && !item->GetLinkDB().isEmpty())
+				m_app->InsertMapLinkDBMeasure(item->GetLinkDB(),(GraphicsItem*)item);
 		}
 		else if (item)
 			delete item;
