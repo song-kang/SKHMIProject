@@ -344,6 +344,10 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 			item = new GraphicsPolygonLineItem();
 		else if (xml->name() == tr("line"))
 			item = new GraphicsLineItem();
+		else if (xml->name() == tr("triangle"))
+			item = new GraphicsTriangleItem(QRect(0,0,0,0));
+		else if (xml->name() == tr("rhombus"))
+			item = new GraphicsRhombusItem(QRect(0,0,0,0));
 		else if (xml->name() == tr("group"))
 			item = qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(xml));
 		else
@@ -388,6 +392,10 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 			item = new GraphicsPolygonLineItem();
 		else if (xml->name() == tr("line"))
 			item = new GraphicsLineItem();
+		else if (xml->name() == tr("triangle"))
+			item = new GraphicsTriangleItem(QRect(0,0,0,0));
+		else if (xml->name() == tr("rhombus"))
+			item = new GraphicsTriangleItem(QRect(0,0,0,0));
 		else if (xml->name() == tr("group"))
 			item = qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(xml));
 		else

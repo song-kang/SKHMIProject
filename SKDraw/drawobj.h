@@ -406,6 +406,46 @@ public:
 
 };
 
+///////////////////////// GraphicsTriangleItem /////////////////////////
+class GraphicsTriangleItem : public GraphicsRectItem
+{
+public:
+	GraphicsTriangleItem(const QRect &rect, GraphicsRectItem * parent = 0);
+	~GraphicsTriangleItem();
+
+	QRectF GetLocalRect() const { return m_localRect; }
+
+public:
+	virtual QGraphicsItem *Duplicate();
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	QPolygonF m_points;
+};
+
+///////////////////////// GraphicsTriangleItem /////////////////////////
+class GraphicsRhombusItem : public GraphicsRectItem
+{
+public:
+	GraphicsRhombusItem(const QRect &rect, GraphicsRectItem * parent = 0);
+	~GraphicsRhombusItem();
+
+	QRectF GetLocalRect() const { return m_localRect; }
+
+public:
+	virtual QGraphicsItem *Duplicate();
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	QPolygonF m_points;
+};
+
 ///////////////////////// GraphicsEllipseItem /////////////////////////
 class GraphicsEllipseItem :public GraphicsRectItem
 {

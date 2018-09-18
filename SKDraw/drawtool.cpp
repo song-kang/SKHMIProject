@@ -21,6 +21,8 @@ static DrawRectTool		c_ellipseTool(eDrawEllipse);
 static DrawRectTool		c_circleTool(eDrawCircle);
 static DrawRectTool		c_textTool(eDrawText);
 static DrawRectTool		c_pictureTool(eDrawPicture);
+static DrawRectTool		c_triangleTool(eDrawTriangle);
+static DrawRectTool		c_rhombusTool(eDrawRhombus);
 
 enum SelectMode
 {
@@ -400,6 +402,10 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 			m_pItem = new GraphicsEllipseItem(QRect(1, 1, 1, 1), true);
 		else if (c_drawShape == eDrawText)
 			m_pItem = new GraphicsTextItem(QRect(0, 0, 80, 25));
+		else if (c_drawShape == eDrawTriangle)
+			m_pItem = new GraphicsTriangleItem(QRect(1, 1, 1, 1));
+		else if (c_drawShape == eDrawRhombus)
+			m_pItem = new GraphicsRhombusItem(QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawPicture)
 		{
 			QString f = QFileDialog::getOpenFileName(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png)"));

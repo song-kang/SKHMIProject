@@ -19,6 +19,8 @@ enum DrawShape
 	eDrawPolyline,
 	eDrawText,
 	eDrawPicture,
+	eDrawTriangle,
+	eDrawRhombus,
 };
 
 ///////////////////////// DrawTool ////////////////////////

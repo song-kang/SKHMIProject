@@ -271,7 +271,7 @@ bool PropertyEditor::IsVisibleProperty(QString property)
 		return true;
 
 	QString shape = ((GraphicsItem*)m_pObject)->GetName();
-	if (shape == "多边形图元")
+	if (shape == "多边形图元" || shape == "矩形图元" || shape == "圆形图元" || shape == "椭圆形图元" || shape == "三角形图元" || shape == "菱形图元")
 	{
 		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle")
 			return true;
@@ -288,27 +288,6 @@ bool PropertyEditor::IsVisibleProperty(QString property)
 	else if (shape == "圆角矩形图元")
 	{
 		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle" || property == "RoundRadius")
-			return true;
-		else
-			return false;
-	}
-	else if (shape == "矩形图元")
-	{
-		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle")
-			return true;
-		else
-			return false;
-	}
-	else if (shape == "圆形图元")
-	{
-		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle")
-			return true;
-		else
-			return false;
-	}
-	else if (shape == "椭圆形图元")
-	{
-		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle")
 			return true;
 		else
 			return false;

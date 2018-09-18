@@ -267,6 +267,8 @@ void SKDraw::InitSlot()
 	connect(ui.actionPolygon,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionText,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 	connect(ui.actionPicture,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionTriangle,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
+	connect(ui.actionRhombus,SIGNAL(triggered()),this,SLOT(SlotAddShape()));
 
 	connect(ui.actionLeft,SIGNAL(triggered()),this,SLOT(SlotAlign()));
 	connect(ui.actionRight,SIGNAL(triggered()),this,SLOT(SlotAlign()));
@@ -559,6 +561,10 @@ void SKDraw::SlotAddShape()
 			DrawTool::c_drawShape = eDrawText;
 		else if (sender() == ui.actionPicture)
 			DrawTool::c_drawShape = eDrawPicture;
+		else if (sender() == ui.actionTriangle)
+			DrawTool::c_drawShape = eDrawTriangle;
+		else if (sender() == ui.actionRhombus)
+			DrawTool::c_drawShape = eDrawRhombus;
 
 		m_pView->setDragMode(QGraphicsView::NoDrag);
 	}

@@ -955,6 +955,135 @@ bool GraphicsRectItem::LoadFromXml(QXmlStreamReader *xml)
 	return true;
 }
 
+///////////////////////// GraphicsTriangleItem /////////////////////////
+GraphicsTriangleItem::GraphicsTriangleItem(const QRect &rect, GraphicsRectItem *parent)
+	:GraphicsRectItem(rect, parent)
+{
+	SetName("三角形图元");
+}
+
+GraphicsTriangleItem::~GraphicsTriangleItem()
+{
+
+}
+
+QGraphicsItem* GraphicsTriangleItem::Duplicate()
+{
+	GraphicsTriangleItem * item = new GraphicsTriangleItem(m_localRect.toRect());
+
+	item->m_width = GetWidth();
+	item->m_height = GetHeight();
+	item->SetScene(GetScene());
+	item->setPos(pos().x(), pos().y());
+	item->SetPen(GetPen());
+	item->SetBrush(GetBrush());
+	item->setTransform(transform());
+	item->setTransformOriginPoint(transformOriginPoint());
+	item->setRotation(rotation());
+	item->setScale(scale());
+	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
+	item->UpdateCoordinate();
+
+	return item;
+}
+
+void GraphicsTriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	painter->setPen(GetPen());
+	painter->setBrush(GetBrush());
+
+	m_points.clear();
+	m_points.append(QPointF(m_localRect.x()+m_localRect.width()/2,m_localRect.y()));
+	m_points.append(QPointF(m_localRect.x(),m_localRect.y()+m_localRect.height()));
+	m_points.append(QPointF(m_localRect.x()+m_localRect.width(),m_localRect.y()+m_localRect.height()));
+	painter->drawPolygon(m_points);
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
+}
+
+bool GraphicsTriangleItem::SaveToXml(QXmlStreamWriter *xml)
+{
+	xml->writeStartElement(tr("triangle"));
+	WriteBaseAttributes(xml);
+	xml->writeEndElement();
+	return true;
+}
+
+bool GraphicsTriangleItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	ReadBaseAttributes(xml);
+	UpdateCoordinate();
+	xml->skipCurrentElement();
+	return true;
+}
+
+///////////////////////// GraphicsRhombusItem /////////////////////////
+GraphicsRhombusItem::GraphicsRhombusItem(const QRect &rect, GraphicsRectItem *parent)
+	:GraphicsRectItem(rect, parent)
+{
+	SetName("菱形图元");
+}
+
+GraphicsRhombusItem::~GraphicsRhombusItem()
+{
+
+}
+
+QGraphicsItem* GraphicsRhombusItem::Duplicate()
+{
+	GraphicsRhombusItem * item = new GraphicsRhombusItem(m_localRect.toRect());
+
+	item->m_width = GetWidth();
+	item->m_height = GetHeight();
+	item->SetScene(GetScene());
+	item->setPos(pos().x(), pos().y());
+	item->SetPen(GetPen());
+	item->SetBrush(GetBrush());
+	item->setTransform(transform());
+	item->setTransformOriginPoint(transformOriginPoint());
+	item->setRotation(rotation());
+	item->setScale(scale());
+	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
+	item->UpdateCoordinate();
+
+	return item;
+}
+
+void GraphicsRhombusItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	painter->setPen(GetPen());
+	painter->setBrush(GetBrush());
+
+	m_points.clear();
+	m_points.append(QPointF(m_localRect.x()+m_localRect.width()/2,m_localRect.y()));
+	m_points.append(QPointF(m_localRect.x(),m_localRect.y()+m_localRect.height()/2));
+	m_points.append(QPointF(m_localRect.x()+m_localRect.width()/2,m_localRect.y()+m_localRect.height()));
+	m_points.append(QPointF(m_localRect.x()+m_localRect.width(),m_localRect.y()+m_localRect.height()/2));
+	painter->drawPolygon(m_points);
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
+}
+
+bool GraphicsRhombusItem::SaveToXml(QXmlStreamWriter *xml)
+{
+	xml->writeStartElement(tr("rhombus"));
+	WriteBaseAttributes(xml);
+	xml->writeEndElement();
+	return true;
+}
+
+bool GraphicsRhombusItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	ReadBaseAttributes(xml);
+	UpdateCoordinate();
+	xml->skipCurrentElement();
+	return true;
+}
+
 ///////////////////////// GraphicsEllipseItem /////////////////////////
 GraphicsEllipseItem::GraphicsEllipseItem(const QRect &rect, bool isCircle, QGraphicsItem *parent)
 	:GraphicsRectItem(rect, parent)

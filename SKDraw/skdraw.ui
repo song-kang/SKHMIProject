@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>903</width>
-    <height>528</height>
+    <width>976</width>
+    <height>561</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>903</width>
+     <width>976</width>
      <height>23</height>
     </rect>
    </property>
@@ -86,6 +86,8 @@
      <addaction name="actionRoundRect"/>
      <addaction name="actionCircle"/>
      <addaction name="actionEllipse"/>
+     <addaction name="actionTriangle"/>
+     <addaction name="actionRhombus"/>
      <addaction name="separator"/>
      <addaction name="actionText"/>
      <addaction name="actionPicture"/>
@@ -241,6 +243,8 @@
    <addaction name="actionRoundRect"/>
    <addaction name="actionCircle"/>
    <addaction name="actionEllipse"/>
+   <addaction name="actionTriangle"/>
+   <addaction name="actionRhombus"/>
    <addaction name="separator"/>
    <addaction name="actionText"/>
    <addaction name="actionPicture"/>
@@ -321,7 +325,7 @@
           <x>0</x>
           <y>0</y>
           <width>256</width>
-          <height>169</height>
+          <height>199</height>
          </rect>
         </property>
         <attribute name="label">
@@ -854,6 +858,30 @@
    </property>
    <property name="text">
     <string>数据关联</string>
+   </property>
+  </action>
+  <action name="actionTriangle">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/triangle</normaloff>:/images/triangle</iconset>
+   </property>
+   <property name="text">
+    <string>三角形</string>
+   </property>
+   <property name="toolTip">
+    <string>三角形</string>
+   </property>
+  </action>
+  <action name="actionRhombus">
+   <property name="icon">
+    <iconset resource="skdraw.qrc">
+     <normaloff>:/images/rhombus</normaloff>:/images/rhombus</iconset>
+   </property>
+   <property name="text">
+    <string>菱形</string>
+   </property>
+   <property name="toolTip">
+    <string>菱形</string>
    </property>
   </action>
  </widget>

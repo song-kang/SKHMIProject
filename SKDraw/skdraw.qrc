@@ -73,5 +73,7 @@
         <file alias="device">Resources/images/device.png</file>
         <file alias="ok">Resources/images/ok.png</file>
         <file alias="reorder">Resources/images/reorder.png</file>
+        <file alias="rhombus">Resources/images/rhombus.png</file>
+        <file alias="triangle">Resources/images/triangle.png</file>
     </qresource>
 </RCC>
