@@ -40,9 +40,19 @@ void DrawView::SlotScrollBarValueChanged(int pos)
 void DrawView::wheelEvent(QWheelEvent *event)
 {
 	if (event->delta() > 0)
-		ZoomIn();
+	{
+		if (((DrawScene*)m_pScene)->GetPressShift())
+			ZoomIn();
+		else
+			Translate(QPointF(0, 20));
+	}
 	else
-		ZoomOut();
+	{
+		if (((DrawScene*)m_pScene)->GetPressShift())
+			ZoomOut();
+		else
+			Translate(QPointF(0, -20));
+	}
 }
 
 void DrawView::resizeEvent(QResizeEvent *event)
@@ -73,6 +83,8 @@ void DrawView::keyPressEvent(QKeyEvent *event)
 	case Qt::Key_Minus:
 		ZoomOut();
 		break;
+	case Qt::Key_Shift:
+		((DrawScene*)m_pScene)->SetPressShift(true);
 	}
 
 	QGraphicsView::keyPressEvent(event);

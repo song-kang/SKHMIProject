@@ -274,6 +274,36 @@ bool DrawView::SaveFile(const QString fileName)
 	return true;
 }
 
+bool DrawView::Load(char *content)
+{
+	QXmlStreamReader xml(content);
+	if (xml.readNextStartElement())
+	{
+		if (xml.name() == tr("canvas"))
+		{
+			QColor color;
+			color.setNamedColor(xml.attributes().value(tr("color")).toString());
+			color.setAlpha(xml.attributes().value(tr("alpha")).toString().toInt());
+			int width = xml.attributes().value(tr("width")).toString().toInt();
+			int height = xml.attributes().value(tr("height")).toString().toInt();
+			((DrawScene*)m_pScene)->GetGridTool()->SetBackColor(color);
+			((DrawScene*)m_pScene)->SetWidth(width);
+			((DrawScene*)m_pScene)->SetHeight(height);
+			scene()->setSceneRect(0,0,width,height);
+			if (!LoadCanvas(&xml))
+				return false;
+
+			m_app->GetPropertyEditor()->Clear();
+			m_app->GetPropertyEditor()->SetBackground();
+		}
+	}
+
+	m_isUntitled = false;
+	m_app->GetApp()->SetWindowTitle("SKDraw - " + tr("%1").arg(m_app->GetCurrentTreeWidgetItem()->text(0)));
+
+	return true;
+}
+
 bool DrawView::LoadFile(const QString fileName)
 {
 	if (fileName == m_sFileName)

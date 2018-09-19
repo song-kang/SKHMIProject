@@ -22,6 +22,7 @@ public:
 	bool SaveAs();
 	bool SaveFile(const QString fileName);
 	bool LoadFile(const QString fileName);
+	bool Load(char *content);
 	void SetSymbolName(QString name) { m_sSymbolName = name; }
 	void SetSymbolCursor(QCursor cursor) { m_cursorSymbol = cursor; }
 

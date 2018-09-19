@@ -8,6 +8,7 @@
 #include "drawscene.h"
 #include "drawview.h"
 #include "propertyeditor.h"
+#include "db.h"
 
 class SKDraw : public QMainWindow
 {
@@ -19,6 +20,7 @@ public:
 
 	void InitSlot();
 	void Start();
+	void StartTreeWidgetScene(QList<CWnd*> wnds, QTreeWidgetItem *treeItem);
 
 	void SetApp(SKBaseWidget *app) { m_app = app; }
 	PropertyEditor* GetPropertyEditor() { return m_pPropertyEditor; }
@@ -29,12 +31,21 @@ public:
 	QPen GetPen() { return m_pen; }
 	QBrush GetBrush() { return m_brush; }
 	bool GetDBState() { return m_bDBSt; }
+	QTreeWidgetItem *GetCurrentTreeWidgetItem() { return m_pCurrentTreeWidgetItem; }
+	QTreeWidget *GetWndTreeWidget() { return ui.treeWidgetSence; }
+	QList<CWnd*> &GetListWnd() { return m_lstWnd; }
 
 public:
 	void UpdateActions();
+	CWnd* GetWndFromSn(int sn, QList<CWnd*> list);
 
 public:
 	SKBaseWidget *m_pLinkDataWidget;
+	SKBaseWidget *m_pWndAddWidget;
+	SKBaseWidget *m_pWndAttrWidget;
+
+protected:
+	virtual bool eventFilter(QObject *obj,QEvent *e);
 
 private:
 	Ui::SKDrawClass ui;
@@ -65,10 +76,15 @@ private:
 	bool m_isInitSymbols;
 	bool m_bDBSt;
 
+	QList<CWnd*> m_lstWnd;
+	QMenu m_menuWnd;
+	QTreeWidgetItem *m_pCurrentTreeWidgetItem;
+
 private:
 	void Init();
 	void InitUi();
 	void InitDB();
+	void InitDBWnd(CWnd *pWnd);
 	void InitSymbols();
 	DrawView* CreateView();
 
@@ -78,12 +94,12 @@ signals:
 public slots:
 	void SlotKeyEscape();
 
-private slots:
+public slots:
 	void SlotNew();
 	void SlotOpen();
 	void SlotSave();
 	void SlotSaveas();
-	void SlotClose();
+	bool SlotClose();
 	void SlotExit();
 
 	void SlotCopy();
@@ -138,6 +154,10 @@ private slots:
 	void SlotSymbolsDQClicked(QListWidgetItem *item);
 	void SlotLinkData();
 	void SlotLinkDataClose();
+
+	void SlotMenuWnd(QAction *action);
+	void SlotWndAddClose();
+	void SlotTreeItemDoubleClicked(QTreeWidgetItem *treeItem, int column);
 
 };
 

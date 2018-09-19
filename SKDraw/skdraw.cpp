@@ -2,6 +2,7 @@
 #include "commands.h"
 #include "shaprelate.h"
 #include "sk_database.h"
+#include "wndadd.h"
 
 SKDraw::SKDraw(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -15,7 +16,11 @@ SKDraw::SKDraw(QWidget *parent, Qt::WFlags flags)
 
 SKDraw::~SKDraw()
 {
-
+	foreach (CWnd *p, m_lstWnd)
+	{
+		if (p)
+			delete p;
+	}
 }
 
 void SKDraw::Init()
@@ -26,6 +31,8 @@ void SKDraw::Init()
 	m_bDBSt = false;
 	m_isInitSymbols = false;
 	m_pLinkDataWidget = NULL;
+	m_pWndAddWidget = NULL;
+	m_pWndAttrWidget = NULL;
 	m_pUndoStack = new QUndoStack(this);
 	m_pEditMenu = new QMenu(this);
 	m_pEditMenu->addAction(ui.actionSelect);
@@ -186,6 +193,8 @@ void SKDraw::Init()
 		QFile::copy(":/images/fileWarn", path);
 
 	UpdateActions();
+
+	ui.treeWidgetSence->installEventFilter(this);
 }
 
 void SKDraw::InitUi()
@@ -232,6 +241,47 @@ void SKDraw::InitDB()
 
 	m_bDBSt = true;
 	ui.treeWidgetSence->setHeaderLabel(tr("连接数据库成功"));
+
+	InitDBWnd(NULL);
+}
+
+void SKDraw::InitDBWnd(CWnd *pWnd)
+{
+	SString sql;
+	SRecordset rs;
+	if (pWnd)
+	{
+		sql.sprintf("select wnd_sn,p_wnd_sn,wnd_name,create_author,create_time,modify_author,modify_time,wnd_type "
+			"from t_ssp_uicfg_wnd where p_wnd_sn=%d order by wnd_sn asc",pWnd->GetWndSn());
+	}
+	else
+	{
+		sql.sprintf("select wnd_sn,p_wnd_sn,wnd_name,create_author,create_time,modify_author,modify_time,wnd_type "
+			"from t_ssp_uicfg_wnd where p_wnd_sn=%d order by wnd_sn asc",0);
+	}
+	int cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		for (int i = 0; i < cnt; i++)
+		{
+			CWnd *wnd = new CWnd(pWnd);
+			wnd->SetWndSn(rs.GetValue(i,0).toInt());
+			wnd->SetPWndSn(rs.GetValue(i,1).toInt());
+			wnd->SetWndName(rs.GetValue(i,2).data());
+			wnd->SetCreateAuth(rs.GetValue(i,3).data());
+			wnd->SetCreateTime(rs.GetValue(i,4).toInt());
+			wnd->SetModifyAuth(rs.GetValue(i,5).data());
+			wnd->SetModifyTime(rs.GetValue(i,6).toInt());
+			wnd->SetWndType(rs.GetValue(i,7).toInt());
+
+			if (pWnd)
+				pWnd->m_lstChilds.append(wnd);
+			else
+				m_lstWnd.append(wnd);
+
+			InitDBWnd(wnd);
+		}
+	}
 }
 
 void SKDraw::InitSlot()
@@ -314,6 +364,9 @@ void SKDraw::InitSlot()
 	connect(m_app, SIGNAL(SigReleaseKeyShift()), this, SLOT(SlotReleaseKeyShift()));
 	connect(m_app, SIGNAL(SigKeyEscape()), this, SLOT(SlotKeyEscape()));
 	//connect(m_app, SIGNAL(SigMouseRightButton(QPoint)), this, SLOT(SlotMouseRightButton(QPoint)));
+
+	connect(&m_menuWnd,SIGNAL(triggered(QAction*)),this,SLOT(SlotMenuWnd(QAction*)));
+	connect(ui.treeWidgetSence,SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),this,SLOT(SlotTreeItemDoubleClicked(QTreeWidgetItem *,int)));
 }
 
 void SKDraw::InitSymbols()
@@ -350,7 +403,77 @@ void SKDraw::InitSymbols()
 
 void SKDraw::Start()
 {
-	//SlotNew();
+	StartTreeWidgetScene(m_lstWnd, NULL);
+}
+
+void SKDraw::StartTreeWidgetScene(QList<CWnd*> wnds, QTreeWidgetItem *treeItem)
+{
+	QTreeWidgetItem *item = NULL;
+
+	foreach (CWnd *p, wnds)
+	{
+		if (p->GetPWndSn() == 0)
+			item = new QTreeWidgetItem(ui.treeWidgetSence,p->GetWndType());
+		else
+			item = new QTreeWidgetItem(treeItem,p->GetWndType());
+		item->setData(0, Qt::UserRole,p->GetWndSn());
+		item->setText(0, p->GetWndName());
+		if (item->type() == WND_TYPE_FOLDER)
+			item->setIcon(0, QIcon(":/images/open"));
+		else if (item->type() == WND_TYPE_SVG)
+			item->setIcon(0, QIcon(":/images/logo"));
+
+		if (p->m_lstChilds.count() > 0)
+			StartTreeWidgetScene(p->m_lstChilds,item);
+	}
+}
+
+bool SKDraw::eventFilter(QObject *obj,QEvent *e)
+{
+	QTreeWidgetItem *item = NULL;
+	if (obj && obj == ui.treeWidgetSence)
+	{
+		if (e->type() == QEvent::ContextMenu)
+		{
+			m_menuWnd.clear();
+			QContextMenuEvent *m_e = (QContextMenuEvent*)e;
+			QPoint point(m_e->pos().x(),m_e->pos().y() - ui.treeWidgetSence->header()->height());
+
+			item = (QTreeWidgetItem *)ui.treeWidgetSence->itemAt(point);
+			if (item)
+			{
+				m_pCurrentTreeWidgetItem = item;
+				if (item->type() == WND_TYPE_FOLDER)
+				{
+					m_menuWnd.addAction(QIcon(":/images/logo"),tr("添加场景(&E)"));
+					m_menuWnd.addAction(QIcon(":/images/open"),tr("添加文件夹(&O)"));
+					m_menuWnd.addSeparator();
+					m_menuWnd.addAction(QIcon(":/images/delete"),tr("删除文件夹(&D)"));
+					m_menuWnd.popup(m_e->globalPos());
+				}
+				else if (item->type() == WND_TYPE_SVG)
+				{
+					m_menuWnd.addAction(QIcon(":/images/logo"),tr("添加场景(&E)"));
+					m_menuWnd.addAction(QIcon(":/images/reorder"),tr("场景属性(&A)"));
+					m_menuWnd.addSeparator();
+					m_menuWnd.addAction(QIcon(":/images/undo"),tr("导入场景文件(&I)"));
+					m_menuWnd.addAction(QIcon(":/images/redo"),tr("导出场景文件(&R)"));
+					m_menuWnd.addSeparator();
+					m_menuWnd.addAction(QIcon(":/images/delete"),tr("删除场景(&D)"));
+					m_menuWnd.popup(m_e->globalPos());
+				}
+			}
+			else 
+			{
+				m_pCurrentTreeWidgetItem = NULL;
+				m_menuWnd.addAction(QIcon(":/images/logo"),tr("添加场景(&E)"));
+				m_menuWnd.addAction(QIcon(":/images/open"),tr("添加文件夹(&O)"));
+				m_menuWnd.popup(m_e->globalPos());
+			}
+		}
+	}
+
+	return QWidget::eventFilter(obj,e);
 }
 
 void SKDraw::SlotNew()
@@ -394,11 +517,11 @@ void SKDraw::SlotSaveas()
 
 }
 
-void SKDraw::SlotClose()
+bool SKDraw::SlotClose()
 {
 	int ret = QMessageBox::question(NULL,tr("询问"),tr("确认关闭？"),tr("关闭"),tr("取消"));
 	if (ret != 0)
-		return;
+		return false;
 
 	m_isClose = true;
 	m_pPropertyEditor->Clear();
@@ -412,6 +535,8 @@ void SKDraw::SlotClose()
 	m_app->SetWindowTitle("SKDraw");
 
 	UpdateActions();
+
+	return true;
 }
 
 void SKDraw::SlotExit()
@@ -1027,9 +1152,179 @@ void SKDraw::SlotLinkData()
 	m_pLinkDataWidget->Show();
 }
 
+void SKDraw::SlotTreeItemDoubleClicked(QTreeWidgetItem *treeItem, int column)
+{
+	m_pCurrentTreeWidgetItem = treeItem;
+	CWnd *wnd = GetWndFromSn(treeItem->data(0, Qt::UserRole).toInt(), m_lstWnd);
+	if (wnd)
+	{
+		int len = 0;
+		unsigned char* buffer = NULL;
+		SString sWhere = SString::toFormat("wnd_sn=%d",wnd->GetWndSn());
+		DB->ReadLobToMem("t_ssp_uicfg_wnd","svg_file",sWhere,buffer,len);
+		if (buffer && len > 0)
+		{
+			if (m_pView && SlotClose() == false)
+				return;
+
+			SlotNew();
+			m_pView->Load((char*)buffer);
+			delete buffer;
+		}
+		else
+			QMessageBox::warning(NULL,tr("告警"),tr("无场景文件，无法导出"));
+	}
+	else
+		QMessageBox::warning(NULL,tr("告警"),tr("通过场景号[%1]未发现场景").arg(treeItem->data(0, Qt::UserRole).toInt()));
+}
+
 void SKDraw::SlotLinkDataClose()
 {
 	disconnect(m_pLinkDataWidget, SIGNAL(SigClose()), this, SLOT(SlotLinkDataClose()));
 	delete m_pLinkDataWidget;
 	m_pLinkDataWidget = NULL;
+}
+
+void SKDraw::SlotMenuWnd(QAction *action)
+{
+	if (action->text() == "添加场景(&E)" || action->text() == "添加文件夹(&O)")
+	{
+		if (!m_pWndAddWidget)
+		{
+			WndAdd *wgt = new WndAdd(this);
+			m_pWndAddWidget = new SKBaseWidget(NULL,wgt);
+			m_pWndAddWidget->SetWindowsFlagsDialog();
+			m_pWndAddWidget->SetWindowsModal();
+			if (action->text() == "添加场景(&E)")
+			{
+				wgt->SetType(WND_TYPE_SVG);
+				m_pWndAddWidget->SetWindowTitle("添加场景");
+#ifdef WIN32
+				m_pWndAddWidget->SetWindowIcon(QIcon(":/images/logo"));
+#else
+				m_pWndAddWidget->SetWindowIcon(":/images/logo");
+#endif
+			}
+			else if (action->text() == "添加文件夹(&O)")
+			{
+				wgt->SetType(WND_TYPE_FOLDER);
+				m_pWndAddWidget->SetWindowTitle("添加文件夹");
+#ifdef WIN32
+				m_pWndAddWidget->SetWindowIcon(QIcon(":/images/open"));
+#else
+				m_pWndAddWidget->SetWindowIcon(":/images/logo");
+#endif
+			}
+
+			m_pWndAddWidget->SetWindowFlags(0);
+			m_pWndAddWidget->SetWindowSize(400,100);
+			m_pWndAddWidget->SetIsDrag(true);
+			connect(m_pWndAddWidget, SIGNAL(SigClose()), this, SLOT(SlotWndAddClose()));
+		}
+
+		((WndAdd*)m_pWndAddWidget->GetCenterWidget())->Start();
+		m_pWndAddWidget->Show();
+	}
+	else if (action->text() == "删除文件夹(&D)" || action->text() == "删除场景(&D)")
+	{
+		int ret = QMessageBox::question(this, "询问", "此条目以下内容均会删除，请确认。",tr("确认"),tr("取消"));
+		if (ret == 0)
+		{
+			CWnd *wnd = GetWndFromSn(m_pCurrentTreeWidgetItem->data(0, Qt::UserRole).toInt(), m_lstWnd);
+			if (wnd)
+			{
+				wnd->RemoveDB();
+				if (wnd->m_pParent)
+					wnd->m_pParent->m_lstChilds.removeOne(wnd);
+				else
+					m_lstWnd.removeOne(wnd);
+				delete wnd;
+
+				delete m_pCurrentTreeWidgetItem;
+				m_pCurrentTreeWidgetItem = NULL;
+			}
+		}
+	}
+	else if (action->text() == "场景属性(&A)")
+	{
+	}
+	else if (action->text() == "导入场景文件(&I)")
+	{
+		QString fileName = QFileDialog::getOpenFileName(this, tr("打开"), NULL, "*.sdw");
+		if (!fileName.isEmpty()) 
+		{
+			QFile file(fileName);
+			if (!file.open(QIODevice::ReadOnly))
+			{
+				QMessageBox::warning(NULL,tr("告警"),tr("文件读模式打开失败"));
+				return;
+			}
+			int len = file.size();
+			QByteArray buffer = file.read(file.bytesAvailable());;
+			file.close();
+
+			CWnd *wnd = GetWndFromSn(m_pCurrentTreeWidgetItem->data(0, Qt::UserRole).toInt(), m_lstWnd);
+			if (wnd)
+			{
+				SString sWhere = SString::toFormat("wnd_sn=%d",wnd->GetWndSn());
+				if (!DB->UpdateLobFromMem("t_ssp_uicfg_wnd","svg_file",sWhere,(unsigned char*)buffer.data(),len))
+					QMessageBox::warning(NULL,tr("告警"),tr("导入失败"));
+				else
+					QMessageBox::information(NULL,tr("提示"),tr("导入成功"));
+			}
+		}
+	}
+	else if (action->text() == "导出场景文件(&R)")
+	{
+		CWnd *wnd = GetWndFromSn(m_pCurrentTreeWidgetItem->data(0, Qt::UserRole).toInt(), m_lstWnd);
+		if (wnd)
+		{
+			int len = 0;
+			unsigned char* buffer = NULL;
+			SString sWhere = SString::toFormat("wnd_sn=%d",wnd->GetWndSn());
+			DB->ReadLobToMem("t_ssp_uicfg_wnd","svg_file",sWhere,buffer,len);
+			if (buffer && len > 0)
+			{
+				QString filter = tr("场景文件(*.sdw)");
+				QString fileName = QFileDialog::getSaveFileName(this,tr("保存场景文件"),QString::null,filter);
+				if (!fileName.isEmpty())
+				{
+					QFile file(fileName);
+					if (!file.open(QIODevice::WriteOnly))
+					{
+						QMessageBox::warning(NULL,tr("告警"),tr("文件写模式打开失败"));
+						return;
+					}
+					qint64 length = file.write((char*)buffer,len);
+					file.close();
+					QMessageBox::information(NULL,tr("提示"),tr("导出成功"));
+				}
+			}
+			else
+				QMessageBox::warning(NULL,tr("告警"),tr("无场景文件，无法导出"));
+		}
+	}
+}
+
+void SKDraw::SlotWndAddClose()
+{
+	disconnect(m_pWndAddWidget, SIGNAL(SigClose()), this, SLOT(SlotWndAddClose()));
+	delete m_pWndAddWidget;
+	m_pWndAddWidget = NULL;
+}
+
+CWnd* SKDraw::GetWndFromSn(int sn, QList<CWnd*> list)
+{
+	CWnd *wnd = NULL;
+	foreach (wnd, list)
+	{
+		if (wnd->GetWndSn() == sn)
+			return wnd;
+
+		wnd = GetWndFromSn(sn, wnd->m_lstChilds);
+		if (wnd)
+			return wnd;
+	}
+
+	return NULL;
 }

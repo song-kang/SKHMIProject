@@ -81,6 +81,8 @@ view_plugin_drawer::~view_plugin_drawer()
 	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
 	for (it = m_mapLinkDBState.constBegin(); it != m_mapLinkDBState.constEnd(); it++)
 		delete it.value();
+	for (it = m_mapLinkDBMeasure.constBegin(); it != m_mapLinkDBMeasure.constEnd(); it++)
+		delete it.value();
 
 	while(!m_mdbThred->m_isQuit)
 	{
