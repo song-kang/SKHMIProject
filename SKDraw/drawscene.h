@@ -82,6 +82,9 @@ protected:
 	virtual void keyPressEvent(QKeyEvent *e);
 	virtual void keyReleaseEvent(QKeyEvent *e);
 
+public:
+	QPixmap m_picture;
+
 private:
 	GridTool *m_pGrid;
 	QGraphicsView *m_pView;

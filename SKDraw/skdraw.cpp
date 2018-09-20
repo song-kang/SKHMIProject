@@ -3,6 +3,7 @@
 #include "shaprelate.h"
 #include "sk_database.h"
 #include "wndadd.h"
+#include "dbpic.h"
 
 SKDraw::SKDraw(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -30,9 +31,11 @@ void SKDraw::Init()
 	m_isClose = true;
 	m_bDBSt = false;
 	m_isInitSymbols = false;
+	m_bExitPicture = false;
 	m_pLinkDataWidget = NULL;
 	m_pWndAddWidget = NULL;
 	m_pWndAttrWidget = NULL;
+	m_pDBPictureWidget = NULL;
 	m_pUndoStack = new QUndoStack(this);
 	m_pEditMenu = new QMenu(this);
 	m_pEditMenu->addAction(ui.actionSelect);
@@ -703,6 +706,9 @@ void SKDraw::SlotAddShape()
 	if (sender() != ui.actionSelect && sender() != ui.actionSelectArea && sender() != ui.actionRotate)
 		m_pScene->clearSelection();
 
+	if (sender() == ui.actionPicture)
+		LoadDBPicture();
+
 	m_pView->setCursor(Qt::ArrowCursor);
 	m_pView->SetSymbolName(QString::null);
 
@@ -942,6 +948,8 @@ void SKDraw::UpdateActions()
 	ui.actionPolyline->setEnabled(m_pScene);
 	ui.actionText->setEnabled(m_pScene);
 	ui.actionPicture->setEnabled(m_pScene);
+	ui.actionTriangle->setEnabled(m_pScene);
+	ui.actionRhombus->setEnabled(m_pScene);
 
 	ui.actionZoomin->setEnabled(m_pScene);
 	ui.actionZoomout->setEnabled(m_pScene);
@@ -1172,6 +1180,7 @@ void SKDraw::SlotKeyEscape()
 	m_pView->setDragMode(QGraphicsView::NoDrag);
 	m_pView->setCursor(Qt::ArrowCursor);
 	m_pView->SetSymbolName(QString::null);
+	SetExitPicture(false);
 
 	UpdateActions();
 }
@@ -1409,4 +1418,38 @@ CWnd* SKDraw::GetWndFromSn(int sn, QList<CWnd*> list)
 	}
 
 	return NULL;
+}
+
+void SKDraw::LoadDBPicture()
+{
+	if (!m_pDBPictureWidget)
+	{
+		DBPic *wgt = new DBPic(this);
+		m_pDBPictureWidget = new SKBaseWidget(NULL,wgt);
+		m_pDBPictureWidget->SetWindowsFlagsDialog();
+		m_pDBPictureWidget->SetWindowsModal();
+		m_pDBPictureWidget->SetWindowTitle("图片库");
+#ifdef WIN32
+		m_pDBPictureWidget->SetWindowIcon(QIcon(":/images/dblink"));
+#else
+		m_pDBPictureWidget->SetWindowIcon(":/images/dblink");
+#endif
+		m_pDBPictureWidget->SetWindowFlags(0);
+		m_pDBPictureWidget->SetWindowSize(800,600);
+		m_pDBPictureWidget->SetIsDrag(true);
+		connect(m_pDBPictureWidget, SIGNAL(SigClose()), this, SLOT(SlotDBPictureClose()));
+	}
+
+	((DBPic*)m_pDBPictureWidget->GetCenterWidget())->Start();
+	m_pDBPictureWidget->Show();
+}
+
+void SKDraw::SlotDBPictureClose()
+{
+	disconnect(m_pDBPictureWidget, SIGNAL(SigClose()), this, SLOT(SlotDBPictureClose()));
+	delete m_pDBPictureWidget;
+	m_pDBPictureWidget = NULL;
+
+	if (!GetExitPicture())
+		SlotKeyEscape();
 }

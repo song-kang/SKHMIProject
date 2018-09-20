@@ -1335,6 +1335,19 @@ bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsPictureItem /////////////////////////
+GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QPixmap picture, QGraphicsItem *parent)
+	:GraphicsRectItem(rect, parent),
+	m_picture(picture)
+{
+	m_width = m_picture.width();
+	m_height = m_picture.height();
+	m_localRect.setWidth(m_width);
+	m_localRect.setHeight(m_height);
+	m_initialRect = m_localRect;
+
+	SetName("Í¼ÏñÍ¼Ôª");
+}
+
 GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QString fileName, QGraphicsItem *parent)
 	:GraphicsRectItem(rect, parent),
 	m_fileName(fileName)
@@ -1382,7 +1395,11 @@ void GraphicsPictureItem::Stretch(int handle, double sx, double sy, const QPoint
 
 QGraphicsItem* GraphicsPictureItem::Duplicate()
 {
-	GraphicsPictureItem *item = new GraphicsPictureItem(m_localRect.toRect(), m_fileName);
+	GraphicsPictureItem *item;
+	if (!m_picture.isNull())
+		item = new GraphicsPictureItem(m_localRect.toRect(), m_picture);
+	else
+		item = new GraphicsPictureItem(m_localRect.toRect(), m_fileName);
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
@@ -1413,6 +1430,7 @@ bool GraphicsPictureItem::SaveToXml(QXmlStreamWriter *xml)
 {
 	xml->writeStartElement("picture");
 	WriteBaseAttributes(xml);
+	xml->writeAttribute(tr("sn"),QString("%1").arg(m_iSn));
 	xml->writeAttribute(tr("name"),QString("%1").arg(m_fileName));
 	xml->writeEndElement();
 	return true;
@@ -1421,6 +1439,7 @@ bool GraphicsPictureItem::SaveToXml(QXmlStreamWriter *xml)
 bool GraphicsPictureItem::LoadFromXml(QXmlStreamReader *xml)
 {
 	ReadBaseAttributes(xml);
+	m_iSn = xml->attributes().value(tr("sn")).toString().toInt();
 	m_fileName = xml->attributes().value(tr("name")).toString();
 	if (!m_fileName.isEmpty())
 	{

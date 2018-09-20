@@ -510,9 +510,11 @@ public:
 class GraphicsPictureItem :public GraphicsRectItem
 {
 public:
+	GraphicsPictureItem(const QRect &rect, QPixmap picture, QGraphicsItem *parent = 0);
 	GraphicsPictureItem(const QRect &rect, QString fileName, QGraphicsItem *parent = 0);
 	~GraphicsPictureItem();
 
+	QPixmap GetPicture() { return m_picture; }
 	QString GetFileName() { return m_fileName; }
 
 public:
@@ -525,6 +527,7 @@ public:
 	virtual bool LoadFromXml(QXmlStreamReader *xml);
 
 public:
+	int m_iSn;
 	QPixmap m_picture;
 	QString m_fileName;
 

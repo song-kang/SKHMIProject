@@ -35,6 +35,9 @@ public:
 	QTreeWidget *GetWndTreeWidget() { return ui.treeWidgetSence; }
 	QList<CWnd*> &GetListWnd() { return m_lstWnd; }
 	int GetCurrentWndSn() { return m_iCurrentWndSn; }
+	void SetPicture(QPixmap pix) { m_pScene->m_picture = pix; }
+	void SetExitPicture(bool b) { m_bExitPicture = b; }
+	bool GetExitPicture() { return m_bExitPicture; }
 
 public:
 	void UpdateActions();
@@ -44,6 +47,7 @@ public:
 	SKBaseWidget *m_pLinkDataWidget;
 	SKBaseWidget *m_pWndAddWidget;
 	SKBaseWidget *m_pWndAttrWidget;
+	SKBaseWidget *m_pDBPictureWidget;
 
 protected:
 	virtual bool eventFilter(QObject *obj,QEvent *e);
@@ -81,6 +85,7 @@ private:
 	QMenu m_menuWnd;
 	QTreeWidgetItem *m_pCurrentTreeWidgetItem;
 	int m_iCurrentWndSn;
+	bool m_bExitPicture;
 
 private:
 	void Init();
@@ -89,6 +94,7 @@ private:
 	void InitDBWnd(CWnd *pWnd);
 	void InitSymbols();
 	DrawView* CreateView();
+	void LoadDBPicture();
 
 signals:
 	void SigClose();
@@ -160,6 +166,7 @@ public slots:
 	void SlotMenuWnd(QAction *action);
 	void SlotWndAddClose();
 	void SlotTreeItemDoubleClicked(QTreeWidgetItem *treeItem, int column);
+	void SlotDBPictureClose();
 
 };
 
