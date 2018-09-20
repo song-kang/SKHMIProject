@@ -170,8 +170,6 @@ void DrawView::Translate(QPointF delta)
 {
 	if (((DrawScene*)m_pScene)->selectedItems().count() > 0 || DrawTool::c_drawShape != eDrawSelection)
 		return;
-	
-	SetModified(true);
 
 	delta *= m_scale;
 	QPoint newCenter(viewport()->rect().width() / 2 - delta.x(), viewport()->rect().height() / 2 - delta.y());
