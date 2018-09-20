@@ -278,9 +278,12 @@ bool DrawView::SaveFile(const QString fileName)
 	xml.writeEndElement();
 	xml.writeEndDocument();
 
-	m_sFileName = QFileInfo(fileName).canonicalFilePath();
-	m_isUntitled = false;
-	m_app->GetApp()->SetWindowTitle(tr("SKDraw [%1]").arg(fileName));
+	if (m_iSaveMode == SAVE_MODE_FILE)
+	{
+		m_sFileName = QFileInfo(fileName).canonicalFilePath();
+		m_isUntitled = false;
+		m_app->GetApp()->SetWindowTitle(tr("SKDraw [%1]").arg(fileName));
+	}
 
 	QMessageBox::information(NULL,tr("提示"),tr("文件保存成功"));
 	SetModified(false);
