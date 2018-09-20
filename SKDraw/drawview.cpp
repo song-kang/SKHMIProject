@@ -336,9 +336,11 @@ bool DrawView::SlotSaveDB()
 		return false;
 	}
 	int len = file.size();
-	QByteArray buffer = file.read(file.bytesAvailable());;
+	QByteArray buffer = file.read(file.bytesAvailable());
 	file.close();
 
+	SString sql = SString::toFormat("update t_ssp_uicfg_wnd set modify_time=%d where wnd_sn=%d",(int)SDateTime::getNowSoc(),m_app->GetCurrentWndSn());
+	bool ret = DB->Execute(sql);
 	SString sWhere = SString::toFormat("wnd_sn=%d",m_app->GetCurrentWndSn());
 	if (!DB->UpdateLobFromMem("t_ssp_uicfg_wnd","svg_file",sWhere,(unsigned char*)buffer.data(),len))
 	{
