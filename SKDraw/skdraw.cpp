@@ -711,6 +711,7 @@ void SKDraw::SlotAddShape()
 
 	m_pView->setCursor(Qt::ArrowCursor);
 	m_pView->SetSymbolName(QString::null);
+	SetExitPicture(false);
 
 	UpdateActions();
 }
@@ -1452,4 +1453,6 @@ void SKDraw::SlotDBPictureClose()
 
 	if (!GetExitPicture())
 		SlotKeyEscape();
+	else
+		m_pView->setCursor(Qt::CrossCursor);
 }

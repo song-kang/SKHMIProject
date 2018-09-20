@@ -28,6 +28,7 @@ void DBPic::Init()
 	ui.listWidget->setSpacing(10);							//设置QListWidget中单元项的间距
 	ui.listWidget->setResizeMode(QListWidget::Adjust);		//设置自动适应布局调整（Adjust适应，Fixed不适应），默认不适应
 	ui.listWidget->setMovement(QListWidget::Static);		//设置不能移动
+	ui.listWidget->setSelectionMode(QAbstractItemView:: ExtendedSelection);
 }
 
 void DBPic::InitUi()
@@ -50,6 +51,8 @@ void DBPic::paintEvent(QPaintEvent *e)
 
 void DBPic::Start()
 {
+	m_pCurrentListWidgetItem = NULL;
+
 	SString sql;
 	SRecordset rs;
 	sql.sprintf("select svg_sn,svg_name from t_ssp_svglib_item where svgtype_sn=3");
@@ -81,9 +84,11 @@ void DBPic::Start()
 
 void DBPic::SlotOk()
 {
-	if (!m_pCurrentListWidgetItem)
+	QList<QListWidgetItem *> list = ui.listWidget->selectedItems();
+	if (list.count() != 1)
 		return;
 
+	m_pCurrentListWidgetItem = list.at(0);
 	QPixmap pix = m_pCurrentListWidgetItem->data(Qt::UserRole).value<QPixmap>();
 	m_app->SetPicture(pix);
 	m_app->SetExitPicture(true);
@@ -93,8 +98,8 @@ void DBPic::SlotOk()
 
 void DBPic::SlotAdd()
 {
-	QString fileName = QFileDialog::getOpenFileName(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png)"));
-	if (!fileName.isEmpty())
+	QStringList listFileName = QFileDialog::getOpenFileNames(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png)"));
+	foreach (QString fileName, listFileName)
 	{
 		QFile file(fileName);
 		if (!file.open(QIODevice::ReadOnly))
@@ -112,17 +117,28 @@ void DBPic::SlotAdd()
 		if (DB->Execute(sql))
 		{
 			SString sWhere = SString::toFormat("svg_sn=%d",sn);
-			if (!DB->UpdateLobFromMem("t_ssp_svglib_item","svg_file",sWhere,(unsigned char*)buffer.data(),len))
-				QMessageBox::warning(NULL,tr("告警"),tr("添加失败"));
-			else
-				QMessageBox::information(NULL,tr("提示"),tr("添加成功"));
+			bool ret = DB->UpdateLobFromMem("t_ssp_svglib_item","svg_file",sWhere,(unsigned char*)buffer.data(),len);
 		}
 	}
+
+	ui.listWidget->clear();
+	Start();
 }
 
 void DBPic::SlotDel()
 {
+	QList<QListWidgetItem *> list = ui.listWidget->selectedItems();
+	if (list.count() == 0)
+		return;
 
+	foreach (QListWidgetItem *item, list)
+	{
+		SString sql = SString::toFormat("delete from t_ssp_svglib_item where svg_sn=%d",item->type());
+		bool ret = DB->Execute(sql);
+	}
+
+	ui.listWidget->clear();
+	Start();
 }
 
 void DBPic::SlotListItemClicked(QListWidgetItem *listItem)
