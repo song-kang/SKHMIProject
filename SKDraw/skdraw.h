@@ -34,6 +34,7 @@ public:
 	QTreeWidgetItem *GetCurrentTreeWidgetItem() { return m_pCurrentTreeWidgetItem; }
 	QTreeWidget *GetWndTreeWidget() { return ui.treeWidgetSence; }
 	QList<CWnd*> &GetListWnd() { return m_lstWnd; }
+	int GetCurrentWndSn() { return m_iCurrentWndSn; }
 
 public:
 	void UpdateActions();
@@ -79,6 +80,7 @@ private:
 	QList<CWnd*> m_lstWnd;
 	QMenu m_menuWnd;
 	QTreeWidgetItem *m_pCurrentTreeWidgetItem;
+	int m_iCurrentWndSn;
 
 private:
 	void Init();
@@ -97,8 +99,8 @@ public slots:
 public slots:
 	void SlotNew();
 	void SlotOpen();
-	void SlotSave();
-	void SlotSaveas();
+	bool SlotSave();
+	bool SlotSaveas();
 	bool SlotClose();
 	void SlotExit();
 

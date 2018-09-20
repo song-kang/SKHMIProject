@@ -480,6 +480,8 @@ void SKDraw::SlotNew()
 {
 	DrawView *view = CreateView();
 	ui.gridLayoutCentral->addWidget(view);
+	view->SetModified(false);
+	view->SetSaveMode(SAVE_MODE_FILE);
 	view->show();
 
 	m_pPropertyEditor->SetScene(m_pScene);
@@ -504,24 +506,28 @@ void SKDraw::SlotOpen()
 			SlotNew();
 
 		m_pView->LoadFile(fileName);
+		m_pView->SetSaveMode(SAVE_MODE_FILE);
 	}
 }
 
-void SKDraw::SlotSave()
+bool SKDraw::SlotSave()
 {
-	m_pView->Save();
+	return m_pView->Save();
 }
 
-void SKDraw::SlotSaveas()
+bool SKDraw::SlotSaveas()
 {
-
+	return m_pView->SaveAs();
 }
 
 bool SKDraw::SlotClose()
 {
-	int ret = QMessageBox::question(NULL,tr("询问"),tr("确认关闭？"),tr("关闭"),tr("取消"));
-	if (ret != 0)
-		return false;
+	if (m_pView && m_pView->GetIsModified())
+	{
+		int ret = QMessageBox::question(NULL,tr("注意"),tr("未保存，是否保存？"),tr("保存"),tr("不保存"));
+		if (ret == 0 && !SlotSave())
+			return false;
+	}
 
 	m_isClose = true;
 	m_pPropertyEditor->Clear();
@@ -705,6 +711,9 @@ void SKDraw::SlotAddShape()
 
 void SKDraw::SlotAlign()
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	if (sender() == ui.actionLeft)
 		m_pScene->Align(eAlignLeft);
 	else if (sender() == ui.actionRight)
@@ -731,6 +740,9 @@ void SKDraw::SlotAlign()
 
 void SKDraw::SlotBringToFront()
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	if (m_pScene->selectedItems().isEmpty() || m_pScene->selectedItems().count() != 1)
 		return;
 
@@ -749,6 +761,9 @@ void SKDraw::SlotBringToFront()
 
 void SKDraw::SlotSendToBack()
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	if (m_pScene->selectedItems().isEmpty() || m_pScene->selectedItems().count() != 1)
 		return;
 
@@ -767,6 +782,9 @@ void SKDraw::SlotSendToBack()
 
 void SKDraw::SlotGroup()
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	QList<QGraphicsItem *> selectedItems = m_pScene->selectedItems();
 	if (selectedItems.count() > 1)
 	{
@@ -778,6 +796,9 @@ void SKDraw::SlotGroup()
 
 void SKDraw::SlotUngroup()
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	QGraphicsItem *selectedItem = m_pScene->selectedItems().first();
 	GraphicsItemGroup *group = dynamic_cast<GraphicsItemGroup*>(selectedItem);
 	if (group)
@@ -789,6 +810,9 @@ void SKDraw::SlotUngroup()
 
 void SKDraw::SlotCurrentFontChanged(QFont font)
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	m_font = font;
 	m_font.setPointSize(m_pFontSizeComboBox->currentText().toInt());
 	SlotBold();
@@ -798,23 +822,35 @@ void SKDraw::SlotCurrentFontChanged(QFont font)
 
 void SKDraw::SlotFontSizeChanged(QString size)
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	m_font.setPointSize(size.toInt());
 }
 
 void SKDraw::SlotBold()
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	ui.actionBold->setChecked(ui.actionBold->isChecked());
 	m_font.setBold(ui.actionBold->isChecked());
 }
 
 void SKDraw::SlotItalic()
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	ui.actionItalic->setChecked(ui.actionItalic->isChecked());
 	m_font.setItalic(ui.actionItalic->isChecked());
 }
 
 void SKDraw::SlotUnderline()
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	ui.actionUnderline->setChecked(ui.actionUnderline->isChecked());
 	m_font.setUnderline(ui.actionUnderline->isChecked());
 }
@@ -824,6 +860,9 @@ void SKDraw::SlotBtnFontColor()
 	QColor color = QColorDialog::getColor(m_fontColor,this,tr("选择颜色"));
 	if (color.isValid())
 	{
+		if (m_pView)
+			m_pView->SetModified(true);
+
 		m_fontColor = color.name();
 		m_pFontColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg(m_fontColor.name()));
 	}
@@ -831,16 +870,25 @@ void SKDraw::SlotBtnFontColor()
 
 void SKDraw::SlotPenStyleChanged(QString val)
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	m_pen.setStyle((Qt::PenStyle)(val.toInt()));
 }
 
 void SKDraw::SlotPenWidthChanged(QString val)
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	m_pen.setWidthF(val.toInt());
 }
 
 void SKDraw::SlotBrushStyleChanged(QString val)
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	m_brush.setStyle((Qt::BrushStyle)(val.toInt()));
 }
 
@@ -849,6 +897,9 @@ void SKDraw::SlotBtnPentColor()
 	QColor color = QColorDialog::getColor(m_fontColor,this,tr("选择颜色"));
 	if (color.isValid())
 	{
+		if (m_pView)
+			m_pView->SetModified(true);
+
 		m_pen.setColor(color.name());
 		m_pPenColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg(color.name()));
 	}
@@ -859,6 +910,9 @@ void SKDraw::SlotBtnBrushColor()
 	QColor color = QColorDialog::getColor(m_fontColor,this,tr("选择颜色"));
 	if (color.isValid())
 	{
+		if (m_pView)
+			m_pView->SetModified(true);
+
 		m_brush.setColor(color.name());
 		m_pBrushColorBtn->setStyleSheet(tr("QPushButton{background:%2;}").arg(color.name()));
 	}
@@ -986,6 +1040,9 @@ void SKDraw::SlotItemSelected()
 
 void SKDraw::SlotItemAdded(QGraphicsItem *item)
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	QUndoCommand *addCommand = new AddShapeCommand(item, item->scene());
 	m_pUndoStack->push(addCommand);
 	UpdateActions();
@@ -993,6 +1050,9 @@ void SKDraw::SlotItemAdded(QGraphicsItem *item)
 
 void SKDraw::SlotItemMoved(QGraphicsItem *item, const QPointF &oldPosition)
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	if (item)
 	{
 		QUndoCommand *moveCommand = new MoveShapeCommand(m_pScene, item, oldPosition);
@@ -1007,18 +1067,27 @@ void SKDraw::SlotItemMoved(QGraphicsItem *item, const QPointF &oldPosition)
 
 void SKDraw::SlotItemRotate(QGraphicsItem *item, const qreal oldAngle)
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	QUndoCommand *rotateCommand = new RotateShapeCommand(m_pScene, item, oldAngle);
 	m_pUndoStack->push(rotateCommand);
 }
 
 void SKDraw::SlotItemResize(QGraphicsItem *item, int handle, const QPointF &scale)
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	QUndoCommand *resizeCommand = new ResizeShapeCommand(m_pScene, item, handle, scale );
 	m_pUndoStack->push(resizeCommand);
 }
 
 void SKDraw::SlotItemControl(QGraphicsItem *item, int handle, const QPointF &newPos, const QPointF &lastPos_)
 {
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	QUndoCommand *controlCommand = new ControlShapeCommand(m_pScene, item, handle, newPos, lastPos_);
 	m_pUndoStack->push(controlCommand);
 }
@@ -1117,6 +1186,9 @@ void SKDraw::SlotSymbolsDQClicked(QListWidgetItem *item)
 	if (!m_pView)
 		SlotNew();
 
+	if (m_pView)
+		m_pView->SetModified(true);
+
 	QPixmap pix = item->icon().pixmap(300, 300);
 	QCursor cursor(pix);
 	m_pView->setCursor(cursor);
@@ -1155,27 +1227,33 @@ void SKDraw::SlotLinkData()
 void SKDraw::SlotTreeItemDoubleClicked(QTreeWidgetItem *treeItem, int column)
 {
 	m_pCurrentTreeWidgetItem = treeItem;
-	CWnd *wnd = GetWndFromSn(treeItem->data(0, Qt::UserRole).toInt(), m_lstWnd);
+	m_iCurrentWndSn = treeItem->data(0, Qt::UserRole).toInt();
+	CWnd *wnd = GetWndFromSn(m_iCurrentWndSn, m_lstWnd);
 	if (wnd)
 	{
 		int len = 0;
 		unsigned char* buffer = NULL;
 		SString sWhere = SString::toFormat("wnd_sn=%d",wnd->GetWndSn());
-		DB->ReadLobToMem("t_ssp_uicfg_wnd","svg_file",sWhere,buffer,len);
-		if (buffer && len > 0)
+		if (DB->ReadLobToMem("t_ssp_uicfg_wnd","svg_file",sWhere,buffer,len))
 		{
-			if (m_pView && SlotClose() == false)
-				return;
+			if (buffer && len > 0)
+			{
+				if (m_pView && SlotClose() == false)
+					return;
 
-			SlotNew();
-			m_pView->Load((char*)buffer);
-			delete buffer;
+				SlotNew();
+				m_pView->Load((char*)buffer);
+				m_pView->SetSaveMode(SAVE_MODE_DB);
+				delete buffer;
+			}
+			else
+				QMessageBox::warning(NULL,tr("告警"),tr("无场景文件，无法导出"));
 		}
 		else
-			QMessageBox::warning(NULL,tr("告警"),tr("无场景文件，无法导出"));
+			QMessageBox::warning(NULL,tr("告警"),tr("通过场景号[%1]读取场景失败").arg(m_iCurrentWndSn));
 	}
 	else
-		QMessageBox::warning(NULL,tr("告警"),tr("通过场景号[%1]未发现场景").arg(treeItem->data(0, Qt::UserRole).toInt()));
+		QMessageBox::warning(NULL,tr("告警"),tr("通过场景号[%1]未发现场景").arg(m_iCurrentWndSn));
 }
 
 void SKDraw::SlotLinkDataClose()
@@ -1282,26 +1360,30 @@ void SKDraw::SlotMenuWnd(QAction *action)
 			int len = 0;
 			unsigned char* buffer = NULL;
 			SString sWhere = SString::toFormat("wnd_sn=%d",wnd->GetWndSn());
-			DB->ReadLobToMem("t_ssp_uicfg_wnd","svg_file",sWhere,buffer,len);
-			if (buffer && len > 0)
+			if (DB->ReadLobToMem("t_ssp_uicfg_wnd","svg_file",sWhere,buffer,len))
 			{
-				QString filter = tr("场景文件(*.sdw)");
-				QString fileName = QFileDialog::getSaveFileName(this,tr("保存场景文件"),QString::null,filter);
-				if (!fileName.isEmpty())
+				if (buffer && len > 0)
 				{
-					QFile file(fileName);
-					if (!file.open(QIODevice::WriteOnly))
+					QString filter = tr("场景文件(*.sdw)");
+					QString fileName = QFileDialog::getSaveFileName(this,tr("保存场景文件"),QString::null,filter);
+					if (!fileName.isEmpty())
 					{
-						QMessageBox::warning(NULL,tr("告警"),tr("文件写模式打开失败"));
-						return;
+						QFile file(fileName);
+						if (!file.open(QIODevice::WriteOnly))
+						{
+							QMessageBox::warning(NULL,tr("告警"),tr("文件写模式打开失败"));
+							return;
+						}
+						qint64 length = file.write((char*)buffer,len);
+						file.close();
+						QMessageBox::information(NULL,tr("提示"),tr("导出成功"));
 					}
-					qint64 length = file.write((char*)buffer,len);
-					file.close();
-					QMessageBox::information(NULL,tr("提示"),tr("导出成功"));
 				}
+				else
+					QMessageBox::warning(NULL,tr("告警"),tr("无场景文件，无法导出"));
 			}
 			else
-				QMessageBox::warning(NULL,tr("告警"),tr("无场景文件，无法导出"));
+				QMessageBox::warning(NULL,tr("告警"),tr("通过场景号[%1]读取场景失败").arg(m_iCurrentWndSn));
 		}
 	}
 }

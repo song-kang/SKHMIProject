@@ -1,6 +1,7 @@
 #include "drawview.h"
 #include "skdraw.h"
 #include "drawscene.h"
+#include "sk_database.h"
 
 DrawView::DrawView(QGraphicsScene *scene)
 	: QGraphicsView(scene)
@@ -26,6 +27,7 @@ DrawView::DrawView(QGraphicsScene *scene)
 
 	connect(horizontalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
 	connect(verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
+	connect(this, SIGNAL(SigSaveDB()), this , SLOT(SlotSaveDB()));
 }
 
 DrawView::~DrawView()
@@ -169,6 +171,8 @@ void DrawView::Translate(QPointF delta)
 	if (((DrawScene*)m_pScene)->selectedItems().count() > 0 || DrawTool::c_drawShape != eDrawSelection)
 		return;
 	
+	SetModified(true);
+
 	delta *= m_scale;
 	QPoint newCenter(viewport()->rect().width() / 2 - delta.x(), viewport()->rect().height() / 2 - delta.y());
 	centerOn(mapToScene(newCenter));
@@ -222,10 +226,17 @@ void DrawView::UpdateRuler()
 
 bool DrawView::Save()
 {
-	if (m_isUntitled)
-		return SaveAs();
-	else if (!m_sFileName.isEmpty())
-		return SaveFile(m_sFileName);
+	if (m_iSaveMode == SAVE_MODE_FILE)
+	{
+		if (m_isUntitled)
+			return SaveAs();
+		else if (!m_sFileName.isEmpty())
+			return SaveFile(m_sFileName);
+	}
+	else if (m_iSaveMode == SAVE_MODE_DB)
+	{
+		return SaveDB();
+	}
 
 	return false;
 }
@@ -269,7 +280,73 @@ bool DrawView::SaveFile(const QString fileName)
 
 	m_sFileName = QFileInfo(fileName).canonicalFilePath();
 	m_isUntitled = false;
-	m_app->GetApp()->SetWindowTitle("SKDraw - " + tr("%1").arg(fileName));
+	m_app->GetApp()->SetWindowTitle(tr("SKDraw [%1]").arg(fileName));
+
+	QMessageBox::information(NULL,tr("提示"),tr("文件保存成功"));
+	SetModified(false);
+	return true;
+}
+
+bool DrawView::SaveDB()
+{
+	QString fileName = "tmp.sdw";
+	QFile file(fileName);
+	if (!file.open(QFile::WriteOnly | QFile::Text))
+	{
+		QMessageBox::warning(this, tr("告警"), tr("文件【%1】写模式打开失败\n%2.").arg(fileName).arg(file.errorString()));
+		return false;
+	}
+
+	QXmlStreamWriter xml(&file);
+	xml.setAutoFormatting(true);
+	xml.writeStartDocument();
+	xml.writeDTD("<!DOCTYPE SKDRAW>");
+	xml.writeStartElement("canvas");
+	xml.writeAttribute("width",QString("%1").arg(scene()->width()));
+	xml.writeAttribute("height",QString("%1").arg(scene()->height()));
+	xml.writeAttribute("color",QString("%1").arg(((DrawScene*)m_pScene)->GetGridTool()->GetBackColor().name()));
+	xml.writeAttribute("alpha",QString("%1").arg(((DrawScene*)m_pScene)->GetGridTool()->GetBackColor().alpha()));
+	foreach (QGraphicsItem *item , scene()->items())
+	{
+		AbstractShape *ab = qgraphicsitem_cast<AbstractShape*>(item);
+		QGraphicsItemGroup *g = dynamic_cast<QGraphicsItemGroup*>(item->parentItem());
+		if (ab &&!qgraphicsitem_cast<SizeHandleRect*>(ab) && !g)
+			ab->SaveToXml(&xml);
+	}
+	xml.writeEndElement();
+	xml.writeEndDocument();
+
+	file.flush();
+	file.close();
+	emit SigSaveDB();
+
+	return true;
+}
+
+bool DrawView::SlotSaveDB()
+{
+	QString fileName = "tmp.sdw";
+	QFile file(fileName);
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("文件读模式打开失败"));
+		return false;
+	}
+	int len = file.size();
+	QByteArray buffer = file.read(file.bytesAvailable());;
+	file.close();
+
+	SString sWhere = SString::toFormat("wnd_sn=%d",m_app->GetCurrentWndSn());
+	if (!DB->UpdateLobFromMem("t_ssp_uicfg_wnd","svg_file",sWhere,(unsigned char*)buffer.data(),len))
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("数据库保存失败"));
+		return false;
+	}
+	else
+	{
+		QMessageBox::information(NULL,tr("提示"),tr("数据库保存成功"));
+		SetModified(false);
+	}
 
 	return true;
 }
@@ -299,7 +376,7 @@ bool DrawView::Load(char *content)
 	}
 
 	m_isUntitled = false;
-	m_app->GetApp()->SetWindowTitle("SKDraw - " + tr("%1").arg(m_app->GetCurrentTreeWidgetItem()->text(0)));
+	m_app->GetApp()->SetWindowTitle(tr("SKDraw [%1]").arg(m_app->GetCurrentTreeWidgetItem()->text(0)));
 
 	return true;
 }
@@ -340,7 +417,7 @@ bool DrawView::LoadFile(const QString fileName)
 
 	m_sFileName = QFileInfo(fileName).canonicalFilePath();
 	m_isUntitled = false;
-	m_app->GetApp()->SetWindowTitle("SKDraw - " + tr("%1").arg(fileName));
+	m_app->GetApp()->SetWindowTitle(tr("SKDraw [%1]").arg(fileName));
 
 	return true;
 }

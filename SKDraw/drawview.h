@@ -5,6 +5,9 @@
 #include "rulebar.h"
 #include "drawobj.h"
 
+#define SAVE_MODE_DB		1
+#define SAVE_MODE_FILE		2
+
 class SKDraw;
 class DrawView : public QGraphicsView
 {
@@ -21,10 +24,15 @@ public:
 	bool Save();
 	bool SaveAs();
 	bool SaveFile(const QString fileName);
+	bool SaveDB();
 	bool LoadFile(const QString fileName);
 	bool Load(char *content);
 	void SetSymbolName(QString name) { m_sSymbolName = name; }
 	void SetSymbolCursor(QCursor cursor) { m_cursorSymbol = cursor; }
+	void SetModified(bool b) { m_isModified = b; }
+	void SetSaveMode(int mode) { m_iSaveMode = mode; }
+	bool GetIsModified() { return m_isModified; }
+	int  GetSaveMode() { return m_iSaveMode; }
 
 public:
 	void ZoomIn();
@@ -50,9 +58,11 @@ private:
 	qreal m_scale;
 	qreal m_zoomDelta;
 	bool m_isUntitled;
+	bool m_isModified;
 	QString m_sFileName;
 	QString m_sSymbolName;
 	QCursor m_cursorSymbol;
+	int m_iSaveMode;
 
 private:
 	void UpdateRuler();
@@ -70,8 +80,12 @@ private:
 	SKDraw *m_app;
 	QGraphicsScene *m_pScene;
 
+signals:
+	void SigSaveDB();
+
 private slots:
 	void SlotScrollBarValueChanged(int pos);
+	bool SlotSaveDB();
 	
 };
 
