@@ -603,6 +603,9 @@ void DrawPolygonTool::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event, Dra
 {
 	DrawTool::mouseDoubleClickEvent(event,scene);
 
+	if (!m_pItem) //防止画线时，第二个点双击
+		return;
+	
 	m_pItem->EndPoint(event->scenePos());
 	m_pItem->UpdateCoordinate();
 	m_pItem->setSelected(true);
