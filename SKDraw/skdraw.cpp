@@ -369,7 +369,7 @@ void SKDraw::InitSlot()
 	//connect(m_app, SIGNAL(SigMouseRightButton(QPoint)), this, SLOT(SlotMouseRightButton(QPoint)));
 
 	connect(&m_menuWnd,SIGNAL(triggered(QAction*)),this,SLOT(SlotMenuWnd(QAction*)));
-	connect(ui.treeWidgetSence,SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),this,SLOT(SlotTreeItemDoubleClicked(QTreeWidgetItem *,int)));
+	connect(ui.treeWidgetSence,SIGNAL(itemPressed(QTreeWidgetItem *,int)),this,SLOT(SlotTreeItemPressed(QTreeWidgetItem *,int)));
 }
 
 void SKDraw::InitSymbols()
@@ -1234,11 +1234,13 @@ void SKDraw::SlotLinkData()
 	m_pLinkDataWidget->Show();
 }
 
-void SKDraw::SlotTreeItemDoubleClicked(QTreeWidgetItem *treeItem, int column)
+void SKDraw::SlotTreeItemPressed(QTreeWidgetItem *treeItem, int column)
 {
+	if (qApp->mouseButtons() != Qt::LeftButton)
+		return;	//不响应右键，右键用于菜单，itemClicked信号不起此作用
+
 	m_pCurrentTreeWidgetItem = treeItem;
-	m_iCurrentWndSn = treeItem->data(0, Qt::UserRole).toInt();
-	CWnd *wnd = GetWndFromSn(m_iCurrentWndSn, m_lstWnd);
+	CWnd *wnd = GetWndFromSn(treeItem->data(0, Qt::UserRole).toInt(), m_lstWnd);
 	if (wnd)
 	{
 		int len = 0;
@@ -1255,6 +1257,7 @@ void SKDraw::SlotTreeItemDoubleClicked(QTreeWidgetItem *treeItem, int column)
 				m_pView->Load((char*)buffer);
 				m_pView->SetSaveMode(SAVE_MODE_DB);
 				delete buffer;
+				m_iCurrentWndSn = treeItem->data(0, Qt::UserRole).toInt();
 			}
 			else
 				QMessageBox::warning(NULL,tr("告警"),tr("无场景文件，无法导出"));

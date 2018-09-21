@@ -165,7 +165,7 @@ public slots:
 
 	void SlotMenuWnd(QAction *action);
 	void SlotWndAddClose();
-	void SlotTreeItemDoubleClicked(QTreeWidgetItem *treeItem, int column);
+	void SlotTreeItemPressed(QTreeWidgetItem *treeItem, int column);
 	void SlotDBPictureClose();
 
 };
