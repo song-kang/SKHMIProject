@@ -75,5 +75,7 @@
         <file alias="reorder">Resources/images/reorder.png</file>
         <file alias="rhombus">Resources/images/rhombus.png</file>
         <file alias="triangle">Resources/images/triangle.png</file>
+        <file alias="export">Resources/images/export.png</file>
+        <file alias="import">Resources/images/import.png</file>
     </qresource>
 </RCC>

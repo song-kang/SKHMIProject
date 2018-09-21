@@ -34,8 +34,10 @@ signals:
 
 private slots:
 	void SlotOk();
-	void SlotAdd();
+	void SlotImport();
+	void SlotExport();
 	void SlotDel();
+	void SlotClose();
 	void SlotListItemClicked(QListWidgetItem *listItem);
 
 private:

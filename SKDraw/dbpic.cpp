@@ -39,8 +39,10 @@ void DBPic::InitUi()
 void DBPic::InitSlot()
 {
 	connect(ui.btnOk, SIGNAL(clicked()), this, SLOT(SlotOk()));
-	connect(ui.btnAdd, SIGNAL(clicked()), this, SLOT(SlotAdd()));
+	connect(ui.btnImport, SIGNAL(clicked()), this, SLOT(SlotImport()));
+	connect(ui.btnExport, SIGNAL(clicked()), this, SLOT(SlotExport()));
 	connect(ui.btnDel, SIGNAL(clicked()), this, SLOT(SlotDel()));
+	connect(ui.btnClose, SIGNAL(clicked()), this, SLOT(SlotClose()));
 	connect(ui.listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(SlotListItemClicked(QListWidgetItem*)));
 }
 
@@ -86,7 +88,10 @@ void DBPic::SlotOk()
 {
 	QList<QListWidgetItem *> list = ui.listWidget->selectedItems();
 	if (list.count() != 1)
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("请选择一张图片"));
 		return;
+	}
 
 	m_pCurrentListWidgetItem = list.at(0);
 	QPixmap pix = m_pCurrentListWidgetItem->data(Qt::UserRole).value<QPixmap>();
@@ -96,7 +101,7 @@ void DBPic::SlotOk()
 	emit SigClose();
 }
 
-void DBPic::SlotAdd()
+void DBPic::SlotImport()
 {
 	QStringList listFileName = QFileDialog::getOpenFileNames(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png)"));
 	foreach (QString fileName, listFileName)
@@ -125,10 +130,48 @@ void DBPic::SlotAdd()
 	Start();
 }
 
+void DBPic::SlotExport()
+{
+	QList<QListWidgetItem *> list = ui.listWidget->selectedItems();
+	if (list.count() == 0)
+		return;
+
+	QString dir = QFileDialog::getExistingDirectory();
+	foreach (QListWidgetItem *item, list)
+	{
+		SString sql;
+		SRecordset rs;
+		sql.sprintf("select svg_name from t_ssp_svglib_item where svg_sn=%d",item->type());
+		int cnt = DB->Retrieve(sql,rs);
+		if (cnt > 0)
+		{
+			QString name = rs.GetValue(0,0).data();
+
+			int len = 0;
+			unsigned char* buffer = NULL;
+			SString sWhere = SString::toFormat("svg_sn=%d",item->type());
+			if (DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len))
+			{
+				QString path = dir + "\\" + name;
+				QFile file(path);
+				if (!file.open(QFile::WriteOnly))
+					continue;
+				file.write((char*)buffer, len);
+			}
+		}
+	}
+
+	QMessageBox::information(NULL,tr("提示"),tr("图片导出完毕"));
+}
+
 void DBPic::SlotDel()
 {
 	QList<QListWidgetItem *> list = ui.listWidget->selectedItems();
 	if (list.count() == 0)
+		return;
+
+	int ret = QMessageBox::question(this, "询问", "确认删除图片？",tr("删除"),tr("放弃"));
+	if (ret != 0)
 		return;
 
 	foreach (QListWidgetItem *item, list)
@@ -139,6 +182,11 @@ void DBPic::SlotDel()
 
 	ui.listWidget->clear();
 	Start();
+}
+
+void DBPic::SlotClose()
+{
+	emit SigClose();
 }
 
 void DBPic::SlotListItemClicked(QListWidgetItem *listItem)

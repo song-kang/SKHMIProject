@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>499</width>
-    <height>319</height>
+    <width>561</width>
+    <height>339</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,20 +20,31 @@
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="btnAdd">
+      <widget class="QPushButton" name="btnImport">
        <property name="text">
-        <string>添加(&amp;A)</string>
+        <string>导入图片(&amp;I)</string>
        </property>
        <property name="icon">
         <iconset resource="skdraw.qrc">
-         <normaloff>:/images/ok</normaloff>:/images/ok</iconset>
+         <normaloff>:/images/import</normaloff>:/images/import</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnExport">
+       <property name="text">
+        <string>导出图片(&amp;E)</string>
+       </property>
+       <property name="icon">
+        <iconset resource="skdraw.qrc">
+         <normaloff>:/images/export</normaloff>:/images/export</iconset>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="btnDel">
        <property name="text">
-        <string>删除(&amp;D)</string>
+        <string>删除图片(&amp;D)</string>
        </property>
        <property name="icon">
         <iconset resource="skdraw.qrc">
@@ -57,11 +68,22 @@
      <item>
       <widget class="QPushButton" name="btnOk">
        <property name="text">
-        <string>选中(&amp;O)</string>
+        <string>选中图片(&amp;O)</string>
        </property>
        <property name="icon">
         <iconset resource="skdraw.qrc">
          <normaloff>:/images/ok</normaloff>:/images/ok</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnClose">
+       <property name="text">
+        <string>取消(&amp;C)</string>
+       </property>
+       <property name="icon">
+        <iconset resource="skdraw.qrc">
+         <normaloff>:/images/delete</normaloff>:/images/delete</iconset>
        </property>
       </widget>
      </item>

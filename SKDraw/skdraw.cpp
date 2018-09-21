@@ -459,8 +459,8 @@ bool SKDraw::eventFilter(QObject *obj,QEvent *e)
 					m_menuWnd.addAction(QIcon(":/images/logo"),tr("添加场景(&E)"));
 					m_menuWnd.addAction(QIcon(":/images/reorder"),tr("场景属性(&A)"));
 					m_menuWnd.addSeparator();
-					m_menuWnd.addAction(QIcon(":/images/undo"),tr("导入场景文件(&I)"));
-					m_menuWnd.addAction(QIcon(":/images/redo"),tr("导出场景文件(&R)"));
+					m_menuWnd.addAction(QIcon(":/images/import"),tr("导入场景文件(&I)"));
+					m_menuWnd.addAction(QIcon(":/images/export"),tr("导出场景文件(&R)"));
 					m_menuWnd.addSeparator();
 					m_menuWnd.addAction(QIcon(":/images/delete"),tr("删除场景(&D)"));
 					m_menuWnd.popup(m_e->globalPos());
