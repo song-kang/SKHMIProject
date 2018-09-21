@@ -5,6 +5,9 @@
 #include "ui_dbpic.h"
 #include "skwidget.h"
 
+#define PIC_TYPE_NORMAL		3
+#define PIC_TYPE_GIF		4
+
 class SKDraw;
 class DBPic : public SKWidget
 {

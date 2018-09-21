@@ -60,7 +60,7 @@ void DBPic::Start()
 
 	SString sql;
 	SRecordset rs;
-	sql.sprintf("select svg_sn,svg_name from t_ssp_svglib_item where svgtype_sn=3");
+	sql.sprintf("select svg_sn,svg_name from t_ssp_svglib_item where svgtype_sn in (%d,%d)",PIC_TYPE_NORMAL,PIC_TYPE_GIF);
 	int cnt = DB->Retrieve(sql,rs);
 	if (cnt > 0)
 	{
@@ -114,7 +114,7 @@ void DBPic::SlotImport()
 		return;
 	}
 
-	QStringList listFileName = QFileDialog::getOpenFileNames(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png)"));
+	QStringList listFileName = QFileDialog::getOpenFileNames(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png *.gif)"));
 	foreach (QString fileName, listFileName)
 	{
 		QFile file(fileName);
@@ -127,9 +127,15 @@ void DBPic::SlotImport()
 		QByteArray buffer = file.read(file.bytesAvailable());;
 		file.close();
 
+		int type = 0;
+		if (QFileInfo(fileName).suffix().toLower().trimmed() == "gif")
+			type = PIC_TYPE_GIF;
+		else
+			type = PIC_TYPE_NORMAL;
+			
 		int sn = DB->SelectIntoI(SString::toFormat("select max(svg_sn) from t_ssp_svglib_item")) + 1;
 		SString sql = SString::toFormat("insert into t_ssp_svglib_item (svg_sn,svgtype_sn,svg_name) values (%d,%d,'%s')",
-			sn,3,QFileInfo(fileName).fileName().toStdString().data());
+			sn,type,QFileInfo(fileName).fileName().toStdString().data());
 		if (DB->Execute(sql))
 		{
 			SString sWhere = SString::toFormat("svg_sn=%d",sn);
