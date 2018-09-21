@@ -867,12 +867,6 @@ void GraphicsPictureItem::LoadPicture(int sn)
 {
 	if (!m_picture.load(Common::GetCurrentAppPath() + tr("../picture/%1").arg(sn)))
 		m_picture.load(":/images/fileWarn");
-
-	m_width = m_picture.width();
-	m_height = m_picture.height();
-	m_localRect.setWidth(m_width);
-	m_localRect.setHeight(m_height);
-	m_initialRect = m_localRect;
 }
 
 void GraphicsPictureItem::LoadGif(int sn)
@@ -881,11 +875,6 @@ void GraphicsPictureItem::LoadGif(int sn)
 	bool ret = pix.load(Common::GetCurrentAppPath() + tr("../picture/%1").arg(sn));
 	if (!ret)
 		m_picture.load(":/images/fileWarn");
-	m_width = pix.width();
-	m_height = pix.height();
-	m_localRect.setWidth(m_width);
-	m_localRect.setHeight(m_height);
-	m_initialRect = m_localRect;
 
 	if (ret)
 	{
