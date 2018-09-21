@@ -55,6 +55,7 @@ private:
 	void LoadSymbol(QPoint point);
 	void ScaleToScreenWidth();
 	void ScaleToScreenHeight();
+	void LoadPicture(QXmlStreamReader *xml, AbstractShape *shape);
 
 public:
 	GraphicsItemGroup* LoadGroupFromXML(QXmlStreamReader *xml);

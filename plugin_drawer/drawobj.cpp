@@ -818,6 +818,7 @@ GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QString fileName, QG
 	:GraphicsRectItem(rect, parent),
 	m_fileName(fileName)
 {
+	m_gif = NULL;
 	m_picture.load(Common::GetCurrentAppPath() + "../picture/" + fileName);
 	m_width = m_picture.width();
 	m_height = m_picture.height();
@@ -830,12 +831,16 @@ GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QString fileName, QG
 
 GraphicsPictureItem::~GraphicsPictureItem()
 {
-
+	if (m_gif)
+		delete m_gif;
 }
 
 void GraphicsPictureItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-	painter->drawPixmap(m_localRect.toRect(), m_picture);
+	if (!m_picture.isNull())
+		painter->drawPixmap(m_localRect.toRect(), m_picture);
+	else
+		painter->drawImage(m_localRect.toRect(), m_gif->currentImage());
 }
 
 bool GraphicsPictureItem::LoadFromXml(QXmlStreamReader *xml)
@@ -845,14 +850,48 @@ bool GraphicsPictureItem::LoadFromXml(QXmlStreamReader *xml)
 	if (!m_fileName.isEmpty())
 	{
 		if (Common::FileExists(Common::GetCurrentAppPath() + "../picture/" + m_fileName))
-			m_picture.load(Common::GetCurrentAppPath() + "../picture/" + m_fileName);
+		{
+			if (!m_picture.load(Common::GetCurrentAppPath() + "../picture/" + m_fileName))
+				m_picture.load(":/images/fileWarn");
+		}
 		else
-			m_picture.load(Common::GetCurrentAppPath() + "../picture/fileWarn.png");
+			m_picture.load(":/images/fileWarn");
 	}
 
 	xml->skipCurrentElement();
 	UpdateCoordinate();
 	return true;
+}
+
+void GraphicsPictureItem::LoadPicture(int sn)
+{
+	if (!m_picture.load(Common::GetCurrentAppPath() + tr("../picture/%1").arg(sn)))
+		m_picture.load(":/images/fileWarn");
+
+	m_width = m_picture.width();
+	m_height = m_picture.height();
+	m_localRect.setWidth(m_width);
+	m_localRect.setHeight(m_height);
+	m_initialRect = m_localRect;
+}
+
+void GraphicsPictureItem::LoadGif(int sn)
+{
+	QPixmap pix;
+	bool ret = pix.load(Common::GetCurrentAppPath() + tr("../picture/%1").arg(sn));
+	if (!ret)
+		m_picture.load(":/images/fileWarn");
+	m_width = pix.width();
+	m_height = pix.height();
+	m_localRect.setWidth(m_width);
+	m_localRect.setHeight(m_height);
+	m_initialRect = m_localRect;
+
+	if (ret)
+	{
+		m_gif = new QMovie(Common::GetCurrentAppPath() + tr("../picture/%1").arg(sn));
+		m_gif->start();
+	}
 }
 
 ///////////////////////// GraphicsItemGroup /////////////////////////

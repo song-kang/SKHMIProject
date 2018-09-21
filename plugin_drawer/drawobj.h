@@ -308,6 +308,9 @@ public:
 
 	QString GetFileName() { return m_fileName; }
 
+	void LoadPicture(int sn);
+	void LoadGif(int sn);
+
 public:
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual bool LoadFromXml(QXmlStreamReader *xml);
@@ -315,6 +318,7 @@ public:
 public:
 	QPixmap m_picture;
 	QString m_fileName;
+	QMovie *m_gif;
 
 };
 

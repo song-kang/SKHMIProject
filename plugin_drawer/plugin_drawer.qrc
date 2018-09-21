@@ -1,4 +1,5 @@
 <RCC>
-	<qresource prefix="/plugin_drawer">
-	</qresource>
+    <qresource prefix="/images">
+        <file alias="fileWarn">Resources/images/fileWarn.png</file>
+    </qresource>
 </RCC>

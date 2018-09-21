@@ -31,6 +31,9 @@ private:
 	QString m_sError;
 
 private:
+	void DownLoadPicture();
+
+private:
 	CInitWidget *m_pApp;
 };
 

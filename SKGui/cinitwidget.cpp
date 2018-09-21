@@ -57,6 +57,15 @@ void LoadThread::run()
 		return;
 	}
 
+	SigText(tr("下载图库......"));
+	QString dir = Common::GetCurrentAppPath() + "../picture/";
+	if (!Common::FolderExists(dir) && !Common::CreateFolder(dir))
+	{
+		m_sError = tr("图片文件夹(picture)不存在或无法创建！");
+		return;
+	}
+	DownLoadPicture();
+
 	SigText(tr("加载代理配置，启动代理......"));
 	SK_GUI->BeginAgent();
 
@@ -64,6 +73,37 @@ void LoadThread::run()
 	SK_GUI->m_pPluginMgr->Init();
 
 	SigText(tr("加载完毕."));
+}
+
+void LoadThread::DownLoadPicture()
+{
+	SString sql;
+	SRecordset rs;
+	sql.sprintf("select svg_sn from t_ssp_svglib_item");
+	int cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		for (int i = 0; i < cnt; i++)
+		{
+			int sn = rs.GetValue(i,0).toInt();
+
+			int len = 0;
+			unsigned char* buffer = NULL;
+			SString sWhere = SString::toFormat("svg_sn=%d",sn);
+			if (DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len))
+			{
+				QString path = Common::GetCurrentAppPath() + tr("../picture/%1").arg(sn);
+				QFile file(path);
+				if (!file.open(QFile::WriteOnly))
+				{
+					delete buffer;
+					continue;
+				}
+				file.write((char*)buffer, len);
+				delete buffer;
+			}
+		}
+	}
 }
 
 ///////////////////////////// CInitWidget //////////////////////////////////

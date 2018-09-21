@@ -297,7 +297,10 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 		else if (xml->name() == tr("text"))
 			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
 		else if (xml->name() == tr("picture"))
+		{
 			item = new GraphicsPictureItem(QRect(0, 0, 0, 0), QString::null);
+			LoadPicture(xml, item);
+		}
 		else if (xml->name()==tr("polygon"))
 			item = new GraphicsPolygonItem();
 		else if (xml->name()==tr("polyline"))
@@ -351,7 +354,10 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 		else if (xml->name() == tr("text"))
 			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
 		else if (xml->name() == tr("picture"))
+		{
 			item = new GraphicsPictureItem(QRect(0, 0, 0, 0), QString::null);
+			LoadPicture(xml, item);
+		}
 		else if (xml->name()==tr("polygon"))
 			item = new GraphicsPolygonItem();
 		else if (xml->name()==tr("polyline"))
@@ -398,4 +404,14 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 	}
 
 	return NULL;
+}
+
+void DrawView::LoadPicture(QXmlStreamReader *xml, AbstractShape *shape)
+{
+	int sn = xml->attributes().value(tr("sn")).toString().toInt();
+	int type = DB->SelectIntoI(SString::toFormat("select svgtype_sn from t_ssp_svglib_item where svg_sn=%d",sn));
+	if (type == 3)
+		((GraphicsPictureItem*)shape)->LoadPicture(sn);
+	else if (type == 4)
+		((GraphicsPictureItem*)shape)->LoadGif(sn);
 }
