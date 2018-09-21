@@ -36,6 +36,7 @@ public:
 	QList<CWnd*> &GetListWnd() { return m_lstWnd; }
 	int GetCurrentWndSn() { return m_iCurrentWndSn; }
 	void SetPicture(QPixmap pix) { m_pScene->m_picture = pix; }
+	void SetPictureSn(int sn) { m_pScene->m_pictureSn = sn; }
 	void SetExitPicture(bool b) { m_bExitPicture = b; }
 	bool GetExitPicture() { return m_bExitPicture; }
 

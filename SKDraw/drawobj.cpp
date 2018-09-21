@@ -2,6 +2,7 @@
 #include "drawscene.h"
 #include "drawview.h"
 #include "skdraw.h"
+#include "ssp_database.h"
 
 ///////////////////////// ShapeMimeData /////////////////////////
 ShapeMimeData::ShapeMimeData(QList<QGraphicsItem *> items)
@@ -1335,9 +1336,9 @@ bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsPictureItem /////////////////////////
-GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QPixmap picture, QGraphicsItem *parent)
+GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, int sn, QPixmap picture, QGraphicsItem *parent)
 	:GraphicsRectItem(rect, parent),
-	m_picture(picture)
+	m_iSn(sn),m_picture(picture)
 {
 	m_width = m_picture.width();
 	m_height = m_picture.height();
@@ -1397,7 +1398,7 @@ QGraphicsItem* GraphicsPictureItem::Duplicate()
 {
 	GraphicsPictureItem *item;
 	if (!m_picture.isNull())
-		item = new GraphicsPictureItem(m_localRect.toRect(), m_picture);
+		item = new GraphicsPictureItem(m_localRect.toRect(), m_iSn, m_picture);
 	else
 		item = new GraphicsPictureItem(m_localRect.toRect(), m_fileName);
 
@@ -1441,16 +1442,23 @@ bool GraphicsPictureItem::LoadFromXml(QXmlStreamReader *xml)
 	ReadBaseAttributes(xml);
 	m_iSn = xml->attributes().value(tr("sn")).toString().toInt();
 	m_fileName = xml->attributes().value(tr("name")).toString();
-	if (!m_fileName.isEmpty())
-	{
-		if (Common::FileExists(Common::GetCurrentAppPath() + "../picture/" + m_fileName))
-			m_picture.load(Common::GetCurrentAppPath() + "../picture/" + m_fileName);
-		else
-			m_picture.load(Common::GetCurrentAppPath() + "../picture/fileWarn.png");
-	}
+
+	if (m_picture.isNull() && !LoadPictureByName())
+		m_picture.load(":/images/fileWarn");
 
 	xml->skipCurrentElement();
 	UpdateCoordinate();
+	return true;
+}
+
+bool GraphicsPictureItem::LoadPictureByName()
+{
+	if (!Common::FileExists(Common::GetCurrentAppPath() + "../picture/" + m_fileName))
+		return false;
+
+	if (!m_picture.load(Common::GetCurrentAppPath() + "../picture/" + m_fileName))
+		return false;
+	
 	return true;
 }
 

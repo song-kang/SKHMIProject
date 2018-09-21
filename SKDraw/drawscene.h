@@ -84,6 +84,7 @@ protected:
 
 public:
 	QPixmap m_picture;
+	int m_pictureSn;
 
 private:
 	GridTool *m_pGrid;

@@ -408,16 +408,8 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 			m_pItem = new GraphicsRhombusItem(QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawPicture)
 		{
-			//QString f = QFileDialog::getOpenFileName(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png)"));
-			//if (!f.isEmpty() && SavePicture(f))
-			//	m_pItem = new GraphicsPictureItem(QRect(0, 0, 0, 0), QFileInfo(f).fileName());
-			//else
-			//{
-			//	SetCursor(scene,Qt::ArrowCursor);
-			//	return;
-			//}
 			if (!scene->m_picture.isNull())
-				m_pItem = new GraphicsPictureItem(QRect(0, 0, 0, 0), scene->m_picture);
+				m_pItem = new GraphicsPictureItem(QRect(0, 0, 0, 0), scene->m_pictureSn, scene->m_picture);
 			else
 				return;
 		}

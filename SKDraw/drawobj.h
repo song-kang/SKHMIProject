@@ -510,7 +510,7 @@ public:
 class GraphicsPictureItem :public GraphicsRectItem
 {
 public:
-	GraphicsPictureItem(const QRect &rect, QPixmap picture, QGraphicsItem *parent = 0);
+	GraphicsPictureItem(const QRect &rect, int sn, QPixmap picture, QGraphicsItem *parent = 0);
 	GraphicsPictureItem(const QRect &rect, QString fileName, QGraphicsItem *parent = 0);
 	~GraphicsPictureItem();
 
@@ -530,6 +530,9 @@ public:
 	int m_iSn;
 	QPixmap m_picture;
 	QString m_fileName;
+
+private:
+	bool LoadPictureByName();
 
 };
 

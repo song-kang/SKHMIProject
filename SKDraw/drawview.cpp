@@ -326,6 +326,12 @@ bool DrawView::SaveDB()
 
 bool DrawView::SlotSaveDB()
 {
+	if (m_app->GetDBState() == false)
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("需连接数据库"));
+		return false;
+	}
+
 	QString fileName = "tmp.sdw";
 	QFile file(fileName);
 	if (!file.open(QIODevice::ReadOnly))
@@ -425,6 +431,23 @@ bool DrawView::LoadFile(const QString fileName)
 	return true;
 }
 
+QPixmap DrawView::LoadPictureByDB(QXmlStreamReader *xml)
+{
+	QPixmap pix;
+	int sn = xml->attributes().value(tr("sn")).toString().toInt();
+
+	int len = 0;
+	unsigned char* buffer = NULL;
+	SString sWhere = SString::toFormat("svg_sn=%d",sn);
+	if (m_app->GetDBState() && DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len))
+	{
+		pix.loadFromData(buffer, len);
+		delete buffer;
+	}
+
+	return pix;
+}
+
 bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 {
 	if (!xml->isStartElement() || xml->name() != "canvas")
@@ -447,7 +470,10 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 		else if (xml->name() == tr("text"))
 			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
 		else if (xml->name() == tr("picture"))
+		{
 			item = new GraphicsPictureItem(QRect(0, 0, 0, 0), QString::null);
+			((GraphicsPictureItem*)item)->m_picture = LoadPictureByDB(xml);
+		}
 		else if (xml->name()==tr("polygon"))
 			item = new GraphicsPolygonItem();
 		else if (xml->name()==tr("polyline"))
@@ -495,7 +521,10 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 		else if (xml->name() == tr("text"))
 			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
 		else if (xml->name() == tr("picture"))
+		{
 			item = new GraphicsPictureItem(QRect(0, 0, 0, 0), QString::null);
+			((GraphicsPictureItem*)item)->m_picture = LoadPictureByDB(xml);
+		}
 		else if (xml->name()==tr("polygon"))
 			item = new GraphicsPolygonItem();
 		else if (xml->name()==tr("polyline"))

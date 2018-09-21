@@ -55,6 +55,9 @@ void DBPic::Start()
 {
 	m_pCurrentListWidgetItem = NULL;
 
+	if (m_app->GetDBState() == false)
+		return;
+
 	SString sql;
 	SRecordset rs;
 	sql.sprintf("select svg_sn,svg_name from t_ssp_svglib_item where svgtype_sn=3");
@@ -79,6 +82,7 @@ void DBPic::Start()
 				var.setValue(pix);
 				item->setData(Qt::UserRole,var);
 				ui.listWidget->addItem(item);
+				delete buffer;
 			}
 		}
 	}
@@ -96,6 +100,7 @@ void DBPic::SlotOk()
 	m_pCurrentListWidgetItem = list.at(0);
 	QPixmap pix = m_pCurrentListWidgetItem->data(Qt::UserRole).value<QPixmap>();
 	m_app->SetPicture(pix);
+	m_app->SetPictureSn(m_pCurrentListWidgetItem->type());
 	m_app->SetExitPicture(true);
 
 	emit SigClose();
@@ -103,6 +108,12 @@ void DBPic::SlotOk()
 
 void DBPic::SlotImport()
 {
+	if (m_app->GetDBState() == false)
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("需连接数据库"));
+		return;
+	}
+
 	QStringList listFileName = QFileDialog::getOpenFileNames(NULL, tr("选择图像文件"), QString::null, tr("图像文件(*.bmp *.jpg *.png)"));
 	foreach (QString fileName, listFileName)
 	{
@@ -134,7 +145,16 @@ void DBPic::SlotExport()
 {
 	QList<QListWidgetItem *> list = ui.listWidget->selectedItems();
 	if (list.count() == 0)
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("请选择需导出的图片"));
 		return;
+	}
+
+	if (m_app->GetDBState() == false)
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("需连接数据库"));
+		return;
+	}
 
 	QString dir = QFileDialog::getExistingDirectory();
 	foreach (QListWidgetItem *item, list)
@@ -155,8 +175,12 @@ void DBPic::SlotExport()
 				QString path = dir + "\\" + name;
 				QFile file(path);
 				if (!file.open(QFile::WriteOnly))
+				{
+					delete buffer;
 					continue;
+				}
 				file.write((char*)buffer, len);
+				delete buffer;
 			}
 		}
 	}
@@ -168,7 +192,16 @@ void DBPic::SlotDel()
 {
 	QList<QListWidgetItem *> list = ui.listWidget->selectedItems();
 	if (list.count() == 0)
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("请选择需删除的图片"));
 		return;
+	}
+
+	if (m_app->GetDBState() == false)
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("需连接数据库"));
+		return;
+	}
 
 	int ret = QMessageBox::question(this, "询问", "确认删除图片？",tr("删除"),tr("放弃"));
 	if (ret != 0)

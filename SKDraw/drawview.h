@@ -68,6 +68,7 @@ private:
 	void UpdateRuler();
 	bool LoadCanvas(QXmlStreamReader *xml);
 	void LoadSymbol(QPoint point);
+	QPixmap LoadPictureByDB(QXmlStreamReader *xml);
 
 public:
 	GraphicsItemGroup* LoadGroupFromXML(QXmlStreamReader *xml);
@@ -75,13 +76,11 @@ public:
 signals:
 	void SigPositionChanged(int x, int y);
 	void SigMouseRightButton(QPoint p);
+	void SigSaveDB();
 
 private:
 	SKDraw *m_app;
 	QGraphicsScene *m_pScene;
-
-signals:
-	void SigSaveDB();
 
 private slots:
 	void SlotScrollBarValueChanged(int pos);
