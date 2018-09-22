@@ -15,10 +15,12 @@ public:
 	void SetDesc(QString desc) { m_sDesc = desc; }
 	void SetAuth(bool b) { m_bAuth = b; }
 	void SetType(int type) { m_iType = type; }
+	void SetRefSn(int sn) { m_iRefSn = sn; }
 	QString GetKey() { return m_sKey; }
 	QString GetDesc() { return m_sDesc; }
 	bool GetAuth() { return m_bAuth; }
 	int GetType() { return m_iType; }
+	int GetRefSn() { return m_iRefSn; }
 
 	bool IsExist(QString key);
 
@@ -33,6 +35,7 @@ private:
 	QString m_sDesc;
 	bool m_bAuth;
 	int	m_iType;
+	int m_iRefSn; //m_iType=0,1时无效;m_iType=2时为T_SSP_UICFG_WND的wnd_sn;
 	
 };
 

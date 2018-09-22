@@ -36,11 +36,9 @@ void CFunPointEdit::Init()
 	m_bIconChange = false;
 	m_iImageLen = 0;
 
-	ui.comboBox_type->insertItem(0,"插件功能点");
+	ui.comboBox_type->insertItem(NORMAL_PLUGIN,"一般插件功能点");
 	ui.comboBox_type->insertSeparator(1);
-	//ui.comboBox_type->insertItem(1,"动态菜单项");
-	ui.comboBox_type->insertItem(2,"组态界面功能点");
-	ui.comboBox_type->insertItem(3,"动态报表功能点");
+	ui.comboBox_type->insertItem(DRAW_PLUGIN,"组态插件功能点");
 
 	QRegExp regx("[0-9]+$");
 	QValidator *validator = new QRegExpValidator(regx, ui.lineEdit_no);
@@ -122,7 +120,7 @@ void CFunPointEdit::InitTreeWidget(QTreeWidgetItem *item, QString key)
 				else
 					it->setIcon(0,QIcon(":/images/application"));
 				if (imageBuffer)
-					delete imageBuffer;
+					delete [] imageBuffer;
 			}
 			it->setText(0,name);
 			it->setToolTip(0,name);
@@ -192,7 +190,7 @@ void CFunPointEdit::Start()
 				else
 					root->setIcon(0,QIcon(":/images/application"));
 				if (imageBuffer)
-					delete imageBuffer;
+					delete [] imageBuffer;
 			}
 			root->setText(0,name);
 			root->setToolTip(0,name);
@@ -201,10 +199,20 @@ void CFunPointEdit::Start()
 		}
 	}
 
+	sql.sprintf("select wnd_sn,wnd_name from t_ssp_uicfg_wnd");
+	cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		ui.comboBox_wnd->insertItem(0, "空", 0);
+		for (int i = 0; i < cnt; i++)
+			ui.comboBox_wnd->insertItem(i+1, rs.GetValue(i,1).data(), rs.GetValue(i,0).toInt());
+	}
+
 	ui.lineEdit_no->setEnabled(false);
 	ui.lineEdit_name->setEnabled(false);
 	ui.comboBox_type->setEnabled(false);
 	ui.comboBox_plugin->setEnabled(false);
+	ui.comboBox_wnd->setEnabled(false);
 	ui.btnIconExport->setEnabled(false);
 	ui.btnIconImport->setEnabled(false);
 	ui.btnSave->setEnabled(false);
@@ -262,6 +270,7 @@ void CFunPointEdit::SlotTreeItemClicked(QTreeWidgetItem *item, int column)
 	ui.lineEdit_name->setEnabled(true);
 	ui.comboBox_type->setEnabled(true);
 	ui.comboBox_plugin->setEnabled(true);
+	ui.comboBox_wnd->setEnabled(true);
 	ui.btnIconExport->setEnabled(true);
 	ui.btnIconImport->setEnabled(true);
 	ui.btnSave->setEnabled(false);
@@ -271,11 +280,13 @@ void CFunPointEdit::SlotTreeItemClicked(QTreeWidgetItem *item, int column)
 		ui.label_plugin->setVisible(false);
 		ui.label_icon->setVisible(false);
 		ui.label_auth->setVisible(false);
+		ui.label_wnd->setVisible(false);
 		ui.comboBox_type->setVisible(false);
 		ui.comboBox_plugin->setVisible(false);
 		ui.btnIconExport->setVisible(false);
 		ui.btnIconImport->setVisible(false);
 		ui.tableWidget_auth->setVisible(false);
+		ui.comboBox_wnd->setVisible(false);
 	}
 	else
 	{
@@ -294,7 +305,7 @@ void CFunPointEdit::SlotTreeItemClicked(QTreeWidgetItem *item, int column)
 
 	SString sql;
 	SRecordset rs;
-	sql.sprintf("select fun_key,name,idx,type from t_ssp_fun_point where fun_key='%s'",m_sCurrentKey.toStdString().data());
+	sql.sprintf("select fun_key,name,idx,type,ref_sn from t_ssp_fun_point where fun_key='%s'",m_sCurrentKey.toStdString().data());
 	int cnt = DB->Retrieve(sql,rs);
 	if (cnt == 1)
 	{
@@ -302,6 +313,7 @@ void CFunPointEdit::SlotTreeItemClicked(QTreeWidgetItem *item, int column)
 		disconnect(ui.lineEdit_no, SIGNAL(textChanged(const QString&)), this, SLOT(SlotNoTextChanged(const QString&)));
 		disconnect(ui.lineEdit_name, SIGNAL(textChanged(const QString&)), this, SLOT(SlotNameTextChanged(const QString&)));
 		disconnect(ui.comboBox_type, SIGNAL(currentIndexChanged(int)), this, SLOT(SlotTypeCurrentIndexChanged(int)));
+		disconnect(ui.comboBox_wnd, SIGNAL(currentIndexChanged(int)), this, SLOT(SlotWndCurrentIndexChanged(int)));
 		disconnect(ui.comboBox_plugin, SIGNAL(editTextChanged(const QString&)), this, SLOT(SlotPluginEditTextChanged(const QString&)));
 
 		QString fun_key = m_sPlugin = rs.GetValue(0,0).data();
@@ -309,6 +321,7 @@ void CFunPointEdit::SlotTreeItemClicked(QTreeWidgetItem *item, int column)
 		int idx = rs.GetValue(0,2).toInt();
 		m_sIdx = QString("%1").arg(idx);
 		int type = m_iType = rs.GetValue(0,3).toInt();
+		m_iRefSn = rs.GetValue(0,4).toInt();
 
 		ui.lineEdit_no->setText(tr("%1").arg(idx));
 		ui.lineEdit_name->setText(tr("%1").arg(name));
@@ -328,6 +341,28 @@ void CFunPointEdit::SlotTreeItemClicked(QTreeWidgetItem *item, int column)
 		if (bFind == false)
 			ui.comboBox_plugin->setEditText(fun_key);
 
+		if (m_iType == DRAW_PLUGIN)
+		{
+			bool bFind = false;
+			ui.label_wnd->setVisible(true);
+			ui.comboBox_wnd->setVisible(true);
+			for (int i = 0; i < ui.comboBox_wnd->count(); i++)
+			{
+				if (ui.comboBox_wnd->itemData(i).toInt() == m_iRefSn)
+				{
+					ui.comboBox_wnd->setCurrentIndex(i);
+					bFind = true;
+				}
+			}
+			if (bFind == false)
+				ui.comboBox_wnd->setCurrentIndex(0);
+		}
+		else
+		{
+			ui.label_wnd->setVisible(false);
+			ui.comboBox_wnd->setVisible(false);
+		}
+
 		int imageLen = 0;
 		unsigned char* imageBuffer = NULL;
 		SString sWhere = SString::toFormat("fun_key='%s'",fun_key.toStdString().data());
@@ -342,7 +377,7 @@ void CFunPointEdit::SlotTreeItemClicked(QTreeWidgetItem *item, int column)
 		else
 			ui.btnIconImport->setIcon(QIcon(":/images/application"));
 		if (imageBuffer)
-			delete imageBuffer;
+			delete [] imageBuffer;
 
 		ui.tableWidget_auth->setRowCount(0);
 		ui.tableWidget_auth->clearContents();
@@ -384,6 +419,7 @@ void CFunPointEdit::SlotTreeItemClicked(QTreeWidgetItem *item, int column)
 		connect(ui.lineEdit_no, SIGNAL(textChanged(const QString&)), this, SLOT(SlotNoTextChanged(const QString&)));
 		connect(ui.lineEdit_name, SIGNAL(textChanged(const QString&)), this, SLOT(SlotNameTextChanged(const QString&)));
 		connect(ui.comboBox_type, SIGNAL(currentIndexChanged(int)), this, SLOT(SlotTypeCurrentIndexChanged(int)));
+		connect(ui.comboBox_wnd, SIGNAL(currentIndexChanged(int)), this, SLOT(SlotWndCurrentIndexChanged(int)));
 		connect(ui.comboBox_plugin, SIGNAL(editTextChanged(const QString&)), this, SLOT(SlotPluginEditTextChanged(const QString&)));
 	}
 }
@@ -430,10 +466,12 @@ void CFunPointEdit::SlotIconExport()
 			if (!file.open(QIODevice::WriteOnly))
 			{
 				QMessageBox::warning(NULL,tr("告警"),tr("文件写模式打开失败"));
+				delete [] imageBuffer;
 				return;
 			}
 			qint64 len = file.write((char*)imageBuffer,imageLen);
 			file.close();
+			delete [] imageBuffer;
 		}
 	}
 	else
@@ -489,11 +527,15 @@ void CFunPointEdit::SlotSave()
 	//	goto fin;
 	//}
 
-	sql.sprintf("update t_ssp_fun_point set fun_key='%s',name='%s',idx=%d,type=%d where fun_key='%s'",
+	if (tmp_key == "plugin_drawer")
+		tmp_key = QString("%1.%2").arg(tmp_key).arg(SDateTime::getNowSoc());
+
+	sql.sprintf("update t_ssp_fun_point set fun_key='%s',name='%s',idx=%d,type=%d,ref_sn=%d where fun_key='%s'",
 		tmp_key.toStdString().data(),
 		ui.lineEdit_name->text().toStdString().data(),
 		ui.lineEdit_no->text().trimmed().toInt(),
 		ui.comboBox_type->currentIndex(),
+		ui.comboBox_wnd->isVisible() ? ui.comboBox_wnd->itemData(ui.comboBox_wnd->currentIndex()).toInt() : -1,
 		m_sCurrentKey.toStdString().data());
 	if (!DB->Execute(sql))
 	{
@@ -592,12 +634,30 @@ void CFunPointEdit::SlotTypeCurrentIndexChanged(int index)
 {
 	Q_UNUSED(index);
 
+	if (index == NORMAL_PLUGIN)
+	{
+		ui.label_wnd->setVisible(false);
+		ui.comboBox_wnd->setVisible(false);
+	}
+	else if (index == DRAW_PLUGIN)
+	{
+		ui.label_wnd->setVisible(true);
+		ui.comboBox_wnd->setVisible(true);
+	}
+
 	CompareChange();
 }
 
 void CFunPointEdit::SlotPluginEditTextChanged(const QString &text)
 {
 	Q_UNUSED(text);
+
+	CompareChange();
+}
+
+void CFunPointEdit::SlotWndCurrentIndexChanged(int index)
+{
+	Q_UNUSED(index);
 
 	CompareChange();
 }
@@ -698,7 +758,7 @@ void CFunPointEdit::SlotFunPointAddClose()
 			else
 				item->setIcon(0,QIcon(":/images/application"));
 			if (imageBuffer)
-				delete imageBuffer;
+				delete [] imageBuffer;
 		}
 		item->setText(0,((CFunPointAdd*)m_pFunPointAddWidget->GetCenterWidget())->GetFunPointName());
 		item->setToolTip(0,((CFunPointAdd*)m_pFunPointAddWidget->GetCenterWidget())->GetFunPointName());
@@ -727,11 +787,13 @@ bool CFunPointEdit::CompareChange()
 	QString idx = ui.lineEdit_no->text().trimmed();
 	QString name = ui.lineEdit_name->text().trimmed();
 	int type = ui.comboBox_type->currentIndex();
+	int refSn = ui.comboBox_wnd->itemData(ui.comboBox_wnd->currentIndex()).toInt();
 
 	if (m_sIdx != idx || 
 		m_sName != name ||
 		m_iType != type ||
 		m_sPlugin != tmp ||
+		m_iRefSn != refSn ||
 		CompareAuthChange())
 	{
 		m_bIsSave = true;

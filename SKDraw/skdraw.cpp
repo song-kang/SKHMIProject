@@ -1252,14 +1252,14 @@ void SKDraw::SlotTreeItemPressed(QTreeWidgetItem *treeItem, int column)
 			{
 				if (m_pView && SlotClose() == false)
 				{
-					delete buffer;
+					delete [] buffer;
 					return;
 				}
 
 				SlotNew();
 				m_pView->Load((char*)buffer);
 				m_pView->SetSaveMode(SAVE_MODE_DB);
-				delete buffer;
+				delete [] buffer;
 				m_iCurrentWndSn = treeItem->data(0, Qt::UserRole).toInt();
 			}
 			else
@@ -1388,7 +1388,7 @@ void SKDraw::SlotMenuWnd(QAction *action)
 						if (!file.open(QIODevice::WriteOnly))
 						{
 							QMessageBox::warning(NULL,tr("告警"),tr("文件写模式打开失败"));
-							delete buffer;
+							delete [] buffer;
 							return;
 						}
 						qint64 length = file.write((char*)buffer,len);
@@ -1396,7 +1396,7 @@ void SKDraw::SlotMenuWnd(QAction *action)
 						QMessageBox::information(NULL,tr("提示"),tr("导出成功"));
 					}
 
-					delete buffer;
+					delete [] buffer;
 				}
 				else
 					QMessageBox::warning(NULL,tr("告警"),tr("无场景文件，无法导出"));

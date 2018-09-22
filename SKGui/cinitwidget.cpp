@@ -90,7 +90,7 @@ void LoadThread::DownLoadPicture()
 			int len = 0;
 			unsigned char* buffer = NULL;
 			SString sWhere = SString::toFormat("svg_sn=%d",sn);
-			if (DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len))
+			if (DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len) && buffer && len > 0)
 			{
 				QString path = Common::GetCurrentAppPath() + tr("../picture/%1").arg(sn);
 				QFile file(path);
@@ -100,7 +100,7 @@ void LoadThread::DownLoadPicture()
 					continue;
 				}
 				file.write((char*)buffer, len);
-				delete buffer;
+				delete [] buffer;
 			}
 		}
 	}

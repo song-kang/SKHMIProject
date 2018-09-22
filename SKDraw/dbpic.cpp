@@ -72,7 +72,7 @@ void DBPic::Start()
 			int len = 0;
 			unsigned char* buffer = NULL;
 			SString sWhere = SString::toFormat("svg_sn=%d",sn);
-			if (DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len))
+			if (DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len) && buffer && len > 0)
 			{
 				QPixmap pix;
 				pix.loadFromData(buffer,len);
@@ -82,7 +82,7 @@ void DBPic::Start()
 				var.setValue(pix);
 				item->setData(Qt::UserRole,var);
 				ui.listWidget->addItem(item);
-				delete buffer;
+				delete [] buffer;
 			}
 		}
 	}
@@ -176,17 +176,17 @@ void DBPic::SlotExport()
 			int len = 0;
 			unsigned char* buffer = NULL;
 			SString sWhere = SString::toFormat("svg_sn=%d",item->type());
-			if (DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len))
+			if (DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len) && buffer && len > 0)
 			{
 				QString path = dir + "\\" + name;
 				QFile file(path);
 				if (!file.open(QFile::WriteOnly))
 				{
-					delete buffer;
+					delete [] buffer;
 					continue;
 				}
 				file.write((char*)buffer, len);
-				delete buffer;
+				delete [] buffer;
 			}
 		}
 	}

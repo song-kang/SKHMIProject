@@ -107,7 +107,8 @@ PLUGIN_EXPORT void* PluginNewView(const char* sFunName,const void* parentWidget)
 		view_plugin_drawer *v = new view_plugin_drawer((QWidget*)parentWidget);
 		if (v)
 		{
-			SString sCmd("D:\\1.sdw");
+			int sn = DB->SelectIntoI(SString::toFormat("select ref_sn from t_ssp_fun_point where fun_key='%s'",sFunName));
+			SString sCmd(SString::toFormat("wnd_sn=%d",sn));
 			SString sResult;
 			v->OnCommand(sCmd, sResult);
 		}

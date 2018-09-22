@@ -32,11 +32,10 @@ void CFunPointAdd::Init()
 	QValidator *validator = new QRegExpValidator(regx, ui.lineEdit_no);
 	ui.lineEdit_no->setValidator(validator); 
 
-	ui.comboBox_type->insertItem(0,"插件功能点");
+	ui.comboBox_type->insertItem(NORMAL_PLUGIN,"一般插件功能点");
 	ui.comboBox_type->insertSeparator(1);
 	//ui.comboBox_type->insertItem(1,"动态菜单项");
-	ui.comboBox_type->insertItem(2,"组态界面功能点");
-	ui.comboBox_type->insertItem(3,"动态报表功能点");
+	ui.comboBox_type->insertItem(DRAW_PLUGIN,"组态插件功能点");
 
 	QList<CPlugin*> l = SK_GUI->m_pPluginMgr->GetPluginList();
 	foreach (CPlugin *plugin, l)
@@ -67,6 +66,9 @@ void CFunPointAdd::Init()
 
 void CFunPointAdd::InitUi()
 {
+	ui.label_wnd->setVisible(false);
+	ui.comboBox_wnd->setVisible(false);
+
 	setStyleSheet(tr("QWidget#%1{background:rgb(255,255,255,220);border-bottom-left-radius:6px;border-bottom-right-radius:6px;}").arg(objectName()));
 }
 
@@ -74,6 +76,7 @@ void CFunPointAdd::InitSlot()
 {
 	connect(ui.btnIconImport, SIGNAL(clicked()), this, SLOT(SlotIconImport()));
 	connect(ui.btnSave, SIGNAL(clicked()), this, SLOT(SlotSave()));
+	connect(ui.comboBox_type, SIGNAL(currentIndexChanged(int)), this, SLOT(SlotTypeCurrentIndexChanged(int)));
 }
 
 void CFunPointAdd::paintEvent(QPaintEvent *e)
@@ -104,8 +107,10 @@ void CFunPointAdd::Start()
 		ui.label_plugin->setVisible(false);
 		ui.label_icon->setVisible(false);
 		ui.label_auth->setVisible(false);
+		ui.label_wnd->setVisible(false);
 		ui.comboBox_type->setVisible(false);
 		ui.comboBox_plugin->setVisible(false);
+		ui.comboBox_wnd->setVisible(false);
 		ui.btnIconImport->setVisible(false);
 		ui.tableWidget_auth->setVisible(false);
 	}
@@ -140,6 +145,31 @@ void CFunPointAdd::Start()
 
 			row++;
 		}
+	}
+
+	sql.sprintf("select wnd_sn,wnd_name from t_ssp_uicfg_wnd");
+	cnt = DB->Retrieve(sql,rs);
+	if (cnt > 0)
+	{
+		ui.comboBox_wnd->insertItem(0, "空", 0);
+		for (int i = 0; i < cnt; i++)
+			ui.comboBox_wnd->insertItem(i+1, rs.GetValue(i,1).data(), rs.GetValue(i,0).toInt());
+	}
+}
+
+void CFunPointAdd::SlotTypeCurrentIndexChanged(int index)
+{
+	Q_UNUSED(index);
+
+	if (index == NORMAL_PLUGIN)
+	{
+		ui.label_wnd->setVisible(false);
+		ui.comboBox_wnd->setVisible(false);
+	}
+	else if (index == DRAW_PLUGIN)
+	{
+		ui.label_wnd->setVisible(true);
+		ui.comboBox_wnd->setVisible(true);
 	}
 }
 
@@ -209,19 +239,24 @@ void CFunPointAdd::SlotSave()
 	SRecordset rs;
 	sql.sprintf("select count(*) from t_ssp_fun_point where fun_key='%s'",m_sFunPointKey.toStdString().data());
 	int cnt = DB->Retrieve(sql,rs);
-	if (rs.GetValue(0,0).toInt() > 0)
+	if (m_sFunPointKey != "plugin_drawer" && 
+		rs.GetValue(0,0).toInt() > 0)
 	{
 		QMessageBox::warning(NULL,tr("告警"),tr("插件名称重复"));
 		return;
 	}
 
 	m_sFunPointName = ui.lineEdit_name->text();
-	sql.sprintf("insert into t_ssp_fun_point (fun_key,p_fun_key,name,idx,type) values ('%s','%s','%s',%d,%d)",
+	if (m_sFunPointKey == "plugin_drawer")
+		m_sFunPointKey = QString("%1.%2").arg(m_sFunPointKey).arg(SDateTime::getNowSoc());
+
+	sql.sprintf("insert into t_ssp_fun_point (fun_key,p_fun_key,name,idx,type,ref_sn) values ('%s','%s','%s',%d,%d,%d)",
 		m_sFunPointKey.toStdString().data(),
 		m_pTreeItem ? m_sKey.toStdString().data() : "top",
 		m_sFunPointName.toStdString().data(),
 		ui.lineEdit_no->text().toInt(),
-		m_iType == TYPE_FOLDER ? 1 : ui.comboBox_type->currentIndex());
+		m_iType == TYPE_FOLDER ? 1 : ui.comboBox_type->currentIndex(),
+		m_iType == TYPE_APP ? ui.comboBox_wnd->itemData(ui.comboBox_wnd->currentIndex()).toInt() : -1);
 	if (!DB->Execute(sql))
 	{
 		QMessageBox::warning(NULL,tr("告警"),tr("保存失败"));

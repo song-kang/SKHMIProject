@@ -33,6 +33,7 @@ private:
 	QString m_sIdx;
 	QString m_sName;
 	int		m_iType;
+	int		m_iRefSn;
 	QString m_sPlugin;
 
 	QMenu *m_pMenuNull;
@@ -69,6 +70,7 @@ private slots:
 	void SlotNameTextChanged(const QString &text);
 	void SlotTypeCurrentIndexChanged(int index);
 	void SlotPluginEditTextChanged(const QString &text);
+	void SlotWndCurrentIndexChanged(int index);
 	void SlotTriggerMenu(QAction *action);
 	void SlotFunPointAddClose();
 };

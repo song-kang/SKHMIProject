@@ -439,10 +439,10 @@ QPixmap DrawView::LoadPictureByDB(QXmlStreamReader *xml)
 	int len = 0;
 	unsigned char* buffer = NULL;
 	SString sWhere = SString::toFormat("svg_sn=%d",sn);
-	if (m_app->GetDBState() && DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len))
+	if (m_app->GetDBState() && DB->ReadLobToMem("t_ssp_svglib_item","svg_file",sWhere,buffer,len) && buffer && len > 0)
 	{
 		pix.loadFromData(buffer, len);
-		delete buffer;
+		delete [] buffer;
 	}
 
 	return pix;

@@ -130,26 +130,18 @@ bool view_plugin_drawer::ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pM
 
 int view_plugin_drawer::OnCommand(SString sCmd,SString &sResult)
 {
-#if 0
-	SString sql;
-	SRecordset rs;
-	sql.sprintf("select ref_sn from t_ssp_fun_point where fun_key='%s'",sCmd.data());
-	int ref_sn = DB->SelectIntoI(sql);
-
-	unsigned char *pBuf;
 	int iLen = 0;
-	if (DB->ReadLobToMem("t_ssp_uicfg_wnd","svg_file",SString::toFormat("wnd_sn=%d",ref_sn),pBuf,iLen))
+	unsigned char *pBuf = NULL;
+	if (DB->ReadLobToMem("t_ssp_uicfg_wnd","svg_file",sCmd,pBuf,iLen) && pBuf && iLen > 0)
 	{
-		m_pView->Load((char*)pBuf);
-		delete [] pBuf;
-	}
-#endif
+		m_pView = CreateView();
+		if (m_pView)
+		{
+			m_pView->Load((char*)pBuf);
+			ui.gridLayoutCentral->addWidget(m_pView);
+		}
 
-	m_pView = CreateView();
-	if (m_pView)
-	{
-		m_pView->Load(QString(sCmd.data()));
-		ui.gridLayoutCentral->addWidget(m_pView);
+		delete [] pBuf;
 	}
 
 	return 0;

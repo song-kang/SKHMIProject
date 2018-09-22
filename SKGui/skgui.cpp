@@ -168,9 +168,9 @@ void SKGui::SetFunPoint(CFunPoint *fpoint)
 	SString sql;
 	SRecordset rs;
 	if (fpoint)
-		sql.sprintf("select fun_key,name,auth,type from t_ssp_fun_point where p_fun_key='%s' order by idx asc",fpoint->GetKey().toStdString().data());
+		sql.sprintf("select fun_key,name,auth,type,ref_sn from t_ssp_fun_point where p_fun_key='%s' order by idx asc",fpoint->GetKey().toStdString().data());
 	else
-		sql.sprintf("select fun_key,name,auth,type from t_ssp_fun_point where p_fun_key='%s' order by idx asc","top");
+		sql.sprintf("select fun_key,name,auth,type,ref_sn from t_ssp_fun_point where p_fun_key='%s' order by idx asc","top");
 	int cnt = DB->Retrieve(sql,rs);
 	if (cnt > 0)
 	{
@@ -181,6 +181,7 @@ void SKGui::SetFunPoint(CFunPoint *fpoint)
 			p->SetDesc(rs.GetValue(i,1).data());
 			p->SetAuth((bool)rs.GetValue(i,2).toInt());
 			p->SetType(rs.GetValue(i,3).toInt());
+			p->SetRefSn(rs.GetValue(i,4).toInt());
 			
 			SString sWhere = SString::toFormat("fun_key='%s'",p->GetKey().toStdString().data());
 			DB->ReadLobToMem("t_ssp_fun_point","img_normal",sWhere,p->m_pImageBuffer,p->m_iImageLen);

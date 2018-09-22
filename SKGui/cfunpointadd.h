@@ -11,6 +11,9 @@
 #define TYPE_FOLDER		1
 #define TYPE_APP		2
 
+#define NORMAL_PLUGIN	0
+#define DRAW_PLUGIN		2
+
 class CFunPointAdd : public SKWidget
 {
 	Q_OBJECT
@@ -55,6 +58,7 @@ signals:
 	void SigClose();
 
 private slots:
+	void SlotTypeCurrentIndexChanged(int index);
 	void SlotIconImport();
 	void SlotSave();
 
