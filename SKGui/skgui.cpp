@@ -422,5 +422,5 @@ void SKGui::GotoFunPoint(QString funKey)
 	}
 
 	QString name = DB->SelectInto(SString::toFormat("select name from t_ssp_fun_point where fun_key='%s'",funKey.toStdString().data()));
-	m_pHmiWidget->GotoFunPoint(funKey,name,QIcon(pix));
+	m_pHmiWidget->GotoFunPoint(funKey,name,pix.isNull()?QIcon(":/images/application"):QIcon(pix));
 }

@@ -34,7 +34,8 @@ void GraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 
 void GraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
-	m_pScene->GetView()->setCursor(Qt::PointingHandCursor);
+	if (!GetLinkScene().isEmpty())
+		m_pScene->GetView()->setCursor(Qt::PointingHandCursor);
 
 	QGraphicsItem::hoverMoveEvent(event);
 }
