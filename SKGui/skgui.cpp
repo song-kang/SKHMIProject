@@ -409,7 +409,18 @@ bool SKGui::IsExistKey(QString key)
 	return bFind;
 }
 
-void SKGui::GotoFunPoint(QString name, QString desc, QIcon icon)
+void SKGui::GotoFunPoint(QString funKey)
 {
-	m_pHmiWidget->GotoFunPoint(name,desc,icon);
+	int iLen = 0;
+	unsigned char *pBuf = NULL;
+	QPixmap pix;
+	SString sWhere = SString::toFormat("fun_key='%s'",funKey.toStdString().data());
+	if (DB->ReadLobToMem("t_ssp_fun_point","img_normal",sWhere,pBuf,iLen) && pBuf && iLen > 0)
+	{
+		pix.loadFromData(pBuf,iLen);
+		delete [] pBuf;
+	}
+
+	QString name = DB->SelectInto(SString::toFormat("select name from t_ssp_fun_point where fun_key='%s'",funKey.toStdString().data()));
+	m_pHmiWidget->GotoFunPoint(funKey,name,QIcon(pix));
 }

@@ -55,7 +55,7 @@ public:
 	void DeleteUserAuth();
 	bool IsExistKey(QString key);
 
-	void GotoFunPoint(QString name, QString desc, QIcon icon);
+	void GotoFunPoint(QString funKey);
 
 public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);

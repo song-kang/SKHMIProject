@@ -174,17 +174,7 @@ void view_plugin_drawer::SlotItemSelected()
 	if (scene.isEmpty())
 		return;
 
-	int iLen = 0;
-	unsigned char *pBuf = NULL;
-	QStringList l = scene.split("::");
-	QPixmap pix;
-	SString sWhere = SString::toFormat("fun_key='%s'",l.at(0).toStdString().data());
-	if (DB->ReadLobToMem("t_ssp_fun_point","img_normal",sWhere,pBuf,iLen) && pBuf && iLen > 0)
-	{
-		pix.loadFromData(pBuf,iLen);
-		delete [] pBuf;
-	}
-	SK_GUI->GotoFunPoint(l.at(0), l.at(1), QIcon(pix));
+	SK_GUI->GotoFunPoint(scene.split("::").at(0));
 	m_pScene->clearSelection();
 }
 
