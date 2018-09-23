@@ -236,6 +236,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_dbpic.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="selfun.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_selfun.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_selfun.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="skdraw.h">
@@ -340,6 +349,12 @@
     <CustomBuild Include="dbpic.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="selfun.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="selfun.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_skdraw.h">
@@ -358,6 +373,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_dbpic.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_selfun.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

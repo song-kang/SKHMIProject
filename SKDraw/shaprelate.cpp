@@ -1,6 +1,7 @@
 #include "shaprelate.h"
 #include "skdraw.h"
 #include "seldb.h"
+#include "selfun.h"
 
 ///////////////////////// PropertyState /////////////////////////
 PropertyState::PropertyState(QWidget *parent)
@@ -244,6 +245,7 @@ void ShapRelate::Init()
 	ui.tabWidgetState->setEnabled(false);
 	ui.btnLinkDB->setEnabled(false);
 	m_pSelDBWidget = NULL;
+	m_pSelFunWidget = NULL;
 }
 
 void ShapRelate::InitUi()
@@ -604,12 +606,46 @@ void ShapRelate::SlotSelDBClose()
 {
 	ui.lineEditLinkDB->setText(((SelDB*)m_pSelDBWidget->GetCenterWidget())->GetPoint());
 
-	disconnect(m_pSelDBWidget, SIGNAL(SigClose()), this, SLOT(SlotLinkDataClose()));
+	disconnect(m_pSelDBWidget, SIGNAL(SigClose()), this, SLOT(SlotSelDBClose()));
 	delete m_pSelDBWidget;
 	m_pSelDBWidget = NULL;
 }
 
 void ShapRelate::SlotLinkScene()
 {
+	if (!m_app->GetDBState())
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("数据库连接异常"));
+		return;
+	}
 
+	if (!m_pSelFunWidget)
+	{
+		SelFun *wgt = new SelFun(this);
+		m_pSelFunWidget = new SKBaseWidget(NULL,wgt);
+		m_pSelFunWidget->SetWindowsFlagsDialog();
+		m_pSelFunWidget->SetWindowsModal();
+		m_pSelFunWidget->SetWindowTitle("选择功能点");
+#ifdef WIN32
+		m_pSelFunWidget->SetWindowIcon(QIcon(":/images/dblink"));
+#else
+		m_pSelFunWidget->SetWindowIcon(":/images/dblink");
+#endif
+		m_pSelFunWidget->SetWindowFlags(0);
+		m_pSelFunWidget->SetWindowSize(900,600);
+		m_pSelFunWidget->SetIsDrag(true);
+		connect(m_pSelFunWidget, SIGNAL(SigClose()), this, SLOT(SlotSelFunClose()));
+	}
+
+	((SelFun*)m_pSelFunWidget->GetCenterWidget())->Start();
+	m_pSelFunWidget->Show();
+}
+
+void ShapRelate::SlotSelFunClose()
+{
+	ui.lineEditLinkScene->setText(((SelFun*)m_pSelFunWidget->GetCenterWidget())->GetFunPoint());
+
+	disconnect(m_pSelFunWidget, SIGNAL(SigClose()), this, SLOT(SlotSelFunClose()));
+	delete m_pSelFunWidget;
+	m_pSelFunWidget = NULL;
 }

@@ -79,6 +79,7 @@ public:
 	QString m_text;
 	QString m_picturePath;
 	SKBaseWidget *m_pSelDBWidget;
+	SKBaseWidget *m_pSelFunWidget;
 
 protected:
 	virtual void paintEvent(QPaintEvent *);
@@ -101,6 +102,7 @@ private slots:
 	void SlotLinkDB();
 	void SlotSelDBClose();
 	void SlotLinkScene();
+	void SlotSelFunClose();
 	void SlotShowTypeChanged(int index);
 	void SlotStateNumChanged(int index);
 
