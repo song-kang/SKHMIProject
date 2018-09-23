@@ -335,7 +335,7 @@ void CNavigtion::SlotClickedFunPoint()
 	}
 
 	SetQuickFunPoint(name);
-	Common::ClearLayout(ui.vLayoutFun);
+	ClearFunPointLayout();
 	SetQuickFunPointList();
 
 	m_pTool->RefreshArrow();

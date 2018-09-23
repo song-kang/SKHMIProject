@@ -25,8 +25,10 @@ public:
 	void SetEveryFunction(bool b) { m_bEveryFunction = b; }
 
 	void SetUser(QString user);
+	void SetQuickFunPoint(QString key);
 	void SetQuickFunPointList();
 	void SetTreeFunPoint(QList<CFunPoint*> lstFunPoint, CUser *user, QTreeWidgetItem *itemParent);
+	void ClearFunPointLayout() { Common::ClearLayout(ui.vLayoutFun); }
 
 private:
 	Ui::CNavigtion ui;
@@ -43,7 +45,6 @@ private:
 	void Init();
 	void InitUi();
 	void InitSlot();
-	void SetQuickFunPoint(QString key);
 	void QuickFunPointList(QString key, QList<CFunPoint*> lstFunPoint);
 	void FindFunPoint(QTreeWidgetItem *item, const QString &text);
 

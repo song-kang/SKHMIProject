@@ -14,7 +14,9 @@
  * 001	 2018-08-11	SspAssist　创建文件
  *
  **/
+
 #include "view_plugin_drawer.h"
+#include "skgui.h"
 
 //================= MDBThread ===================
 MDBThread::MDBThread(QObject *parent)
@@ -163,17 +165,37 @@ DrawView* view_plugin_drawer::CreateView()
 
 void view_plugin_drawer::SlotItemSelected()
 {
-	int a = 0;
+	QList<QGraphicsItem*> list = m_pScene->selectedItems();
+	if (list.count() != 1)
+		return;
+
+	QGraphicsItem *item = list.at(0);
+	QString scene = ((GraphicsItem*)item)->GetLinkScene();
+	if (scene.isEmpty())
+		return;
+
+	int iLen = 0;
+	unsigned char *pBuf = NULL;
+	QStringList l = scene.split("::");
+	QPixmap pix;
+	SString sWhere = SString::toFormat("fun_key='%s'",l.at(0).toStdString().data());
+	if (DB->ReadLobToMem("t_ssp_fun_point","img_normal",sWhere,pBuf,iLen) && pBuf && iLen > 0)
+	{
+		pix.loadFromData(pBuf,iLen);
+		delete [] pBuf;
+	}
+	SK_GUI->GotoFunPoint(l.at(0), l.at(1), QIcon(pix));
+	m_pScene->clearSelection();
 }
 
 void view_plugin_drawer::SlotPositionChanged(int,int)
 {
-	int a = 0;
+	
 }
 
 void view_plugin_drawer::SlotMouseRightButton(QPoint)
 {
-	int a = 0;
+	
 }
 
 void view_plugin_drawer::InsertMapLinkDBState(QString key, GraphicsItem *item)

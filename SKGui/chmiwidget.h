@@ -19,6 +19,7 @@ public:
 
 	void SetApp(SKBaseWidget *app) { m_app = app; }
 	int  GotoWidget(QString name);
+	void GotoFunPoint(QString name, QString desc, QIcon icon);
 	bool ShowWidgetByPluginName(QString name);
 	void InsertWidget(CBaseView *view);
 	void DeleteWidget(QString name);

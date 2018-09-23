@@ -45,7 +45,7 @@ DrawScene::DrawScene(QObject *parent)
 	m_pAlignItem = NULL;
 
 	m_pSwapIntervalTimer = new QTimer(this);
-	m_pSwapIntervalTimer->setInterval(1000);
+	m_pSwapIntervalTimer->setInterval(100);
 	m_pSwapIntervalTimer->start();
 
 	connect(m_pSwapIntervalTimer, SIGNAL(timeout()), this, SLOT(SlotSwapIntervalTimer()));
@@ -72,7 +72,7 @@ void DrawScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void DrawScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-	QGraphicsScene::mousePressEvent(mouseEvent);
+	QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
 void DrawScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)

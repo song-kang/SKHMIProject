@@ -24,6 +24,7 @@ class CPluginMgr;
 class CFunPoint;
 class CUsers;
 class CUser;
+class CHMIWidget;
 class SKGUI_EXPORT SKGui : public SApplication
 {
 public:
@@ -54,6 +55,8 @@ public:
 	void DeleteUserAuth();
 	bool IsExistKey(QString key);
 
+	void GotoFunPoint(QString name, QString desc, QIcon icon);
+
 public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
 	virtual bool Start(){ return true; }
@@ -65,6 +68,7 @@ public:
 	QList<CUsers*> m_lstUsers;
 	QSettings *m_iSettings;
 	quint32 m_iLoginOutTime;
+	CHMIWidget *m_pHmiWidget;
 
 private:
 	void *w;

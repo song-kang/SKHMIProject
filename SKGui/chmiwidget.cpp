@@ -9,6 +9,7 @@ CHMIWidget::CHMIWidget(QWidget *parent)
 	: SKWidget(parent)
 {
 	m_app = (SKBaseWidget *)parent;
+	SK_GUI->m_pHmiWidget = this;
 
 	Init();
 	InitUi();
@@ -298,6 +299,26 @@ int CHMIWidget::GotoWidget(QString name)
 	}
 
 	return 0; //发现了加载过的插件
+}
+
+void CHMIWidget::GotoFunPoint(QString name, QString desc, QIcon icon)
+{
+	int ret = GotoWidget(name);
+	if (ret == 1) //新建插件成功
+	{
+		m_pToolWidget->CreateToolButton(name,desc,icon);
+		m_pToolWidget->SetToolButtonClicked(name);
+	}
+	else if (ret == 2) //未发现加载过的插件，且新建插件失败
+	{
+		QMessageBox::warning(NULL,tr("告警"),tr("界面【%1】加载失败！").arg(""));
+	}
+
+	m_pNavigtion->SetQuickFunPoint(name);
+	m_pNavigtion->ClearFunPointLayout();
+	m_pNavigtion->SetQuickFunPointList();
+
+	m_pToolWidget->RefreshArrow();
 }
 
 bool CHMIWidget::ShowWidgetByPluginName(QString name)

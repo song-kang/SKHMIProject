@@ -4,6 +4,7 @@
 #include "cpluginmgr.h"
 #include "cfunpoint.h"
 #include "cusers.h"
+#include "chmiwidget.h"
 
 #define HMI_NAME		"HMI界面主程序"
 #define HMI_VERSION		"1.0.0"
@@ -406,4 +407,9 @@ bool SKGui::IsExistKey(QString key)
 	}
 
 	return bFind;
+}
+
+void SKGui::GotoFunPoint(QString name, QString desc, QIcon icon)
+{
+	m_pHmiWidget->GotoFunPoint(name,desc,icon);
 }
