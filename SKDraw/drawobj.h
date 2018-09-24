@@ -252,7 +252,7 @@ class GraphicsItem : public QObject, public AbstractShapeType <QGraphicsItem>
 	Q_PROPERTY(Qt::BrushStyle BrushStyle READ GetBrushStyle WRITE SetBrushStyle)
 
 public:
-	GraphicsItem(QGraphicsItem * parent);
+	GraphicsItem(DrawScene *scene, QGraphicsItem * parent);
 	~GraphicsItem();
 
 	enum { Type = UserType + 1 };
@@ -299,7 +299,7 @@ signals:
 class GraphicsPolygonItem : public GraphicsItem
 {
 public:
-	GraphicsPolygonItem(QGraphicsItem * parent = 0);
+	GraphicsPolygonItem(DrawScene *scene, QGraphicsItem * parent = 0);
 	~GraphicsPolygonItem();
 
 public:
@@ -329,7 +329,7 @@ public:
 class GraphicsLineItem : public GraphicsPolygonItem
 {
 public:
-	GraphicsLineItem(QGraphicsItem * parent = 0);
+	GraphicsLineItem(DrawScene *scene, QGraphicsItem * parent = 0);
 	~GraphicsLineItem();
 
 public:
@@ -352,7 +352,7 @@ public:
 class GraphicsPolygonLineItem : public GraphicsPolygonItem
 {
 public:
-	GraphicsPolygonLineItem(QGraphicsItem * parent = 0);
+	GraphicsPolygonLineItem(DrawScene *scene, QGraphicsItem * parent = 0);
 	~GraphicsPolygonLineItem();
 
 public:
@@ -376,7 +376,7 @@ class GraphicsRectItem : public GraphicsItem
 	Q_PROPERTY(QSize RoundRadius READ GetRound WRITE SetRound)
 
 public:
-	GraphicsRectItem(const QRect &rect, bool isRound = false, QGraphicsItem * parent = 0);
+	GraphicsRectItem(DrawScene *scene, const QRect &rect, bool isRound = false, QGraphicsItem * parent = 0);
 	~GraphicsRectItem();
 
 	void SetRound(QSize size) { m_round = size; update(); }
@@ -410,7 +410,7 @@ public:
 class GraphicsTriangleItem : public GraphicsRectItem
 {
 public:
-	GraphicsTriangleItem(const QRect &rect, GraphicsRectItem * parent = 0);
+	GraphicsTriangleItem(DrawScene *scene, const QRect &rect, GraphicsRectItem * parent = 0);
 	~GraphicsTriangleItem();
 
 	QRectF GetLocalRect() const { return m_localRect; }
@@ -431,7 +431,7 @@ public:
 class GraphicsRhombusItem : public GraphicsRectItem
 {
 public:
-	GraphicsRhombusItem(const QRect &rect, GraphicsRectItem * parent = 0);
+	GraphicsRhombusItem(DrawScene *scene, const QRect &rect, GraphicsRectItem * parent = 0);
 	~GraphicsRhombusItem();
 
 	QRectF GetLocalRect() const { return m_localRect; }
@@ -452,7 +452,7 @@ public:
 class GraphicsEllipseItem :public GraphicsRectItem
 {
 public:
-	GraphicsEllipseItem(const QRect &rect, bool isCircle = false, QGraphicsItem *parent = 0);
+	GraphicsEllipseItem(DrawScene *scene, const QRect &rect, bool isCircle = false, QGraphicsItem *parent = 0);
 	~GraphicsEllipseItem();
 
 public:
@@ -481,7 +481,7 @@ class GraphicsTextItem :public GraphicsRectItem
 	Q_PROPERTY(QFont Font READ GetFont WRITE SetFont)
 
 public:
-	GraphicsTextItem(const QRect &rect, QGraphicsItem *parent = 0);
+	GraphicsTextItem(DrawScene *scene, const QRect &rect, QGraphicsItem *parent = 0);
 	~GraphicsTextItem();
 
 	void SetFont(QFont font) { m_font = font; update(); }
@@ -512,8 +512,8 @@ public:
 class GraphicsPictureItem :public GraphicsRectItem
 {
 public:
-	GraphicsPictureItem(const QRect &rect, int sn, QPixmap picture, QGraphicsItem *parent = 0);
-	GraphicsPictureItem(const QRect &rect, QString fileName, QGraphicsItem *parent = 0);
+	GraphicsPictureItem(DrawScene *scene, const QRect &rect, int sn, QPixmap picture, QGraphicsItem *parent = 0);
+	GraphicsPictureItem(DrawScene *scene, const QRect &rect, QString fileName, QGraphicsItem *parent = 0);
 	~GraphicsPictureItem();
 
 	QPixmap GetPicture() { return m_picture; }

@@ -46,8 +46,9 @@ QList<QGraphicsItem *> ShapeMimeData::items() const
 }
 
 ///////////////////////// GraphicsItem /////////////////////////
-GraphicsItem::GraphicsItem(QGraphicsItem *parent)
-    :AbstractShapeType<QGraphicsItem>(parent)
+GraphicsItem::GraphicsItem(DrawScene *scene, QGraphicsItem *parent)
+    :AbstractShapeType<QGraphicsItem>(parent),
+	m_pScene(scene)
 {
 	setAcceptHoverEvents(true);
     setFlag(QGraphicsItem::ItemIsMovable, true);
@@ -57,7 +58,7 @@ GraphicsItem::GraphicsItem(QGraphicsItem *parent)
 	m_handles.reserve(eHandleLeft);
 	for (int i = eHandleLeftTop; i <= eHandleLeft; i++)
 	{
-		SizeHandleRect *shr = new SizeHandleRect(this, i);
+		SizeHandleRect *shr = new SizeHandleRect(this, (DrawView*)m_pScene->GetView(), i);
 		m_handles.push_back(shr);
 	}
 
@@ -232,9 +233,11 @@ bool GraphicsItem::WriteBaseAttributes(QXmlStreamWriter *xml)
 }
 
 ///////////////////////// GraphicsPolygonItem /////////////////////////
-GraphicsPolygonItem::GraphicsPolygonItem(QGraphicsItem *parent)
-	:GraphicsItem(parent)
+GraphicsPolygonItem::GraphicsPolygonItem(DrawScene *scene, QGraphicsItem *parent)
+	:GraphicsItem(scene, parent)
 {
+	SetScene(scene);
+
 	SetName("多边形图元");
 }
 
@@ -356,13 +359,13 @@ void GraphicsPolygonItem::UpdateCoordinate()
 
 QGraphicsItem* GraphicsPolygonItem::Duplicate()
 {
-	GraphicsPolygonItem *item = new GraphicsPolygonItem();
+	GraphicsPolygonItem *item = new GraphicsPolygonItem(GetScene());
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
 	item->m_points = m_points;
 	for ( int i = 0 ; i < m_points.size() ; ++i )
-		item->m_handles.push_back(new SizeHandleRect(item, eHandleLeft + i + 1, true));
+		item->m_handles.push_back(new SizeHandleRect(item, (DrawView*)GetScene()->GetView(), eHandleLeft + i + 1, true));
 
 	item->SetScene(GetScene());
 	item->setPos(pos().x(),pos().y());
@@ -399,7 +402,7 @@ void GraphicsPolygonItem::AddPoint(const QPointF &point)
 	m_points.append(mapFromScene(point));
 
 	int direct = m_points.count();
-	SizeHandleRect *shr = new SizeHandleRect(this, direct + eHandleLeft, true);
+	SizeHandleRect *shr = new SizeHandleRect(this, (DrawView*)GetScene()->GetView(), direct + eHandleLeft, true);
 	m_handles.push_back(shr);
 }
 
@@ -460,7 +463,7 @@ bool GraphicsPolygonItem::LoadFromXml(QXmlStreamReader *xml)
 			qreal y = xml->attributes().value("y").toString().toDouble();
 			m_points.append(QPointF(x,y));
 			int dir = m_points.count();
-			SizeHandleRect *shr = new SizeHandleRect(this, dir + eHandleLeft, true);
+			SizeHandleRect *shr = new SizeHandleRect(this, (DrawView*)GetScene()->GetView(), dir + eHandleLeft, true);
 			m_handles.push_back(shr);
 			xml->skipCurrentElement();
 		}
@@ -473,12 +476,14 @@ bool GraphicsPolygonItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsLineItem /////////////////////////
-GraphicsLineItem::GraphicsLineItem(QGraphicsItem *parent)
-	:GraphicsPolygonItem(parent)
+GraphicsLineItem::GraphicsLineItem(DrawScene *scene, QGraphicsItem *parent)
+	:GraphicsPolygonItem(scene, parent)
 {
 	for (Handles::iterator it = m_handles.begin(); it != m_handles.end(); ++it)
 		delete (*it);
 	m_handles.clear();
+
+	SetScene(scene);
 
 	SetName("线段图元");
 }
@@ -530,14 +535,14 @@ void GraphicsLineItem::UpdateHandles()
 
 QGraphicsItem* GraphicsLineItem::Duplicate()
 {
-	GraphicsLineItem *item = new GraphicsLineItem();
+	GraphicsLineItem *item = new GraphicsLineItem(GetScene());
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
 	item->m_points = m_points;
 	item->m_initialPoints = m_initialPoints;
 	for (int i = 0; i < m_points.size(); i++)
-		item->m_handles.push_back(new SizeHandleRect(item, eHandleLeft+i+1, true));
+		item->m_handles.push_back(new SizeHandleRect(item, (DrawView*)GetScene()->GetView(), eHandleLeft+i+1, true));
 
 	item->SetScene(GetScene());
 	item->setPos(pos().x(), pos().y());
@@ -572,7 +577,7 @@ void GraphicsLineItem::AddPoint(const QPointF &point)
 	m_points.append(mapFromScene(point));
 
 	int direct = m_points.count();
-	SizeHandleRect *shr = new SizeHandleRect(this, direct + eHandleLeft, true);
+	SizeHandleRect *shr = new SizeHandleRect(this, (DrawView*)GetScene()->GetView(), direct + eHandleLeft, true);
 	m_handles.push_back(shr);
 }
 
@@ -634,7 +639,7 @@ bool GraphicsLineItem::LoadFromXml(QXmlStreamReader *xml)
 			qreal y = xml->attributes().value("y").toString().toDouble();
 			m_points.append(QPointF(x,y));
 			int dir = m_points.count();
-			SizeHandleRect *shr = new SizeHandleRect(this, dir + eHandleLeft, true);
+			SizeHandleRect *shr = new SizeHandleRect(this, (DrawView*)GetScene()->GetView(), dir + eHandleLeft, true);
 			m_handles.push_back(shr);
 			xml->skipCurrentElement();
 		}
@@ -647,9 +652,11 @@ bool GraphicsLineItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsPolygonLineItem /////////////////////////
-GraphicsPolygonLineItem::GraphicsPolygonLineItem(QGraphicsItem *parent)
-	:GraphicsPolygonItem(parent)
+GraphicsPolygonLineItem::GraphicsPolygonLineItem(DrawScene *scene, QGraphicsItem *parent)
+	:GraphicsPolygonItem(scene, parent)
 {
+	SetScene(scene);
+
 	SetName("折线图元");
 }
 
@@ -694,13 +701,13 @@ void GraphicsPolygonLineItem::Control(int direct, const QPointF &delta)
 
 QGraphicsItem* GraphicsPolygonLineItem::Duplicate()
 {
-	GraphicsPolygonLineItem *item = new GraphicsPolygonLineItem();
+	GraphicsPolygonLineItem *item = new GraphicsPolygonLineItem(GetScene());
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
 	item->m_points = m_points;
 	for (int i = 0; i < m_points.size(); i++)
-		item->m_handles.push_back(new SizeHandleRect(item, eHandleLeft + i + 1, true));
+		item->m_handles.push_back(new SizeHandleRect(item, (DrawView*)GetScene()->GetView(), eHandleLeft + i + 1, true));
 
 	item->SetScene(GetScene());
 	item->setPos(pos().x(), pos().y());
@@ -802,7 +809,7 @@ bool GraphicsPolygonLineItem::LoadFromXml(QXmlStreamReader *xml)
 			qreal y = xml->attributes().value("y").toString().toDouble();
 			m_points.append(QPointF(x,y));
 			int dir = m_points.count();
-			SizeHandleRect *shr = new SizeHandleRect(this, dir + eHandleLeft, true);
+			SizeHandleRect *shr = new SizeHandleRect(this, (DrawView*)GetScene()->GetView(), dir + eHandleLeft, true);
 			m_handles.push_back(shr);
 			xml->skipCurrentElement();
 		}
@@ -815,10 +822,11 @@ bool GraphicsPolygonLineItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsRectItem /////////////////////////
-GraphicsRectItem::GraphicsRectItem(const QRect &rect, bool isRound, QGraphicsItem *parent)
-	:GraphicsItem(parent)
+GraphicsRectItem::GraphicsRectItem(DrawScene *scene, const QRect &rect, bool isRound, QGraphicsItem *parent)
+	:GraphicsItem(scene,parent)
 	,m_isRound(isRound)
 {
+	SetScene(scene);
 	m_round.setWidth(5);
 	m_round.setHeight(5);
 	m_localRect = rect;
@@ -904,7 +912,7 @@ void GraphicsRectItem::UpdateCoordinate()
 
 QGraphicsItem* GraphicsRectItem::Duplicate()
 {
-	GraphicsRectItem * item = new GraphicsRectItem(m_localRect.toRect(), m_isRound);
+	GraphicsRectItem * item = new GraphicsRectItem(GetScene(), m_localRect.toRect(), m_isRound);
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
@@ -984,9 +992,11 @@ bool GraphicsRectItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsTriangleItem /////////////////////////
-GraphicsTriangleItem::GraphicsTriangleItem(const QRect &rect, GraphicsRectItem *parent)
-	:GraphicsRectItem(rect, parent)
+GraphicsTriangleItem::GraphicsTriangleItem(DrawScene *scene, const QRect &rect, GraphicsRectItem *parent)
+	:GraphicsRectItem(scene, rect, parent)
 {
+	SetScene(scene);
+
 	SetName("三角形图元");
 }
 
@@ -997,7 +1007,7 @@ GraphicsTriangleItem::~GraphicsTriangleItem()
 
 QGraphicsItem* GraphicsTriangleItem::Duplicate()
 {
-	GraphicsTriangleItem * item = new GraphicsTriangleItem(m_localRect.toRect());
+	GraphicsTriangleItem * item = new GraphicsTriangleItem(GetScene(), m_localRect.toRect());
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
@@ -1058,9 +1068,11 @@ bool GraphicsTriangleItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsRhombusItem /////////////////////////
-GraphicsRhombusItem::GraphicsRhombusItem(const QRect &rect, GraphicsRectItem *parent)
-	:GraphicsRectItem(rect, parent)
+GraphicsRhombusItem::GraphicsRhombusItem(DrawScene *scene, const QRect &rect, GraphicsRectItem *parent)
+	:GraphicsRectItem(scene, rect, parent)
 {
+	SetScene(scene);
+
 	SetName("菱形图元");
 }
 
@@ -1071,7 +1083,7 @@ GraphicsRhombusItem::~GraphicsRhombusItem()
 
 QGraphicsItem* GraphicsRhombusItem::Duplicate()
 {
-	GraphicsRhombusItem * item = new GraphicsRhombusItem(m_localRect.toRect());
+	GraphicsRhombusItem * item = new GraphicsRhombusItem(GetScene(), m_localRect.toRect());
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
@@ -1133,10 +1145,12 @@ bool GraphicsRhombusItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsEllipseItem /////////////////////////
-GraphicsEllipseItem::GraphicsEllipseItem(const QRect &rect, bool isCircle, QGraphicsItem *parent)
-	:GraphicsRectItem(rect, parent)
+GraphicsEllipseItem::GraphicsEllipseItem(DrawScene *scene, const QRect &rect, bool isCircle, QGraphicsItem *parent)
+	:GraphicsRectItem(scene, rect, parent)
 	,m_isCircle(isCircle)
 {
+	SetScene(scene);
+
 	if (isCircle)
 		SetName("圆形图元");
 	else
@@ -1192,7 +1206,7 @@ void GraphicsEllipseItem::UpdateHandles()
 
 QGraphicsItem* GraphicsEllipseItem::Duplicate()
 {
-	GraphicsEllipseItem * item = new GraphicsEllipseItem(m_localRect.toRect(), m_isCircle);
+	GraphicsEllipseItem * item = new GraphicsEllipseItem(GetScene(), m_localRect.toRect(), m_isCircle);
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
@@ -1258,9 +1272,11 @@ bool GraphicsEllipseItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsTextItem /////////////////////////
-GraphicsTextItem::GraphicsTextItem(const QRect &rect, QGraphicsItem *parent)
-	:GraphicsRectItem(rect, parent)
+GraphicsTextItem::GraphicsTextItem(DrawScene *scene, const QRect &rect, QGraphicsItem *parent)
+	:GraphicsRectItem(scene, rect, parent)
 {
+	SetScene(scene);
+
 	m_text = "文字";
 
 	//m_font.setCapitalization(QFont::SmallCaps);			//设置字母大小写
@@ -1309,7 +1325,7 @@ void GraphicsTextItem::Stretch(int handle, double sx, double sy, const QPointF &
 
 QGraphicsItem* GraphicsTextItem::Duplicate()
 {
-	GraphicsTextItem * item = new GraphicsTextItem(m_localRect.toRect());
+	GraphicsTextItem * item = new GraphicsTextItem(GetScene(), m_localRect.toRect());
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
@@ -1377,10 +1393,12 @@ bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
 }
 
 ///////////////////////// GraphicsPictureItem /////////////////////////
-GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, int sn, QPixmap picture, QGraphicsItem *parent)
-	:GraphicsRectItem(rect, parent),
+GraphicsPictureItem::GraphicsPictureItem(DrawScene *scene, const QRect &rect, int sn, QPixmap picture, QGraphicsItem *parent)
+	:GraphicsRectItem(scene, rect, parent),
 	m_iSn(sn),m_picture(picture)
 {
+	SetScene(scene);
+
 	m_width = m_picture.width();
 	m_height = m_picture.height();
 	m_localRect.setWidth(m_width);
@@ -1390,10 +1408,12 @@ GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, int sn, QPixmap pict
 	SetName("图像图元");
 }
 
-GraphicsPictureItem::GraphicsPictureItem(const QRect &rect, QString fileName, QGraphicsItem *parent)
-	:GraphicsRectItem(rect, parent),
+GraphicsPictureItem::GraphicsPictureItem(DrawScene *scene, const QRect &rect, QString fileName, QGraphicsItem *parent)
+	:GraphicsRectItem(scene, rect, parent),
 	m_fileName(fileName)
 {
+	SetScene(scene);
+
 	m_picture.load(Common::GetCurrentAppPath() + "../picture/" + fileName);
 	m_width = m_picture.width();
 	m_height = m_picture.height();
@@ -1439,9 +1459,9 @@ QGraphicsItem* GraphicsPictureItem::Duplicate()
 {
 	GraphicsPictureItem *item;
 	if (!m_picture.isNull())
-		item = new GraphicsPictureItem(m_localRect.toRect(), m_iSn, m_picture);
+		item = new GraphicsPictureItem(GetScene(), m_localRect.toRect(), m_iSn, m_picture);
 	else
-		item = new GraphicsPictureItem(m_localRect.toRect(), m_fileName);
+		item = new GraphicsPictureItem(GetScene(), m_localRect.toRect(), m_fileName);
 
 	item->m_width = GetWidth();
 	item->m_height = GetHeight();
@@ -1513,7 +1533,7 @@ GraphicsItemGroup::GraphicsItemGroup(QGraphicsItem *parent)
 	m_handles.reserve(eHandleLeft);
 	for (int i = eHandleLeftTop; i <= eHandleLeft; i++)
 	{
-		SizeHandleRect *shr = new SizeHandleRect(this, i);
+		SizeHandleRect *shr = new SizeHandleRect(this, (DrawView*)GetScene()->GetView(), i);
 		m_handles.push_back(shr);
 	}
 #endif

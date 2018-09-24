@@ -393,23 +393,23 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 		m_opposite = QPointF();
 		scene->clearSelection();
 		if (c_drawShape == eDrawRectangle)
-			m_pItem = new GraphicsRectItem(QRect(1, 1, 1, 1));
+			m_pItem = new GraphicsRectItem(scene,QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawRoundrect)
-			m_pItem = new GraphicsRectItem(QRect(1, 1, 1, 1), true);
+			m_pItem = new GraphicsRectItem(scene,QRect(1, 1, 1, 1), true);
 		else if (c_drawShape == eDrawEllipse)
-			m_pItem = new GraphicsEllipseItem(QRect(1, 1, 1, 1));
+			m_pItem = new GraphicsEllipseItem(scene,QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawCircle)
-			m_pItem = new GraphicsEllipseItem(QRect(1, 1, 1, 1), true);
+			m_pItem = new GraphicsEllipseItem(scene,QRect(1, 1, 1, 1), true);
 		else if (c_drawShape == eDrawText)
-			m_pItem = new GraphicsTextItem(QRect(0, 0, 80, 25));
+			m_pItem = new GraphicsTextItem(scene,QRect(0, 0, 80, 25));
 		else if (c_drawShape == eDrawTriangle)
-			m_pItem = new GraphicsTriangleItem(QRect(1, 1, 1, 1));
+			m_pItem = new GraphicsTriangleItem(scene,QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawRhombus)
-			m_pItem = new GraphicsRhombusItem(QRect(1, 1, 1, 1));
+			m_pItem = new GraphicsRhombusItem(scene,QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawPicture)
 		{
 			if (!scene->m_picture.isNull())
-				m_pItem = new GraphicsPictureItem(QRect(0, 0, 0, 0), scene->m_pictureSn, scene->m_picture);
+				m_pItem = new GraphicsPictureItem(scene,QRect(0, 0, 0, 0), scene->m_pictureSn, scene->m_picture);
 			else
 				return;
 		}
@@ -548,11 +548,11 @@ void DrawPolygonTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene
 	{
 		scene->clearSelection();
 		if (c_drawShape == eDrawPolygon)
-			m_pItem = new GraphicsPolygonItem();
+			m_pItem = new GraphicsPolygonItem(scene);
 		else if (c_drawShape == eDrawPolyline)
-			m_pItem = new GraphicsPolygonLineItem();
+			m_pItem = new GraphicsPolygonLineItem(scene);
 		else if (c_drawShape == eDrawLine)
-			m_pItem = new GraphicsLineItem();
+			m_pItem = new GraphicsLineItem(scene);
 
 		m_initialPositions = c_down;
 		scene->addItem(m_pItem);

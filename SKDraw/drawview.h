@@ -33,6 +33,7 @@ public:
 	void SetSaveMode(int mode) { m_iSaveMode = mode; }
 	bool GetIsModified() { return m_isModified; }
 	int  GetSaveMode() { return m_iSaveMode; }
+	qreal GetScale() { return m_scale; }
 
 public:
 	void ZoomIn();

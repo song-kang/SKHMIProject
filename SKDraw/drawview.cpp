@@ -460,30 +460,30 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 	{
 		AbstractShape *item = NULL;
 		if (xml->name() == tr("rect"))
-			item = new GraphicsRectItem(QRect(0,0,0,0));
+			item = new GraphicsRectItem((DrawScene*)m_pScene, QRect(0,0,0,0));
 		else if (xml->name() == tr("roundrect"))
-			item = new GraphicsRectItem(QRect(0,0,0,0), true);
+			item = new GraphicsRectItem((DrawScene*)m_pScene, QRect(0,0,0,0), true);
 		else if (xml->name() == tr("ellipse"))
-			item = new GraphicsEllipseItem(QRect(0,0,0,0));
+			item = new GraphicsEllipseItem((DrawScene*)m_pScene, QRect(0,0,0,0));
 		else if (xml->name() == tr("circle"))
-			item = new GraphicsEllipseItem(QRect(0,0,0,0), true);
+			item = new GraphicsEllipseItem((DrawScene*)m_pScene, QRect(0,0,0,0), true);
 		else if (xml->name() == tr("text"))
-			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
+			item = new GraphicsTextItem((DrawScene*)m_pScene, QRect(0, 0, 0, 0));
 		else if (xml->name() == tr("picture"))
 		{
-			item = new GraphicsPictureItem(QRect(0, 0, 0, 0), QString::null);
+			item = new GraphicsPictureItem((DrawScene*)m_pScene, QRect(0, 0, 0, 0), QString::null);
 			((GraphicsPictureItem*)item)->m_picture = LoadPictureByDB(xml);
 		}
 		else if (xml->name()==tr("polygon"))
-			item = new GraphicsPolygonItem();
+			item = new GraphicsPolygonItem((DrawScene*)m_pScene);
 		else if (xml->name()==tr("polyline"))
-			item = new GraphicsPolygonLineItem();
+			item = new GraphicsPolygonLineItem((DrawScene*)m_pScene);
 		else if (xml->name() == tr("line"))
-			item = new GraphicsLineItem();
+			item = new GraphicsLineItem((DrawScene*)m_pScene);
 		else if (xml->name() == tr("triangle"))
-			item = new GraphicsTriangleItem(QRect(0,0,0,0));
+			item = new GraphicsTriangleItem((DrawScene*)m_pScene, QRect(0,0,0,0));
 		else if (xml->name() == tr("rhombus"))
-			item = new GraphicsRhombusItem(QRect(0,0,0,0));
+			item = new GraphicsRhombusItem((DrawScene*)m_pScene, QRect(0,0,0,0));
 		else if (xml->name() == tr("group"))
 			item = qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(xml));
 		else
@@ -511,30 +511,30 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 	{
 		AbstractShape * item = NULL;
 		if (xml->name() == tr("rect"))
-			item = new GraphicsRectItem(QRect(0,0,0,0));
+			item = new GraphicsRectItem((DrawScene*)m_pScene, QRect(0,0,0,0));
 		else if (xml->name() == tr("roundrect"))
-			item = new GraphicsRectItem(QRect(0,0,0,0), true);
+			item = new GraphicsRectItem((DrawScene*)m_pScene, QRect(0,0,0,0), true);
 		else if (xml->name() == tr("ellipse"))
-			item = new GraphicsEllipseItem(QRect(0,0,0,0));
+			item = new GraphicsEllipseItem((DrawScene*)m_pScene, QRect(0,0,0,0));
 		else if (xml->name() == tr("circle"))
-			item = new GraphicsEllipseItem(QRect(0,0,0,0), true);
+			item = new GraphicsEllipseItem((DrawScene*)m_pScene, QRect(0,0,0,0), true);
 		else if (xml->name() == tr("text"))
-			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
+			item = new GraphicsTextItem((DrawScene*)m_pScene, QRect(0, 0, 0, 0));
 		else if (xml->name() == tr("picture"))
 		{
-			item = new GraphicsPictureItem(QRect(0, 0, 0, 0), QString::null);
+			item = new GraphicsPictureItem((DrawScene*)m_pScene, QRect(0, 0, 0, 0), QString::null);
 			((GraphicsPictureItem*)item)->m_picture = LoadPictureByDB(xml);
 		}
 		else if (xml->name()==tr("polygon"))
-			item = new GraphicsPolygonItem();
+			item = new GraphicsPolygonItem((DrawScene*)m_pScene);
 		else if (xml->name()==tr("polyline"))
-			item = new GraphicsPolygonLineItem();
+			item = new GraphicsPolygonLineItem((DrawScene*)m_pScene);
 		else if (xml->name() == tr("line"))
-			item = new GraphicsLineItem();
+			item = new GraphicsLineItem((DrawScene*)m_pScene);
 		else if (xml->name() == tr("triangle"))
-			item = new GraphicsTriangleItem(QRect(0,0,0,0));
+			item = new GraphicsTriangleItem((DrawScene*)m_pScene, QRect(0,0,0,0));
 		else if (xml->name() == tr("rhombus"))
-			item = new GraphicsTriangleItem(QRect(0,0,0,0));
+			item = new GraphicsTriangleItem((DrawScene*)m_pScene, QRect(0,0,0,0));
 		else if (xml->name() == tr("group"))
 			item = qgraphicsitem_cast<AbstractShape*>(LoadGroupFromXML(xml));
 		else
