@@ -311,7 +311,7 @@ public:
 	virtual QGraphicsItem* Duplicate();
 
 	virtual QRectF boundingRect() const;
-	virtual QPainterPath Shape() const;
+	virtual QPainterPath shape() const;
 	virtual void AddPoint(const QPointF &point);
 	virtual void EndPoint(const QPointF &point);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -338,7 +338,7 @@ public:
 	virtual int HandleCount() const { return m_handles.size() + eHandleLeft; }	
 	virtual QGraphicsItem* Duplicate();
 
-	virtual QPainterPath Shape() const;
+	virtual QPainterPath shape() const;
 	virtual void AddPoint(const QPointF &point);
 	virtual void EndPoint(const QPointF &point);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -359,7 +359,7 @@ public:
 	virtual void Control(int direct, const QPointF &delta);
 	virtual QGraphicsItem *Duplicate();
 
-	virtual QPainterPath Shape() const;
+	virtual QPainterPath shape() const;
 	virtual void EndPoint(const QPointF &point);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
@@ -391,7 +391,7 @@ public:
 	virtual QGraphicsItem *Duplicate();
 
 	virtual QRectF boundingRect() const;
-	virtual QPainterPath Shape() const;
+	virtual QPainterPath shape() const;
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 	virtual bool SaveToXml(QXmlStreamWriter *xml);
@@ -417,6 +417,7 @@ public:
 
 public:
 	virtual QGraphicsItem *Duplicate();
+	virtual QPainterPath shape() const;
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 	virtual bool SaveToXml(QXmlStreamWriter *xml);
@@ -437,6 +438,7 @@ public:
 
 public:
 	virtual QGraphicsItem *Duplicate();
+	virtual QPainterPath shape() const;
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 	virtual bool SaveToXml(QXmlStreamWriter *xml);
@@ -459,7 +461,7 @@ public:
 	virtual QGraphicsItem *Duplicate();
 	
 	virtual QRectF boundingRect() const;
-	virtual QPainterPath Shape() const;
+	virtual QPainterPath shape() const;
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 	virtual bool SaveToXml(QXmlStreamWriter *xml);

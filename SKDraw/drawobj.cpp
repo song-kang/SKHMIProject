@@ -4,6 +4,25 @@
 #include "skdraw.h"
 #include "ssp_database.h"
 
+static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen)
+{
+	const qreal penWidthZero = qreal(0.00000001);
+
+	if (path == QPainterPath() || pen == Qt::NoPen)
+		return path;
+	QPainterPathStroker ps;
+	ps.setCapStyle(pen.capStyle());
+	if (pen.widthF() <= 0.0)
+		ps.setWidth(penWidthZero);
+	else
+		ps.setWidth(pen.widthF());
+	ps.setJoinStyle(pen.joinStyle());
+	ps.setMiterLimit(pen.miterLimit());
+	QPainterPath p = ps.createStroke(path);
+	//p.addPath(path);
+	return p;
+}
+
 ///////////////////////// ShapeMimeData /////////////////////////
 ShapeMimeData::ShapeMimeData(QList<QGraphicsItem *> items)
 {
@@ -362,10 +381,10 @@ QGraphicsItem* GraphicsPolygonItem::Duplicate()
 
 QRectF GraphicsPolygonItem::boundingRect() const
 {
-	return Shape().controlPointRect();
+	return shape().controlPointRect();
 }
 
-QPainterPath GraphicsPolygonItem::Shape() const
+QPainterPath GraphicsPolygonItem::shape() const
 {
 	QPainterPath path;
 
@@ -535,7 +554,7 @@ QGraphicsItem* GraphicsLineItem::Duplicate()
 	return item;
 }
 
-QPainterPath GraphicsLineItem::Shape() const
+QPainterPath GraphicsLineItem::shape() const
 {
 	QPainterPath path;
 
@@ -545,7 +564,7 @@ QPainterPath GraphicsLineItem::Shape() const
 		path.lineTo(m_points.at(1));
 	}
 
-	return path;
+	return qt_graphicsItem_shapeFromPath(path, GetPen());
 }
 
 void GraphicsLineItem::AddPoint(const QPointF &point)
@@ -699,9 +718,10 @@ QGraphicsItem* GraphicsPolygonLineItem::Duplicate()
 	return item;
 }
 
-QPainterPath GraphicsPolygonLineItem::Shape() const
+QPainterPath GraphicsPolygonLineItem::shape() const
 {
 	QPainterPath path;
+
 	path.moveTo(m_points.at(0));
 
 	int i = 1;
@@ -711,7 +731,7 @@ QPainterPath GraphicsPolygonLineItem::Shape() const
 		i++;
 	}
 
-	return path;
+	return qt_graphicsItem_shapeFromPath(path, GetPen());
 }
 
 void GraphicsPolygonLineItem::EndPoint(const QPointF &point)
@@ -749,6 +769,7 @@ void GraphicsPolygonLineItem::paint(QPainter *painter, const QStyleOptionGraphic
 	}
 
 	painter->drawPath(path);
+	//painter->drawPolyline(m_points);
 
 	if (option && (option->state & QStyle::State_Selected))
 		DrawOutline(painter);
@@ -907,7 +928,7 @@ QRectF GraphicsRectItem::boundingRect() const
 	return m_localRect;
 }
 
-QPainterPath GraphicsRectItem::Shape() const
+QPainterPath GraphicsRectItem::shape() const
 {
 	QPainterPath path;
 
@@ -995,6 +1016,16 @@ QGraphicsItem* GraphicsTriangleItem::Duplicate()
 	return item;
 }
 
+QPainterPath GraphicsTriangleItem::shape() const
+{
+	QPainterPath path;
+
+	path.addPolygon(m_points);
+	path.closeSubpath();
+
+	return path;
+}
+
 void GraphicsTriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	painter->setPen(GetPen());
@@ -1057,6 +1088,16 @@ QGraphicsItem* GraphicsRhombusItem::Duplicate()
 	item->UpdateCoordinate();
 
 	return item;
+}
+
+QPainterPath GraphicsRhombusItem::shape() const
+{
+	QPainterPath path;
+
+	path.addPolygon(m_points);
+	path.closeSubpath();
+
+	return path;
 }
 
 void GraphicsRhombusItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -1172,10 +1213,10 @@ QGraphicsItem* GraphicsEllipseItem::Duplicate()
 
 QRectF GraphicsEllipseItem::boundingRect() const
 {
-	return Shape().controlPointRect();
+	return shape().controlPointRect();
 }
 
-QPainterPath GraphicsEllipseItem::Shape() const
+QPainterPath GraphicsEllipseItem::shape() const
 {
 	QPainterPath path;
 
