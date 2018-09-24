@@ -144,7 +144,7 @@ public:
 public:
 	virtual void UpdateCoordinate();
 	virtual QRectF boundingRect() const;
-	virtual QPainterPath Shape() const;
+	virtual QPainterPath shape() const;
 	virtual void AddPoint(const QPointF &point);
 	virtual void EndPoint(const QPointF &point);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -164,7 +164,7 @@ public:
 	~GraphicsLineItem();
 
 public:
-	virtual QPainterPath Shape() const;
+	virtual QPainterPath shape() const;
 	virtual void AddPoint(const QPointF &point);
 	virtual void EndPoint(const QPointF &point);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -180,7 +180,7 @@ public:
 	~GraphicsPolygonLineItem();
 
 public:
-	virtual QPainterPath Shape() const;
+	virtual QPainterPath shape() const;
 	virtual void EndPoint(const QPointF &point);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual bool LoadFromXml(QXmlStreamReader *xml);
@@ -203,7 +203,7 @@ public:
 public:
 	virtual void UpdateCoordinate();
 	virtual QRectF boundingRect() const;
-	virtual QPainterPath Shape() const;
+	virtual QPainterPath shape() const;
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual bool LoadFromXml(QXmlStreamReader *xml);
 
@@ -226,6 +226,7 @@ public:
 	QRectF GetLocalRect() const { return m_localRect; }
 
 public:
+	virtual QPainterPath shape() const;
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual bool LoadFromXml(QXmlStreamReader *xml);
 
@@ -243,6 +244,7 @@ public:
 	QRectF GetLocalRect() const { return m_localRect; }
 
 public:
+	virtual QPainterPath shape() const;
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual bool LoadFromXml(QXmlStreamReader *xml);
 
@@ -259,7 +261,7 @@ public:
 
 public:
 	virtual QRectF boundingRect() const;
-	virtual QPainterPath Shape() const;
+	virtual QPainterPath shape() const;
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual bool LoadFromXml(QXmlStreamReader *xml);
 

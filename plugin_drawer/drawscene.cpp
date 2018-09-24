@@ -148,11 +148,7 @@ void DrawScene::SlotSelectionChanged()
 		if (sp == m_pAlignItem)
 			SetAlignItem(NULL);
 		else
-		{
 			SetAlignItem(sp);
-			//for (Handles::iterator it = sp->m_handles.begin(); it != sp->m_handles.end(); ++it)
-			//	(*it)->SetBorderColor(Qt::black);
-		}
 	}
 	else if (l.count() > 1)
 	{

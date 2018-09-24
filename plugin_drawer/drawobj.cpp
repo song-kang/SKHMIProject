@@ -3,6 +3,25 @@
 #include "drawview.h"
 #include "view_plugin_drawer.h"
 
+static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen)
+{
+	const qreal penWidthZero = qreal(0.00000001);
+
+	if (path == QPainterPath() || pen == Qt::NoPen)
+		return path;
+	QPainterPathStroker ps;
+	ps.setCapStyle(pen.capStyle());
+	if (pen.widthF() <= 0.0)
+		ps.setWidth(penWidthZero);
+	else
+		ps.setWidth(pen.widthF());
+	ps.setJoinStyle(pen.joinStyle());
+	ps.setMiterLimit(pen.miterLimit());
+	QPainterPath p = ps.createStroke(path);
+	//p.addPath(path);
+	return p;
+}
+
 ///////////////////////// GraphicsItem /////////////////////////
 GraphicsItem::GraphicsItem(QGraphicsItem *parent)
     :AbstractShapeType<QGraphicsItem>(parent)
@@ -191,10 +210,10 @@ void GraphicsPolygonItem::UpdateCoordinate()
 
 QRectF GraphicsPolygonItem::boundingRect() const
 {
-	return Shape().controlPointRect();
+	return shape().controlPointRect();
 }
 
-QPainterPath GraphicsPolygonItem::Shape() const
+QPainterPath GraphicsPolygonItem::shape() const
 {
 	QPainterPath path;
 
@@ -207,10 +226,6 @@ QPainterPath GraphicsPolygonItem::Shape() const
 void GraphicsPolygonItem::AddPoint(const QPointF &point)
 {
 	m_points.append(mapFromScene(point));
-
-	//int direct = m_points.count();
-	//SizeHandleRect *shr = new SizeHandleRect(this, direct + eHandleLeft, true);
-	//m_handles.push_back(shr);
 }
 
 void GraphicsPolygonItem::EndPoint(const QPointF &point)
@@ -222,9 +237,7 @@ void GraphicsPolygonItem::EndPoint(const QPointF &point)
 		m_points[nPoints-1].x() == m_points[nPoints-2].x() ||
 		m_points[nPoints-1].y() == m_points[nPoints-2].y()))
 	{
-		//delete m_handles[eHandleLeft+nPoints-1];
 		m_points.remove(nPoints-1);
-		//m_handles.resize(eHandleLeft+nPoints-1);
 	}
 
 	m_initialPoints = m_points;
@@ -274,8 +287,6 @@ bool GraphicsPolygonItem::LoadFromXml(QXmlStreamReader *xml)
 			qreal y = xml->attributes().value("y").toString().toDouble();
 			m_points.append(QPointF(x,y));
 			int dir = m_points.count();
-			//SizeHandleRect *shr = new SizeHandleRect(this, dir + eHandleLeft, true);
-			//m_handles.push_back(shr);
 			xml->skipCurrentElement();
 		}
 		else
@@ -290,10 +301,6 @@ bool GraphicsPolygonItem::LoadFromXml(QXmlStreamReader *xml)
 GraphicsLineItem::GraphicsLineItem(QGraphicsItem *parent)
 	:GraphicsPolygonItem(parent)
 {
-	//for (Handles::iterator it = m_handles.begin(); it != m_handles.end(); ++it)
-	//	delete (*it);
-	//m_handles.clear();
-
 	SetName("Ïß¶ÎÍ¼Ôª");
 }
 
@@ -302,7 +309,7 @@ GraphicsLineItem::~GraphicsLineItem()
 
 }
 
-QPainterPath GraphicsLineItem::Shape() const
+QPainterPath GraphicsLineItem::shape() const
 {
 	QPainterPath path;
 
@@ -312,16 +319,12 @@ QPainterPath GraphicsLineItem::Shape() const
 		path.lineTo(m_points.at(1));
 	}
 
-	return path;
+	return qt_graphicsItem_shapeFromPath(path, GetPen());
 }
 
 void GraphicsLineItem::AddPoint(const QPointF &point)
 {
 	m_points.append(mapFromScene(point));
-
-	//int direct = m_points.count();
-	//SizeHandleRect *shr = new SizeHandleRect(this, direct + eHandleLeft, true);
-	//m_handles.push_back(shr);
 }
 
 void GraphicsLineItem::EndPoint(const QPointF &point)
@@ -333,9 +336,7 @@ void GraphicsLineItem::EndPoint(const QPointF &point)
 		m_points[nPoints-1].x() == m_points[nPoints-2].x() &&
 		m_points[nPoints-1].y() == m_points[nPoints-2].y()))
 	{
-		//delete m_handles[nPoints-1];
 		m_points.remove(nPoints-1);
-		//m_handles.resize(nPoints-1);
 	}
 
 	m_initialPoints = m_points;
@@ -378,9 +379,6 @@ bool GraphicsLineItem::LoadFromXml(QXmlStreamReader *xml)
 			qreal x = xml->attributes().value("x").toString().toDouble();
 			qreal y = xml->attributes().value("y").toString().toDouble();
 			m_points.append(QPointF(x,y));
-			int dir = m_points.count();
-			//SizeHandleRect *shr = new SizeHandleRect(this, dir + eHandleLeft, true);
-			//m_handles.push_back(shr);
 			xml->skipCurrentElement();
 		}
 		else
@@ -402,7 +400,7 @@ GraphicsPolygonLineItem::~GraphicsPolygonLineItem()
 
 }
 
-QPainterPath GraphicsPolygonLineItem::Shape() const
+QPainterPath GraphicsPolygonLineItem::shape() const
 {
 	QPainterPath path;
 	path.moveTo(m_points.at(0));
@@ -414,7 +412,7 @@ QPainterPath GraphicsPolygonLineItem::Shape() const
 		i++;
 	}
 
-	return path;
+	return qt_graphicsItem_shapeFromPath(path, GetPen());
 }
 
 void GraphicsPolygonLineItem::EndPoint(const QPointF &point)
@@ -426,9 +424,7 @@ void GraphicsPolygonLineItem::EndPoint(const QPointF &point)
 		m_points[nPoints-1].x() == m_points[nPoints-2].x() ||
 		m_points[nPoints-1].y() == m_points[nPoints-2].y()))
 	{
-		//delete m_handles[eHandleLeft+nPoints-1];
 		m_points.remove(nPoints-1);
-		//m_handles.resize(eHandleLeft+nPoints-1);
 	}
 
 	m_initialPoints = m_points;
@@ -479,9 +475,6 @@ bool GraphicsPolygonLineItem::LoadFromXml(QXmlStreamReader *xml)
 			qreal x = xml->attributes().value("x").toString().toDouble();
 			qreal y = xml->attributes().value("y").toString().toDouble();
 			m_points.append(QPointF(x,y));
-			int dir = m_points.count();
-			//SizeHandleRect *shr = new SizeHandleRect(this, dir + eHandleLeft, true);
-			//m_handles.push_back(shr);
 			xml->skipCurrentElement();
 		}
 		else
@@ -544,7 +537,7 @@ QRectF GraphicsRectItem::boundingRect() const
 	return m_localRect;
 }
 
-QPainterPath GraphicsRectItem::Shape() const
+QPainterPath GraphicsRectItem::shape() const
 {
 	QPainterPath path;
 
@@ -617,6 +610,16 @@ GraphicsTriangleItem::~GraphicsTriangleItem()
 
 }
 
+QPainterPath GraphicsTriangleItem::shape() const
+{
+	QPainterPath path;
+
+	path.addPolygon(m_points);
+	path.closeSubpath();
+
+	return path;
+}
+
 void GraphicsTriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	painter->setPen(GetPen());
@@ -647,6 +650,16 @@ GraphicsRhombusItem::GraphicsRhombusItem(const QRect &rect, GraphicsRectItem *pa
 GraphicsRhombusItem::~GraphicsRhombusItem()
 {
 
+}
+
+QPainterPath GraphicsRhombusItem::shape() const
+{
+	QPainterPath path;
+
+	path.addPolygon(m_points);
+	path.closeSubpath();
+
+	return path;
 }
 
 void GraphicsRhombusItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -688,10 +701,10 @@ GraphicsEllipseItem::~GraphicsEllipseItem()
 
 QRectF GraphicsEllipseItem::boundingRect() const
 {
-	return Shape().controlPointRect();
+	return shape().controlPointRect();
 }
 
-QPainterPath GraphicsEllipseItem::Shape() const
+QPainterPath GraphicsEllipseItem::shape() const
 {
 	QPainterPath path;
 
