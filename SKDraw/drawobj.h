@@ -479,6 +479,7 @@ class GraphicsTextItem :public GraphicsRectItem
 
 	Q_PROPERTY(QString Text READ GetText WRITE SetText)
 	Q_PROPERTY(QFont Font READ GetFont WRITE SetFont)
+	Q_PROPERTY(Qt::Alignment TextAlignment READ GetTextAlignment WRITE SetTextAlignment)
 
 public:
 	GraphicsTextItem(DrawScene *scene, const QRect &rect, QGraphicsItem *parent = 0);
@@ -488,9 +489,11 @@ public:
 	void SetFontColor(QColor c) { m_pen.setColor(c); update(); }
 	void SetText(QString text) { m_text = text; update(); }
 	void SetOption(QTextOption option) { m_option = option; }
+	void SetTextAlignment(Qt::Alignment alignment) { m_option.setAlignment(alignment); update(); }
 	QFont GetFont() { return m_font; }
 	QString GetText() { return m_text; }
 	QTextOption GetOption() { return m_option; }
+	Qt::Alignment GetTextAlignment() const { return m_option.alignment(); }
 
 public:
 	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);

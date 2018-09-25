@@ -1282,7 +1282,6 @@ GraphicsTextItem::GraphicsTextItem(DrawScene *scene, const QRect &rect, QGraphic
 	//m_font.setCapitalization(QFont::SmallCaps);			//设置字母大小写
 	//m_font.setLetterSpacing(QFont::AbsoluteSpacing, 2);	//设置字符间距
 	m_option.setAlignment(Qt::AlignCenter);
-	//m_option.setWrapMode(QTextOption::NoWrap);
 	m_option.setWrapMode(QTextOption::WordWrap);
 
 	SetName("文字图元");
@@ -1370,6 +1369,7 @@ bool GraphicsTextItem::SaveToXml(QXmlStreamWriter *xml)
 	xml->writeAttribute(tr("underline"),QString("%1").arg(m_font.underline()));
 	xml->writeAttribute(tr("strikeOut"),QString("%1").arg(m_font.strikeOut()));
 	xml->writeAttribute(tr("kerning"),QString("%1").arg(m_font.kerning()));
+	xml->writeAttribute(tr("alignment"),QString("%1").arg(m_option.alignment()));
 
 	xml->writeEndElement();
 	return true;
@@ -1386,6 +1386,7 @@ bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
 	m_font.setUnderline(xml->attributes().value(tr("underline")).toString().toInt());
 	m_font.setStrikeOut(xml->attributes().value(tr("strikeOut")).toString().toInt());
 	m_font.setKerning(xml->attributes().value(tr("kerning")).toString().toInt());
+	m_option.setAlignment((Qt::Alignment)xml->attributes().value(tr("alignment")).toString().toInt());
 	
 	xml->skipCurrentElement();
 	UpdateCoordinate();

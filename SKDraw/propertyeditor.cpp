@@ -56,6 +56,7 @@ void PropertyEditor::InitMap()
 	m_mapTranslate.insert("BrushColor", "画刷颜色");
 	m_mapTranslate.insert("BrushStyle", "画刷风格");
 	m_mapTranslate.insert("RoundRadius", "圆角半径");
+	m_mapTranslate.insert("TextAlignment", "对齐方式");
 }
 
 void PropertyEditor::SlotValueChanged(QtProperty *property, int value)
@@ -102,6 +103,11 @@ void PropertyEditor::SlotValueChanged(QtProperty *property, const QVariant &valu
 		PropertyCommand(property, value, scale);
 		if (((GraphicsItem*)m_pObject)->GetName() == "文字图元")
 			PropertyCommand(property, value, font);
+	}
+	else if (metaProperty.isEnumType())
+	{
+		if (QString(metaProperty.name()) == "TextAlignment")
+			metaProperty.write(m_pObject, value);
 	}
 }
 
@@ -188,14 +194,24 @@ void PropertyEditor::AddProperties(const QMetaObject *metaObject)
 		int type = metaProperty.userType();
 		if (metaProperty.isEnumType())
 		{
-			enumProperty = m_pEnumManager->addProperty(m_mapTranslate.value(metaProperty.name()));
-			QMetaEnum metaEnum = metaProperty.enumerator();
-			QStringList enumNames;
-			QMap<int, QIcon> enumIcons;
-			for (int i = 0; i < metaEnum.keyCount(); i++)
-				EnumEditor(i, metaEnum.key(i), enumNames, enumIcons);
-			m_pEnumManager->setEnumNames(enumProperty, enumNames);
-			m_pEnumManager->setEnumIcons(enumProperty, enumIcons);
+			if (QString(metaProperty.name()) == "TextAlignment")
+			{
+				subProperty = m_pVariantManager->addProperty(QtVariantPropertyManager::flagTypeId(), m_mapTranslate.value(metaProperty.name()));
+				QStringList flagNames;
+				flagNames << "左对齐" << "右对齐" << "水平居中" << "调整间距两端对齐" << "布局绝对方向对齐" << "上对齐" << "下对齐" << "垂直居中";
+				subProperty->setAttribute(QLatin1String("flagNames"), flagNames);
+			}
+			else
+			{
+				enumProperty = m_pEnumManager->addProperty(m_mapTranslate.value(metaProperty.name()));
+				QMetaEnum metaEnum = metaProperty.enumerator();
+				QStringList enumNames;
+				QMap<int, QIcon> enumIcons;
+				for (int i = 0; i < metaEnum.keyCount(); i++)
+					EnumEditor(i, metaEnum.key(i), enumNames, enumIcons);
+				m_pEnumManager->setEnumNames(enumProperty, enumNames);
+				m_pEnumManager->setEnumIcons(enumProperty, enumIcons);
+			}
 		}
 		else if (m_pVariantManager->isPropertyTypeSupported(type))
 		{
@@ -294,7 +310,7 @@ bool PropertyEditor::IsVisibleProperty(QString property)
 	}
 	else if (shape == "文字图元")
 	{
-		if (property == "PenColor" || property == "Text" || property == "Font" || property == "TextOption")
+		if (property == "PenColor" || property == "Text" || property == "Font" || property == "TextAlignment")
 			return true;
 		else
 			return false;
