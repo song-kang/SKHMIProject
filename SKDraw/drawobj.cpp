@@ -1570,7 +1570,7 @@ QPixmap GraphicsItemGroup::Image()
 	return pixmap;
 }
 
-void GraphicsItemGroup::Stretch( int handle, double sx, double sy, const QPointF &origin)
+void GraphicsItemGroup::Stretch(int handle, double sx, double sy, const QPointF &origin)
 {
 	QTransform trans;
 	switch (handle) 

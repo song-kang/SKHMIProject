@@ -92,17 +92,21 @@ void PropertyEditor::SlotValueChanged(QtProperty *property, const QVariant &valu
 		QPen pen = ((GraphicsItem*)m_pObject)->GetPen();
 		QBrush brush = ((GraphicsItem*)m_pObject)->GetBrush();
 		qreal scale = ((GraphicsItem*)m_pObject)->scale();
+#if 1	//目前无法判断m_pOject是GraphicsItem或GraphicsItemGroup
 		QFont font;
 		if (((GraphicsItem*)m_pObject)->GetName() == "文字图元")
 			font = ((GraphicsTextItem*)m_pObject)->GetFont();
+#endif
 
 		metaProperty.write(m_pObject, value);
 
 		PropertyCommand(property, value, pen);
 		PropertyCommand(property, value, brush);
 		PropertyCommand(property, value, scale);
+#if 1	//目前无法判断m_pOject是GraphicsItem或GraphicsItemGroup
 		if (((GraphicsItem*)m_pObject)->GetName() == "文字图元")
 			PropertyCommand(property, value, font);
+#endif
 	}
 	else if (metaProperty.isEnumType())
 	{

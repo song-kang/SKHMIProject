@@ -547,6 +547,8 @@ class GraphicsItemGroup : public QObject,
 {
 	Q_OBJECT
 
+	//Q_PROPERTY(qreal Rotation READ GetRotation WRITE SetRotation)
+
 public:
 	explicit GraphicsItemGroup(QGraphicsItem *parent = 0);
 	~GraphicsItemGroup();
@@ -554,6 +556,9 @@ public:
 	enum { Type = UserType + 2 };
 	int  type() const { return Type; }
 	QPixmap Image();
+
+	//void SetRotation(qreal angle) { setRotation(angle); }
+	//qreal GetRotation() { return rotation(); }
 	
 public:
 	virtual void Move(const QPointF & point) {};

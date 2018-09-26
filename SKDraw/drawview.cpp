@@ -147,6 +147,10 @@ void DrawView::mousePressEvent(QMouseEvent *event)
 	{
 		SigMouseRightButton(mapToGlobal(event->pos()));
 	}
+	else if (event->button() == Qt::MiddleButton)
+	{
+		m_app->SlotKeyEscape();
+	}
 
 	QGraphicsView::mousePressEvent(event);
 }
