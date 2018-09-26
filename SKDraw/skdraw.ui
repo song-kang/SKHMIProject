@@ -319,13 +319,62 @@
        <property name="currentIndex">
         <number>0</number>
        </property>
-       <widget class="QWidget" name="pageDQ">
+       <property name="tabSpacing">
+        <number>6</number>
+       </property>
+       <widget class="QWidget" name="pageBase">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
           <width>256</width>
-          <height>199</height>
+          <height>157</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>基本图元</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QListWidget" name="listWidgetBase">
+           <property name="viewMode">
+            <enum>QListView::IconMode</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="pageComplex">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>98</width>
+          <height>73</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>综合图元</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_7">
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QListWidget" name="listWidgetComplex"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="pageDQ">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>98</width>
+          <height>73</height>
          </rect>
         </property>
         <attribute name="label">
@@ -861,6 +910,9 @@
    </property>
   </action>
   <action name="actionTriangle">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="skdraw.qrc">
      <normaloff>:/images/triangle</normaloff>:/images/triangle</iconset>
@@ -873,6 +925,9 @@
    </property>
   </action>
   <action name="actionRhombus">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="skdraw.qrc">
      <normaloff>:/images/rhombus</normaloff>:/images/rhombus</iconset>

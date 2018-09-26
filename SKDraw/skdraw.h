@@ -94,6 +94,8 @@ private:
 	void InitDB();
 	void InitDBWnd(CWnd *pWnd);
 	void InitSymbols();
+	void InitBaseItem();
+	void InitComplexItem();
 	DrawView* CreateView();
 	void LoadDBPicture();
 
@@ -161,6 +163,8 @@ public slots:
 
 	void SlotMouseRightButton(QPoint p);
 	void SlotSymbolsDQClicked(QListWidgetItem *item);
+	void SlotBaseItemClicked(QListWidgetItem *item);
+	void SlotComplexItemClicked(QListWidgetItem *item);
 	void SlotLinkData();
 	void SlotLinkDataClose();
 

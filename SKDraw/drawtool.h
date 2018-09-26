@@ -21,6 +21,7 @@ enum DrawShape
 	eDrawPicture,
 	eDrawTriangle,
 	eDrawRhombus,
+	eDrawTextTime,
 };
 
 ///////////////////////// DrawTool ////////////////////////

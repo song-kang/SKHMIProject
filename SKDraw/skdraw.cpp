@@ -12,6 +12,8 @@ SKDraw::SKDraw(QWidget *parent, Qt::WFlags flags)
 
 	Init();
 	InitUi();
+	InitBaseItem();
+	InitComplexItem();
 	InitDB();
 }
 
@@ -225,6 +227,17 @@ void SKDraw::InitUi()
 
 	ui.listWidgetDQ->setMovement(QListView::Static);
 	ui.listWidgetDQ->setResizeMode(QListView::Adjust);
+
+	ui.listWidgetBase->setMovement(QListView::Static);
+	ui.listWidgetBase->setResizeMode(QListView::Adjust);
+	ui.listWidgetBase->setIconSize(QSize(24,24));
+	ui.listWidgetBase->setSpacing(12);
+
+	ui.listWidgetComplex->setMovement(QListView::Static);
+	ui.listWidgetComplex->setResizeMode(QListView::Adjust);
+	ui.listWidgetComplex->setIconSize(QSize(24,24));
+	ui.listWidgetComplex->setSpacing(12);
+
 	tabifyDockWidget(ui.dockWidgetSence,ui.dockWidgetItem);
 	ui.dockWidgetSence->raise();
 }
@@ -355,6 +368,8 @@ void SKDraw::InitSlot()
 	connect(m_pBrushColorBtn,SIGNAL(clicked()),this,SLOT(SlotBtnBrushColor()));
 
 	connect(ui.listWidgetDQ,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(SlotSymbolsDQClicked(QListWidgetItem*)));
+	connect(ui.listWidgetBase,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(SlotBaseItemClicked(QListWidgetItem*)));
+	connect(ui.listWidgetComplex,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(SlotComplexItemClicked(QListWidgetItem*)));
 	connect(ui.actionLinkData,SIGNAL(triggered()),this,SLOT(SlotLinkData()));
 
 	connect(m_app, SIGNAL(SigKeyUp()), this, SLOT(SlotKeyUp()));
@@ -370,6 +385,80 @@ void SKDraw::InitSlot()
 
 	connect(&m_menuWnd,SIGNAL(triggered(QAction*)),this,SLOT(SlotMenuWnd(QAction*)));
 	connect(ui.treeWidgetSence,SIGNAL(itemPressed(QTreeWidgetItem *,int)),this,SLOT(SlotTreeItemPressed(QTreeWidgetItem *,int)));
+}
+
+void SKDraw::InitBaseItem()
+{
+	QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/line"),tr("线段"));
+	item->setData(Qt::UserRole,eDrawLine);
+	item->setToolTip(tr("线段"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/polyline"),tr("折线"));
+	item->setData(Qt::UserRole,eDrawPolyline);
+	item->setToolTip(tr("折线"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/polygon"),tr("多边形"));
+	item->setData(Qt::UserRole,eDrawPolygon);
+	item->setToolTip(tr("多边形"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/rectangle"),tr("矩形"));
+	item->setData(Qt::UserRole,eDrawRectangle);
+	item->setToolTip(tr("矩形"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/roundrect"),tr("圆角矩形"));
+	item->setData(Qt::UserRole,eDrawPolyline);
+	item->setToolTip(tr("圆角矩形"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/circle"),tr("圆形"));
+	item->setData(Qt::UserRole,eDrawCircle);
+	item->setToolTip(tr("圆形"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/ellipse"),tr("椭圆形"));
+	item->setData(Qt::UserRole,eDrawEllipse);
+	item->setToolTip(tr("椭圆形"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/triangle"),tr("三角形"));
+	item->setData(Qt::UserRole,eDrawTriangle);
+	item->setToolTip(tr("三角形"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/rhombus"),tr("菱形"));
+	item->setData(Qt::UserRole,eDrawRhombus);
+	item->setToolTip(tr("菱形"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/text"),tr("文字"));
+	item->setData(Qt::UserRole,eDrawText);
+	item->setToolTip(tr("文字"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/picture"),tr("图片"));
+	item->setData(Qt::UserRole,eDrawPicture);
+	item->setToolTip(tr("图片"));
+	ui.listWidgetBase->addItem(item);
+}
+
+void SKDraw::InitComplexItem()
+{
+	//if (sender() == ui.actionLine)
+	//{
+	//	QTableWidget *tableWgt = new QTableWidget(10,3);
+	//	QGraphicsProxyWidget *pTableWgt = m_pScene->addWidget(tableWgt);
+	//	pTableWgt->setPos(200,200);
+	//	return;
+	//}
+
+	QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/line"),tr("文本时间"));
+	item->setData(Qt::UserRole,eDrawLine);
+	item->setToolTip(tr("文本时间"));
+	ui.listWidgetBase->addItem(item);
 }
 
 void SKDraw::InitSymbols()
@@ -968,6 +1057,8 @@ void SKDraw::UpdateActions()
 	ui.actionPolyline->setChecked(DrawTool::c_drawShape == eDrawPolyline);
 	ui.actionText->setChecked(DrawTool::c_drawShape == eDrawText);
 	ui.actionPicture->setChecked(DrawTool::c_drawShape == eDrawPicture);
+	ui.actionTriangle->setChecked(DrawTool::c_drawShape == eDrawTriangle);
+	ui.actionRhombus->setChecked(DrawTool::c_drawShape == eDrawRhombus);
 
 	ui.actionUndo->setEnabled(m_pUndoStack->canUndo());
 	ui.actionRedo->setEnabled(m_pUndoStack->canRedo());
@@ -1189,6 +1280,29 @@ void SKDraw::SlotKeyEscape()
 void SKDraw::SlotMouseRightButton(QPoint p)
 {
 	m_pEditMenu->popup(p/* + QPoint(18,18)*/);
+}
+
+void SKDraw::SlotBaseItemClicked(QListWidgetItem *item)
+{
+	if (!m_pView)
+		SlotNew();
+
+	if (m_pView)
+		m_pView->SetModified(true);
+
+	m_pScene->clearSelection();
+	DrawTool::c_drawShape = (DrawShape)item->data(Qt::UserRole).toInt();
+	m_pView->setDragMode(QGraphicsView::NoDrag);
+
+	if (DrawTool::c_drawShape == eDrawPicture)
+		LoadDBPicture();
+
+	UpdateActions();
+}
+
+void SKDraw::SlotComplexItemClicked(QListWidgetItem *item)
+{
+
 }
 
 void SKDraw::SlotSymbolsDQClicked(QListWidgetItem *item)
