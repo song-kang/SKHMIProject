@@ -63,6 +63,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sys_unit_agent", "sys_unit_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugin_drawer", "plugin_drawer\plugin_drawer.vcxproj", "{BABEAE12-D3BE-4322-0564-201808110903}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugin_telecontrol", "plugin_telecontrol\plugin_telecontrol.vcxproj", "{BABEAE12-D3BE-4322-2046-201809261325}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -117,6 +119,10 @@ Global
 		{BABEAE12-D3BE-4322-0564-201808110903}.Debug|Win32.Build.0 = Debug|Win32
 		{BABEAE12-D3BE-4322-0564-201808110903}.Release|Win32.ActiveCfg = Release|Win32
 		{BABEAE12-D3BE-4322-0564-201808110903}.Release|Win32.Build.0 = Release|Win32
+		{BABEAE12-D3BE-4322-2046-201809261325}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BABEAE12-D3BE-4322-2046-201809261325}.Debug|Win32.Build.0 = Debug|Win32
+		{BABEAE12-D3BE-4322-2046-201809261325}.Release|Win32.ActiveCfg = Release|Win32
+		{BABEAE12-D3BE-4322-2046-201809261325}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -266,7 +266,7 @@ void ShapRelate::InitSlot()
 void ShapRelate::Start()
 {
 	QStringList list;
-	list << "无类型" << "状态类型";
+	list << "无类型" << "状态类" << "遥控类" << "遥调类";
 	ui.comboBoxShowType->addItems(list);
 	ui.comboBoxShowType->setCurrentIndex(0);
 
@@ -288,7 +288,7 @@ void ShapRelate::Start()
 	m_scale = ((GraphicsItem*)m_pShape)->GetScale();
 	if (m_sShapeName == "文字图元")
 	{
-		ui.comboBoxShowType->addItem("测量类型");
+		ui.comboBoxShowType->addItem("测量类");
 		m_font = ((GraphicsTextItem*)m_pShape)->GetFont();
 		m_text = ((GraphicsTextItem*)m_pShape)->GetText();
 	}
@@ -321,23 +321,38 @@ void ShapRelate::SlotShowTypeChanged(int index)
 		ui.comboBoxShowState->clear();
 		ui.lineEditLinkDB->clear();
 		ui.btnLinkDB->setEnabled(false);
+		ui.btnLinkScene->setEnabled(true);
 		ui.tabWidgetState->setEnabled(false);
 		ui.tabWidgetState->clear();
 		break;
-	case 1: //状态类型
+	case 1: //状态类
 		ui.comboBoxStateNum->setEnabled(true);
 		ui.comboBoxShowState->setEnabled(true);
 		ui.lineEditLinkDB->clear();
 		ui.btnLinkDB->setEnabled(true);
+		ui.btnLinkScene->setEnabled(true);
 		ui.tabWidgetState->setEnabled(true);
 		break;
-	case 2: //测量类型
+	case 2: //遥控类
+	case 3: //遥调类
 		ui.comboBoxStateNum->setEnabled(false);
 		ui.comboBoxStateNum->setCurrentIndex(0);
 		ui.comboBoxShowState->setEnabled(false);
 		ui.comboBoxShowState->clear();
 		ui.lineEditLinkDB->clear();
 		ui.btnLinkDB->setEnabled(true);
+		ui.btnLinkScene->setEnabled(false);
+		ui.tabWidgetState->setEnabled(true);
+		ui.tabWidgetState->clear();
+		break;
+	case 4: //测量类
+		ui.comboBoxStateNum->setEnabled(false);
+		ui.comboBoxStateNum->setCurrentIndex(0);
+		ui.comboBoxShowState->setEnabled(false);
+		ui.comboBoxShowState->clear();
+		ui.lineEditLinkDB->clear();
+		ui.btnLinkDB->setEnabled(true);
+		ui.btnLinkScene->setEnabled(true);
 		ui.tabWidgetState->setEnabled(true);
 		ui.tabWidgetState->clear();
 		break;
@@ -490,6 +505,12 @@ void ShapRelate::SetFontFromString(PropertyState *ps, QString strFont)
 
 void ShapRelate::SlotOk()
 {
+	if (ui.comboBoxShowType->currentIndex() != 0 && ui.lineEditLinkDB->text().trimmed().isEmpty())
+	{
+		QMessageBox::warning(this, "告警", "请在数据库选取条目");
+		return;
+	}
+
 	((GraphicsItem*)m_pShape)->SetLinkDB(ui.lineEditLinkDB->text().trimmed());
 	((GraphicsItem*)m_pShape)->SetLinkScene(ui.lineEditLinkScene->text().trimmed());
 	if (((GraphicsItem*)m_pShape)->DisplayName() == "组合图元")

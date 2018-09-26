@@ -424,3 +424,20 @@ void SKGui::GotoFunPoint(QString funKey)
 	QString name = DB->SelectInto(SString::toFormat("select name from t_ssp_fun_point where fun_key='%s'",funKey.toStdString().data()));
 	m_pHmiWidget->GotoFunPoint(funKey,name,pix.isNull()?QIcon(":/images/application"):QIcon(pix));
 }
+
+CBaseView* SKGui::GotoFunPoint(QString funKey, QString &desc, QIcon &icon)
+{
+	int iLen = 0;
+	unsigned char *pBuf = NULL;
+	QPixmap pix;
+	SString sWhere = SString::toFormat("fun_key='%s'",funKey.toStdString().data());
+	if (DB->ReadLobToMem("t_ssp_fun_point","img_normal",sWhere,pBuf,iLen) && pBuf && iLen > 0)
+	{
+		pix.loadFromData(pBuf,iLen);
+		icon = QIcon(pix);
+		delete [] pBuf;
+	}
+
+	desc = DB->SelectInto(SString::toFormat("select name from t_ssp_fun_point where fun_key='%s'",funKey.toStdString().data()));
+	return m_pHmiWidget->GotoWidget(funKey, desc);
+}

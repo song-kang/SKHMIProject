@@ -2,16 +2,9 @@
  *
  * 文 件 名 : view_plugin_drawer.h
  * 创建日期 : 2018-08-11 09:03
- * 作    者 : SspAssist(skt001@163.com)
  * 修改日期 : $Date: $
- * 当前版本 : $Revision: $
  * 功能描述 : 自画图形展示插件
  * 修改记录 : 
- *            $Log: $
- *
- * Ver  Date        Author    Comments
- * ---  ----------  --------  -------------------------------------------
- * 001	 2018-08-11	SspAssist　创建文件
  *
  **/
 
@@ -20,6 +13,7 @@
 
 #include "cbaseview.h"
 #include "sk_database.h"
+#include "skbasewidget.h"
 #include "SMdb.h"
 #include "ui_view_plugin_drawer.h"
 #include "drawview.h"
@@ -105,6 +99,8 @@ public:
 	QMap<QString, QList<GraphicsItem *>*> m_mapLinkDBState;
 	QMap<QString, QList<GraphicsItem *>*> m_mapLinkDBMeasure;
 
+	SKBaseWidget *m_pCtrlWidget;
+
 private:
 	void RegisterMdbTrigger()
 	{
@@ -125,6 +121,7 @@ private slots:
 	void SlotItemSelected();
 	void SlotPositionChanged(int,int);
 	void SlotMouseRightButton(QPoint);
+	void SlotCtrlClose();
 	
 };
 

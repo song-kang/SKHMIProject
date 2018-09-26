@@ -56,6 +56,7 @@ public:
 	bool IsExistKey(QString key);
 
 	void GotoFunPoint(QString funKey);
+	CBaseView* GotoFunPoint(QString funKey, QString &desc, QIcon &icon);
 
 public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);

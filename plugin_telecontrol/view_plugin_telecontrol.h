@@ -1,35 +1,28 @@
 /**
  *
- * 文 件 名 : view_plugin_demo1.h
- * 创建日期 : 2018-03-24 09:34
- * 作    者 : SspAssist(skt001@163.com)
+ * 文 件 名 : view_plugin_telecontrol.h
+ * 创建日期 : 2018-09-26 13:25
  * 修改日期 : $Date: $
- * 当前版本 : $Revision: $
- * 功能描述 : 界面平台测试插件1
+ * 功能描述 : 遥控类界面插件
  * 修改记录 : 
- *            $Log: $
- *
- * Ver  Date        Author    Comments
- * ---  ----------  --------  -------------------------------------------
- * 001	 2018-03-24	SspAssist　创建文件
  *
  **/
 
-#ifndef __VIEW_PLUGIN_DEMO1_H__
-#define __VIEW_PLUGIN_DEMO1_H__
+#ifndef __VIEW_PLUGIN_TELECONTROL_H__
+#define __VIEW_PLUGIN_TELECONTROL_H__
 
 #include "cbaseview.h"
 #include "sk_database.h"
 #include "SMdb.h"
-#include "ui_view_plugin_demo1.h"
+#include "ui_view_plugin_telecontrol.h"
 
-class view_plugin_demo1 : public CBaseView
+class view_plugin_telecontrol : public CBaseView
 {
 	Q_OBJECT
 
 public:
-	view_plugin_demo1(QWidget *parent = 0);
-	~view_plugin_demo1();
+	view_plugin_telecontrol(QWidget *parent = 0);
+	~view_plugin_telecontrol();
 
 	virtual void SetBackgroundColor(int red = 240, int yellow = 240, int blue = 240, int alpha = 230)
 	{
@@ -43,9 +36,14 @@ public:
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
 
 private:
-	Ui::view_plugin_demo1 ui;
+	Ui::view_plugin_telecontrol ui;
 
 	CMdbClient *m_pMdbTrgClient;
+
+private:
+	void Init();
+	void InitUi();
+	void InitSlot();
 
 private:
 	void RegisterMdbTrigger()
@@ -62,5 +60,5 @@ private:
 	void TestCommandSend();
 };
 
-#endif // __VIEW_PLUGIN_DEMO1_H__
+#endif // __VIEW_PLUGIN_TELECONTROL_H__
 

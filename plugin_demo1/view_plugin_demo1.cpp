@@ -33,6 +33,11 @@ view_plugin_demo1::~view_plugin_demo1()
 	RemoveMdbTrigger();
 }
 
+int view_plugin_demo1::OnCommand(SString sCmd,SString &sResult)
+{
+	return 0;
+}
+
 BYTE* view_plugin_demo1::OnMdbTrgCallback(void* cbParam,SString &sTable,eMdbTriggerType eType,int iTrgRows,int iRowSize,BYTE *pTrgData)
 {
 	t_oe_element_state stuElemState;

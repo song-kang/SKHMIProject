@@ -301,6 +301,15 @@ int CHMIWidget::GotoWidget(QString name)
 	return 0; //发现了加载过的插件
 }
 
+CBaseView* CHMIWidget::GotoWidget(QString name, QString desc)
+{
+	CBaseView *view = SK_GUI->NewView(name);
+	if (view)
+		return view;
+
+	return NULL;
+}
+
 void CHMIWidget::GotoFunPoint(QString name, QString desc, QIcon icon)
 {
 	int ret = GotoWidget(name);
