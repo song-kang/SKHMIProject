@@ -23,6 +23,7 @@ static DrawRectTool		c_textTool(eDrawText);
 static DrawRectTool		c_pictureTool(eDrawPicture);
 static DrawRectTool		c_triangleTool(eDrawTriangle);
 static DrawRectTool		c_rhombusTool(eDrawRhombus);
+static DrawRectTool		c_textTimeTool(eDrawTextTime);
 
 enum SelectMode
 {
@@ -418,16 +419,18 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 			else
 				return;
 		}
+		else if (c_drawShape == eDrawTextTime)
+			m_pItem = new GraphicsTextTimeItem(scene,QRect(0, 0, 250, 25));
 
 		scene->addItem(m_pItem);
 		m_pItem->SetScene(scene);
 		m_pItem->setPos(event->scenePos());
 
-		if (c_drawShape == eDrawText || c_drawShape == eDrawPicture)
+		if (c_drawShape == eDrawText || c_drawShape == eDrawPicture || c_drawShape == eDrawTextTime)
 		{
 			m_pItem->setSelected(true);
 			m_pItem->UpdateCoordinate();
-			if (c_drawShape == eDrawText)
+			if (c_drawShape == eDrawText || c_drawShape == eDrawTextTime)
 			{
 				((GraphicsTextItem*)m_pItem)->SetFont(((DrawView*)scene->GetView())->GetApp()->GetFont());
 				((GraphicsTextItem*)m_pItem)->SetFontColor(((DrawView*)scene->GetView())->GetApp()->GetFontColor());

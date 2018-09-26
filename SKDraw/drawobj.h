@@ -511,6 +511,32 @@ public:
 
 };
 
+///////////////////////// GraphicsTextTimeItem /////////////////////////
+class GraphicsTextTimeItem :public GraphicsTextItem
+{
+	Q_OBJECT
+
+	Q_PROPERTY(QString TextTimeStyle READ GetStyle WRITE SetStyle)
+
+public:
+	GraphicsTextTimeItem(DrawScene *scene, const QRect &rect, QGraphicsItem *parent = 0);
+	~GraphicsTextTimeItem();
+
+	void SetStyle(QString style) { m_sStyle = style; }
+	QString GetStyle() { return m_sStyle; }
+
+public:
+	virtual QGraphicsItem *Duplicate();
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	QString m_sStyle;
+
+};
+
 ///////////////////////// GraphicsPictureItem /////////////////////////
 class GraphicsPictureItem :public GraphicsRectItem
 {

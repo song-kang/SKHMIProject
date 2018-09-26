@@ -57,6 +57,7 @@ void PropertyEditor::InitMap()
 	m_mapTranslate.insert("BrushStyle", "画刷风格");
 	m_mapTranslate.insert("RoundRadius", "圆角半径");
 	m_mapTranslate.insert("TextAlignment", "对齐方式");
+	m_mapTranslate.insert("TextTimeStyle", "时间样式");
 }
 
 void PropertyEditor::SlotValueChanged(QtProperty *property, int value)
@@ -315,6 +316,13 @@ bool PropertyEditor::IsVisibleProperty(QString property)
 	else if (shape == "文字图元")
 	{
 		if (property == "PenColor" || property == "Text" || property == "Font" || property == "TextAlignment")
+			return true;
+		else
+			return false;
+	}
+	else if (shape == "文本时间")
+	{
+		if (property == "PenColor" || property == "Font" || property == "TextAlignment" || property == "TextTimeStyle")
 			return true;
 		else
 			return false;

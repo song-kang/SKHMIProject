@@ -77,5 +77,6 @@
         <file alias="triangle">Resources/images/triangle.png</file>
         <file alias="export">Resources/images/export.png</file>
         <file alias="import">Resources/images/import.png</file>
+        <file alias="texttime">Resources/images/texttime.png</file>
     </qresource>
 </RCC>

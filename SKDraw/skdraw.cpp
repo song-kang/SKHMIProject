@@ -455,10 +455,10 @@ void SKDraw::InitComplexItem()
 	//	return;
 	//}
 
-	QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/line"),tr("文本时间"));
+	QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/texttime"),tr("文本时间"));
 	item->setData(Qt::UserRole,eDrawLine);
 	item->setToolTip(tr("文本时间"));
-	ui.listWidgetBase->addItem(item);
+	ui.listWidgetComplex->addItem(item);
 }
 
 void SKDraw::InitSymbols()
@@ -1302,7 +1302,20 @@ void SKDraw::SlotBaseItemClicked(QListWidgetItem *item)
 
 void SKDraw::SlotComplexItemClicked(QListWidgetItem *item)
 {
+	if (!m_pView)
+		SlotNew();
 
+	if (m_pView)
+		m_pView->SetModified(true);
+
+	m_pScene->clearSelection();
+	if (item->text() == "文本时间")
+	{
+		DrawTool::c_drawShape = eDrawTextTime;
+		m_pView->setDragMode(QGraphicsView::NoDrag);
+	}
+
+	UpdateActions();
 }
 
 void SKDraw::SlotSymbolsDQClicked(QListWidgetItem *item)

@@ -1393,6 +1393,102 @@ bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
 	return true;
 }
 
+///////////////////////// GraphicsTextTimeItem /////////////////////////
+GraphicsTextTimeItem::GraphicsTextTimeItem(DrawScene *scene, const QRect &rect, QGraphicsItem *parent)
+	:GraphicsTextItem(scene, rect, parent)
+{
+	SetScene(scene);
+
+	m_sStyle = "yyyy-MM-dd hh:mm:ss";
+
+	m_option.setAlignment(Qt::AlignCenter);
+	m_option.setWrapMode(QTextOption::WordWrap);
+
+	SetName("文本时间");
+}
+
+GraphicsTextTimeItem::~GraphicsTextTimeItem()
+{
+
+}
+
+QGraphicsItem* GraphicsTextTimeItem::Duplicate()
+{
+	GraphicsTextTimeItem * item = new GraphicsTextTimeItem(GetScene(), m_localRect.toRect());
+
+	item->m_width = GetWidth();
+	item->m_height = GetHeight();
+	item->SetScene(GetScene());
+	item->setPos(pos().x(), pos().y());
+	item->SetPen(GetPen());
+	item->SetBrush(GetBrush());
+	item->SetFont(GetFont());
+	item->SetText(GetText());
+	item->SetOption(GetOption());
+	item->setTransform(transform());
+	item->setTransformOriginPoint(transformOriginPoint());
+	item->setRotation(rotation());
+	item->setScale(scale());
+	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
+	item->SetStyle(GetStyle());
+	item->UpdateCoordinate();
+
+	return item;
+}
+
+void GraphicsTextTimeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	QDateTime dt = QDateTime::currentDateTime();
+	QString sTime = dt.toString(m_sStyle);
+
+	painter->setFont(m_font);
+	painter->setPen(GetPen());
+	painter->drawText(m_localRect, sTime, m_option);
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
+}
+
+bool GraphicsTextTimeItem::SaveToXml(QXmlStreamWriter *xml)
+{
+	xml->writeStartElement("textTime");
+	WriteBaseAttributes(xml);
+
+	xml->writeAttribute(tr("desc"),QString("%1").arg(m_text));
+	xml->writeAttribute(tr("style"),QString("%1").arg(m_sStyle));
+	xml->writeAttribute(tr("family"),QString("%1").arg(m_font.family()));
+	xml->writeAttribute(tr("pointSize"),QString("%1").arg(m_font.pointSize()));
+	xml->writeAttribute(tr("bold"),QString("%1").arg(m_font.bold()));
+	xml->writeAttribute(tr("italic"),QString("%1").arg(m_font.italic()));
+	xml->writeAttribute(tr("underline"),QString("%1").arg(m_font.underline()));
+	xml->writeAttribute(tr("strikeOut"),QString("%1").arg(m_font.strikeOut()));
+	xml->writeAttribute(tr("kerning"),QString("%1").arg(m_font.kerning()));
+	xml->writeAttribute(tr("alignment"),QString("%1").arg(m_option.alignment()));
+
+	xml->writeEndElement();
+	return true;
+}
+
+bool GraphicsTextTimeItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	ReadBaseAttributes(xml);
+	m_text = xml->attributes().value(tr("desc")).toString();
+	m_sStyle = xml->attributes().value(tr("style")).toString();
+	m_font.setFamily(xml->attributes().value(tr("family")).toString());
+	m_font.setPointSize(xml->attributes().value(tr("pointSize")).toString().toInt());
+	m_font.setBold(xml->attributes().value(tr("bold")).toString().toInt());
+	m_font.setItalic(xml->attributes().value(tr("italic")).toString().toInt());
+	m_font.setUnderline(xml->attributes().value(tr("underline")).toString().toInt());
+	m_font.setStrikeOut(xml->attributes().value(tr("strikeOut")).toString().toInt());
+	m_font.setKerning(xml->attributes().value(tr("kerning")).toString().toInt());
+	m_option.setAlignment((Qt::Alignment)xml->attributes().value(tr("alignment")).toString().toInt());
+
+	xml->skipCurrentElement();
+	UpdateCoordinate();
+	return true;
+}
+
 ///////////////////////// GraphicsPictureItem /////////////////////////
 GraphicsPictureItem::GraphicsPictureItem(DrawScene *scene, const QRect &rect, int sn, QPixmap picture, QGraphicsItem *parent)
 	:GraphicsRectItem(scene, rect, parent),
