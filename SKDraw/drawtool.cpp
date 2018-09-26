@@ -247,6 +247,11 @@ void DrawSelectTool::mouseReleaseEvent(QGraphicsSceneMouseEvent *event, DrawScen
 	m_nDragHandle = eHandleNone;
 	m_bHoverSizer = false;
 	m_opposite = QPointF();
+
+	DrawTool::c_drawShape = eDrawSelection;
+	((DrawView*)scene->GetView())->setDragMode(QGraphicsView::NoDrag);
+	((DrawView*)scene->GetView())->GetApp()->UpdateActions();
+
 	scene->MouseEvent(event);
 }
 
