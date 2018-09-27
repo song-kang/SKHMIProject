@@ -21,13 +21,15 @@ HEADERS += ../include/SKGui/skgui.h \
     ./cusers.h \
     ./cuserswidget.h \
     ./cauthwidget.h \
+    ./cfunpointedit.h \
+    ./cfunpointadd.h \
     ./cloginwidget.h \
-    ./cinitwidget.h \
-	./cfunpointedit.h \
-	./cfunpointadd.h
+    ./cinitwidget.h
 SOURCES += ./cauthwidget.cpp \
     ./cbaseview.cpp \
     ./cfunpoint.cpp \
+    ./cfunpointadd.cpp \
+    ./cfunpointedit.cpp \
     ./chmiwidget.cpp \
     ./cinitwidget.cpp \
     ./cloginwidget.cpp \
@@ -37,15 +39,13 @@ SOURCES += ./cauthwidget.cpp \
     ./cusers.cpp \
     ./cuserswidget.cpp \
     ./skgui.cpp \
-    ./touchscrollarea.cpp \
-	./cfunpointedit.cpp \
-	././cfunpointadd.cpp
+    ./touchscrollarea.cpp
 FORMS += ./cinitwidget.ui \
     ./cloginwidget.ui \
     ./ctoolwidget.ui \
     ./cnavigtion.ui \
     ./cuserswidget.ui \
     ./cauthwidget.ui \
-	./cfunpointedit.ui \
-	./cfunpointadd.ui
+    ./cfunpointedit.ui \
+    ./cfunpointadd.ui
 RESOURCES += skgui.qrc

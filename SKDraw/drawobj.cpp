@@ -2,7 +2,6 @@
 #include "drawscene.h"
 #include "drawview.h"
 #include "skdraw.h"
-#include "ssp_database.h"
 
 static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen)
 {

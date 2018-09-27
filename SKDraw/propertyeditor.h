@@ -41,8 +41,8 @@ private:
 	QObject *m_pObject;
 	QList<QtProperty*> m_lstTopLevelProperties;
 	QMap<QtProperty *, int> m_propertyToIndex;
-	QMap<const QMetaObject*, QMap<int, QtVariantProperty*>> m_classToIndexToProperty;
-	QMap<const QMetaObject*, QMap<int, QtProperty*>> m_classToIndexToEnumProperty;
+	QMap<const QMetaObject*, QMap<int, QtVariantProperty*> > m_classToIndexToProperty;
+	QMap<const QMetaObject*, QMap<int, QtProperty*> > m_classToIndexToEnumProperty;
 	QMap<QString, QString> m_mapTranslate;
 	DrawScene *m_pScene;
 

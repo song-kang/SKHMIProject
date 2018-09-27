@@ -18,6 +18,7 @@ INCLUDEPATH += ./GeneratedFiles \
     /home/uk/include \
     /home/uk/include/comm \
     /home/uk/include/db \
+    /home/uk/include/db/mdb \
     /home/uk/include/db/mysql \
     /home/uk/include/db/oracle \
     /home/uk/include/db/oracle/oci/include

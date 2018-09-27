@@ -410,7 +410,7 @@ void SKDraw::InitBaseItem()
 	ui.listWidgetBase->addItem(item);
 
 	item = new QListWidgetItem(QIcon(":/images/roundrect"),tr("圆角矩形"));
-	item->setData(Qt::UserRole,eDrawPolyline);
+	item->setData(Qt::UserRole,eDrawRoundrect);
 	item->setToolTip(tr("圆角矩形"));
 	ui.listWidgetBase->addItem(item);
 

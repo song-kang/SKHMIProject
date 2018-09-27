@@ -9,8 +9,10 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 TEMPLATE = subdirs
 SUBDIRS += SKBaseWidget/SKBaseWidget.pro \
-    example/example.pro \
     SKHMI/SKHMI.pro \
     SKGui/SKGui.pro \
     plugin_demo1/plugin_demo1.pro \
-    plugin_demo2/plugin_demo2.pro
+    plugin_demo2/plugin_demo2.pro \
+    SKDraw/SKDraw.pro \
+    plugin_drawer/plugin_drawer.pro \
+    plugin_telecontrol/plugin_telecontrol.pro

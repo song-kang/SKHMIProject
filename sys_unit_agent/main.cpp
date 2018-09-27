@@ -30,7 +30,6 @@
 #define MOD_TIME "12:36:00"
 #endif
 
-#include "ssp_base.h"
 #include "UnitMgrApplication.h"
 CUnitMgrApplication g_app;
 

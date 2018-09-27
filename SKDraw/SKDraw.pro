@@ -3,17 +3,18 @@
 # ------------------------------------------------------
 
 TEMPLATE = app
-TARGET = SKHMI
+TARGET = SKDraw
 DESTDIR = /home/uk/bin
-QT += core gui xml xmlpatterns
+QT += core gui network xml xmlpatterns svg
 CONFIG += debug
-DEFINES += QT_DLL QT_XML_LIB QT_XMLPATTERNS_LIB
+DEFINES += QT_DLL QT_XML_LIB QT_NETWORK_LIB QT_SVG_LIB QT_XMLPATTERNS_LIB
+QMAKE_CXXFLAGS += -fpermissive
 INCLUDEPATH += ./GeneratedFiles \
     . \
     ./GeneratedFiles/Debug \
     ./../include/SKBase \
     ./../include/SKBaseWidget \
-    ./../include/SKGui \
+    ./qtpropertybrowser \
     /usr/include/mysql \
     /home/uk/include \
     /home/uk/include/comm \
@@ -32,7 +33,6 @@ LIBS += -L"/home/uk/lib" \
     -lsbase_oracled \
     -lSKBased \
     -lSKBaseWidget \
-    -lSKGui \
     -lmysqlclient \
     -lociei
 
@@ -42,4 +42,4 @@ MOC_DIR += ./GeneratedFiles/debug
 OBJECTS_DIR += debug
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
-include(SKHMI.pri)
+include(SKDraw.pri)
