@@ -809,6 +809,7 @@ bool GraphicsTextItem::LoadFromXml(QXmlStreamReader *xml)
 	m_font.setUnderline(xml->attributes().value(tr("underline")).toString().toInt());
 	m_font.setStrikeOut(xml->attributes().value(tr("strikeOut")).toString().toInt());
 	m_font.setKerning(xml->attributes().value(tr("kerning")).toString().toInt());
+	m_option.setAlignment((Qt::Alignment)xml->attributes().value(tr("alignment")).toString().toInt());
 
 	xml->skipCurrentElement();
 	UpdateCoordinate();
@@ -825,6 +826,52 @@ void GraphicsTextItem::SetStyle(QString sFont, QString text)
 	m_font.setUnderline(sFont.split(",").at(4).toInt());
 	m_font.setStrikeOut(sFont.split(",").at(5).toInt());
 	m_font.setKerning(sFont.split(",").at(6).toInt());
+}
+
+///////////////////////// GraphicsTextTimeItem /////////////////////////
+GraphicsTextTimeItem::GraphicsTextTimeItem(const QRect &rect, QGraphicsItem *parent)
+	:GraphicsTextItem(rect, parent)
+{
+	m_sStyle = "yyyy-MM-dd hh:mm:ss";
+
+	m_option.setAlignment(Qt::AlignCenter);
+	m_option.setWrapMode(QTextOption::WordWrap);
+
+	SetName("文本时间");
+}
+
+GraphicsTextTimeItem::~GraphicsTextTimeItem()
+{
+
+}
+
+void GraphicsTextTimeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	QDateTime dt = QDateTime::currentDateTime();
+	QString sTime = dt.toString(m_sStyle);
+
+	painter->setFont(m_font);
+	painter->setPen(GetPen());
+	painter->drawText(m_localRect, sTime, m_option);
+}
+
+bool GraphicsTextTimeItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	ReadBaseAttributes(xml);
+	m_text = xml->attributes().value(tr("desc")).toString();
+	m_sStyle = xml->attributes().value(tr("style")).toString();
+	m_font.setFamily(xml->attributes().value(tr("family")).toString());
+	m_font.setPointSize(xml->attributes().value(tr("pointSize")).toString().toInt());
+	m_font.setBold(xml->attributes().value(tr("bold")).toString().toInt());
+	m_font.setItalic(xml->attributes().value(tr("italic")).toString().toInt());
+	m_font.setUnderline(xml->attributes().value(tr("underline")).toString().toInt());
+	m_font.setStrikeOut(xml->attributes().value(tr("strikeOut")).toString().toInt());
+	m_font.setKerning(xml->attributes().value(tr("kerning")).toString().toInt());
+	m_option.setAlignment((Qt::Alignment)xml->attributes().value(tr("alignment")).toString().toInt());
+
+	xml->skipCurrentElement();
+	UpdateCoordinate();
+	return true;
 }
 
 ///////////////////////// GraphicsPictureItem /////////////////////////

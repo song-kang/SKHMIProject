@@ -301,6 +301,25 @@ public:
 
 };
 
+///////////////////////// GraphicsTextTimeItem /////////////////////////
+class GraphicsTextTimeItem :public GraphicsTextItem
+{
+public:
+	GraphicsTextTimeItem(const QRect &rect, QGraphicsItem *parent = 0);
+	~GraphicsTextTimeItem();
+
+	void SetStyle(QString style) { m_sStyle = style; }
+	QString GetStyle() { return m_sStyle; }
+
+public:
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	QString m_sStyle;
+
+};
+
 ///////////////////////// GraphicsPictureItem /////////////////////////
 class GraphicsPictureItem :public GraphicsRectItem
 {

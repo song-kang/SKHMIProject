@@ -296,6 +296,8 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 			item = new GraphicsEllipseItem(QRect(0,0,0,0), true);
 		else if (xml->name() == tr("text"))
 			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
+		else if (xml->name() == tr("textTime"))
+			item = new GraphicsTextTimeItem(QRect(0, 0, 0, 0));
 		else if (xml->name() == tr("picture"))
 		{
 			item = new GraphicsPictureItem(QRect(0, 0, 0, 0), QString::null);
@@ -353,6 +355,8 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 			item = new GraphicsEllipseItem(QRect(0,0,0,0), true);
 		else if (xml->name() == tr("text"))
 			item = new GraphicsTextItem(QRect(0, 0, 0, 0));
+		else if (xml->name() == tr("textTime"))
+			item = new GraphicsTextTimeItem(QRect(0, 0, 0, 0));
 		else if (xml->name() == tr("picture"))
 		{
 			item = new GraphicsPictureItem(QRect(0, 0, 0, 0), QString::null);
