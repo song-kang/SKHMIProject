@@ -1,4 +1,4 @@
-ï»¿#include "skdraw.h"
+#include "skdraw.h"
 #include "commands.h"
 #include "shaprelate.h"
 #include "sk_database.h"
@@ -51,9 +51,9 @@ void SKDraw::Init()
 	ui.dockWidgetProperty->setWidget(m_pPropertyEditor);
 
 	m_pFontComboBox = new QFontComboBox(this);
-	m_pFontComboBox->setCurrentFont(QFont("å®‹ä½“"));
+	m_pFontComboBox->setCurrentFont(QFont("ËÎÌå"));
 	m_pFontSizeComboBox = new QComboBox(this);
-	m_pFontSizeComboBox->setToolTip(m_pFontSizeComboBox->tr("å­—ä½“å¤§å°"));
+	m_pFontSizeComboBox->setToolTip(m_pFontSizeComboBox->tr("×ÖÌå´óÐ¡"));
 	m_pFontSizeComboBox->setEditable(false);
 	for (int i = 6,j = 0; j < 7; i++,j++)
 		m_pFontSizeComboBox->addItem(QString().setNum(i));
@@ -84,7 +84,7 @@ void SKDraw::Init()
 	m_fontColor.setNamedColor("#00FFFF");
 
 	m_pPenStyleComboBox = new QComboBox(this);
-	m_pPenStyleComboBox->setToolTip(m_pPenStyleComboBox->tr("çº¿åž‹"));
+	m_pPenStyleComboBox->setToolTip(m_pPenStyleComboBox->tr("ÏßÐÍ"));
 	m_pPenStyleComboBox->setEditable(false);
 	m_pPenStyleComboBox->setIconSize(QSize(160,20));
 	m_pPenStyleComboBox->setMinimumWidth(160);
@@ -95,14 +95,14 @@ void SKDraw::Init()
 		QPainter painter(&pix);
 		if (pos == Qt::NoPen)
 		{
-			QFont f("å®‹ä½“");
+			QFont f("ËÎÌå");
 			f.setPointSize(10);
 			QTextOption o;
 			o.setAlignment(Qt::AlignCenter);
 			QPen pen(Qt::black);
 			painter.setPen(pen);
-			painter.setFont(QFont("å®‹ä½“"));
-			painter.drawText(QRect(2,3,148,16),"æ— çº¿æ¡",o);
+			painter.setFont(QFont("ËÎÌå"));
+			painter.drawText(QRect(2,3,148,16),"ÎÞÏßÌõ",o);
 		}
 		else
 		{
@@ -117,7 +117,7 @@ void SKDraw::Init()
 	m_pen.setStyle((Qt::PenStyle)1);
 
 	m_pPenWidthComboBox = new QComboBox(this);
-	m_pPenWidthComboBox->setToolTip(m_pPenStyleComboBox->tr("çº¿å®½"));
+	m_pPenWidthComboBox->setToolTip(m_pPenStyleComboBox->tr("Ïß¿í"));
 	m_pPenWidthComboBox->setEditable(false);
 	m_pPenWidthComboBox->setIconSize(QSize(160,20));
 	m_pPenWidthComboBox->setMinimumWidth(160);
@@ -136,7 +136,7 @@ void SKDraw::Init()
 	m_pen.setWidthF(1.0);
 
 	m_pBrushStyleComboBox = new QComboBox(this);
-	m_pBrushStyleComboBox->setToolTip(m_pPenStyleComboBox->tr("ç”»åˆ·ç±»åž‹"));
+	m_pBrushStyleComboBox->setToolTip(m_pPenStyleComboBox->tr("»­Ë¢ÀàÐÍ"));
 	m_pBrushStyleComboBox->setEditable(false);
 	m_pBrushStyleComboBox->setIconSize(QSize(160,20));
 	m_pBrushStyleComboBox->setMinimumWidth(160);
@@ -147,14 +147,14 @@ void SKDraw::Init()
 		QPainter painter(&pix);
 		if (pos == Qt::NoBrush)
 		{
-			QFont f("å®‹ä½“");
+			QFont f("ËÎÌå");
 			f.setPointSize(10);
 			QTextOption o;
 			o.setAlignment(Qt::AlignCenter);
 			QPen pen(Qt::black);
 			painter.setPen(pen);
-			painter.setFont(QFont("å®‹ä½“"));
-			painter.drawText(QRect(2,3,148,16),"æ— å¡«å……",o);
+			painter.setFont(QFont("ËÎÌå"));
+			painter.drawText(QRect(2,3,148,16),"ÎÞÌî³ä",o);
 		}
 		else
 		{
@@ -218,12 +218,12 @@ void SKDraw::InitUi()
 	QPainter painter(&pix);
 	painter.setPen(pen);
 	painter.setFont(f);
-	painter.drawText(QRect(2,3,298,47),tr("å›¾å½¢ç¼–è¾‘å™¨"),o);
+	painter.drawText(QRect(2,3,298,47),tr("Í¼ÐÎ±à¼­Æ÷"),o);
 	m_pLabelLogo = new QLabel(this);
 	m_pLabelLogo->setStyleSheet("background:transparent;");
 	m_pLabelLogo->setPixmap(pix);
 	ui.gridLayoutCentral->addWidget(m_pLabelLogo,0,0,0,0,Qt::AlignCenter);
-	statusBar()->showMessage(tr("æ¬¢è¿Žä½¿ç”¨å›¾å½¢ç¼–è¾‘å™¨"));
+	statusBar()->showMessage(tr("»¶Ó­Ê¹ÓÃÍ¼ÐÎ±à¼­Æ÷"));
 
 	ui.listWidgetDQ->setMovement(QListView::Static);
 	ui.listWidgetDQ->setResizeMode(QListView::Adjust);
@@ -256,7 +256,7 @@ void SKDraw::InitDB()
 		return;
 
 	m_bDBSt = true;
-	ui.treeWidgetSence->setHeaderLabel(tr("è¿žæŽ¥æ•°æ®åº“æˆåŠŸ"));
+	ui.treeWidgetSence->setHeaderLabel(tr("Á¬½ÓÊý¾Ý¿â³É¹¦"));
 
 	InitDBWnd(NULL);
 }
@@ -389,59 +389,59 @@ void SKDraw::InitSlot()
 
 void SKDraw::InitBaseItem()
 {
-	QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/line"),tr("çº¿æ®µ"));
+	QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/line"),tr("Ïß¶Î"));
 	item->setData(Qt::UserRole,eDrawLine);
-	item->setToolTip(tr("çº¿æ®µ"));
+	item->setToolTip(tr("Ïß¶Î"));
 	ui.listWidgetBase->addItem(item);
 
-	item = new QListWidgetItem(QIcon(":/images/polyline"),tr("æŠ˜çº¿"));
+	item = new QListWidgetItem(QIcon(":/images/polyline"),tr("ÕÛÏß"));
 	item->setData(Qt::UserRole,eDrawPolyline);
-	item->setToolTip(tr("æŠ˜çº¿"));
+	item->setToolTip(tr("ÕÛÏß"));
 	ui.listWidgetBase->addItem(item);
 
-	item = new QListWidgetItem(QIcon(":/images/polygon"),tr("å¤šè¾¹å½¢"));
+	item = new QListWidgetItem(QIcon(":/images/polygon"),tr("¶à±ßÐÎ"));
 	item->setData(Qt::UserRole,eDrawPolygon);
-	item->setToolTip(tr("å¤šè¾¹å½¢"));
+	item->setToolTip(tr("¶à±ßÐÎ"));
 	ui.listWidgetBase->addItem(item);
 
-	item = new QListWidgetItem(QIcon(":/images/rectangle"),tr("çŸ©å½¢"));
+	item = new QListWidgetItem(QIcon(":/images/rectangle"),tr("¾ØÐÎ"));
 	item->setData(Qt::UserRole,eDrawRectangle);
-	item->setToolTip(tr("çŸ©å½¢"));
+	item->setToolTip(tr("¾ØÐÎ"));
 	ui.listWidgetBase->addItem(item);
 
-	item = new QListWidgetItem(QIcon(":/images/roundrect"),tr("åœ†è§’çŸ©å½¢"));
+	item = new QListWidgetItem(QIcon(":/images/roundrect"),tr("Ô²½Ç¾ØÐÎ"));
 	item->setData(Qt::UserRole,eDrawRoundrect);
-	item->setToolTip(tr("åœ†è§’çŸ©å½¢"));
+	item->setToolTip(tr("Ô²½Ç¾ØÐÎ"));
 	ui.listWidgetBase->addItem(item);
 
-	item = new QListWidgetItem(QIcon(":/images/circle"),tr("åœ†å½¢"));
+	item = new QListWidgetItem(QIcon(":/images/circle"),tr("Ô²ÐÎ"));
 	item->setData(Qt::UserRole,eDrawCircle);
-	item->setToolTip(tr("åœ†å½¢"));
+	item->setToolTip(tr("Ô²ÐÎ"));
 	ui.listWidgetBase->addItem(item);
 
-	item = new QListWidgetItem(QIcon(":/images/ellipse"),tr("æ¤­åœ†å½¢"));
+	item = new QListWidgetItem(QIcon(":/images/ellipse"),tr("ÍÖÔ²ÐÎ"));
 	item->setData(Qt::UserRole,eDrawEllipse);
-	item->setToolTip(tr("æ¤­åœ†å½¢"));
+	item->setToolTip(tr("ÍÖÔ²ÐÎ"));
 	ui.listWidgetBase->addItem(item);
 
-	item = new QListWidgetItem(QIcon(":/images/triangle"),tr("ä¸‰è§’å½¢"));
+	item = new QListWidgetItem(QIcon(":/images/triangle"),tr("Èý½ÇÐÎ"));
 	item->setData(Qt::UserRole,eDrawTriangle);
-	item->setToolTip(tr("ä¸‰è§’å½¢"));
+	item->setToolTip(tr("Èý½ÇÐÎ"));
 	ui.listWidgetBase->addItem(item);
 
-	item = new QListWidgetItem(QIcon(":/images/rhombus"),tr("è±å½¢"));
+	item = new QListWidgetItem(QIcon(":/images/rhombus"),tr("ÁâÐÎ"));
 	item->setData(Qt::UserRole,eDrawRhombus);
-	item->setToolTip(tr("è±å½¢"));
+	item->setToolTip(tr("ÁâÐÎ"));
 	ui.listWidgetBase->addItem(item);
 
-	item = new QListWidgetItem(QIcon(":/images/text"),tr("æ–‡å­—"));
+	item = new QListWidgetItem(QIcon(":/images/text"),tr("ÎÄ×Ö"));
 	item->setData(Qt::UserRole,eDrawText);
-	item->setToolTip(tr("æ–‡å­—"));
+	item->setToolTip(tr("ÎÄ×Ö"));
 	ui.listWidgetBase->addItem(item);
 
-	item = new QListWidgetItem(QIcon(":/images/picture"),tr("å›¾ç‰‡"));
+	item = new QListWidgetItem(QIcon(":/images/picture"),tr("Í¼Æ¬"));
 	item->setData(Qt::UserRole,eDrawPicture);
-	item->setToolTip(tr("å›¾ç‰‡"));
+	item->setToolTip(tr("Í¼Æ¬"));
 	ui.listWidgetBase->addItem(item);
 }
 
@@ -455,9 +455,9 @@ void SKDraw::InitComplexItem()
 	//	return;
 	//}
 
-	QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/texttime"),tr("æ–‡æœ¬æ—¶é—´"));
+	QListWidgetItem *item = new QListWidgetItem(QIcon(":/images/texttime"),tr("ÎÄ±¾Ê±¼ä"));
 	item->setData(Qt::UserRole,eDrawLine);
-	item->setToolTip(tr("æ–‡æœ¬æ—¶é—´"));
+	item->setToolTip(tr("ÎÄ±¾Ê±¼ä"));
 	ui.listWidgetComplex->addItem(item);
 }
 
@@ -487,7 +487,7 @@ void SKDraw::InitSymbols()
 		GraphicsItemGroup *grp = m_pView->LoadGroupFromXML(&xml);
 		QPixmap pix = grp->Image();
 		QListWidgetItem *item = new QListWidgetItem(QIcon(pix),tr("%1").arg(name.split(".").at(0)));
-		item->setToolTip(tr("æ–‡ä»¶åç§°ï¼š%1\næ–‡ä»¶ä½ç½®ï¼š%2").arg(name).arg(path+"/"+name));
+		item->setToolTip(tr("ÎÄ¼þÃû³Æ£º%1\nÎÄ¼þÎ»ÖÃ£º%2").arg(name).arg(path+"/"+name));
 		ui.listWidgetDQ->addItem(item);
 		delete grp;
 	}
@@ -537,29 +537,29 @@ bool SKDraw::eventFilter(QObject *obj,QEvent *e)
 				m_pCurrentTreeWidgetItem = item;
 				if (item->type() == WND_TYPE_FOLDER)
 				{
-					m_menuWnd.addAction(QIcon(":/images/logo"),tr("æ·»åŠ åœºæ™¯(&E)"));
-					m_menuWnd.addAction(QIcon(":/images/open"),tr("æ·»åŠ æ–‡ä»¶å¤¹(&O)"));
+					m_menuWnd.addAction(QIcon(":/images/logo"),tr("Ìí¼Ó³¡¾°(&E)"));
+					m_menuWnd.addAction(QIcon(":/images/open"),tr("Ìí¼ÓÎÄ¼þ¼Ð(&O)"));
 					m_menuWnd.addSeparator();
-					m_menuWnd.addAction(QIcon(":/images/delete"),tr("åˆ é™¤æ–‡ä»¶å¤¹(&D)"));
+					m_menuWnd.addAction(QIcon(":/images/delete"),tr("É¾³ýÎÄ¼þ¼Ð(&D)"));
 					m_menuWnd.popup(m_e->globalPos());
 				}
 				else if (item->type() == WND_TYPE_SVG)
 				{
-					m_menuWnd.addAction(QIcon(":/images/logo"),tr("æ·»åŠ åœºæ™¯(&E)"));
-					m_menuWnd.addAction(QIcon(":/images/reorder"),tr("åœºæ™¯å±žæ€§(&A)"));
+					m_menuWnd.addAction(QIcon(":/images/logo"),tr("Ìí¼Ó³¡¾°(&E)"));
+					m_menuWnd.addAction(QIcon(":/images/reorder"),tr("³¡¾°ÊôÐÔ(&A)"));
 					m_menuWnd.addSeparator();
-					m_menuWnd.addAction(QIcon(":/images/import"),tr("å¯¼å…¥åœºæ™¯æ–‡ä»¶(&I)"));
-					m_menuWnd.addAction(QIcon(":/images/export"),tr("å¯¼å‡ºåœºæ™¯æ–‡ä»¶(&R)"));
+					m_menuWnd.addAction(QIcon(":/images/import"),tr("µ¼Èë³¡¾°ÎÄ¼þ(&I)"));
+					m_menuWnd.addAction(QIcon(":/images/export"),tr("µ¼³ö³¡¾°ÎÄ¼þ(&R)"));
 					m_menuWnd.addSeparator();
-					m_menuWnd.addAction(QIcon(":/images/delete"),tr("åˆ é™¤åœºæ™¯(&D)"));
+					m_menuWnd.addAction(QIcon(":/images/delete"),tr("É¾³ý³¡¾°(&D)"));
 					m_menuWnd.popup(m_e->globalPos());
 				}
 			}
 			else 
 			{
 				m_pCurrentTreeWidgetItem = NULL;
-				m_menuWnd.addAction(QIcon(":/images/logo"),tr("æ·»åŠ åœºæ™¯(&E)"));
-				m_menuWnd.addAction(QIcon(":/images/open"),tr("æ·»åŠ æ–‡ä»¶å¤¹(&O)"));
+				m_menuWnd.addAction(QIcon(":/images/logo"),tr("Ìí¼Ó³¡¾°(&E)"));
+				m_menuWnd.addAction(QIcon(":/images/open"),tr("Ìí¼ÓÎÄ¼þ¼Ð(&O)"));
 				m_menuWnd.popup(m_e->globalPos());
 			}
 		}
@@ -591,7 +591,7 @@ void SKDraw::SlotNew()
 
 void SKDraw::SlotOpen()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("æ‰“å¼€"), NULL, "*.sdw");
+	QString fileName = QFileDialog::getOpenFileName(this, tr("´ò¿ª"), NULL, "*.sdw");
 	if (!fileName.isEmpty()) 
 	{
 		if (!m_pScene)
@@ -616,7 +616,7 @@ bool SKDraw::SlotClose()
 {
 	if (m_pView && m_pView->GetIsModified())
 	{
-		int ret = QMessageBox::question(NULL,tr("æ³¨æ„"),tr("æœªä¿å­˜ï¼Œæ˜¯å¦ä¿å­˜ï¼Ÿ"),tr("ä¿å­˜"),tr("ä¸ä¿å­˜"));
+		int ret = QMessageBox::question(NULL,tr("×¢Òâ"),tr("Î´±£´æ£¬ÊÇ·ñ±£´æ£¿"),tr("±£´æ"),tr("²»±£´æ"));
 		if (ret == 0 && !SlotSave())
 			return false;
 	}
@@ -629,7 +629,7 @@ bool SKDraw::SlotClose()
 	m_pView = NULL;
 	m_pScene = NULL;
 
-	statusBar()->showMessage(tr("æ¬¢è¿Žä½¿ç”¨å›¾å½¢ç¼–è¾‘å™¨"));
+	statusBar()->showMessage(tr("»¶Ó­Ê¹ÓÃÍ¼ÐÎ±à¼­Æ÷"));
 	m_app->SetWindowTitle("SKDraw");
 
 	UpdateActions();
@@ -639,7 +639,7 @@ bool SKDraw::SlotClose()
 
 void SKDraw::SlotExit()
 {
-	int ret = QMessageBox::question(NULL,tr("è¯¢é—®"),tr("ç¡®è®¤é€€å‡ºï¼Ÿ"),tr("é€€å‡º"),tr("å–æ¶ˆ"));
+	int ret = QMessageBox::question(NULL,tr("Ñ¯ÎÊ"),tr("È·ÈÏÍË³ö£¿"),tr("ÍË³ö"),tr("È¡Ïû"));
 	if (ret == 0)
 		SigClose();
 }
@@ -953,7 +953,7 @@ void SKDraw::SlotUnderline()
 
 void SKDraw::SlotBtnFontColor()
 {
-	QColor color = QColorDialog::getColor(m_fontColor,this,tr("é€‰æ‹©é¢œè‰²"));
+	QColor color = QColorDialog::getColor(m_fontColor,this,tr("Ñ¡ÔñÑÕÉ«"));
 	if (color.isValid())
 	{
 		if (m_pView)
@@ -990,7 +990,7 @@ void SKDraw::SlotBrushStyleChanged(QString val)
 
 void SKDraw::SlotBtnPentColor()
 {
-	QColor color = QColorDialog::getColor(m_fontColor,this,tr("é€‰æ‹©é¢œè‰²"));
+	QColor color = QColorDialog::getColor(m_fontColor,this,tr("Ñ¡ÔñÑÕÉ«"));
 	if (color.isValid())
 	{
 		if (m_pView)
@@ -1003,7 +1003,7 @@ void SKDraw::SlotBtnPentColor()
 
 void SKDraw::SlotBtnBrushColor()
 {
-	QColor color = QColorDialog::getColor(m_fontColor,this,tr("é€‰æ‹©é¢œè‰²"));
+	QColor color = QColorDialog::getColor(m_fontColor,this,tr("Ñ¡ÔñÑÕÉ«"));
 	if (color.isValid())
 	{
 		if (m_pView)
@@ -1194,7 +1194,7 @@ void SKDraw::SlotItemControl(QGraphicsItem *item, int handle, const QPointF &new
 
 void SKDraw::SlotPositionChanged(int x, int y)
 {
-	statusBar()->showMessage(tr("åæ ‡ï¼ˆ%1,%2ï¼‰").arg(x).arg(y));
+	statusBar()->showMessage(tr("×ø±ê£¨%1,%2£©").arg(x).arg(y));
 }
 
 void SKDraw::SlotKeyUp()
@@ -1309,7 +1309,7 @@ void SKDraw::SlotComplexItemClicked(QListWidgetItem *item)
 		m_pView->SetModified(true);
 
 	m_pScene->clearSelection();
-	if (item->text() == "æ–‡æœ¬æ—¶é—´")
+	if (item->text() == "ÎÄ±¾Ê±¼ä")
 	{
 		DrawTool::c_drawShape = eDrawTextTime;
 		m_pView->setDragMode(QGraphicsView::NoDrag);
@@ -1330,7 +1330,7 @@ void SKDraw::SlotSymbolsDQClicked(QListWidgetItem *item)
 	QCursor cursor(pix);
 	m_pView->setCursor(cursor);
 	m_pView->SetSymbolCursor(cursor);
-	m_pView->SetSymbolName(item->toolTip().split("æ–‡ä»¶ä½ç½®ï¼š").at(1));
+	m_pView->SetSymbolName(item->toolTip().split("ÎÄ¼þÎ»ÖÃ£º").at(1));
 	m_pScene->clearSelection();
 	DrawTool::c_drawShape = eDrawSelection;
 	m_pView->setDragMode(QGraphicsView::NoDrag);
@@ -1345,7 +1345,7 @@ void SKDraw::SlotLinkData()
 		m_pLinkDataWidget = new SKBaseWidget(NULL,sr);
 		m_pLinkDataWidget->SetWindowsFlagsDialog();
 		m_pLinkDataWidget->SetWindowsModal();
-		m_pLinkDataWidget->SetWindowTitle("æ•°æ®å…³è”");
+		m_pLinkDataWidget->SetWindowTitle("Êý¾Ý¹ØÁª");
 #ifdef WIN32
 		m_pLinkDataWidget->SetWindowIcon(QIcon(":/images/dblink"));
 #else
@@ -1364,7 +1364,7 @@ void SKDraw::SlotLinkData()
 void SKDraw::SlotTreeItemPressed(QTreeWidgetItem *treeItem, int column)
 {
 	if (qApp->mouseButtons() != Qt::LeftButton)
-		return;	//ä¸å“åº”å³é”®ï¼Œå³é”®ç”¨äºŽèœå•ï¼ŒitemClickedä¿¡å·ä¸èµ·æ­¤ä½œç”¨
+		return;	//²»ÏìÓ¦ÓÒ¼ü£¬ÓÒ¼üÓÃÓÚ²Ëµ¥£¬itemClickedÐÅºÅ²»Æð´Ë×÷ÓÃ
 
 	m_pCurrentTreeWidgetItem = treeItem;
 	CWnd *wnd = GetWndFromSn(treeItem->data(0, Qt::UserRole).toInt(), m_lstWnd);
@@ -1390,13 +1390,13 @@ void SKDraw::SlotTreeItemPressed(QTreeWidgetItem *treeItem, int column)
 				m_iCurrentWndSn = treeItem->data(0, Qt::UserRole).toInt();
 			}
 			else
-				QMessageBox::warning(NULL,tr("å‘Šè­¦"),tr("æ— åœºæ™¯æ–‡ä»¶ï¼Œæ— æ³•å¯¼å‡º"));
+				QMessageBox::warning(NULL,tr("¸æ¾¯"),tr("ÎÞ³¡¾°ÎÄ¼þ£¬ÎÞ·¨µ¼³ö"));
 		}
 		else
-			QMessageBox::warning(NULL,tr("å‘Šè­¦"),tr("é€šè¿‡åœºæ™¯å·[%1]è¯»å–åœºæ™¯å¤±è´¥").arg(m_iCurrentWndSn));
+			QMessageBox::warning(NULL,tr("¸æ¾¯"),tr("Í¨¹ý³¡¾°ºÅ[%1]¶ÁÈ¡³¡¾°Ê§°Ü").arg(m_iCurrentWndSn));
 	}
 	else
-		QMessageBox::warning(NULL,tr("å‘Šè­¦"),tr("é€šè¿‡åœºæ™¯å·[%1]æœªå‘çŽ°åœºæ™¯").arg(m_iCurrentWndSn));
+		QMessageBox::warning(NULL,tr("¸æ¾¯"),tr("Í¨¹ý³¡¾°ºÅ[%1]Î´·¢ÏÖ³¡¾°").arg(m_iCurrentWndSn));
 }
 
 void SKDraw::SlotLinkDataClose()
@@ -1408,7 +1408,7 @@ void SKDraw::SlotLinkDataClose()
 
 void SKDraw::SlotMenuWnd(QAction *action)
 {
-	if (action->text() == "æ·»åŠ åœºæ™¯(&E)" || action->text() == "æ·»åŠ æ–‡ä»¶å¤¹(&O)")
+	if (action->text() == "Ìí¼Ó³¡¾°(&E)" || action->text() == "Ìí¼ÓÎÄ¼þ¼Ð(&O)")
 	{
 		if (!m_pWndAddWidget)
 		{
@@ -1416,20 +1416,20 @@ void SKDraw::SlotMenuWnd(QAction *action)
 			m_pWndAddWidget = new SKBaseWidget(NULL,wgt);
 			m_pWndAddWidget->SetWindowsFlagsDialog();
 			m_pWndAddWidget->SetWindowsModal();
-			if (action->text() == "æ·»åŠ åœºæ™¯(&E)")
+			if (action->text() == "Ìí¼Ó³¡¾°(&E)")
 			{
 				wgt->SetType(WND_TYPE_SVG);
-				m_pWndAddWidget->SetWindowTitle("æ·»åŠ åœºæ™¯");
+				m_pWndAddWidget->SetWindowTitle("Ìí¼Ó³¡¾°");
 #ifdef WIN32
 				m_pWndAddWidget->SetWindowIcon(QIcon(":/images/logo"));
 #else
 				m_pWndAddWidget->SetWindowIcon(":/images/logo");
 #endif
 			}
-			else if (action->text() == "æ·»åŠ æ–‡ä»¶å¤¹(&O)")
+			else if (action->text() == "Ìí¼ÓÎÄ¼þ¼Ð(&O)")
 			{
 				wgt->SetType(WND_TYPE_FOLDER);
-				m_pWndAddWidget->SetWindowTitle("æ·»åŠ æ–‡ä»¶å¤¹");
+				m_pWndAddWidget->SetWindowTitle("Ìí¼ÓÎÄ¼þ¼Ð");
 #ifdef WIN32
 				m_pWndAddWidget->SetWindowIcon(QIcon(":/images/open"));
 #else
@@ -1446,9 +1446,9 @@ void SKDraw::SlotMenuWnd(QAction *action)
 		((WndAdd*)m_pWndAddWidget->GetCenterWidget())->Start();
 		m_pWndAddWidget->Show();
 	}
-	else if (action->text() == "åˆ é™¤æ–‡ä»¶å¤¹(&D)" || action->text() == "åˆ é™¤åœºæ™¯(&D)")
+	else if (action->text() == "É¾³ýÎÄ¼þ¼Ð(&D)" || action->text() == "É¾³ý³¡¾°(&D)")
 	{
-		int ret = QMessageBox::question(this, "è¯¢é—®", "æ­¤æ¡ç›®ä»¥ä¸‹å†…å®¹å‡ä¼šåˆ é™¤ï¼Œè¯·ç¡®è®¤ã€‚",tr("ç¡®è®¤"),tr("å–æ¶ˆ"));
+		int ret = QMessageBox::question(this, "Ñ¯ÎÊ", "´ËÌõÄ¿ÒÔÏÂÄÚÈÝ¾ù»áÉ¾³ý£¬ÇëÈ·ÈÏ¡£",tr("È·ÈÏ"),tr("È¡Ïû"));
 		if (ret == 0)
 		{
 			CWnd *wnd = GetWndFromSn(m_pCurrentTreeWidgetItem->data(0, Qt::UserRole).toInt(), m_lstWnd);
@@ -1466,18 +1466,18 @@ void SKDraw::SlotMenuWnd(QAction *action)
 			}
 		}
 	}
-	else if (action->text() == "åœºæ™¯å±žæ€§(&A)")
+	else if (action->text() == "³¡¾°ÊôÐÔ(&A)")
 	{
 	}
-	else if (action->text() == "å¯¼å…¥åœºæ™¯æ–‡ä»¶(&I)")
+	else if (action->text() == "µ¼Èë³¡¾°ÎÄ¼þ(&I)")
 	{
-		QString fileName = QFileDialog::getOpenFileName(this, tr("æ‰“å¼€"), NULL, "*.sdw");
+		QString fileName = QFileDialog::getOpenFileName(this, tr("´ò¿ª"), NULL, "*.sdw");
 		if (!fileName.isEmpty()) 
 		{
 			QFile file(fileName);
 			if (!file.open(QIODevice::ReadOnly))
 			{
-				QMessageBox::warning(NULL,tr("å‘Šè­¦"),tr("æ–‡ä»¶è¯»æ¨¡å¼æ‰“å¼€å¤±è´¥"));
+				QMessageBox::warning(NULL,tr("¸æ¾¯"),tr("ÎÄ¼þ¶ÁÄ£Ê½´ò¿ªÊ§°Ü"));
 				return;
 			}
 			int len = file.size();
@@ -1489,13 +1489,13 @@ void SKDraw::SlotMenuWnd(QAction *action)
 			{
 				SString sWhere = SString::toFormat("wnd_sn=%d",wnd->GetWndSn());
 				if (!DB->UpdateLobFromMem("t_ssp_uicfg_wnd","svg_file",sWhere,(unsigned char*)buffer.data(),len))
-					QMessageBox::warning(NULL,tr("å‘Šè­¦"),tr("å¯¼å…¥å¤±è´¥"));
+					QMessageBox::warning(NULL,tr("¸æ¾¯"),tr("µ¼ÈëÊ§°Ü"));
 				else
-					QMessageBox::information(NULL,tr("æç¤º"),tr("å¯¼å…¥æˆåŠŸ"));
+					QMessageBox::information(NULL,tr("ÌáÊ¾"),tr("µ¼Èë³É¹¦"));
 			}
 		}
 	}
-	else if (action->text() == "å¯¼å‡ºåœºæ™¯æ–‡ä»¶(&R)")
+	else if (action->text() == "µ¼³ö³¡¾°ÎÄ¼þ(&R)")
 	{
 		CWnd *wnd = GetWndFromSn(m_pCurrentTreeWidgetItem->data(0, Qt::UserRole).toInt(), m_lstWnd);
 		if (wnd)
@@ -1507,29 +1507,29 @@ void SKDraw::SlotMenuWnd(QAction *action)
 			{
 				if (buffer && len > 0)
 				{
-					QString filter = tr("åœºæ™¯æ–‡ä»¶(*.sdw)");
-					QString fileName = QFileDialog::getSaveFileName(this,tr("ä¿å­˜åœºæ™¯æ–‡ä»¶"),QString::null,filter);
+					QString filter = tr("³¡¾°ÎÄ¼þ(*.sdw)");
+					QString fileName = QFileDialog::getSaveFileName(this,tr("±£´æ³¡¾°ÎÄ¼þ"),QString::null,filter);
 					if (!fileName.isEmpty())
 					{
 						QFile file(fileName);
 						if (!file.open(QIODevice::WriteOnly))
 						{
-							QMessageBox::warning(NULL,tr("å‘Šè­¦"),tr("æ–‡ä»¶å†™æ¨¡å¼æ‰“å¼€å¤±è´¥"));
+							QMessageBox::warning(NULL,tr("¸æ¾¯"),tr("ÎÄ¼þÐ´Ä£Ê½´ò¿ªÊ§°Ü"));
 							delete [] buffer;
 							return;
 						}
 						qint64 length = file.write((char*)buffer,len);
 						file.close();
-						QMessageBox::information(NULL,tr("æç¤º"),tr("å¯¼å‡ºæˆåŠŸ"));
+						QMessageBox::information(NULL,tr("ÌáÊ¾"),tr("µ¼³ö³É¹¦"));
 					}
 
 					delete [] buffer;
 				}
 				else
-					QMessageBox::warning(NULL,tr("å‘Šè­¦"),tr("æ— åœºæ™¯æ–‡ä»¶ï¼Œæ— æ³•å¯¼å‡º"));
+					QMessageBox::warning(NULL,tr("¸æ¾¯"),tr("ÎÞ³¡¾°ÎÄ¼þ£¬ÎÞ·¨µ¼³ö"));
 			}
 			else
-				QMessageBox::warning(NULL,tr("å‘Šè­¦"),tr("é€šè¿‡åœºæ™¯å·[%1]è¯»å–åœºæ™¯å¤±è´¥").arg(m_iCurrentWndSn));
+				QMessageBox::warning(NULL,tr("¸æ¾¯"),tr("Í¨¹ý³¡¾°ºÅ[%1]¶ÁÈ¡³¡¾°Ê§°Ü").arg(m_iCurrentWndSn));
 		}
 	}
 }
@@ -1565,7 +1565,7 @@ void SKDraw::LoadDBPicture()
 		m_pDBPictureWidget = new SKBaseWidget(NULL,wgt);
 		m_pDBPictureWidget->SetWindowsFlagsDialog();
 		m_pDBPictureWidget->SetWindowsModal();
-		m_pDBPictureWidget->SetWindowTitle("å›¾ç‰‡åº“");
+		m_pDBPictureWidget->SetWindowTitle("Í¼Æ¬¿â");
 #ifdef WIN32
 		m_pDBPictureWidget->SetWindowIcon(QIcon(":/images/dblink"));
 #else
