@@ -24,6 +24,8 @@ static DrawRectTool		c_pictureTool(eDrawPicture);
 static DrawRectTool		c_triangleTool(eDrawTriangle);
 static DrawRectTool		c_rhombusTool(eDrawRhombus);
 static DrawRectTool		c_textTimeTool(eDrawTextTime);
+static DrawRectTool		c_arcCircleTool(eDrawArcCircle);
+static DrawRectTool		c_arcEllipseTool(eDrawArcEllipse);
 
 enum SelectMode
 {
@@ -406,6 +408,10 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 			m_pItem = new GraphicsEllipseItem(scene,QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawCircle)
 			m_pItem = new GraphicsEllipseItem(scene,QRect(1, 1, 1, 1), true);
+		else if (c_drawShape == eDrawArcEllipse)
+			m_pItem = new GraphicsArcEllipseItem(scene,QRect(1, 1, 1, 1));
+		else if (c_drawShape == eDrawArcCircle)
+			m_pItem = new GraphicsArcEllipseItem(scene,QRect(1, 1, 1, 1), true);
 		else if (c_drawShape == eDrawText)
 			m_pItem = new GraphicsTextItem(scene,QRect(0, 0, 80, 25));
 		else if (c_drawShape == eDrawTriangle)

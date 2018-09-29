@@ -472,6 +472,42 @@ public:
 
 };
 
+///////////////////////// GraphicsArcEllipseItem /////////////////////////
+class GraphicsArcEllipseItem :public GraphicsRectItem
+{
+	Q_OBJECT
+
+	Q_PROPERTY(qreal StartAngle READ GetStartAngle WRITE SetStartAngle)
+	Q_PROPERTY(qreal EndAngle READ GetEndAngle WRITE SetEndAngle)
+
+public:
+	GraphicsArcEllipseItem(DrawScene *scene, const QRect &rect, bool isCircle = false, QGraphicsItem *parent = 0);
+	~GraphicsArcEllipseItem();
+
+	void SetStartAngle(qreal angle) { m_startAngle = angle; update(); }
+	void SetEndAngle(qreal angle) { m_endAngle = angle; update(); }
+	qreal GetStartAngle() { return m_startAngle; }
+	qreal GetEndAngle() { return m_endAngle; }
+
+public:
+	virtual void Stretch(int handle, double sx, double sy, const QPointF &origin);
+	virtual void UpdateHandles();
+	virtual QGraphicsItem *Duplicate();
+
+	virtual QRectF boundingRect() const;
+	virtual QPainterPath shape() const;
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	bool m_isCircle;
+	qreal m_startAngle;
+	qreal m_endAngle;
+
+};
+
 ///////////////////////// GraphicsTextItem /////////////////////////
 class GraphicsTextItem :public GraphicsRectItem
 {

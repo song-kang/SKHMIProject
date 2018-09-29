@@ -1270,6 +1270,142 @@ bool GraphicsEllipseItem::LoadFromXml(QXmlStreamReader *xml)
 	return true;
 }
 
+///////////////////////// GraphicsArcEllipseItem /////////////////////////
+GraphicsArcEllipseItem::GraphicsArcEllipseItem(DrawScene *scene, const QRect &rect, bool isCircle, QGraphicsItem *parent)
+	:GraphicsRectItem(scene, rect, parent)
+	,m_isCircle(isCircle)
+{
+	SetScene(scene);
+
+	m_startAngle = 0.0;
+	m_endAngle = 270.0;
+
+	if (isCircle)
+		SetName("Ô²»¡ÏßÍ¼Ôª");
+	else
+		SetName("ÍÖÔ²»¡ÏßÍ¼Ôª");
+}
+
+GraphicsArcEllipseItem::~GraphicsArcEllipseItem()
+{
+
+}
+
+void GraphicsArcEllipseItem::Stretch(int handle, double sx, double sy, const QPointF &origin)
+{
+	QTransform trans;
+	switch (handle)
+	{
+	case eHandleRight:
+	case eHandleLeft:
+		sy = 1;
+		break;
+	case eHandleTop:
+	case eHandleBottom:
+		sx = 1;
+		break;
+	default:
+		break;
+	}
+
+	m_opposite = origin;
+	trans.translate(origin.x(), origin.y());
+	trans.scale(sx, sy);
+	trans.translate(-origin.x(), -origin.y());
+
+	prepareGeometryChange();
+	m_localRect = trans.mapRect(m_initialRect);
+	if (m_isCircle)
+	{
+		if (m_localRect.width() > m_localRect.height())
+			m_localRect.setHeight(m_localRect.width());
+		else
+			m_localRect.setWidth(m_localRect.height());
+	}
+	m_width = m_localRect.width();
+	m_height = m_localRect.height();
+
+	UpdateHandles();
+}
+
+void GraphicsArcEllipseItem::UpdateHandles()
+{
+	GraphicsItem::UpdateHandles();
+}
+
+QGraphicsItem* GraphicsArcEllipseItem::Duplicate()
+{
+	GraphicsArcEllipseItem * item = new GraphicsArcEllipseItem(GetScene(), m_localRect.toRect(), m_isCircle);
+
+	item->m_width = GetWidth();
+	item->m_height = GetHeight();
+	item->SetScene(GetScene());
+	item->setPos(pos().x(), pos().y());
+	item->SetPen(GetPen());
+	item->SetBrush(GetBrush());
+	item->SetStartAngle(GetStartAngle());
+	item->SetEndAngle(GetEndAngle());
+	item->setTransform(transform());
+	item->setTransformOriginPoint(transformOriginPoint());
+	item->setRotation(rotation());
+	item->setScale(scale());
+	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
+	item->UpdateCoordinate();
+
+	return item;
+}
+
+QRectF GraphicsArcEllipseItem::boundingRect() const
+{
+	return shape().controlPointRect();
+}
+
+QPainterPath GraphicsArcEllipseItem::shape() const
+{
+	QPainterPath path;
+	path.moveTo(m_localRect.center());
+	path.arcTo(m_localRect, m_startAngle * 16, (m_endAngle - m_startAngle) * 16);
+
+	return qt_graphicsItem_shapeFromPath(path, GetPen());
+}
+
+void GraphicsArcEllipseItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	painter->setPen(GetPen());
+	painter->drawArc(m_localRect, m_startAngle * 16, (m_endAngle - m_startAngle) * 16);
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
+}
+
+bool GraphicsArcEllipseItem::SaveToXml(QXmlStreamWriter *xml)
+{
+	if (m_isCircle)
+		xml->writeStartElement(tr("arcCircle"));
+	else
+		xml->writeStartElement(tr("arcEllipse"));
+
+	WriteBaseAttributes(xml);
+
+	xml->writeAttribute(tr("startAngle"),QString("%1").arg(m_startAngle));
+	xml->writeAttribute(tr("endAngle"),QString("%1").arg(m_endAngle));
+
+	xml->writeEndElement();
+	return true;
+}
+
+bool GraphicsArcEllipseItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	ReadBaseAttributes(xml);
+	m_startAngle = xml->attributes().value(tr("startAngle")).toString().toDouble();
+	m_endAngle = xml->attributes().value(tr("endAngle")).toString().toDouble();
+
+	xml->skipCurrentElement();
+	UpdateCoordinate();
+	return true;
+}
+
 ///////////////////////// GraphicsTextItem /////////////////////////
 GraphicsTextItem::GraphicsTextItem(DrawScene *scene, const QRect &rect, QGraphicsItem *parent)
 	:GraphicsRectItem(scene, rect, parent)

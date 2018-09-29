@@ -58,6 +58,8 @@ void PropertyEditor::InitMap()
 	m_mapTranslate.insert("RoundRadius", "圆角半径");
 	m_mapTranslate.insert("TextAlignment", "对齐方式");
 	m_mapTranslate.insert("TextTimeStyle", "时间样式");
+	m_mapTranslate.insert("StartAngle", "起始角度");
+	m_mapTranslate.insert("EndAngle", "终止角度");
 }
 
 void PropertyEditor::SlotValueChanged(QtProperty *property, int value)
@@ -302,6 +304,13 @@ bool PropertyEditor::IsVisibleProperty(QString property)
 	else if (shape == "线段图元" || shape == "折线图元")
 	{
 		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle")
+			return true;
+		else
+			return false;
+	}
+	else if (shape == "圆弧线图元" || shape == "椭圆弧线图元")
+	{
+		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "StartAngle" || property == "EndAngle")
 			return true;
 		else
 			return false;

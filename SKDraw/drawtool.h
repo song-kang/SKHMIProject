@@ -22,6 +22,8 @@ enum DrawShape
 	eDrawTriangle,
 	eDrawRhombus,
 	eDrawTextTime,
+	eDrawArcCircle,
+	eDrawArcEllipse,
 };
 
 ///////////////////////// DrawTool ////////////////////////

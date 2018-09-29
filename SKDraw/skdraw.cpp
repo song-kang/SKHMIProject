@@ -404,6 +404,16 @@ void SKDraw::InitBaseItem()
 	item->setToolTip(tr("¶à±ßÐÎ"));
 	ui.listWidgetBase->addItem(item);
 
+	item = new QListWidgetItem(QIcon(":/images/arcCircle"),tr("Ô²»¡Ïß"));
+	item->setData(Qt::UserRole,eDrawArcCircle);
+	item->setToolTip(tr("Ô²»¡Ïß"));
+	ui.listWidgetBase->addItem(item);
+
+	item = new QListWidgetItem(QIcon(":/images/arcEllipse"),tr("ÍÖÔ²»¡Ïß"));
+	item->setData(Qt::UserRole,eDrawArcEllipse);
+	item->setToolTip(tr("ÍÖÔ²»¡Ïß"));
+	ui.listWidgetBase->addItem(item);
+
 	item = new QListWidgetItem(QIcon(":/images/rectangle"),tr("¾ØÐÎ"));
 	item->setData(Qt::UserRole,eDrawRectangle);
 	item->setToolTip(tr("¾ØÐÎ"));

@@ -78,5 +78,7 @@
         <file alias="export">Resources/images/export.png</file>
         <file alias="import">Resources/images/import.png</file>
         <file alias="texttime">Resources/images/texttime.png</file>
+        <file alias="arcCircle">Resources/images/arcCircle.png</file>
+        <file alias="arcEllipse">Resources/images/arcEllipse.png</file>
     </qresource>
 </RCC>
