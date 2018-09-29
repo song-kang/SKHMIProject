@@ -24,6 +24,8 @@ DrawView::DrawView(QGraphicsScene *scene)
 	m_isUntitled = true;
 	m_bScaleToScreen = true;
 
+	setStyleSheet("QToolTip {background-color:white}");
+
 	connect(horizontalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
 	connect(verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
 }
