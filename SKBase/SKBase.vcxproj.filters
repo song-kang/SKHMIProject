@@ -27,6 +27,9 @@
     <ClInclude Include="..\include\SKBase\sk_unitconfig.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\SKBase\sk_config_mgr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sk_database.cpp">
@@ -36,6 +39,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="sk_unitconfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sk_config_mgr.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

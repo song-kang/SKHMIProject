@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="GB2312"?>
+<watch-config>
+  <hard_dog open="false" />
+  <watch-list>
+	<process module="sys_unit_agent" cmdline="sys_unit_agent" arg="" path="D:\GitHub\SKHMIProject\Release" first_delay_sec="0" />
+	<process module="sys_mdb" cmdline="sys_mdb" arg="" path="D:\GitHub\SKHMIProject\Release" first_delay_sec="5" />
+	<process module="SKHMI" cmdline="SKHMI" arg="" path="D:\GitHub\SKHMIProject\Release" first_delay_sec="10" />
+  </watch-list>
+</watch-config>
