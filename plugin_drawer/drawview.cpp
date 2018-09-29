@@ -9,12 +9,13 @@ DrawView::DrawView(QGraphicsScene *scene)
 {
 	m_pScene = scene;
 
+	setObjectName("DrawView");
 	setRenderHint(QPainter::Antialiasing);
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	setStyleSheet("background: transparent;border:0px");
+	setStyleSheet(tr("QGraphicsView#%1{background: transparent;border:0px}").arg(objectName()));
 	setViewport(new QWidget);
 
 	m_bMouseTranslate = false;
@@ -23,8 +24,6 @@ DrawView::DrawView(QGraphicsScene *scene)
 	m_iZoomLevel = 0;
 	m_isUntitled = true;
 	m_bScaleToScreen = true;
-
-	setStyleSheet("QToolTip {background-color:white}");
 
 	connect(horizontalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
 	connect(verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
