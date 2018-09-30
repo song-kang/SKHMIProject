@@ -387,6 +387,7 @@ bool GraphicsLineItem::LoadFromXml(QXmlStreamReader *xml)
 			xml->skipCurrentElement();
 	}
 
+	UpdateCoordinate();
 	return true;
 }
 
