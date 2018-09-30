@@ -7,7 +7,8 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./sizehandle.h \
+HEADERS += ./resource.h \
+    ./sizehandle.h \
     ./skdraw.h \
     ./wndadd.h \
     ./rulebar.h \

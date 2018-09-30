@@ -43,3 +43,4 @@ OBJECTS_DIR += debug
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 include(SKDraw.pri)
+win32:RC_FILE = SKDraw.rc
