@@ -80,5 +80,6 @@
         <file alias="texttime">Resources/images/texttime.png</file>
         <file alias="arcCircle">Resources/images/arcCircle.png</file>
         <file alias="arcEllipse">Resources/images/arcEllipse.png</file>
+        <file alias="parallelogram">Resources/images/parallelogram.png</file>
     </qresource>
 </RCC>

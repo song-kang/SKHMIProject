@@ -60,6 +60,7 @@ void PropertyEditor::InitMap()
 	m_mapTranslate.insert("TextTimeStyle", "时间样式");
 	m_mapTranslate.insert("StartAngle", "起始角度");
 	m_mapTranslate.insert("EndAngle", "终止角度");
+	m_mapTranslate.insert("ParallelogramAngle", "对角角度");
 }
 
 void PropertyEditor::SlotValueChanged(QtProperty *property, int value)
@@ -318,6 +319,13 @@ bool PropertyEditor::IsVisibleProperty(QString property)
 	else if (shape == "圆角矩形图元")
 	{
 		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle" || property == "RoundRadius")
+			return true;
+		else
+			return false;
+	}
+	else if (shape == "平形四边形图元")
+	{
+		if (property == "PenColor" || property == "PenWidth" || property == "PenStyle" || property == "BrushColor" || property == "BrushStyle" || property == "ParallelogramAngle")
 			return true;
 		else
 			return false;

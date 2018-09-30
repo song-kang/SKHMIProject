@@ -24,6 +24,7 @@ enum DrawShape
 	eDrawTextTime,
 	eDrawArcCircle,
 	eDrawArcEllipse,
+	eDrawParallelogram,
 };
 
 ///////////////////////// DrawTool ////////////////////////

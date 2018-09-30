@@ -3,6 +3,8 @@
 #include "drawview.h"
 #include "view_plugin_drawer.h"
 
+#define RADIAN1		3.14159 / 180.0
+
 static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen)
 {
 	const qreal penWidthZero = qreal(0.00000001);
@@ -683,6 +685,62 @@ bool GraphicsRhombusItem::LoadFromXml(QXmlStreamReader *xml)
 	return true;
 }
 
+///////////////////////// GraphicsParallelogramItem /////////////////////////
+GraphicsParallelogramItem::GraphicsParallelogramItem(const QRect &rect, GraphicsRectItem *parent)
+	:GraphicsRectItem(rect, parent)
+{
+	SetName("平形四边形图元");
+}
+
+GraphicsParallelogramItem::~GraphicsParallelogramItem()
+{
+
+}
+
+QPainterPath GraphicsParallelogramItem::shape() const
+{
+	QPainterPath path;
+
+	path.addPolygon(m_points);
+	path.closeSubpath();
+
+	return path;
+}
+
+void GraphicsParallelogramItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	painter->setPen(GetPen());
+	painter->setBrush(GetBrush());
+
+	if (m_angle > 90.0 && m_angle <= 180.0)
+	{
+		m_points.clear();
+		m_points.append(QPointF(m_localRect.x(),m_localRect.y()));
+		m_points.append(QPointF(m_localRect.x()+m_localRect.height()/tan(RADIAN1*(180.0-m_angle)),m_localRect.y()+m_localRect.height()));
+		m_points.append(QPointF(m_localRect.x()+m_localRect.width(),m_localRect.y()+m_localRect.height()));
+		m_points.append(QPointF(m_localRect.x()+(m_localRect.width()-m_localRect.height()/tan(RADIAN1*(180.0-m_angle))),m_localRect.y()));
+	}
+	else if (m_angle >= 0.0 && m_angle < 90.0)
+	{
+		m_points.clear();
+		m_points.append(QPointF(m_localRect.x()+m_localRect.width(),m_localRect.y()));
+		m_points.append(QPointF(m_localRect.x()+m_localRect.height()/tan(RADIAN1*m_angle),m_localRect.y()));
+		m_points.append(QPointF(m_localRect.x(),m_localRect.y()+m_localRect.height()));
+		m_points.append(QPointF(m_localRect.x()+(m_localRect.width()-m_localRect.height()/tan(RADIAN1*m_angle)),m_localRect.y()+m_localRect.height()));
+	}
+
+	painter->drawPolygon(m_points);
+}
+
+bool GraphicsParallelogramItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	ReadBaseAttributes(xml);
+	m_angle = xml->attributes().value(tr("angle")).toString().toDouble();
+	UpdateCoordinate();
+	xml->skipCurrentElement();
+	return true;
+}
+
 ///////////////////////// GraphicsEllipseItem /////////////////////////
 GraphicsEllipseItem::GraphicsEllipseItem(const QRect &rect, bool isCircle, QGraphicsItem *parent)
 	:GraphicsRectItem(rect, parent)
@@ -752,6 +810,53 @@ bool GraphicsEllipseItem::LoadFromXml(QXmlStreamReader *xml)
 	ReadBaseAttributes(xml);
 	xml->skipCurrentElement();
 
+	UpdateCoordinate();
+	return true;
+}
+
+///////////////////////// GraphicsArcEllipseItem /////////////////////////
+GraphicsArcEllipseItem::GraphicsArcEllipseItem(const QRect &rect, bool isCircle, QGraphicsItem *parent)
+	:GraphicsRectItem(rect, parent)
+	,m_isCircle(isCircle)
+{
+	if (isCircle)
+		SetName("圆弧线图元");
+	else
+		SetName("椭圆弧线图元");
+}
+
+GraphicsArcEllipseItem::~GraphicsArcEllipseItem()
+{
+
+}
+
+QRectF GraphicsArcEllipseItem::boundingRect() const
+{
+	return shape().controlPointRect();
+}
+
+QPainterPath GraphicsArcEllipseItem::shape() const
+{
+	QPainterPath path;
+	path.moveTo(m_localRect.center());
+	path.arcTo(m_localRect, m_startAngle * 16, (m_endAngle - m_startAngle) * 16);
+
+	return qt_graphicsItem_shapeFromPath(path, GetPen());
+}
+
+void GraphicsArcEllipseItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	painter->setPen(GetPen());
+	painter->drawArc(m_localRect, m_startAngle * 16, (m_endAngle - m_startAngle) * 16);
+}
+
+bool GraphicsArcEllipseItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	ReadBaseAttributes(xml);
+	m_startAngle = xml->attributes().value(tr("startAngle")).toString().toDouble();
+	m_endAngle = xml->attributes().value(tr("endAngle")).toString().toDouble();
+
+	xml->skipCurrentElement();
 	UpdateCoordinate();
 	return true;
 }

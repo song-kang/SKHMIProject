@@ -252,6 +252,25 @@ public:
 	QPolygonF m_points;
 };
 
+///////////////////////// GraphicsParallelogramItem /////////////////////////
+class GraphicsParallelogramItem : public GraphicsRectItem
+{
+public:
+	GraphicsParallelogramItem(const QRect &rect, GraphicsRectItem * parent = 0);
+	~GraphicsParallelogramItem();
+
+	QRectF GetLocalRect() const { return m_localRect; }
+
+public:
+	virtual QPainterPath shape() const;
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	QPolygonF m_points;
+	qreal m_angle;
+};
+
 ///////////////////////// GraphicsEllipseItem /////////////////////////
 class GraphicsEllipseItem :public GraphicsRectItem
 {
@@ -267,6 +286,26 @@ public:
 
 public:
 	bool m_isCircle;
+
+};
+
+///////////////////////// GraphicsArcEllipseItem /////////////////////////
+class GraphicsArcEllipseItem :public GraphicsRectItem
+{
+public:
+	GraphicsArcEllipseItem(const QRect &rect, bool isCircle = false, QGraphicsItem *parent = 0);
+	~GraphicsArcEllipseItem();
+
+public:
+	virtual QRectF boundingRect() const;
+	virtual QPainterPath shape() const;
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	bool m_isCircle;
+	qreal m_startAngle;
+	qreal m_endAngle;
 
 };
 

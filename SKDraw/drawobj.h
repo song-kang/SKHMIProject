@@ -448,6 +448,35 @@ public:
 	QPolygonF m_points;
 };
 
+///////////////////////// GraphicsParallelogramItem /////////////////////////
+class GraphicsParallelogramItem : public GraphicsRectItem
+{
+	Q_OBJECT
+
+	Q_PROPERTY(qreal ParallelogramAngle READ GetAngle WRITE SetAngle)
+
+public:
+	GraphicsParallelogramItem(DrawScene *scene, const QRect &rect, GraphicsRectItem * parent = 0);
+	~GraphicsParallelogramItem();
+
+	void SetAngle(qreal angle) { m_angle = angle; update(); }
+	qreal GetAngle() { return m_angle; }
+
+	QRectF GetLocalRect() const { return m_localRect; }
+
+public:
+	virtual QGraphicsItem *Duplicate();
+	virtual QPainterPath shape() const;
+	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	virtual bool SaveToXml(QXmlStreamWriter *xml);
+	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	QPolygonF m_points;
+	qreal m_angle;
+};
+
 ///////////////////////// GraphicsEllipseItem /////////////////////////
 class GraphicsEllipseItem :public GraphicsRectItem
 {

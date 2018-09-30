@@ -444,6 +444,11 @@ void SKDraw::InitBaseItem()
 	item->setToolTip(tr("菱形"));
 	ui.listWidgetBase->addItem(item);
 
+	item = new QListWidgetItem(QIcon(":/images/parallelogram"),tr("平行四边形"));
+	item->setData(Qt::UserRole,eDrawParallelogram);
+	item->setToolTip(tr("平行四边形"));
+	ui.listWidgetBase->addItem(item);
+
 	item = new QListWidgetItem(QIcon(":/images/text"),tr("文字"));
 	item->setData(Qt::UserRole,eDrawText);
 	item->setToolTip(tr("文字"));

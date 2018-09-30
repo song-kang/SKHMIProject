@@ -3,6 +3,8 @@
 #include "drawview.h"
 #include "skdraw.h"
 
+#define RADIAN1		3.14159 / 180.0
+
 static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen)
 {
 	const qreal penWidthZero = qreal(0.00000001);
@@ -1138,6 +1140,101 @@ bool GraphicsRhombusItem::SaveToXml(QXmlStreamWriter *xml)
 bool GraphicsRhombusItem::LoadFromXml(QXmlStreamReader *xml)
 {
 	ReadBaseAttributes(xml);
+	UpdateCoordinate();
+	xml->skipCurrentElement();
+	return true;
+}
+
+///////////////////////// GraphicsParallelogramItem /////////////////////////
+GraphicsParallelogramItem::GraphicsParallelogramItem(DrawScene *scene, const QRect &rect, GraphicsRectItem *parent)
+	:GraphicsRectItem(scene, rect, parent)
+{
+	SetScene(scene);
+
+	m_angle = 60.0;
+
+	SetName("平形四边形图元");
+}
+
+GraphicsParallelogramItem::~GraphicsParallelogramItem()
+{
+
+}
+
+QGraphicsItem* GraphicsParallelogramItem::Duplicate()
+{
+	GraphicsParallelogramItem * item = new GraphicsParallelogramItem(GetScene(), m_localRect.toRect());
+
+	item->m_width = GetWidth();
+	item->m_height = GetHeight();
+	item->SetScene(GetScene());
+	item->setPos(pos().x(), pos().y());
+	item->SetPen(GetPen());
+	item->SetBrush(GetBrush());
+	item->SetAngle(GetAngle());
+	item->setTransform(transform());
+	item->setTransformOriginPoint(transformOriginPoint());
+	item->setRotation(rotation());
+	item->setScale(scale());
+	item->setZValue(zValue()+0.1);
+	item->SetName(GetName());
+	item->UpdateCoordinate();
+
+	return item;
+}
+
+QPainterPath GraphicsParallelogramItem::shape() const
+{
+	QPainterPath path;
+
+	path.addPolygon(m_points);
+	path.closeSubpath();
+
+	return path;
+}
+
+void GraphicsParallelogramItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	painter->setPen(GetPen());
+	painter->setBrush(GetBrush());
+
+	if (m_angle > 90.0 && m_angle <= 180.0)
+	{
+		m_points.clear();
+		m_points.append(QPointF(m_localRect.x(),m_localRect.y()));
+		m_points.append(QPointF(m_localRect.x()+m_localRect.height()/tan(RADIAN1*(180.0-m_angle)),m_localRect.y()+m_localRect.height()));
+		m_points.append(QPointF(m_localRect.x()+m_localRect.width(),m_localRect.y()+m_localRect.height()));
+		m_points.append(QPointF(m_localRect.x()+(m_localRect.width()-m_localRect.height()/tan(RADIAN1*(180.0-m_angle))),m_localRect.y()));
+	}
+	else if (m_angle >= 0.0 && m_angle < 90.0)
+	{
+		m_points.clear();
+		m_points.append(QPointF(m_localRect.x()+m_localRect.width(),m_localRect.y()));
+		m_points.append(QPointF(m_localRect.x()+m_localRect.height()/tan(RADIAN1*m_angle),m_localRect.y()));
+		m_points.append(QPointF(m_localRect.x(),m_localRect.y()+m_localRect.height()));
+		m_points.append(QPointF(m_localRect.x()+(m_localRect.width()-m_localRect.height()/tan(RADIAN1*m_angle)),m_localRect.y()+m_localRect.height()));
+	}
+
+	painter->drawPolygon(m_points);
+
+	if (option && (option->state & QStyle::State_Selected))
+		DrawOutline(painter);
+}
+
+bool GraphicsParallelogramItem::SaveToXml(QXmlStreamWriter *xml)
+{
+	xml->writeStartElement(tr("parallelogram"));
+	WriteBaseAttributes(xml);
+
+	xml->writeAttribute(tr("angle"),QString("%1").arg(m_angle));
+	xml->writeEndElement();
+	return true;
+}
+
+bool GraphicsParallelogramItem::LoadFromXml(QXmlStreamReader *xml)
+{
+	ReadBaseAttributes(xml);
+	m_angle = xml->attributes().value(tr("angle")).toString().toDouble();
 	UpdateCoordinate();
 	xml->skipCurrentElement();
 	return true;

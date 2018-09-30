@@ -26,6 +26,7 @@ static DrawRectTool		c_rhombusTool(eDrawRhombus);
 static DrawRectTool		c_textTimeTool(eDrawTextTime);
 static DrawRectTool		c_arcCircleTool(eDrawArcCircle);
 static DrawRectTool		c_arcEllipseTool(eDrawArcEllipse);
+static DrawRectTool		c_parallelogramTool(eDrawParallelogram);
 
 enum SelectMode
 {
@@ -418,6 +419,8 @@ void DrawRectTool::mousePressEvent(QGraphicsSceneMouseEvent *event, DrawScene *s
 			m_pItem = new GraphicsTriangleItem(scene,QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawRhombus)
 			m_pItem = new GraphicsRhombusItem(scene,QRect(1, 1, 1, 1));
+		else if (c_drawShape == eDrawParallelogram)
+			m_pItem = new GraphicsParallelogramItem(scene,QRect(1, 1, 1, 1));
 		else if (c_drawShape == eDrawPicture)
 		{
 			if (!scene->m_picture.isNull())
