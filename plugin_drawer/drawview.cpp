@@ -58,7 +58,8 @@ void DrawView::wheelEvent(QWheelEvent *event)
 
 void DrawView::resizeEvent(QResizeEvent *event)
 {
-	setViewportMargins(0,0,0,0);
+	ScaleToScreenWidth();
+
 	QGraphicsView::resizeEvent(event);
 }
 
