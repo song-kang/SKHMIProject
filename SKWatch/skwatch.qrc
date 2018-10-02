@@ -7,5 +7,7 @@
         <file alias="start">Resources/start.png</file>
         <file alias="cancel">Resources/cancel.png</file>
         <file alias="ok">Resources/ok.png</file>
+        <file alias="monitor">Resources/monitor.png</file>
+        <file alias="quit">Resources/quit.png</file>
     </qresource>
 </RCC>

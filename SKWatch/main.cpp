@@ -8,6 +8,7 @@
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
+	QApplication::setQuitOnLastWindowClosed(false);
 
 #ifdef WIN32
 	a.setFont(QFont("Microsoft Yahei", 10));

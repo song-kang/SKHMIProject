@@ -4,6 +4,7 @@
 #include "skhead.h"
 #include "ui_skwatch.h"
 #include "Watch.h"
+#include "csystray.h"
 
 class SKWatch : public QWidget
 {
@@ -14,7 +15,9 @@ public:
 	~SKWatch();
 
 	void Start(int argc, char *argv[]);
-	void SendSigRefresh();
+
+protected:
+	void closeEvent(QCloseEvent *event);
 
 private:
 	Ui::SKWatchClass ui;
@@ -23,6 +26,7 @@ private:
 	QTimer *m_timer;
 	SXmlConfig m_cfgXml;
 	QTableWidgetItem *m_pCurrentItem;
+	CSysTray *m_pSystemTray;
 
 private:
 	void Init();

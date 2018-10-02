@@ -29,10 +29,16 @@ SKWatch::~SKWatch()
 
 void SKWatch::Init()
 {
+	setWindowFlags(Qt::WindowCloseButtonHint);
 	ui.btnRemove->setEnabled(false);
 	ui.btnStart->setEnabled(false);
 	ui.btnModify->setEnabled(false);
 	m_pCurrentItem = NULL;
+
+	m_pSystemTray = new CSysTray(this);
+	m_pSystemTray->setToolTip(QString::fromLocal8Bit("Èí¼þ¹·"));
+	m_pSystemTray->setIcon(QIcon(":/images/eye"));
+
 	m_timer = new QTimer(this);
 	m_timer->setInterval(3000);
 }
@@ -72,6 +78,17 @@ void SKWatch::Start(int argc, char *argv[])
 	WriteConfigFile();
 	m_watch.Run(argc, argv);
 	m_timer->start();
+}
+
+void SKWatch::closeEvent(QCloseEvent *event)
+{
+	if (!m_pSystemTray->isVisible())
+	{
+		m_pSystemTray->show();
+		m_pSystemTray->showMessage("Èí¼þ¹·", "µã»÷»Ö¸´", QSystemTrayIcon::Information, 1000);
+		hide();
+		event->ignore();
+	}
 }
 
 void SKWatch::SlotAdd()
