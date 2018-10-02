@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SKWatchClass</class>
+ <widget class="QWidget" name="SKWatchClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>628</width>
+    <height>332</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>软件狗</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="skwatch.qrc">
+    <normaloff>:/images/eye</normaloff>:/images/eye</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTableWidget" name="tableWidget">
+     <column>
+      <property name="text">
+       <string>状态</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>名称</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>参数</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>路径</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>延时启动时间(秒)</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>启动成功次数</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>最后成功时间</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>启动失败次数</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>最后失败时间</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="btnAdd">
+       <property name="text">
+        <string>添加监视项(&amp;A)</string>
+       </property>
+       <property name="icon">
+        <iconset resource="skwatch.qrc">
+         <normaloff>:/images/add</normaloff>:/images/add</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnRemove">
+       <property name="text">
+        <string>删除监视项(&amp;R)</string>
+       </property>
+       <property name="icon">
+        <iconset resource="skwatch.qrc">
+         <normaloff>:/images/remove</normaloff>:/images/remove</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnStart">
+       <property name="text">
+        <string>启停监视(&amp;T)</string>
+       </property>
+       <property name="icon">
+        <iconset resource="skwatch.qrc">
+         <normaloff>:/images/start</normaloff>:/images/start</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnModify">
+       <property name="text">
+        <string>修改监视项(&amp;M)</string>
+       </property>
+       <property name="icon">
+        <iconset resource="skwatch.qrc">
+         <normaloff>:/images/edit</normaloff>:/images/edit</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="skwatch.qrc"/>
+ </resources>
+ <connections/>
+</ui>

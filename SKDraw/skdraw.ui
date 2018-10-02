@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>SKDraw</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="skdraw.qrc">
+    <normaloff>:/images/logo</normaloff>:/images/logo</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
     <property name="margin">
@@ -352,8 +356,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>256</width>
-          <height>157</height>
+          <width>98</width>
+          <height>73</height>
          </rect>
         </property>
         <attribute name="label">
