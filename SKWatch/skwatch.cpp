@@ -71,11 +71,14 @@ void SKWatch::Start(int argc, char *argv[])
 	m_watch.m_sBinPath = Common::GetCurrentAppPath().toStdString().data();
 	QString sConf = tr("%1/../conf/sys_watch.xml").arg(Common::GetCurrentAppPath());
 	m_watch.Load(sConf.toStdString().data());
-
+	
 	//CConfigMgr::SetReloadSeconds(5);
 	//CConfigMgr::StartReload();
 
 	WriteConfigFile();
+	QFileInfo info(argv[0]);
+	QString name = info.fileName();
+	m_watch.SetModuleName(name.toStdString().data());
 	m_watch.Run(argc, argv);
 	m_timer->start();
 }
@@ -113,8 +116,8 @@ void SKWatch::SlotAdd()
 
 		m_watch.m_Lock.lock();
 		m_watch.m_ExtModuleList.append(module);
-		WriteConfigFile();
 		m_watch.m_Lock.unlock();
+		WriteConfigFile();
 	}
 }
 
@@ -137,8 +140,8 @@ void SKWatch::SlotRemove()
 		{
 			m_watch.m_Lock.lock();
 			m_watch.m_ExtModuleList.remove(module);
-			WriteConfigFile();
 			m_watch.m_Lock.unlock();
+			WriteConfigFile();
 		}
 	}
 }
@@ -194,8 +197,8 @@ void SKWatch::SlotModify()
 		module->sArg = dlg.GetAppArg().toStdString().data();
 		module->sPath = dlg.GetAppPath().toStdString().data();
 		module->first_delay_sec = dlg.GetDelayTime();
-		WriteConfigFile();
 		m_watch.m_Lock.unlock();
+		WriteConfigFile();
 	}
 }
 

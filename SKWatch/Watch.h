@@ -103,6 +103,8 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	void HaltOtherSelfModule();
 
+	void SetModuleName(SString name) { m_sModuleName = name; }
+
 	bool m_bQuit,m_bQuited;
 	bool m_bHardWatch;//是否启动硬件看门狗
 	SPtrList<stuExtModule> m_ExtModuleList;//独立运行模块列表
@@ -110,6 +112,7 @@ public:
 	SString m_sBinPath;
 	bool m_bCmdNoDog;//运行参数中是否含有nodog
 	SLock m_Lock;//配置锁
+	SString m_sModuleName;
 };
 
 #endif //__WATCH_DOG_H__

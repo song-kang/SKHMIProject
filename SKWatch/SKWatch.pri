@@ -7,13 +7,15 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-TEMPLATE = subdirs
-SUBDIRS += SKBaseWidget/SKBaseWidget.pro \
-    SKHMI/SKHMI.pro \
-    SKGui/SKGui.pro \
-    plugin_demo1/plugin_demo1.pro \
-    plugin_demo2/plugin_demo2.pro \
-    SKDraw/SKDraw.pro \
-    plugin_drawer/plugin_drawer.pro \
-    plugin_telecontrol/plugin_telecontrol.pro \
-    SKWatch/SKWatch.pro
+HEADERS += ./Watch.h \
+    ./skwatch.h \
+    ./dlgadd.h \
+    ./csystray.h
+SOURCES += ./csystray.cpp \
+    ./dlgadd.cpp \
+    ./main.cpp \
+    ./skwatch.cpp \
+    ./Watch.cpp
+FORMS += ./skwatch.ui \
+    ./dlgadd.ui
+RESOURCES += skwatch.qrc

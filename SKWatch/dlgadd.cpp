@@ -50,7 +50,12 @@ void DlgAdd::Start()
 
 void DlgAdd::SlotApp()
 {
-	QString filter = tr("app file(*.exe *.*)");
+#ifdef WIN32
+    QString filter = tr("app file(*.exe)");
+#else
+	QString filter = tr("app file(*)");
+#endif
+
 	QString fileName = QFileDialog::getOpenFileName(this,tr("选择应用程序"),QString::null,filter);
 	if (!fileName.isEmpty())
 	{

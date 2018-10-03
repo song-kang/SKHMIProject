@@ -321,7 +321,7 @@ void CWatch::HaltOtherSelfModule()
 	int i,ps=SApi::GetSystemProcess(list);
 	SString sModule,sModuleInfo,sTemp;
 	int pid=0;
-	SString sMyMod = SLog::getModuleName();
+    SString sMyMod = m_sModuleName;
 
 	LOGDEBUG("先查找其它的守护程序，并终止");
 	//先查找其它的守护程序，并终止
