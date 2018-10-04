@@ -1,0 +1,8 @@
+[Desktop Entry] 
+Name=软件狗
+Comment= Watch for SKProject
+Exec=/home/uk/bin/SKWatch 
+Icon=/home/uk/bin/eye.png
+Terminal=false
+Type=Application
+#Categories=Application;Development;
