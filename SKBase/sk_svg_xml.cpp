@@ -359,9 +359,10 @@ CSKTextItem* CSKSvgXml::CreateTextTime(stuPoint point, float width, float height
 	return item;
 }
 
-void CSKSvgXml::CreateArrowLine(SPtrList<stuPoint> *points, float arrowScale, SString color, float width)
+void CSKSvgXml::CreateArrowLine(SPtrList<stuPoint> *points, float arrowScale, SString color, float width, float z)
 {
 	CSKItem *item = CreateLine(points, color, width);
+	item->m_z = z;
 
 	float cx = points->at(1)->m_x;
 	float cy = points->at(1)->m_y;
@@ -407,11 +408,13 @@ void CSKSvgXml::CreateArrowLine(SPtrList<stuPoint> *points, float arrowScale, SS
 	item->m_penColor = color;
 	item->m_penWidth = width;
 	item->m_brushColor = color;
+	item->m_z = z;
 }
 
-void CSKSvgXml::CreateDoubleArrowLine(SPtrList<stuPoint> *points, float arrowScale, SString color, float width)
+void CSKSvgXml::CreateDoubleArrowLine(SPtrList<stuPoint> *points, float arrowScale, SString color, float width, float z)
 {
 	CSKItem *item = CreateLine(points, color, width);
+	item->m_z = z;
 
 	//前箭头
 	float cx = points->at(1)->m_x;
@@ -458,6 +461,7 @@ void CSKSvgXml::CreateDoubleArrowLine(SPtrList<stuPoint> *points, float arrowSca
 	item->m_penColor = color;
 	item->m_penWidth = width;
 	item->m_brushColor = color;
+	item->m_z = z;
 
 	//后箭头
 	cx = points->at(0)->m_x;
@@ -504,6 +508,7 @@ void CSKSvgXml::CreateDoubleArrowLine(SPtrList<stuPoint> *points, float arrowSca
 	item->m_penColor = color;
 	item->m_penWidth = width;
 	item->m_brushColor = color;
+	item->m_z = z;
 }
 
 bool CSKSvgXml::SaveToXml(SString &content, SString encoding)
