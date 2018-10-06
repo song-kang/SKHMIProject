@@ -359,7 +359,7 @@ CSKTextItem* CSKSvgXml::CreateTextTime(stuPoint point, float width, float height
 	return item;
 }
 
-void CSKSvgXml::CreateArrowLine(SPtrList<stuPoint> *points, SString color, float width)
+void CSKSvgXml::CreateArrowLine(SPtrList<stuPoint> *points, float arrowScale, SString color, float width)
 {
 	CSKItem *item = CreateLine(points, color, width);
 
@@ -380,10 +380,10 @@ void CSKSvgXml::CreateArrowLine(SPtrList<stuPoint> *points, SString color, float
 	if (bConv)
 		radian += (float)3.1415926;
 
-	float x3 = (cx-10);
-	float y3 = cy-3;
-	float x4 = (cx-10);
-	float y4 = cy+3;
+	float x3 = cx-10*arrowScale;
+	float y3 = cy-3*arrowScale;
+	float x4 = cx-10*arrowScale;
+	float y4 = cy+3*arrowScale;
 
 	float x30 = (float)(x3-cx)*cos(radian)-(y3-cy)*sin(radian)+cx;
 	float x40 = (float)(x4-cx)*cos(radian)-(y4-cy)*sin(radian)+cx;
@@ -409,7 +409,7 @@ void CSKSvgXml::CreateArrowLine(SPtrList<stuPoint> *points, SString color, float
 	item->m_brushColor = color;
 }
 
-void CSKSvgXml::CreateDoubleArrowLine(SPtrList<stuPoint> *points, SString color, float width)
+void CSKSvgXml::CreateDoubleArrowLine(SPtrList<stuPoint> *points, float arrowScale, SString color, float width)
 {
 	CSKItem *item = CreateLine(points, color, width);
 
@@ -431,10 +431,10 @@ void CSKSvgXml::CreateDoubleArrowLine(SPtrList<stuPoint> *points, SString color,
 	if (bConv)
 		radian += (float)3.1415926;
 
-	float x3 = (cx-10);
-	float y3 = cy-3;
-	float x4 = (cx-10);
-	float y4 = cy+3;
+	float x3 = cx-10*arrowScale;
+	float y3 = cy-3*arrowScale;
+	float x4 = cx-10*arrowScale;
+	float y4 = cy+3*arrowScale;
 
 	float x30 = (float)(x3-cx)*cos(radian)-(y3-cy)*sin(radian)+cx;
 	float x40 = (float)(x4-cx)*cos(radian)-(y4-cy)*sin(radian)+cx;
@@ -477,10 +477,10 @@ void CSKSvgXml::CreateDoubleArrowLine(SPtrList<stuPoint> *points, SString color,
 	if (bConv)
 		radian += (float)3.1415926;
 
-	x3 = (cx-10);
-	y3 = cy-3;
-	x4 = (cx-10);
-	y4 = cy+3;
+	x3 = cx-10*arrowScale;
+	y3 = cy-3*arrowScale;
+	x4 = cx-10*arrowScale;
+	y4 = cy+3*arrowScale;
 
 	x30 = (float)(x3-cx)*cos(radian)-(y3-cy)*sin(radian)+cx;
 	x40 = (float)(x4-cx)*cos(radian)-(y4-cy)*sin(radian)+cx;

@@ -101,5 +101,5 @@ void view_plugin_demo1::CreatSvgXml()
 	p1->m_x = 200;
 	p1->m_y = 100;
 	points.append(p1);
-	m_svgXml.CreateDoubleArrowLine(&points,"#00ff00",1);
+	m_svgXml.CreateDoubleArrowLine(&points,1,"#00ff00",2);
 }

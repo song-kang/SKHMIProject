@@ -172,8 +172,8 @@ public:
 	CSKItem* CreatePolygon(SPtrList<stuPoint> *points);
 	CSKTextItem* CreateText(stuPoint point, float width, float height, SString desc);
 	CSKTextItem* CreateTextTime(stuPoint point, float width, float height, SString style="yyyy-MM-dd hh:mm:ss");
-	void CreateArrowLine(SPtrList<stuPoint> *points, SString color="#FFFFFF", float width=1);
-	void CreateDoubleArrowLine(SPtrList<stuPoint> *points, SString color="#FFFFFF", float width=1);
+	void CreateArrowLine(SPtrList<stuPoint> *points, float arrowScale=1.0, SString color="#FFFFFF", float width=1);
+	void CreateDoubleArrowLine(SPtrList<stuPoint> *points, float arrowScale=1.0, SString color="#FFFFFF", float width=1);
 
 	bool SaveToXml(SString &content, SString encoding="GB2312");
 	bool BaseToXml(CSKItem *item, SBaseConfig *base);
