@@ -15,12 +15,14 @@
     <ClInclude Include="..\include\SKBase\sk_config_mgr.h" />
     <ClInclude Include="..\include\SKBase\sk_database.h" />
     <ClInclude Include="..\include\SKBase\sk_log.h" />
+    <ClInclude Include="..\include\SKBase\sk_svg_xml.h" />
     <ClInclude Include="..\include\SKBase\sk_unitconfig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sk_config_mgr.cpp" />
     <ClCompile Include="sk_database.cpp" />
     <ClCompile Include="sk_log.cpp" />
+    <ClCompile Include="sk_svg_xml.cpp" />
     <ClCompile Include="sk_unitconfig.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

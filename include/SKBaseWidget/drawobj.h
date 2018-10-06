@@ -3,8 +3,13 @@
 
 #include "skhead.h"
 
-class DrawScene;
+#ifdef SKBASEWIDGET_LIB
+# define SKBASEWIDGET_EXPORT Q_DECL_EXPORT
+#else
+# define SKBASEWIDGET_EXPORT Q_DECL_IMPORT
+#endif
 
+class DrawScene;
 ///////////////////////// AbstractShapeType /////////////////////////
 template <typename BaseType = QGraphicsItem>
 class AbstractShapeType : public BaseType
@@ -86,7 +91,7 @@ public:
 typedef AbstractShapeType <QGraphicsItem> AbstractShape;
 
 ///////////////////////// GraphicsItem /////////////////////////
-class GraphicsItem : public QObject, public AbstractShapeType <QGraphicsItem>
+class SKBASEWIDGET_EXPORT GraphicsItem : public QObject, public AbstractShapeType <QGraphicsItem>
 {
 	Q_OBJECT
 

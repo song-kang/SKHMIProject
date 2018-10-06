@@ -26,6 +26,7 @@ view_plugin_demo1::view_plugin_demo1(QWidget *parent)
 	RegisterMdbTrigger();
 
 	TestCommandSend();
+	Start();
 }
 
 view_plugin_demo1::~view_plugin_demo1()
@@ -76,4 +77,29 @@ void view_plugin_demo1::TestCommandSend()
 	{
 		int b = 0;
 	}
+}
+
+void view_plugin_demo1::Start()
+{
+	CreatSvgXml();
+	SString sContent;
+	m_svgXml.SaveToXml(sContent);
+
+	m_pSvgView = new DrawView;
+	m_pSvgView->Load(sContent.data());
+	ui.gridLayoutCentral->addWidget(m_pSvgView);
+}
+
+void view_plugin_demo1::CreatSvgXml()
+{
+	stuPoint point;
+	//point.m_x = 100;
+	//point.m_y = 300;
+	//m_svgXml.CreatRhombus(point,100,150);
+
+	point.m_x = 200;
+	point.m_y = 100;
+	CSKTextItem *item = m_svgXml.CreatTextTime(point,200,80);
+	item->SetFamily("Î¢ÈíÑÅºÚ");
+	item->SetPointSize(16);
 }

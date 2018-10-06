@@ -58,6 +58,10 @@ private:
 	}
 
 	void TestCommandSend();
+
+signals:
+	void SigClose();
+
 };
 
 #endif // __VIEW_PLUGIN_TELECONTROL_H__

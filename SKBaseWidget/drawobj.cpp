@@ -1,9 +1,7 @@
 #include "drawobj.h"
 #include "drawscene.h"
-#include "drawview.h"
-#include "view_plugin_drawer.h"
 
-#define RADIAN1		3.14159 / 180.0
+#define RADIAN1		3.141593 / 180.0
 
 static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen)
 {

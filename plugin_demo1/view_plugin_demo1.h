@@ -21,6 +21,8 @@
 #include "cbaseview.h"
 #include "sk_database.h"
 #include "SMdb.h"
+#include "drawview.h"
+#include "sk_svg_xml.h"
 #include "ui_view_plugin_demo1.h"
 
 class view_plugin_demo1 : public CBaseView
@@ -42,10 +44,15 @@ public:
 	//代理消息处理接口，由派生类实现，处理函数必须尽量短小，快速返回
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
 
+	void Start();
+	void CreatSvgXml();
+
 private:
 	Ui::view_plugin_demo1 ui;
 
 	CMdbClient *m_pMdbTrgClient;
+	DrawView *m_pSvgView;
+	CSKSvgXml m_svgXml;
 
 private:
 	void RegisterMdbTrigger()

@@ -1,5 +1,5 @@
 #include "drawscene.h"
-#include "view_plugin_drawer.h"
+#include "drawview.h"
 
 #define DEFAULT_WIDTH		1880
 #define DEFAULT_HEIGHT		960
@@ -30,7 +30,6 @@ void GridTool::PaintGrid(QPainter *painter, const QRect &rect)
 DrawScene::DrawScene(QObject *parent)
 	: QGraphicsScene(parent)
 {
-	m_app = (view_plugin_drawer*)parent;
 	m_pView = NULL;
 	m_pGrid = new GridTool();
 
@@ -41,15 +40,12 @@ DrawScene::DrawScene(QObject *parent)
 	setSceneRect(QRectF(0, 0, m_iWidth, m_iHeight));
 	setBackgroundBrush(QBrush("#013E53"));
 
-	m_dx = m_dy = 0;
-	m_pAlignItem = NULL;
-
 	m_pSwapIntervalTimer = new QTimer(this);
 	m_pSwapIntervalTimer->setInterval(100);
 	m_pSwapIntervalTimer->start();
 
-	connect(m_pSwapIntervalTimer, SIGNAL(timeout()), this, SLOT(SlotSwapIntervalTimer()));
 	connect(this, SIGNAL(selectionChanged()), this, SLOT(SlotSelectionChanged()));
+	connect(m_pSwapIntervalTimer, SIGNAL(timeout()), this, SLOT(SlotSwapIntervalTimer()));
 }
 
 DrawScene::~DrawScene()
@@ -87,93 +83,27 @@ void DrawScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void DrawScene::keyPressEvent(QKeyEvent *e)
 {
-	qreal dx = 0;
-	qreal dy = 0;
-	m_bMoved = false;
 
-	switch(e->key())
-	{
-	case Qt::Key_Up:
-		dx = 0;
-		dy = -1;
-		m_bMoved = true;
-		break;
-	case Qt::Key_Down:
-		dx = 0;
-		dy = 1;
-		m_bMoved = true;
-		break;
-	case Qt::Key_Left:
-		dx = -1;
-		dy = 0;
-		m_bMoved = true;
-		break;
-	case Qt::Key_Right:
-		dx = 1;
-		dy = 0;
-		m_bMoved = true;
-		break;
-	}
-
-	m_dx += dx;
-	m_dy += dy;
-	//if (m_bMoved)
-	//{
-	//	foreach (QGraphicsItem *item, selectedItems())
-	//	{
-	//		item->moveBy(dx,dy);
-	//		((DrawView*)m_pView)->GetApp()->GetPropertyEditor()->UpdateProperties(((GraphicsItem*)item)->metaObject());
-	//	}
-	//}
 }
 
 void DrawScene::keyReleaseEvent(QKeyEvent *e)
 {
-	//if (m_bMoved && selectedItems().count() > 0)
-	//	emit SigItemMoved(NULL, QPointF(m_dx,m_dy));
 
-	m_dx = m_dy = 0;
 }
 
 void DrawScene::SlotSelectionChanged()
 {
-	QList<QGraphicsItem*> l = selectedItems();
-	if (l.count() == 0)
-	{
-		SetAlignItem(NULL);
-	}
-	else if (l.count() == 1 && l.first()->isSelected())
-	{
-		AbstractShape *sp = qgraphicsitem_cast<AbstractShape*>(l.first());
-		if (sp == m_pAlignItem)
-			SetAlignItem(NULL);
-		else
-			SetAlignItem(sp);
-	}
-	else if (l.count() > 1)
-	{
-		bool bFind = false;
-		foreach (QGraphicsItem *item, selectedItems())
-		{
-			AbstractShape *sp = qgraphicsitem_cast<AbstractShape*>(item);
-			if (sp != m_pAlignItem)
-			{
-				//for (Handles::iterator it = sp->m_handles.begin(); it != sp->m_handles.end(); ++it)
-				//	(*it)->SetBorderColor(Qt::gray);
-			}
-			bFind = true;
-		}
+	QList<QGraphicsItem*> list = selectedItems();
+	if (list.count() != 1)
+		return;
 
-		if (!bFind && m_pAlignItem)
-			clearSelection();
-	}
-
+	((DrawView*)m_pView)->OnClicked(list);
 }
 
 void DrawScene::SlotSwapIntervalTimer()
 {
 	m_bSwap = !m_bSwap;
-	m_app->RefreshMeasureFromDB();
+	((DrawView*)m_pView)->RefreshMeasureFromDB();
 
 	m_pView->viewport()->update();
 }

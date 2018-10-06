@@ -4,6 +4,12 @@
 #include "skhead.h"
 #include "drawobj.h"
 
+#ifdef SKBASEWIDGET_LIB
+# define SKBASEWIDGET_EXPORT Q_DECL_EXPORT
+#else
+# define SKBASEWIDGET_EXPORT Q_DECL_IMPORT
+#endif
+
 ///////////////////////// GridTool /////////////////////////
 class GridTool
 {
@@ -24,13 +30,12 @@ private:
 };
 
 ///////////////////////// DrawScene /////////////////////////
-class view_plugin_drawer;
-class DrawScene : public QGraphicsScene
+class SKBASEWIDGET_EXPORT DrawScene : public QGraphicsScene
 {
 	Q_OBJECT
 
 public:
-	DrawScene(QObject *parent);
+	DrawScene(QObject *parent = NULL);
 	~DrawScene();
 
 	void SetView(QGraphicsView *view ) { m_pView = view; }
@@ -78,9 +83,6 @@ private:
 private slots:
 	void SlotSelectionChanged();
 	void SlotSwapIntervalTimer();
-
-private:
-	view_plugin_drawer *m_app;
 	
 };
 

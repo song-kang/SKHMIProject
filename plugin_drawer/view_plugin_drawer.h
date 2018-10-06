@@ -13,11 +13,9 @@
 
 #include "cbaseview.h"
 #include "sk_database.h"
-#include "skbasewidget.h"
 #include "SMdb.h"
 #include "ui_view_plugin_drawer.h"
-#include "drawview.h"
-#include "drawscene.h"
+#include "csvgview.h"
 #include "mdb_def.h"
 
 #define LINKDB_NONE			0
@@ -37,6 +35,7 @@ struct stuOeElementStateQueue
 	t_oe_element_state stuState;
 };
 
+class view_plugin_drawer;
 //================= MDBThread ===================
 class MDBThread : public QThread
 {
@@ -79,27 +78,16 @@ public:
 	//代理消息处理接口，由派生类实现，处理函数必须尽量短小，快速返回
 	virtual bool ProcessAgentMsg(WORD wMsgType,stuSpUnitAgentMsgHead *pMsgHead,SString &sHeadStr,BYTE* pBuffer=NULL,int iLength=0);
 
-	void InitDrawobj();
-	void RefreshStateFromDB();
-	void RefreshMeasureFromDB();
-	void InsertMapLinkDBState(QString key, GraphicsItem *item);
-	void InsertMapLinkDBMeasure(QString key, GraphicsItem *item);
-
 private:
 	Ui::view_plugin_drawer ui;
 
 	CMdbClient *m_pMdbTrgClient;
-	DrawView *m_pView;
-	DrawScene *m_pScene;
 	MDBThread *m_mdbThred;
 
 public:
 	QMutex m_queMutex;
 	QQueue<stuOeElementStateQueue> m_qOeElementState;
-	QMap<QString, QList<GraphicsItem *>*> m_mapLinkDBState;
-	QMap<QString, QList<GraphicsItem *>*> m_mapLinkDBMeasure;
-
-	SKBaseWidget *m_pCtrlWidget;
+	CSvgView *m_pSvgView;
 
 private:
 	void RegisterMdbTrigger()
@@ -113,15 +101,8 @@ private:
 		m_pMdbTrgClient->RemoveTriggerCallback(OnMdbTrgCallback,this,"t_oe_element_state",MDB_TRGFLG_UPDATE);
 	}
 
-	DrawView* CreateView();
 	bool Load(char *content);
 	bool Load(QString fileName);
-
-private slots:
-	void SlotItemSelected();
-	void SlotPositionChanged(int,int);
-	void SlotMouseRightButton(QPoint);
-	void SlotCtrlClose();
 	
 };
 

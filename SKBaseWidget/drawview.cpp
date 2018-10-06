@@ -1,13 +1,14 @@
 #include "drawview.h"
 #include "drawscene.h"
-#include "view_plugin_drawer.h"
 
 #define MAX_ZOOM_LEVEL		5
 
 DrawView::DrawView(QGraphicsScene *scene)
 	: QGraphicsView(scene)
 {
-	m_pScene = scene;
+	m_pScene = new DrawScene();
+	m_pScene->SetView(this);
+	this->setScene(m_pScene);
 
 	setObjectName("DrawView");
 	setRenderHint(QPainter::Antialiasing);
@@ -24,18 +25,17 @@ DrawView::DrawView(QGraphicsScene *scene)
 	m_iZoomLevel = 0;
 	m_isUntitled = true;
 	m_bScaleToScreen = true;
-
-	connect(horizontalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
-	connect(verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(SlotScrollBarValueChanged(int)));
 }
 
 DrawView::~DrawView()
 {
+	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
+	for (it = m_mapLinkDBState.constBegin(); it != m_mapLinkDBState.constEnd(); it++)
+		delete it.value();
+	for (it = m_mapLinkDBMeasure.constBegin(); it != m_mapLinkDBMeasure.constEnd(); it++)
+		delete it.value();
 
-}
-
-void DrawView::SlotScrollBarValueChanged(int pos)
-{
+	delete m_pScene;
 }
 
 void DrawView::wheelEvent(QWheelEvent *event)
@@ -314,7 +314,7 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 		else if (xml->name() == tr("triangle"))
 			item = new GraphicsTriangleItem(QRect(0,0,0,0));
 		else if (xml->name() == tr("rhombus"))
-			item = new GraphicsTriangleItem(QRect(0,0,0,0));
+			item = new GraphicsRhombusItem(QRect(0,0,0,0));
 		else if (xml->name() == tr("arcCircle"))
 			item = new GraphicsArcEllipseItem(QRect(0,0,0,0), true);
 		else if (xml->name() == tr("arcEllipse"))
@@ -332,15 +332,15 @@ bool DrawView::LoadCanvas(QXmlStreamReader *xml)
 			scene()->addItem(item);
 
 			if (item->GetShowType() == LINKDB_STATE && !item->GetLinkDB().isEmpty())
-				m_app->InsertMapLinkDBState(item->GetLinkDB(),(GraphicsItem*)item);
+				InsertMapLinkDBState(item->GetLinkDB(),(GraphicsItem*)item);
 			else if (item->GetShowType() == LINKDB_MEASURE && !item->GetLinkDB().isEmpty())
-				m_app->InsertMapLinkDBMeasure(item->GetLinkDB(),(GraphicsItem*)item);
+				InsertMapLinkDBMeasure(item->GetLinkDB(),(GraphicsItem*)item);
 		}
 		else if (item)
 			delete item;
 	}
 
-	m_app->InitDrawobj();
+	InitDrawobj();
 	return true;
 }
 
@@ -398,9 +398,9 @@ GraphicsItemGroup* DrawView::LoadGroupFromXML(QXmlStreamReader *xml)
 			items.append(item);
 
 			if (item->GetShowType() == LINKDB_STATE && !item->GetLinkDB().isEmpty())
-				m_app->InsertMapLinkDBState(item->GetLinkDB(),(GraphicsItem*)item);
+				InsertMapLinkDBState(item->GetLinkDB(),(GraphicsItem*)item);
 			else if (item->GetShowType() == LINKDB_MEASURE && !item->GetLinkDB().isEmpty())
-				m_app->InsertMapLinkDBMeasure(item->GetLinkDB(),(GraphicsItem*)item);
+				InsertMapLinkDBMeasure(item->GetLinkDB(),(GraphicsItem*)item);
 		}
 		else if (item)
 			delete item;
@@ -428,8 +428,143 @@ void DrawView::LoadPicture(QXmlStreamReader *xml, AbstractShape *shape)
 {
 	int sn = xml->attributes().value(tr("sn")).toString().toInt();
 	int type = DB->SelectIntoI(SString::toFormat("select svgtype_sn from t_ssp_svglib_item where svg_sn=%d",sn));
-	if (type == 3)
+	if (type == SVG_TYPE_PIX)
 		((GraphicsPictureItem*)shape)->LoadPicture(sn);
-	else if (type == 4)
+	else if (type == SVG_TYPE_GIF)
 		((GraphicsPictureItem*)shape)->LoadGif(sn);
+}
+
+void DrawView::InsertMapLinkDBState(QString key, GraphicsItem *item)
+{
+	QList<GraphicsItem *> *itemList;
+
+	QMap<QString, QList<GraphicsItem *>*>::iterator it = m_mapLinkDBState.find(key);
+	if (it == m_mapLinkDBState.constEnd())
+	{
+		itemList = new QList<GraphicsItem *>;
+		itemList->append(item);
+		m_mapLinkDBState.insert(key, itemList);
+	}
+	else
+	{
+		itemList = it.value();
+		itemList->append(item);
+	}
+}
+
+void DrawView::InsertMapLinkDBMeasure(QString key, GraphicsItem *item)
+{
+	QList<GraphicsItem *> *itemList;
+
+	QMap<QString, QList<GraphicsItem *>*>::iterator it = m_mapLinkDBMeasure.find(key);
+	if (it == m_mapLinkDBMeasure.constEnd())
+	{
+		itemList = new QList<GraphicsItem *>;
+		itemList->append(item);
+		m_mapLinkDBMeasure.insert(key, itemList);
+	}
+	else
+	{
+		itemList = it.value();
+		itemList->append(item);
+	}
+}
+
+void DrawView::InitDrawobj()
+{
+	SString sql;
+	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
+	for (it = m_mapLinkDBState.constBegin(); it != m_mapLinkDBState.constEnd(); it++)
+	{
+		QStringList l = it.key().split("::");
+		QStringList ll = l.at(1).split(",");
+		sql.sprintf("select current_val from %s where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
+			l.at(0).toStdString().data(),ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
+		int iVal = DB->SelectIntoI(sql);
+
+		QList<GraphicsItem *> *listItem = it.value();
+		for (int i = 0; i < listItem->count(); i++)
+		{
+			GraphicsItem *item = listItem->at(i);
+			if (item->GetShowState() == -1) //如为数据库初始状态
+				item->SetShowState(iVal);
+			item->SetStyleFromState(item->GetShowState());
+		}
+	}
+
+	for (it = m_mapLinkDBMeasure.constBegin(); it != m_mapLinkDBMeasure.constEnd(); it++)
+	{
+		QStringList l = it.key().split("::");
+		QStringList ll = l.at(1).split(",");
+		sql.sprintf("select current_val from %s where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
+			l.at(0).toStdString().data(),ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
+		SString sVal = DB->SelectInto(sql);
+
+		QList<GraphicsItem *> *listItem = it.value();
+		for (int i = 0; i < listItem->count(); i++)
+		{
+			GraphicsItem *item = listItem->at(i);
+			if (item->GetName() == "文字图元")
+				((GraphicsTextItem*)item)->SetText(sVal.data());
+		}
+	}
+}
+
+void DrawView::RefreshStateFromDB()
+{
+	SString sql;
+	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
+	for (it = m_mapLinkDBState.constBegin(); it != m_mapLinkDBState.constEnd(); it++)
+	{
+		QStringList l = it.key().split("::");
+		QStringList ll = l.at(1).split(",");
+		sql.sprintf("select current_val from %s where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
+			l.at(0).toStdString().data(),ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
+		int iVal = DB->SelectIntoI(sql);
+
+		QList<GraphicsItem *> *listItem = it.value();
+		for (int i = 0; i < listItem->count(); i++)
+		{
+			GraphicsItem *item = listItem->at(i);
+			item->SetShowState(iVal);
+		}
+	}
+}
+
+void DrawView::RefreshMeasureFromDB()
+{
+	SString sql;
+	QMap<QString, QList<GraphicsItem *>*>::const_iterator it;
+	for (it = m_mapLinkDBMeasure.constBegin(); it != m_mapLinkDBMeasure.constEnd(); it++)
+	{
+		QStringList l = it.key().split("::");
+		QStringList ll = l.at(1).split(",");
+		sql.sprintf("select current_val from %s where ied_no=%d and cpu_no=%d and group_no=%d and entry=%d",
+			l.at(0).toStdString().data(),ll.at(0).toInt(),ll.at(1).toInt(),ll.at(2).toInt(),ll.at(3).toInt());
+		SString sVal = DB->SelectInto(sql);
+
+		QList<GraphicsItem *> *listItem = it.value();
+		for (int i = 0; i < listItem->count(); i++)
+		{
+			GraphicsItem *item = listItem->at(i);
+			if (item->GetName() == "文字图元")
+				((GraphicsTextItem*)item)->SetText(sVal.data());
+		}
+	}
+}
+
+void DrawView::RefreshStateByKey(QString key, int val)
+{
+	QMap<QString, QList<GraphicsItem *>*>::iterator it = m_mapLinkDBState.find(key);
+	if (it == m_mapLinkDBState.constEnd())
+	{
+		QList<GraphicsItem *> *itemList = it.value();
+		for (int i = 0; i < itemList->count(); i++)
+		{
+			GraphicsItem *item = itemList->at(i);
+			item->SetIsFlash(true);
+			item->SetShowState(val);
+			item->SetStyleFromState(item->GetShowState());
+		}
+	}
 }
