@@ -158,20 +158,22 @@ public:
 	void SetBackgroundColor(SString color) { m_backgroundColor = color; }
 	void SetBackgroundAlpha(int alpha) { m_backgroundAlpha = alpha; }
 
-	CSKItem* CreatLine(SPtrList<stuPoint> *points, SString color="#FFFFFF", float width=1);
-	CSKItem* CreatPolygonLine(SPtrList<stuPoint> *points, SString color="#FFFFFF", float width=1);
-	CSKItem* CreatArcCircle(stuPoint point, float diameter, float startAngle, float endAngle, SString color="#FFFFFF", float width=1);
-	CSKItem* CreatArcEllipse(stuPoint point, float longAxis, float shortAxis, float startAngle, float endAngle, SString color="#FFFFFF", float width=1);
-	CSKItem* CreatRect(stuPoint point, float width, float height);
-	CSKItem* CreatRoundedRect(stuPoint point, float width, float height, float rx=5.0, float ry=5.0);
-	CSKItem* CreatCircle(stuPoint point, float diameter);
-	CSKItem* CreatEllipse(stuPoint point, float longAxis, float shortAxis);
-	CSKItem* CreatTriangle(stuPoint point, float width, float height);
-	CSKItem* CreatRhombus(stuPoint point, float width, float height);
-	CSKItem* CreatParallelogram(stuPoint point, float width, float height, float crossAngle);
-	CSKItem* CreatPolygon(SPtrList<stuPoint> *points);
-	CSKTextItem* CreatText(stuPoint point, float width, float height, SString desc);
-	CSKTextItem* CreatTextTime(stuPoint point, float width, float height, SString style="yyyy-MM-dd hh:mm:ss");
+	CSKItem* CreateLine(SPtrList<stuPoint> *points, SString color="#FFFFFF", float width=1);
+	CSKItem* CreatePolygonLine(SPtrList<stuPoint> *points, SString color="#FFFFFF", float width=1);
+	CSKItem* CreateArcCircle(stuPoint point, float diameter, float startAngle, float endAngle, SString color="#FFFFFF", float width=1);
+	CSKItem* CreateArcEllipse(stuPoint point, float longAxis, float shortAxis, float startAngle, float endAngle, SString color="#FFFFFF", float width=1);
+	CSKItem* CreateRect(stuPoint point, float width, float height);
+	CSKItem* CreateRoundedRect(stuPoint point, float width, float height, float rx=5.0, float ry=5.0);
+	CSKItem* CreateCircle(stuPoint point, float diameter);
+	CSKItem* CreateEllipse(stuPoint point, float longAxis, float shortAxis);
+	CSKItem* CreateTriangle(stuPoint point, float width, float height);
+	CSKItem* CreateRhombus(stuPoint point, float width, float height);
+	CSKItem* CreateParallelogram(stuPoint point, float width, float height, float crossAngle);
+	CSKItem* CreatePolygon(SPtrList<stuPoint> *points);
+	CSKTextItem* CreateText(stuPoint point, float width, float height, SString desc);
+	CSKTextItem* CreateTextTime(stuPoint point, float width, float height, SString style="yyyy-MM-dd hh:mm:ss");
+	void CreateArrowLine(SPtrList<stuPoint> *points, SString color="#FFFFFF", float width=1);
+	void CreateDoubleArrowLine(SPtrList<stuPoint> *points, SString color="#FFFFFF", float width=1);
 
 	bool SaveToXml(SString &content, SString encoding="GB2312");
 	bool BaseToXml(CSKItem *item, SBaseConfig *base);

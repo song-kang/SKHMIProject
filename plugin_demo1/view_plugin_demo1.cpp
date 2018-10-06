@@ -92,14 +92,14 @@ void view_plugin_demo1::Start()
 
 void view_plugin_demo1::CreatSvgXml()
 {
-	stuPoint point;
-	//point.m_x = 100;
-	//point.m_y = 300;
-	//m_svgXml.CreatRhombus(point,100,150);
-
-	point.m_x = 200;
-	point.m_y = 100;
-	CSKTextItem *item = m_svgXml.CreatTextTime(point,200,80);
-	item->SetFamily("Î¢ÈíÑÅºÚ");
-	item->SetPointSize(16);
+	SPtrList<stuPoint> points;
+	stuPoint *p2 = new stuPoint;
+	p2->m_x = 100;
+	p2->m_y = 100;
+	points.append(p2);
+	stuPoint *p1 = new stuPoint;
+	p1->m_x = 200;
+	p1->m_y = 100;
+	points.append(p1);
+	m_svgXml.CreateDoubleArrowLine(&points,"#00ff00",1);
 }

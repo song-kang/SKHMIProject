@@ -69,7 +69,7 @@ CSKSvgXml::~CSKSvgXml()
 		delete m_items.at(i);
 }
 
-CSKItem* CSKSvgXml::CreatLine(SPtrList<stuPoint> *points, SString color, float width)
+CSKItem* CSKSvgXml::CreateLine(SPtrList<stuPoint> *points, SString color, float width)
 {
 	if (points->count() <= 1 || points->count() > 2)
 		return NULL;
@@ -92,7 +92,7 @@ CSKItem* CSKSvgXml::CreatLine(SPtrList<stuPoint> *points, SString color, float w
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatPolygonLine(SPtrList<stuPoint> *points, SString color, float width)
+CSKItem* CSKSvgXml::CreatePolygonLine(SPtrList<stuPoint> *points, SString color, float width)
 {
 	if (points->count() < 2)
 		return NULL;
@@ -132,7 +132,7 @@ CSKItem* CSKSvgXml::CreatPolygonLine(SPtrList<stuPoint> *points, SString color, 
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatArcCircle(stuPoint point, float diameter, float startAngle, float endAngle, SString color, float width)
+CSKItem* CSKSvgXml::CreateArcCircle(stuPoint point, float diameter, float startAngle, float endAngle, SString color, float width)
 {
 	CSKItem *item = new CSKItem;
 	if (item)
@@ -152,7 +152,7 @@ CSKItem* CSKSvgXml::CreatArcCircle(stuPoint point, float diameter, float startAn
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatArcEllipse(stuPoint point, float longAxis, float shortAxis, float startAngle, float endAngle, SString color, float width)
+CSKItem* CSKSvgXml::CreateArcEllipse(stuPoint point, float longAxis, float shortAxis, float startAngle, float endAngle, SString color, float width)
 {
 	CSKItem *item = new CSKItem;
 	if (item)
@@ -172,7 +172,7 @@ CSKItem* CSKSvgXml::CreatArcEllipse(stuPoint point, float longAxis, float shortA
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatRect(stuPoint point, float width, float height)
+CSKItem* CSKSvgXml::CreateRect(stuPoint point, float width, float height)
 {
 	CSKItem *item = new CSKItem;
 	if (item)
@@ -188,7 +188,7 @@ CSKItem* CSKSvgXml::CreatRect(stuPoint point, float width, float height)
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatRoundedRect(stuPoint point, float width, float height, float rx, float ry)
+CSKItem* CSKSvgXml::CreateRoundedRect(stuPoint point, float width, float height, float rx, float ry)
 {
 	CSKItem *item = new CSKItem;
 	if (item)
@@ -206,7 +206,7 @@ CSKItem* CSKSvgXml::CreatRoundedRect(stuPoint point, float width, float height, 
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatCircle(stuPoint point, float diameter)
+CSKItem* CSKSvgXml::CreateCircle(stuPoint point, float diameter)
 {
 	CSKItem *item = new CSKItem;
 	if (item)
@@ -222,7 +222,7 @@ CSKItem* CSKSvgXml::CreatCircle(stuPoint point, float diameter)
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatEllipse(stuPoint point, float longAxis, float shortAxis)
+CSKItem* CSKSvgXml::CreateEllipse(stuPoint point, float longAxis, float shortAxis)
 {
 	CSKItem *item = new CSKItem;
 	if (item)
@@ -238,7 +238,7 @@ CSKItem* CSKSvgXml::CreatEllipse(stuPoint point, float longAxis, float shortAxis
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatTriangle(stuPoint point, float width, float height)
+CSKItem* CSKSvgXml::CreateTriangle(stuPoint point, float width, float height)
 {
 	CSKItem *item = new CSKItem;
 	if (item)
@@ -254,7 +254,7 @@ CSKItem* CSKSvgXml::CreatTriangle(stuPoint point, float width, float height)
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatRhombus(stuPoint point, float width, float height)
+CSKItem* CSKSvgXml::CreateRhombus(stuPoint point, float width, float height)
 {
 	CSKItem *item = new CSKItem;
 	if (item)
@@ -270,7 +270,7 @@ CSKItem* CSKSvgXml::CreatRhombus(stuPoint point, float width, float height)
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatParallelogram(stuPoint point, float width, float height, float crossAngle)
+CSKItem* CSKSvgXml::CreateParallelogram(stuPoint point, float width, float height, float crossAngle)
 {
 	CSKItem *item = new CSKItem;
 	if (item)
@@ -287,7 +287,7 @@ CSKItem* CSKSvgXml::CreatParallelogram(stuPoint point, float width, float height
 	return item;
 }
 
-CSKItem* CSKSvgXml::CreatPolygon(SPtrList<stuPoint> *points)
+CSKItem* CSKSvgXml::CreatePolygon(SPtrList<stuPoint> *points)
 {
 	if (points->count() < 2)
 		return NULL;
@@ -325,7 +325,7 @@ CSKItem* CSKSvgXml::CreatPolygon(SPtrList<stuPoint> *points)
 	return item;
 }
 
-CSKTextItem* CSKSvgXml::CreatText(stuPoint point, float width, float height, SString desc)
+CSKTextItem* CSKSvgXml::CreateText(stuPoint point, float width, float height, SString desc)
 {
 	CSKTextItem *item = new CSKTextItem;
 	if (item)
@@ -342,7 +342,7 @@ CSKTextItem* CSKSvgXml::CreatText(stuPoint point, float width, float height, SSt
 	return item;
 }
 
-CSKTextItem* CSKSvgXml::CreatTextTime(stuPoint point, float width, float height, SString style)
+CSKTextItem* CSKSvgXml::CreateTextTime(stuPoint point, float width, float height, SString style)
 {
 	CSKTextItem *item = new CSKTextItem;
 	if (item)
@@ -357,6 +357,153 @@ CSKTextItem* CSKSvgXml::CreatTextTime(stuPoint point, float width, float height,
 	}
 
 	return item;
+}
+
+void CSKSvgXml::CreateArrowLine(SPtrList<stuPoint> *points, SString color, float width)
+{
+	CSKItem *item = CreateLine(points, color, width);
+
+	float cx = points->at(1)->m_x;
+	float cy = points->at(1)->m_y;
+	float rx = points->at(0)->m_x-points->at(1)->m_x;
+	float ry = points->at(0)->m_y-points->at(1)->m_y;
+	float dis = sqrt(rx*rx+ry*ry);
+	if (dis < 0.01)
+		return;
+
+	bool bConv = false;
+	if (points->at(1)->m_y > points->at(0)->m_y)
+		bConv = true;
+
+	float fcos = (bConv ? -rx : rx) / dis;
+	float radian = (float)(acos(fcos)-3.1415926);
+	if (bConv)
+		radian += (float)3.1415926;
+
+	float x3 = (cx-10);
+	float y3 = cy-3;
+	float x4 = (cx-10);
+	float y4 = cy+3;
+
+	float x30 = (float)(x3-cx)*cos(radian)-(y3-cy)*sin(radian)+cx;
+	float x40 = (float)(x4-cx)*cos(radian)-(y4-cy)*sin(radian)+cx;
+	float y30 = (float)(x3-cx)*sin(radian)+(y3-cy)*cos(radian)+cy;
+	float y40 = (float)(x4-cx)*sin(radian)+(y4-cy)*cos(radian)+cy;
+
+	SPtrList<stuPoint> lstPoint;
+	stuPoint *p = new stuPoint;
+	p->m_x = cx;
+	p->m_y = cy;
+	lstPoint.append(p);
+	p = new stuPoint;
+	p->m_x = x30;
+	p->m_y = y30;
+	lstPoint.append(p);
+	p = new stuPoint;
+	p->m_x = x40;
+	p->m_y = y40;
+	lstPoint.append(p);
+	item = CreatePolygon(&lstPoint);
+	item->m_penColor = color;
+	item->m_penWidth = width;
+	item->m_brushColor = color;
+}
+
+void CSKSvgXml::CreateDoubleArrowLine(SPtrList<stuPoint> *points, SString color, float width)
+{
+	CSKItem *item = CreateLine(points, color, width);
+
+	//前箭头
+	float cx = points->at(1)->m_x;
+	float cy = points->at(1)->m_y;
+	float rx = points->at(0)->m_x-points->at(1)->m_x;
+	float ry = points->at(0)->m_y-points->at(1)->m_y;
+	float dis = sqrt(rx*rx+ry*ry);
+	if (dis < 0.01)
+		return;
+
+	bool bConv = false;
+	if (points->at(1)->m_y > points->at(0)->m_y)
+		bConv = true;
+
+	float fcos = (bConv ? -rx : rx) / dis;
+	float radian = (float)(acos(fcos)-3.1415926);
+	if (bConv)
+		radian += (float)3.1415926;
+
+	float x3 = (cx-10);
+	float y3 = cy-3;
+	float x4 = (cx-10);
+	float y4 = cy+3;
+
+	float x30 = (float)(x3-cx)*cos(radian)-(y3-cy)*sin(radian)+cx;
+	float x40 = (float)(x4-cx)*cos(radian)-(y4-cy)*sin(radian)+cx;
+	float y30 = (float)(x3-cx)*sin(radian)+(y3-cy)*cos(radian)+cy;
+	float y40 = (float)(x4-cx)*sin(radian)+(y4-cy)*cos(radian)+cy;
+
+	SPtrList<stuPoint> lstPoint;
+	stuPoint *p = new stuPoint;
+	p->m_x = cx;
+	p->m_y = cy;
+	lstPoint.append(p);
+	p = new stuPoint;
+	p->m_x = x30;
+	p->m_y = y30;
+	lstPoint.append(p);
+	p = new stuPoint;
+	p->m_x = x40;
+	p->m_y = y40;
+	lstPoint.append(p);
+	item = CreatePolygon(&lstPoint);
+	item->m_penColor = color;
+	item->m_penWidth = width;
+	item->m_brushColor = color;
+
+	//后箭头
+	cx = points->at(0)->m_x;
+	cy = points->at(0)->m_y;
+	rx = points->at(1)->m_x-points->at(0)->m_x;
+	ry = points->at(1)->m_y-points->at(0)->m_y;
+	dis = sqrt(rx*rx+ry*ry);
+	if (dis < 0.01)
+		return;
+
+	bConv = false;
+	if (points->at(0)->m_y > points->at(1)->m_y)
+		bConv = true;
+
+	fcos = (bConv ? -rx : rx) / dis;
+	radian = (float)(acos(fcos)-3.1415926);
+	if (bConv)
+		radian += (float)3.1415926;
+
+	x3 = (cx-10);
+	y3 = cy-3;
+	x4 = (cx-10);
+	y4 = cy+3;
+
+	x30 = (float)(x3-cx)*cos(radian)-(y3-cy)*sin(radian)+cx;
+	x40 = (float)(x4-cx)*cos(radian)-(y4-cy)*sin(radian)+cx;
+	y30 = (float)(x3-cx)*sin(radian)+(y3-cy)*cos(radian)+cy;
+	y40 = (float)(x4-cx)*sin(radian)+(y4-cy)*cos(radian)+cy;
+
+	SPtrList<stuPoint> lstPoint1;
+	p = new stuPoint;
+	p->m_x = cx;
+	p->m_y = cy;
+	lstPoint1.append(p);
+	p = new stuPoint;
+	p->m_x = x30;
+	p->m_y = y30;
+	lstPoint1.append(p);
+	p = new stuPoint;
+	p->m_x = x40;
+	p->m_y = y40;
+	lstPoint1.append(p);
+	item = CreatePolygon(&lstPoint1);
+	item->m_penColor = color;
+	item->m_penWidth = width;
+	item->m_brushColor = color;
 }
 
 bool CSKSvgXml::SaveToXml(SString &content, SString encoding)
