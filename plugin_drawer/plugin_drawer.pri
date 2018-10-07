@@ -8,13 +8,9 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 
 HEADERS += ./plugin_drawer.h \
-    ./drawobj.h \
-    ./drawscene.h \
-    ./drawview.h \
+    ./csvgview.h \
     ./view_plugin_drawer.h
-SOURCES += ./drawobj.cpp \
-    ./drawscene.cpp \
-    ./drawview.cpp \
+SOURCES += ./csvgview.cpp \
     ./plugin_drawer.cpp \
     ./view_plugin_drawer.cpp
 FORMS += ./view_plugin_drawer.ui

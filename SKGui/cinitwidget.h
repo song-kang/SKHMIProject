@@ -67,6 +67,7 @@ signals:
 
 private slots:
 	void SlotClose();
+	void SlotCfg();
 	void SlotValueChanged(const QVariant &value);
 	void SlotAnimationFinished();
 	void SlotLoadThreadFinished();

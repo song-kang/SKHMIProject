@@ -8,10 +8,24 @@ DESTDIR = /home/uk/lib
 QT += core gui
 CONFIG += debug
 DEFINES += QT_DLL SKBASEWIDGET_LIB
+QMAKE_CXXFLAGS += -fpermissive
 INCLUDEPATH += ./GeneratedFiles \
     . \
     ./GeneratedFiles/Debug \
-    ./../include/SKBaseWidget
+    ./../include/SKBase \
+    ./../include/SKBaseWidget \
+    /usr/include/mysql \
+    /home/uk/include \
+    /home/uk/include/comm \
+    /home/uk/include/db \
+    /home/uk/include/db/mdb \
+    /home/uk/include/db/mysql \
+    /home/uk/include/db/oracle \
+    /home/uk/include/db/oracle/oci/include
+
+LIBS += -L"/home/uk/lib" \
+    -lSKBased
+
 PRECOMPILED_HEADER = StdAfx.h
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/debug

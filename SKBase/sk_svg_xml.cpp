@@ -1,4 +1,5 @@
 #include "sk_svg_xml.h"
+#include "math.h"
 
 //================ CSKItem =======================
 CSKItem::CSKItem()
@@ -525,6 +526,8 @@ bool CSKSvgXml::SaveToXml(SString &content, SString encoding)
 		CSKItem *item = m_items.at(i);
 		switch (item->m_eType)
 		{
+		case eItemNone:
+			break;
 		case eItemLine:				//线段
 			LineToXml(item, &xml);
 			break;
@@ -569,6 +572,8 @@ bool CSKSvgXml::SaveToXml(SString &content, SString encoding)
 			break;
 		case eItemTextTime:			//文本时间
 			TextTimeToXml(item, &xml);
+			break;
+		default:
 			break;
 		}
 	}
@@ -621,7 +626,7 @@ bool CSKSvgXml::LineToXml(CSKItem *item, SBaseConfig *canvas)
 	for (int i = 0; i < item->m_points.count(); i++)
 	{
 		stuPoint *p = item->m_points.at(i);
-		SBaseConfig *point = base->AddChildNode("point",SString::toFormat("x=%f;y=%f",p->m_x,p->m_y));
+		base->AddChildNode("point",SString::toFormat("x=%f;y=%f",p->m_x,p->m_y));
 	}
 
 	return true;
@@ -634,7 +639,7 @@ bool CSKSvgXml::PolygonLineToXml(CSKItem *item, SBaseConfig *canvas)
 	for (int i = 0; i < item->m_points.count(); i++)
 	{
 		stuPoint *p = item->m_points.at(i);
-		SBaseConfig *point = base->AddChildNode("point",SString::toFormat("x=%f;y=%f",p->m_x,p->m_y));
+		base->AddChildNode("point",SString::toFormat("x=%f;y=%f",p->m_x,p->m_y));
 	}
 
 	return true;
@@ -711,7 +716,7 @@ bool CSKSvgXml::PolygonToXml(CSKItem *item, SBaseConfig *canvas)
 	for (int i = 0; i < item->m_points.count(); i++)
 	{
 		stuPoint *p = item->m_points.at(i);
-		SBaseConfig *point = base->AddChildNode("point",SString::toFormat("x=%f;y=%f",p->m_x,p->m_y));
+		base->AddChildNode("point",SString::toFormat("x=%f;y=%f",p->m_x,p->m_y));
 	}
 
 	return true;

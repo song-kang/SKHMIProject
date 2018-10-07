@@ -150,6 +150,8 @@ void CInitWidget::InitUi()
 
 	ui.btnClose->setVisible(false);
 	ui.btnClose->setCursor(QCursor(Qt::PointingHandCursor));
+	ui.btnCfg->setVisible(false);
+	ui.btnCfg->setCursor(QCursor(Qt::PointingHandCursor));
 
 	setStyleSheet(tr("QWidget#%1{background:rgb(240,240,240,0);}").arg(objectName()));
 }
@@ -159,6 +161,7 @@ void CInitWidget::InitSlot()
 	connect(m_pAnimation,SIGNAL(valueChanged(QVariant)),SLOT(SlotValueChanged(QVariant)));
 	connect(m_pAnimation,SIGNAL(finished()),SLOT(SlotAnimationFinished()));
 	connect(ui.btnClose,SIGNAL(clicked()),this,SLOT(SlotClose()));
+	connect(ui.btnCfg,SIGNAL(clicked()),this,SLOT(SlotCfg()));
 	connect(m_pLoadThread,SIGNAL(finished()),this,SLOT(SlotLoadThreadFinished()));
 	connect(m_pLoadThread,SIGNAL(SigText(QString)),this,SLOT(SlotLoadThreadText(QString)));
 }
@@ -186,6 +189,14 @@ void CInitWidget::SlotClose()
 	emit SigClose();
 }
 
+void CInitWidget::SlotCfg()
+{
+	ui.btnClose->setVisible(false);
+	ui.btnCfg->setVisible(false);
+	m_pAnimation->start();
+	m_pLoadThread->start();
+}
+
 void CInitWidget::SlotLoadThreadFinished()
 {
 	if (m_pLoadThread->GetError().isEmpty())
@@ -211,6 +222,7 @@ void CInitWidget::SlotLoadThreadFinished()
 	{
 		SlotLoadThreadText(m_pLoadThread->GetError());
 		ui.btnClose->setVisible(true);
+		ui.btnCfg->setVisible(true);
 		m_pAnimation->stop();
 	}
 }

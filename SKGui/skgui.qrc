@@ -63,6 +63,9 @@
         <file alias="pin-on">Resources/pin-on.png</file>
         <file alias="export">Resources/export.png</file>
         <file alias="save">Resources/save.png</file>
+        <file alias="btn_cfg_down">Resources/btn_cfg_down.png</file>
+        <file alias="btn_cfg_hover">Resources/btn_cfg_hover.png</file>
+        <file alias="btn_cfg_normal">Resources/btn_cfg_normal.png</file>
     </qresource>
     <qresource prefix="/skins">
         <file alias="skin0">Resources/skin/skin0.jpg</file>

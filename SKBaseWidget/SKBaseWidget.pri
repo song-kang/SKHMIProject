@@ -13,10 +13,16 @@ HEADERS += ../include/SKBaseWidget/skhead.h \
     ./cmainwidget.h \
     ../include/SKBaseWidget/skwidget.h \
     ../include/SKBaseWidget/AbsFrameLessAutoSize.h \
-    ../include/SKBaseWidget/skbasewidget.h
+    ../include/SKBaseWidget/skbasewidget.h \
+    ../include/SKBaseWidget/drawview.h \
+    ../include/SKBaseWidget/drawobj.h \
+    ../include/SKBaseWidget/drawscene.h
 SOURCES += ./AbsFrameLessAutoSize.cpp \
     ./cmainwidget.cpp \
     ./ctopwidget.cpp \
+    ./drawobj.cpp \
+    ./drawscene.cpp \
+    ./drawview.cpp \
     ./PushButton.cpp \
     ./skbasewidget.cpp \
     ./skwidget.cpp
