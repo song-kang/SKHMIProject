@@ -3,16 +3,12 @@
 # ------------------------------------------------------
 
 TEMPLATE = lib
-TARGET = SKBaseWidget
 DESTDIR = /home/uk/lib
 QT += core gui
-CONFIG += debug
+CONFIG += debug_and_release
 DEFINES += QT_DLL SKBASEWIDGET_LIB
 QMAKE_CXXFLAGS += -fpermissive
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/Debug \
-    ./../include/SKBase \
+INCLUDEPATH += ./../include/SKBase \
     ./../include/SKBaseWidget \
     /usr/include/mysql \
     /home/uk/include \
@@ -23,13 +19,28 @@ INCLUDEPATH += ./GeneratedFiles \
     /home/uk/include/db/oracle \
     /home/uk/include/db/oracle/oci/include
 
-LIBS += -L"/home/uk/lib" \
-    -lSKBased
+CONFIG(debug, debug|release) {
+    INCLUDEPATH += ./GeneratedFiles \
+        . \
+        ./GeneratedFiles/Debug
+    LIBS += -L"/home/uk/lib" \
+        -lSKBased
+    MOC_DIR += ./GeneratedFiles/debug
+    OBJECTS_DIR += debug
+    TARGET = SKBaseWidgetd
+} else {
+    INCLUDEPATH += ./GeneratedFiles \
+        . \
+        ./GeneratedFiles/Release
+    LIBS += -L"/home/uk/lib" \
+        -lSKBase
+    MOC_DIR += ./GeneratedFiles/Release
+    OBJECTS_DIR += release
+    TARGET = SKBaseWidget
+}
 
-PRECOMPILED_HEADER = StdAfx.h
+#PRECOMPILED_HEADER = StdAfx.h
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 include(SKBaseWidget.pri)

@@ -3,15 +3,11 @@
 # ------------------------------------------------------
 
 TEMPLATE = lib
-TARGET = SKGui
 DESTDIR = /home/uk/lib
 QT += core gui
-CONFIG += debug
+CONFIG += debug_and_release
 DEFINES += QT_DLL SKGUI_LIB
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/Debug \
-    ./../include/SKBase \
+INCLUDEPATH += ./../include/SKBase \
     ./../include/SKBaseWidget \
     ./../include/SKGui \
     /usr/include/mysql \
@@ -23,14 +19,30 @@ INCLUDEPATH += ./GeneratedFiles \
     /home/uk/include/db/oracle \
     /home/uk/include/db/oracle/oci/include
 
-LIBS += -L"/home/uk/lib" \
-    -lSKBased \
-    -lSKBaseWidget
+CONFIG(debug, debug|release) {
+    INCLUDEPATH += ./GeneratedFiles \
+        . \
+        ./GeneratedFiles/Debug
+    LIBS += -L"/home/uk/lib" \
+        -lSKBased \
+        -lSKBaseWidgetd
+    MOC_DIR += ./GeneratedFiles/Debug
+    OBJECTS_DIR += debug
+    TARGET = SKGuid
+} else {
+    INCLUDEPATH += ./GeneratedFiles \
+        . \
+        ./GeneratedFiles/Release
+    LIBS += -L"/home/uk/lib" \
+        -lSKBase \
+        -lSKBaseWidget
+    MOC_DIR += ./GeneratedFiles/Release
+    OBJECTS_DIR += release
+    TARGET = SKGui
+}
 
-PRECOMPILED_HEADER = StdAfx.h
+#PRECOMPILED_HEADER = StdAfx.h
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 include(SKGui.pri)

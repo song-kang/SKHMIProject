@@ -3,15 +3,11 @@
 # ------------------------------------------------------
 
 TEMPLATE = app
-TARGET = SKWatch
 DESTDIR = /home/uk/bin
 QT += core gui xml xmlpatterns
-CONFIG += debug
+CONFIG += debug_and_release
 DEFINES += QT_DLL QT_XML_LIB QT_XMLPATTERNS_LIB
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/Debug \
-    ./../include/SKBase \
+INCLUDEPATH += ./../include/SKBase \
     ./../include/SKBaseWidget \
     /usr/include/mysql \
     /home/uk/include \
@@ -22,23 +18,48 @@ INCLUDEPATH += ./GeneratedFiles \
     /home/uk/include/db/oracle \
     /home/uk/include/db/oracle/oci/include
 
-LIBS += -L"/home/uk/lib" \
-    -L"/home/uk/lib/instantclient_11_2" \
-    -L"/usr/lib/i386-linux-gnu" \
-    -lsbased \
-    -lsbase_mdbd \
-    -lsbase_mysqld \
-    -lsbase_oracled \
-    -lSKBased \
-    -lSKBaseWidget \
-    -lmysqlclient \
-    -lociei
+CONFIG(debug, debug|release) {
+    INCLUDEPATH += ./GeneratedFiles \
+        . \
+        ./GeneratedFiles/Debug
+    LIBS += -L"/home/uk/lib" \
+        -L"/home/uk/lib/instantclient_11_2" \
+        -L"/usr/lib/i386-linux-gnu" \
+        -lsbased \
+        -lsbase_mdbd \
+        -lsbase_mysqld \
+        -lsbase_oracled \
+        -lSKBased \
+        -lSKBaseWidgetd \
+        -lSKGuid \
+        -lmysqlclient \
+        -lociei
+    MOC_DIR += ./GeneratedFiles/Debug
+    OBJECTS_DIR += debug
+    TARGET = SKWatchd
+} else {
+    INCLUDEPATH += ./GeneratedFiles \
+        . \
+        ./GeneratedFiles/Release
+    LIBS += -L"/home/uk/lib" \
+        -L"/home/uk/lib/instantclient_11_2" \
+        -L"/usr/lib/i386-linux-gnu" \
+        -lsbase \
+        -lsbase_mdb \
+        -lsbase_mysql \
+        -lsbase_oracle \
+        -lSKBase \
+        -lSKBaseWidget \
+        -lSKGui \
+        -lmysqlclient \
+        -lociei
+    MOC_DIR += ./GeneratedFiles/Release
+    OBJECTS_DIR += release
+    TARGET = SKWatch
+}
 
-PRECOMPILED_HEADER = StdAfx.h
+#PRECOMPILED_HEADER = StdAfx.h
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 include(SKWatch.pri)
-win32:RC_FILE = SKWatch.rc

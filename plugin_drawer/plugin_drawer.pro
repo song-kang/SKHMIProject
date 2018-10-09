@@ -3,16 +3,12 @@
 # ------------------------------------------------------
 
 TEMPLATE = lib
-TARGET = plugin_drawer
 DESTDIR = /home/uk/bin
 QT += core gui webkit
-CONFIG += debug
+CONFIG += debug_and_release
 DEFINES += QT_DLL QT_WEBKIT_LIB
 QMAKE_CXXFLAGS += -fpermissive
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/Debug \
-    ./../include/SKBase \
+INCLUDEPATH += ./../include/SKBase \
     ./../include/SKBaseWidget \
     ./../include/SKGui \
     /usr/include/mysql \
@@ -24,19 +20,48 @@ INCLUDEPATH += ./GeneratedFiles \
     /home/uk/include/db/oracle \
     /home/uk/include/db/oracle/oci/include
 
-LIBS += -L"/home/uk/lib" \
-    -L"/usr/lib/i386-linux-gnu" \
-    -lsbased \
-    -lsbase_mysqld \
-    -lSKBased \
-    -lSKBaseWidget \
-    -lSKGui \
-    -lmysqlclient
+CONFIG(debug, debug|release) {
+    INCLUDEPATH += ./GeneratedFiles \
+        . \
+        ./GeneratedFiles/Debug
+    LIBS += -L"/home/uk/lib" \
+        -L"/home/uk/lib/instantclient_11_2" \
+        -L"/usr/lib/i386-linux-gnu" \
+        -lsbased \
+        -lsbase_mdbd \
+        -lsbase_mysqld \
+        -lsbase_oracled \
+        -lSKBased \
+        -lSKBaseWidgetd \
+        -lSKGuid \
+        -lmysqlclient \
+        -lociei
+    MOC_DIR += ./GeneratedFiles/Debug
+    OBJECTS_DIR += debug
+    TARGET = plugin_drawerd
+} else {
+    INCLUDEPATH += ./GeneratedFiles \
+        . \
+        ./GeneratedFiles/Release
+    LIBS += -L"/home/uk/lib" \
+        -L"/home/uk/lib/instantclient_11_2" \
+        -L"/usr/lib/i386-linux-gnu" \
+        -lsbase \
+        -lsbase_mdb \
+        -lsbase_mysql \
+        -lsbase_oracle \
+        -lSKBase \
+        -lSKBaseWidget \
+        -lSKGui \
+        -lmysqlclient \
+        -lociei
+    MOC_DIR += ./GeneratedFiles/Release
+    OBJECTS_DIR += release
+    TARGET = plugin_drawer
+}
 
-PRECOMPILED_HEADER = StdAfx.h
+#PRECOMPILED_HEADER = StdAfx.h
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 include(plugin_drawer.pri)
