@@ -147,8 +147,8 @@ QPushButton#btnLogin:pressed {
     <rect>
      <x>370</x>
      <y>0</y>
-     <width>23</width>
-     <height>25</height>
+     <width>20</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
