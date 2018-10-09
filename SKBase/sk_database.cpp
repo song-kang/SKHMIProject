@@ -30,7 +30,7 @@ CSKDatabase* CSKDatabase::GetPtr()
 	return g_pDatabase;
 }
 
-#define UKDB_PWD_MASK "iuiqbaio2947ngf2"
+#define UKDB_PWD_MASK "yqqlm^gsycl.1978"
 bool CSKDatabase::Load(SString sPathFile)
 {
 	SXmlConfig xml;
@@ -225,7 +225,7 @@ void* CSKDatabase::ThreadDelayFree(void *lp)
 {
 	CSKDatabase *pThis = (CSKDatabase *)lp;
 	S_INTO_THREAD;
-	SApi::UsSleep(5000000);//5秒后释放
+	SApi::UsSleep(1000000);//5秒后释放
 
 	if (pThis->m_pOldHisMasterDbPools != NULL)
 	{
@@ -289,4 +289,14 @@ void CSKDatabase::RemoveAllMdbTrigger()
 		if (pDb != NULL)
 			pDb->GetMdbClient()->RemoveAllTrigger();
 	}
+}
+
+SString CSKDatabase::DecryptPwd(SString text)
+{
+	return SApi::Decrypt_String(text,UKDB_PWD_MASK);
+}
+
+SString CSKDatabase::EncryptPwd(SString text)
+{
+	return SApi::Encrypt_String(text,UKDB_PWD_MASK);
 }

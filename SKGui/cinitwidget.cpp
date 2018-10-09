@@ -2,6 +2,7 @@
 #include "cloginwidget.h"
 #include "skgui.h"
 #include "cpluginmgr.h"
+#include "cdbset.h"
 
 ///////////////////////////// LoadThread //////////////////////////////////
 LoadThread::LoadThread(QObject *parent)
@@ -18,6 +19,7 @@ LoadThread::~LoadThread()
 void LoadThread::run()
 {
 	SApi::UsSleep(200000); //大于1/8秒，避免等待图形不出现情况
+	m_sError = QString::null;
 
 	SigText(tr("加载日志配置......"));
 #ifdef WIN32
@@ -130,7 +132,7 @@ CInitWidget::~CInitWidget()
 void CInitWidget::Init()
 {
 	m_pLogin = NULL;
-
+	m_pDBSet = NULL;
 	m_pAnimation = new QPropertyAnimation(this, QByteArray());
 	m_pAnimation->setDuration(1000);
 	m_pAnimation->setEasingCurve(QEasingCurve::Linear);
@@ -191,6 +193,34 @@ void CInitWidget::SlotClose()
 
 void CInitWidget::SlotCfg()
 {
+	if (!m_pDBSet)
+	{
+		CDBSet *wgt = new CDBSet();
+		m_pDBSet = new SKBaseWidget(NULL,wgt);
+		m_pDBSet->SetWindowsFlagsDialog();
+		m_pDBSet->SetWindowsModal();
+		m_pDBSet->SetWindowTitle("配置数据库");
+#ifdef WIN32
+		m_pDBSet->SetWindowIcon(QIcon(":/images/dbConfig"));
+#else
+		m_pDBSet->SetWindowIcon(":/images/dbConfig");
+#endif
+		m_pDBSet->SetWindowFlags(0);
+		m_pDBSet->SetWindowSize(550,350);
+		m_pDBSet->SetIsDrag(true);
+		connect(m_pDBSet, SIGNAL(SigClose()), this, SLOT(SlotDBSetClose()));
+	}
+
+	((CDBSet*)m_pDBSet->GetCenterWidget())->Start();
+	m_pDBSet->Show();
+}
+
+void CInitWidget::SlotDBSetClose()
+{
+	connect(m_pDBSet, SIGNAL(SigClose()), this, SLOT(SlotDBSetClose()));
+	delete m_pDBSet;
+	m_pDBSet = NULL;
+
 	ui.btnClose->setVisible(false);
 	ui.btnCfg->setVisible(false);
 	m_pAnimation->start();

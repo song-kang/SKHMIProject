@@ -86,7 +86,7 @@
    <property name="styleSheet">
     <string notr="true">QPushButton#btnClose{
   padding: -1;
-  border-image:url(:/images/btn_close_normal);
+  border-image:url(:/images/btn_close_hover);
 }
 
 QPushButton#btnClose:hover {
@@ -96,7 +96,7 @@ QPushButton#btnClose:hover {
 
 QPushButton#btnClose:pressed {
   padding: -1;
-  border-image:url(:/images/btn_close_down);
+  border-image:url(:/images/btn_close_hover);
 }</string>
    </property>
    <property name="text">
@@ -121,7 +121,7 @@ QPushButton#btnClose:pressed {
    <property name="styleSheet">
     <string notr="true">QPushButton#btnCfg{
   padding: -1;
-  border-image:url(:/images/btn_cfg_normal);
+  border-image:url(:/images/btn_cfg_hover);
 }
 
 QPushButton#btnCfg:hover {
@@ -131,7 +131,7 @@ QPushButton#btnCfg:hover {
 
 QPushButton#btnCfg:pressed {
   padding: -1;
-  border-image:url(:/images/btn_cfg_down);
+  border-image:url(:/images/btn_cfg_hover);
 }</string>
    </property>
    <property name="text">

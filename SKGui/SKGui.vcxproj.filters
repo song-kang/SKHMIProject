@@ -167,6 +167,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_cfunpointadd.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="cdbset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cdbset.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cdbset.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\SKGui\skgui_global.h">
@@ -200,6 +209,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_cfunpointadd.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_cdbset.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -274,6 +286,12 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="cfunpointadd.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="cdbset.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="cdbset.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>

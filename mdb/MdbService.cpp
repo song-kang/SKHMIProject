@@ -27,8 +27,8 @@
 CMdbService::CMdbService()
 {
 	m_iPort = 1400;
-	m_sDbUser = "skt_mdb";
-	m_sDbPwd = "skt001@163.com";
+	m_sDbUser = "mdb";
+	m_sDbPwd = "5512664@sohu.com";
 	SetStartWord(0x518C);
 }
 

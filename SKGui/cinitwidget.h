@@ -56,6 +56,7 @@ private:
 	QPropertyAnimation *m_pAnimation;
 	LoadThread *m_pLoadThread;
 	SKBaseWidget *m_pLogin;
+	SKBaseWidget *m_pDBSet;
 
 private:
 	void Init();
@@ -68,6 +69,7 @@ signals:
 private slots:
 	void SlotClose();
 	void SlotCfg();
+	void SlotDBSetClose();
 	void SlotValueChanged(const QVariant &value);
 	void SlotAnimationFinished();
 	void SlotLoadThreadFinished();

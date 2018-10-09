@@ -30,6 +30,8 @@ public:
 	inline eSsp_Database_Type GetMasterType() { return m_MasterDbType; }
 	inline eSsp_Database_Type GetSlaveType() { return  m_SlaveDbType; }
 	void RemoveAllMdbTrigger();
+	SString DecryptPwd(SString text);
+	SString EncryptPwd(SString text);
 
 private:
 	bool	m_bMaster;
