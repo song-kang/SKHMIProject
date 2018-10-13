@@ -42,11 +42,9 @@ public:
 	void SetWidth(int w) { m_iWidth = w; }
 	void SetHeight(int h) { m_iHeight = h; }
 	void SetPressShift(bool b) { m_bPressShift = b; }
-	void SetAlignItem(AbstractShape *shape) { m_pAlignItem = shape; }
 
 	bool GetPressShift() { return m_bPressShift; }
 	QGraphicsView* GetView() { return m_pView; }
-	AbstractShape* GetAlignItem() { return m_pAlignItem; }
 	int GetWidth() { return m_iWidth; }
 	int GetHeight() { return m_iHeight; }
 	GridTool* GetGridTool() { return m_pGrid; }
@@ -76,7 +74,7 @@ private:
 	qreal m_dy;
 	bool m_bMoved;
 
-	AbstractShape *m_pAlignItem;
+public:
 	QTimer *m_pSwapIntervalTimer;
 	bool m_bSwap;
 

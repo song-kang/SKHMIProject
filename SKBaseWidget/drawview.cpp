@@ -12,7 +12,9 @@ DrawView::DrawView(QGraphicsScene *scene)
 
 	setObjectName("DrawView");
 	setRenderHint(QPainter::Antialiasing);
-	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+	setCacheMode(QGraphicsView::CacheBackground);
+	setOptimizationFlags(QGraphicsView::DontSavePainterState);
+	setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
 	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -429,9 +431,14 @@ void DrawView::LoadPicture(QXmlStreamReader *xml, AbstractShape *shape)
 	int sn = xml->attributes().value(tr("sn")).toString().toInt();
 	int type = DB->SelectIntoI(SString::toFormat("select svgtype_sn from t_ssp_svglib_item where svg_sn=%d",sn));
 	if (type == SVG_TYPE_PIX)
+	{
 		((GraphicsPictureItem*)shape)->LoadPicture(sn);
+	}
 	else if (type == SVG_TYPE_GIF)
+	{
 		((GraphicsPictureItem*)shape)->LoadGif(sn);
+		m_pScene->m_pSwapIntervalTimer->setInterval(200);
+	}
 }
 
 void DrawView::InsertMapLinkDBState(QString key, GraphicsItem *item)

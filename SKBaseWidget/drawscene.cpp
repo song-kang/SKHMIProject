@@ -41,7 +41,7 @@ DrawScene::DrawScene(QObject *parent)
 	setBackgroundBrush(QBrush("#013E53"));
 
 	m_pSwapIntervalTimer = new QTimer(this);
-	m_pSwapIntervalTimer->setInterval(100);
+	m_pSwapIntervalTimer->setInterval(1000);
 	m_pSwapIntervalTimer->start();
 
 	connect(this, SIGNAL(selectionChanged()), this, SLOT(SlotSelectionChanged()));
