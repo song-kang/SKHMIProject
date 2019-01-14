@@ -437,7 +437,7 @@ void DrawView::LoadPicture(QXmlStreamReader *xml, AbstractShape *shape)
 	else if (type == SVG_TYPE_GIF)
 	{
 		((GraphicsPictureItem*)shape)->LoadGif(sn);
-		m_pScene->m_pSwapIntervalTimer->setInterval(200);
+		m_pScene->m_pSwapIntervalTimer->setInterval(150);
 	}
 }
 

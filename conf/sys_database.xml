@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="GB2312"?>
 <database>
-	<master type="mysql" hostaddr="localhost" port="3306" user="root" password="CEF814E144877AAD" dbname="skhmi" />
-	<mdb hostaddr="127.0.0.1" port="1400" user="skt_mdb" password="0FD0C64D27E2EDF9FD8A31067247CE9D" dbname="ukdb" />
+	<master type="mysql" hostaddr="127.0.0.1" port="3306" user="root" password="9CC1FA3F4D8DEAA4" dbname="skhmi"/>
+	<mdb hostaddr="127.0.0.1" port="1400" user="mdb" password="70FD7FA0142F524D6BE4E6D1FDAB02BD" dbname="ukdb"/>
 </database>
-

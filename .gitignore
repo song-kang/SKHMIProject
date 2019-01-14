@@ -33,3 +33,6 @@ SKBase/Debug/SKBased_manifest.rc
 conf/USER1
 conf/USER2
 *.fault
+picture
+Debug
+Release

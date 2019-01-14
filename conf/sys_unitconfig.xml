@@ -4,7 +4,7 @@
 	<system soft_type="UK9010"/>
 	<unit id="1" name="cu1" desc="采集单元1"/>
 	<unit-list>
-		<unit id="1" ip="192.168.1.102" name="cu1" desc="采集单元1" />
+		<unit id="1" ip="192.168.84.1" name="cu1" desc="采集单元1" />
 		<!--unit id="2" ip="172.16.16.65" name="cu2" desc="采集单元2" /-->
 	</unit-list>
 </sys_unitconfig>

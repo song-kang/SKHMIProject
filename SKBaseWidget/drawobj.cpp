@@ -1,7 +1,9 @@
 #include "drawobj.h"
 #include "drawscene.h"
 
-#define RADIAN1		3.141593 / 180.0
+#define PI			3.1415926
+#define RADIAN1		PI / 180.0
+#define ANGLE		180 / PI
 
 static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen)
 {
@@ -302,11 +304,178 @@ GraphicsLineItem::GraphicsLineItem(QGraphicsItem *parent)
 	:GraphicsPolygonItem(parent)
 {
 	SetName("线段图元");
+
+	startTimer(150);
+	m_fScale = 1.5;
+	m_fStep = 4.0;
+	m_iStepCnt = 1;
 }
 
 GraphicsLineItem::~GraphicsLineItem()
 {
 
+}
+
+void GraphicsLineItem::timerEvent(QTimerEvent *event)
+{
+	QPointF p0 = m_points.at(0);
+	QPointF p1 = m_points.at(1);
+	float x = abs(p1.x() - p0.x());
+	float y = abs(p1.y() - p0.y());
+	float angle = atan(y / x)/* * ANGLE*/;
+	float len = m_fStep * m_iStepCnt * m_fScale;
+	if (p1.x() > p0.x() && p1.y() == p0.y()) //X正轴
+	{
+		float x = p0.x() + m_fStep * m_iStepCnt * m_fScale;
+		if (x > p1.x())
+		{
+			m_iStepCnt = 1;
+			x = p1.x();
+		}
+		p1.setX(x);
+	}
+	else if (p1.x() < p0.x() && p1.y() == p0.y()) //X负轴
+	{
+		float x = p0.x() - m_fStep * m_iStepCnt * m_fScale;
+		if (x < p1.x())
+		{
+			m_iStepCnt = 1;
+			x = p1.x();
+		}
+		p1.setX(x);
+	}
+	else if (p1.x() == p0.x() && p1.y() < p0.y()) //Y正轴
+	{
+		float y = p0.y() - m_fStep * m_iStepCnt * m_fScale;
+		if (y < p1.y())
+		{
+			m_iStepCnt = 1;
+			y = p1.y();
+		}
+		p1.setY(y);
+	}
+	else if (p1.x() == p0.x() && p1.y() > p0.y()) //Y负轴
+	{
+		float y = p0.y() + m_fStep * m_iStepCnt * m_fScale;
+		if (y > p1.y())
+		{
+			m_iStepCnt = 1;
+			y = p1.y();
+		}
+		p1.setY(y);
+	}
+	else if (p1.x() > p0.x() && p1.y() < p0.y()) //第一象限
+	{
+		x = p0.x() + len * cos(/*RADIAN1 * */angle);
+		if (x > p1.x())
+		{
+			m_iStepCnt = 1;
+			x = p1.x();
+		}
+		p1.setX(x);
+
+		y = p0.y() - len * sin(angle);
+		if (y < p1.y())
+		{
+			m_iStepCnt = 1;
+			y = p1.y();
+		}
+		p1.setY(y);
+	}
+	else if (p1.x() < p0.x() && p1.y() < p0.y()) //第二象限
+	{
+		x = p0.x() - len * cos(angle);
+		if (x < p1.x())
+		{
+			m_iStepCnt = 1;
+			x = p1.x();
+		}
+		p1.setX(x);
+
+		y = p0.y() - len * sin(angle);
+		if (y < p1.y())
+		{
+			m_iStepCnt = 1;
+			y = p1.y();
+		}
+		p1.setY(y);
+	}
+	else if (p1.x() < p0.x() && p1.y() > p0.y()) //第三象限
+	{
+		x = p0.x() - len * cos(angle);
+		if (x < p1.x())
+		{
+			m_iStepCnt = 1;
+			x = p1.x();
+		}
+		p1.setX(x);
+
+		y = p0.y() + len * sin(angle);
+		if (y > p1.y())
+		{
+			m_iStepCnt = 1;
+			y = p1.y();
+		}
+		p1.setY(y);
+	}
+	else if (p1.x() > p0.x() && p1.y() > p0.y()) //第四象限
+	{
+		x = p0.x() + len * cos(angle);
+		if (x > p1.x())
+		{
+			m_iStepCnt = 1;
+			x = p1.x();
+		}
+		p1.setX(x);
+
+		y = p0.y() + len * sin(angle);
+		if (y > p1.y())
+		{
+			m_iStepCnt = 1;
+			y = p1.y();
+		}
+		p1.setY(y);
+	}
+	else if (p0.x() == p1.x() && p0.y() == p1.y())
+		return;
+	m_iStepCnt++;
+	
+	float cx = p1.x();
+	float cy = p1.y();
+	float rx = p0.x() - p1.x();
+	float ry = p0.y() - p1.y();
+	float dis = sqrt(rx * rx + ry * ry);
+	if (dis < 0.01)
+		return;
+
+	bool bConv = false;
+	if (p1.y() > p0.y())
+		bConv = true;
+
+	float fcos = (bConv ? -rx : rx) / dis;
+	float radian = (float)(acos(fcos) - PI);
+	if (bConv)
+		radian += (float)PI;
+
+	float x3 = cx - 10 * m_fScale;
+	float y3 = cy - 3 * m_fScale;
+	float x4 = cx - 10 * m_fScale;
+	float y4 = cy + 3 * m_fScale;
+
+	float x30 = (float)(x3 - cx) * cos(radian) - (y3 - cy) * sin(radian) + cx;
+	float x40 = (float)(x4 - cx) * cos(radian) - (y4 - cy) * sin(radian) + cx;
+	float y30 = (float)(x3 - cx) * sin(radian) + (y3 - cy) * cos(radian) + cy;
+	float y40 = (float)(x4 - cx) * sin(radian) + (y4 - cy) * cos(radian) + cy;
+
+	m_arrowPoints.clear();
+	QPointF f1(cx,cy);
+	m_arrowPoints.append(f1);
+	QPointF f2(x30,y30);
+	m_arrowPoints.append(f2);
+	QPointF f3(x40,y40);
+	m_arrowPoints.append(f3);
+
+	//update();
 }
 
 QPainterPath GraphicsLineItem::shape() const
@@ -363,10 +532,14 @@ void GraphicsLineItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	{
 		painter->setPen(GetPen());
 	}
-	painter->setBrush(Qt::NoBrush);
+	//painter->setBrush(Qt::NoBrush);
+	painter->setBrush(GetBrush());
 
 	if (m_points.size() > 1)
+	{
 		painter->drawLine(m_points.at(0),m_points.at(1));
+		painter->drawPolygon(m_arrowPoints);
+	}
 }
 
 bool GraphicsLineItem::LoadFromXml(QXmlStreamReader *xml)

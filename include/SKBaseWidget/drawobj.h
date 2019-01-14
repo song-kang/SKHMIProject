@@ -169,11 +169,18 @@ public:
 	~GraphicsLineItem();
 
 public:
+	virtual void timerEvent(QTimerEvent *event);
 	virtual QPainterPath shape() const;
 	virtual void AddPoint(const QPointF &point);
 	virtual void EndPoint(const QPointF &point);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual bool LoadFromXml(QXmlStreamReader *xml);
+
+public:
+	int m_iStepCnt;
+	float m_fStep;
+	float m_fScale;
+	QPolygonF m_arrowPoints;
 
 };
 
