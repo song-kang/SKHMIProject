@@ -48,7 +48,7 @@ void CSvgView::OnClicked(QList<QGraphicsItem*> list)
 	{
 
 	}
-	else	//场景跳转
+	else if	(((GraphicsItem*)item)->GetShowType() == 4)	//场景跳转
 	{
 		QString scene = ((GraphicsItem*)item)->GetLinkScene();
 		if (scene.isEmpty())
@@ -56,6 +56,11 @@ void CSvgView::OnClicked(QList<QGraphicsItem*> list)
 
 		SK_GUI->GotoFunPoint(scene.split("::").at(0));
 		ClearSelection();
+	}
+	else if (((GraphicsItem*)item)->GetShowType() == 5) //自定义
+	{
+		QString custom = ((GraphicsItem*)item)->GetCustom();
+		QMessageBox::information(this, "提示", custom);
 	}
 }
 

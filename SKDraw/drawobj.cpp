@@ -188,6 +188,7 @@ bool GraphicsItem::ReadBaseAttributes(QXmlStreamReader *xml)
 	m_iShowState = xml->attributes().value(tr("showst")).toString().toInt();
 	m_sLinkDB = xml->attributes().value(tr("linkdb")).toString();
 	m_sLinkScene = xml->attributes().value(tr("linkscene")).toString();
+	m_sCustom = xml->attributes().value(tr("custom")).toString();
 
 	QString strval = xml->attributes().value(tr("showstyle")).toString();
 	if (!strval.isEmpty())
@@ -222,6 +223,7 @@ bool GraphicsItem::WriteBaseAttributes(QXmlStreamWriter *xml)
 	xml->writeAttribute(tr("showst"),QString("%1").arg(GetShowState()));
 	xml->writeAttribute(tr("linkdb"),QString("%1").arg(GetLinkDB()));
 	xml->writeAttribute(tr("linkscene"),QString("%1").arg(GetLinkScene()));
+	xml->writeAttribute(tr("custom"),QString("%1").arg(GetCustom()));
 
 	QString s;
 	QMap<int,QString>::const_iterator iter;

@@ -78,7 +78,7 @@ PLUGIN_EXPORT const char* PluginGetVer()
 //////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT const char* PluginFunPointSupported()
 {
-	return "plugin_demo1=界面平台测试插件1;";
+	return "plugin_demo1=界面平台测试插件1;plugin_demo11=界面平台测试插件11;";
 }
 //////////////////////////////////////////////////////////////////////////
 // 描    述:  返回当前插件支持的所有通用动作名称与描述
@@ -104,6 +104,8 @@ PLUGIN_EXPORT void* PluginNewView(const char* sFunName,const void* parentWidget)
 {
 	SString sName = sFunName;
 	if(sName == "plugin_demo1")
+		return new view_plugin_demo1((QWidget*)parentWidget);
+	else if (sName == "plugin_demo11")
 		return new view_plugin_demo1((QWidget*)parentWidget);
 
 	return NULL;

@@ -49,6 +49,7 @@ public:
 	QString GetLinkDB() { return m_sLinkDB; }
 	QString GetLinkScene() { return m_sLinkScene; }
 	bool GetIsFlash() { return m_isFlash; } 
+	QString GetCustom() { return m_sCustom; }
 
 	void SetPen(const QPen & pen) { m_pen = pen; }
 	void SetPenColor(const QColor & color) { m_pen.setColor(color); update(); }
@@ -66,6 +67,7 @@ public:
 	void SetRealState(qint32 state) { m_iRealState = state; }
 	void SetLinkScene(QString scene) { m_sLinkScene = scene; }
 	void SetIsFlash(bool isFlash) { m_isFlash = isFlash; } 
+	void SetCustom(QString custom) { m_sCustom = custom; }
 
 public:
 	QPen   m_pen;
@@ -80,6 +82,7 @@ public:
 	QString m_sLinkScene;
 	bool m_isFlash;
 	QMap<int,QString> m_mapShowStyle;
+	QString m_sCustom;
 
 public:
 	virtual bool LoadFromXml(QXmlStreamReader *xml) = 0;

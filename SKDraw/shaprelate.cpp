@@ -266,7 +266,7 @@ void ShapRelate::InitSlot()
 void ShapRelate::Start()
 {
 	QStringList list;
-	list << "无类型" << "状态类" << "遥控类" << "遥调类";
+	list << "无类型" << "状态类" << "遥控类" << "遥调类" << "场景类" << "自定义类";
 	ui.comboBoxShowType->addItems(list);
 	ui.comboBoxShowType->setCurrentIndex(0);
 
@@ -303,6 +303,7 @@ void ShapRelate::Start()
 	ui.comboBoxShowState->setCurrentIndex(((GraphicsItem*)m_pShape)->GetShowState()+1);
 	ui.lineEditLinkDB->setText(((GraphicsItem*)m_pShape)->GetLinkDB());
 	ui.lineEditLinkScene->setText(((GraphicsItem*)m_pShape)->GetLinkScene());
+	ui.lineEditCustom->setText(((GraphicsItem*)m_pShape)->GetCustom());
 }
 
 void ShapRelate::paintEvent(QPaintEvent *e)
@@ -320,8 +321,11 @@ void ShapRelate::SlotShowTypeChanged(int index)
 		ui.comboBoxShowState->setEnabled(false);
 		ui.comboBoxShowState->clear();
 		ui.lineEditLinkDB->clear();
+		ui.lineEditLinkScene->clear();
+		ui.lineEditCustom->clear();
+		ui.lineEditCustom->setEnabled(false);
 		ui.btnLinkDB->setEnabled(false);
-		ui.btnLinkScene->setEnabled(true);
+		ui.btnLinkScene->setEnabled(false);
 		ui.tabWidgetState->setEnabled(false);
 		ui.tabWidgetState->clear();
 		break;
@@ -329,8 +333,11 @@ void ShapRelate::SlotShowTypeChanged(int index)
 		ui.comboBoxStateNum->setEnabled(true);
 		ui.comboBoxShowState->setEnabled(true);
 		ui.lineEditLinkDB->clear();
+		ui.lineEditLinkScene->clear();
+		ui.lineEditCustom->clear();
+		ui.lineEditCustom->setEnabled(false);
 		ui.btnLinkDB->setEnabled(true);
-		ui.btnLinkScene->setEnabled(true);
+		ui.btnLinkScene->setEnabled(false);
 		ui.tabWidgetState->setEnabled(true);
 		break;
 	case 2: //遥控类
@@ -340,20 +347,54 @@ void ShapRelate::SlotShowTypeChanged(int index)
 		ui.comboBoxShowState->setEnabled(false);
 		ui.comboBoxShowState->clear();
 		ui.lineEditLinkDB->clear();
+		ui.lineEditLinkScene->clear();
+		ui.lineEditCustom->clear();
+		ui.lineEditCustom->setEnabled(false);
 		ui.btnLinkDB->setEnabled(true);
 		ui.btnLinkScene->setEnabled(false);
 		ui.tabWidgetState->setEnabled(true);
 		ui.tabWidgetState->clear();
 		break;
-	case 4: //测量类
+	case 6: //测量类
 		ui.comboBoxStateNum->setEnabled(false);
 		ui.comboBoxStateNum->setCurrentIndex(0);
 		ui.comboBoxShowState->setEnabled(false);
 		ui.comboBoxShowState->clear();
 		ui.lineEditLinkDB->clear();
+		ui.lineEditLinkScene->clear();
+		ui.lineEditCustom->clear();
+		ui.lineEditCustom->setEnabled(false);
 		ui.btnLinkDB->setEnabled(true);
-		ui.btnLinkScene->setEnabled(true);
+		ui.btnLinkScene->setEnabled(false);
 		ui.tabWidgetState->setEnabled(true);
+		ui.tabWidgetState->clear();
+		break;
+	case 4: //场景类
+		ui.comboBoxStateNum->setEnabled(false);
+		ui.comboBoxStateNum->setCurrentIndex(0);
+		ui.comboBoxShowState->setEnabled(false);
+		ui.comboBoxShowState->clear();
+		ui.lineEditLinkDB->clear();
+		ui.lineEditLinkScene->clear();
+		ui.lineEditCustom->clear();
+		ui.lineEditCustom->setEnabled(false);
+		ui.btnLinkDB->setEnabled(false);
+		ui.btnLinkScene->setEnabled(true);
+		ui.tabWidgetState->setEnabled(false);
+		ui.tabWidgetState->clear();
+		break;
+	case 5: //自定义类
+		ui.comboBoxStateNum->setEnabled(false);
+		ui.comboBoxStateNum->setCurrentIndex(0);
+		ui.comboBoxShowState->setEnabled(false);
+		ui.comboBoxShowState->clear();
+		ui.lineEditLinkDB->clear();
+		ui.lineEditLinkScene->clear();
+		ui.lineEditCustom->clear();
+		ui.lineEditCustom->setEnabled(true);
+		ui.btnLinkDB->setEnabled(false);
+		ui.btnLinkScene->setEnabled(false);
+		ui.tabWidgetState->setEnabled(false);
 		ui.tabWidgetState->clear();
 		break;
 	default:
@@ -505,12 +546,15 @@ void ShapRelate::SetFontFromString(PropertyState *ps, QString strFont)
 
 void ShapRelate::SlotOk()
 {
-	if (ui.comboBoxShowType->currentIndex() != 0 && ui.lineEditLinkDB->text().trimmed().isEmpty())
+	if (ui.comboBoxShowType->currentIndex() != 0 && 
+		ui.btnLinkDB->isEnabled() == true && 
+		ui.lineEditLinkDB->text().trimmed().isEmpty())
 	{
 		QMessageBox::warning(this, "告警", "请在数据库选取条目");
 		return;
 	}
 
+	((GraphicsItem*)m_pShape)->SetCustom(ui.lineEditCustom->text().trimmed());
 	((GraphicsItem*)m_pShape)->SetLinkDB(ui.lineEditLinkDB->text().trimmed());
 	((GraphicsItem*)m_pShape)->SetLinkScene(ui.lineEditLinkScene->text().trimmed());
 	if (((GraphicsItem*)m_pShape)->DisplayName() == "组合图元")

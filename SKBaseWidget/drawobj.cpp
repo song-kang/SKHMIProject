@@ -102,6 +102,7 @@ bool GraphicsItem::ReadBaseAttributes(QXmlStreamReader *xml)
 	m_iShowState = xml->attributes().value(tr("showst")).toString().toInt();
 	m_sLinkDB = xml->attributes().value(tr("linkdb")).toString();
 	m_sLinkScene = xml->attributes().value(tr("linkscene")).toString();
+	m_sCustom = xml->attributes().value(tr("custom")).toString();
 
 	QString strval = xml->attributes().value(tr("showstyle")).toString();
 	if (!strval.isEmpty())

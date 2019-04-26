@@ -59,6 +59,7 @@ public:
 	qint32 GetRealState() { return m_iRealState; }
 	QString GetLinkDB() { return m_sLinkDB; }
 	QString GetLinkScene() { return m_sLinkScene; }
+	QString GetCustom() { return m_sCustom; }
 
 	void SetPen(const QPen & pen) { m_pen = pen; }
 	void SetPenColor(const QColor & color) { m_pen.setColor(color); update(); }
@@ -75,6 +76,7 @@ public:
 	void SetLinkDB(QString link) { m_sLinkDB = link; }
 	void SetRealState(qint32 state) { m_iRealState = state; }
 	void SetLinkScene(QString scene) { m_sLinkScene = scene; }
+	void SetCustom(QString custom) { m_sCustom = custom; }
 
 	void SetState(SelectionHandleState st)
 	{
@@ -217,6 +219,7 @@ public:
 	qint32 m_iRealState;
 	QString m_sLinkDB;
 	QString m_sLinkScene;
+	QString m_sCustom;
 
 public:
 	virtual void Move(const QPointF &point) = 0;
