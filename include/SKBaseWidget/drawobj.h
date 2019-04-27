@@ -30,6 +30,7 @@ public:
 		m_iShowState = -1;
 		m_iRealState = -1;
 		m_isFlash = false;
+		m_isShow = true;
 	}
 	virtual ~AbstractShapeType(){}
 
@@ -50,6 +51,7 @@ public:
 	QString GetLinkScene() { return m_sLinkScene; }
 	bool GetIsFlash() { return m_isFlash; } 
 	QString GetCustom() { return m_sCustom; }
+	bool GetIsShow() { return m_isShow; }
 
 	void SetPen(const QPen & pen) { m_pen = pen; }
 	void SetPenColor(const QColor & color) { m_pen.setColor(color); update(); }
@@ -68,6 +70,7 @@ public:
 	void SetLinkScene(QString scene) { m_sLinkScene = scene; }
 	void SetIsFlash(bool isFlash) { m_isFlash = isFlash; } 
 	void SetCustom(QString custom) { m_sCustom = custom; }
+	void SetIsShow(bool isShow) { m_isShow = isShow; }
 
 public:
 	QPen   m_pen;
@@ -83,6 +86,7 @@ public:
 	bool m_isFlash;
 	QMap<int,QString> m_mapShowStyle;
 	QString m_sCustom;
+	bool m_isShow;
 
 public:
 	virtual bool LoadFromXml(QXmlStreamReader *xml) = 0;

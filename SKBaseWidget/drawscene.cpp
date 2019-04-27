@@ -44,8 +44,12 @@ DrawScene::DrawScene(QObject *parent)
 	m_pSwapIntervalTimer->setInterval(1000);
 	m_pSwapIntervalTimer->start();
 
+	m_pGifTimer = new QTimer(this);
+	m_pGifTimer->setInterval(200);
+
 	connect(this, SIGNAL(selectionChanged()), this, SLOT(SlotSelectionChanged()));
 	connect(m_pSwapIntervalTimer, SIGNAL(timeout()), this, SLOT(SlotSwapIntervalTimer()));
+	connect(m_pGifTimer, SIGNAL(timeout()), this, SLOT(SlotGifTimer()));
 }
 
 DrawScene::~DrawScene()
@@ -105,7 +109,12 @@ void DrawScene::SlotSwapIntervalTimer()
 	m_bSwap = !m_bSwap;
 	((DrawView*)m_pView)->RefreshMeasureFromDB();
 
-	m_pView->viewport()->update();
+	((DrawView*)m_pView)->Redraw();
+}
+
+void DrawScene::SlotGifTimer()
+{
+	((DrawView*)m_pView)->Redraw();
 }
 
 GraphicsItemGroup* DrawScene::CreateGroup(const QList<QGraphicsItem *> &items, bool isAdd)

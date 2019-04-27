@@ -248,6 +248,9 @@ void GraphicsPolygonItem::EndPoint(const QPointF &point)
 
 void GraphicsPolygonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	if (m_isFlash)
 	{
 		if (GetScene()->GetSwap())
@@ -306,7 +309,7 @@ GraphicsLineItem::GraphicsLineItem(QGraphicsItem *parent)
 {
 	SetName("Ïß¶ÎÍ¼Ôª");
 
-	startTimer(150);
+	//startTimer(150);
 	m_fScale = 1.5;
 	m_fStep = 4.0;
 	m_iStepCnt = 1;
@@ -514,6 +517,9 @@ void GraphicsLineItem::EndPoint(const QPointF &point)
 
 void GraphicsLineItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	if (m_isFlash)
 	{
 		if (GetScene()->GetSwap())
@@ -607,6 +613,9 @@ void GraphicsPolygonLineItem::EndPoint(const QPointF &point)
 
 void GraphicsPolygonLineItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	if (m_isFlash)
 	{
 		if (GetScene()->GetSwap())
@@ -726,6 +735,9 @@ QPainterPath GraphicsRectItem::shape() const
 
 void GraphicsRectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	if (m_isFlash)
 	{
 		if (GetScene()->GetSwap())
@@ -797,6 +809,9 @@ QPainterPath GraphicsTriangleItem::shape() const
 
 void GraphicsTriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	painter->setPen(GetPen());
 	painter->setBrush(GetBrush());
 
@@ -839,6 +854,9 @@ QPainterPath GraphicsRhombusItem::shape() const
 
 void GraphicsRhombusItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	painter->setPen(GetPen());
 	painter->setBrush(GetBrush());
 
@@ -882,6 +900,9 @@ QPainterPath GraphicsParallelogramItem::shape() const
 
 void GraphicsParallelogramItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	painter->setPen(GetPen());
 	painter->setBrush(GetBrush());
 
@@ -947,6 +968,9 @@ QPainterPath GraphicsEllipseItem::shape() const
 
 void GraphicsEllipseItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	if (m_isFlash)
 	{
 		if (GetScene()->GetSwap())
@@ -1019,6 +1043,9 @@ QPainterPath GraphicsArcEllipseItem::shape() const
 
 void GraphicsArcEllipseItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	painter->setPen(GetPen());
 	painter->drawArc(m_localRect, m_startAngle * 16, (m_endAngle - m_startAngle) * 16);
 }
@@ -1052,6 +1079,9 @@ GraphicsTextItem::~GraphicsTextItem()
 
 void GraphicsTextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	if (m_isFlash)
 	{
 		if (GetScene()->GetSwap())
@@ -1125,6 +1155,9 @@ GraphicsTextTimeItem::~GraphicsTextTimeItem()
 
 void GraphicsTextTimeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	QDateTime dt = QDateTime::currentDateTime();
 	QString sTime = dt.toString(m_sStyle);
 
@@ -1176,6 +1209,9 @@ GraphicsPictureItem::~GraphicsPictureItem()
 
 void GraphicsPictureItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	if (m_isShow == false)
+		return;
+
 	if (!m_picture.isNull())
 		painter->drawPixmap(m_localRect.toRect(), m_picture);
 	else

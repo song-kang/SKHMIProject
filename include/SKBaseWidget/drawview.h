@@ -39,6 +39,8 @@ public:
 	void RefreshMeasureFromDB();
 	void RefreshStateByKey(QString key,int val);
 	void ClearSelection() { m_pScene->clearSelection(); }
+	void Redraw() { viewport()->update(); }
+	GraphicsItem *SearchItemByCustom(QString custom);
 
 public:
 	virtual void OnClicked(QList<QGraphicsItem*> list) {};

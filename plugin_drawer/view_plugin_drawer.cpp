@@ -114,5 +114,9 @@ int view_plugin_drawer::OnCommand(SString sCmd,SString &sResult)
 		delete [] pBuf;
 	}
 
+	GraphicsItem *item = m_pSvgView->SearchItemByCustom("abc");
+	if (item)
+		item->SetIsShow(false);
+
 	return 0;
 }

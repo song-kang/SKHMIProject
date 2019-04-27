@@ -76,11 +76,13 @@ private:
 
 public:
 	QTimer *m_pSwapIntervalTimer;
+	QTimer *m_pGifTimer;
 	bool m_bSwap;
 
 private slots:
 	void SlotSelectionChanged();
 	void SlotSwapIntervalTimer();
+	void SlotGifTimer();
 	
 };
 

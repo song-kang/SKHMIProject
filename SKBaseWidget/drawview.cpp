@@ -437,7 +437,8 @@ void DrawView::LoadPicture(QXmlStreamReader *xml, AbstractShape *shape)
 	else if (type == SVG_TYPE_GIF)
 	{
 		((GraphicsPictureItem*)shape)->LoadGif(sn);
-		m_pScene->m_pSwapIntervalTimer->setInterval(150);
+		if (m_pScene->m_pGifTimer->isActive() == false)
+			m_pScene->m_pGifTimer->start();
 	}
 }
 
@@ -574,4 +575,17 @@ void DrawView::RefreshStateByKey(QString key, int val)
 			item->SetStyleFromState(item->GetShowState());
 		}
 	}
+}
+
+GraphicsItem* DrawView::SearchItemByCustom(QString custom)
+{
+	const QList<QGraphicsItem *> items = m_pScene->items();
+	foreach (QGraphicsItem *item, items)
+	{
+		QString text = ((GraphicsItem*)item)->GetCustom();
+		if (text == custom)
+			return (GraphicsItem*)item;
+	}
+
+	return NULL;
 }
