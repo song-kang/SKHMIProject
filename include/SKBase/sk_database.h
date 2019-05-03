@@ -10,6 +10,8 @@
 #define SK_DATABASE CSKDatabase::GetPtr()
 #define DB SK_DATABASE->GetHisDbOper()
 #define MDB SK_DATABASE->GetMdbOper()
+#define DB_MASTER_TYPE SK_DATABASE->GetMasterType()
+#define DB_SLAVE_TYPE SK_DATABASE->GetSlaveType()
 
 typedef e_SDatabase_Type eSsp_Database_Type;
 

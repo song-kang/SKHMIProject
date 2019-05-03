@@ -1,0 +1,600 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{0797f28c-52a9-480e-8f5a-f8bce3b51ed4}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{d2422345-8c40-4161-865f-43d1c7fc991f}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Header Files\oe">
+      <UniqueIdentifier>{4674ca7c-2101-45a8-b2a3-7440e69a8783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\oe">
+      <UniqueIdentifier>{85c4a96b-7a88-484e-adea-ceb5116aa490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cim">
+      <UniqueIdentifier>{181b93d4-fd72-4077-8a51-04fac05f7a1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cim">
+      <UniqueIdentifier>{a85af9c2-70a9-4e18-bd48-04dd61c17ec0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\na">
+      <UniqueIdentifier>{a6bc8762-6809-4910-b6ef-d47ff964624f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\na">
+      <UniqueIdentifier>{716fb80e-ee6d-4401-8412-2964c52a2fea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\cim_substation.cpp">
+      <Filter>Source Files\cim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\na_comm_device_port.cpp">
+      <Filter>Source Files\na</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\na_sub_network.cpp">
+      <Filter>Source Files\na</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_cpu.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_element_general.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_element_input_extref.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_element_state.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_goose_ap.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_goose_ctrl_block.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_group.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_ied.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_ied_model.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_ied_model_version.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_ied_param.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_ied_physconn.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_mms_ap.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_run_device.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_smv_ap.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\oe_smv_ctrl_block.cpp">
+      <Filter>Source Files\oe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\datasetdelegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dbimportthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlgacksubstation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlggrouptype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlgimportwarntext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlgmanufacturer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlgsubnetwork.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\inputsthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\plugin_scl_import.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\scliedstablewidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\subnetworkdelegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\view_plugin_scl_import.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xmlobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xmlobjectprivate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xmlparsethread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_oms_hmi.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_datasetdelegate.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_datasetdelegate.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dbimportthread.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dbimportthread.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dlgacksubstation.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dlgacksubstation.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dlggrouptype.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dlggrouptype.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dlgimportwarntext.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dlgimportwarntext.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dlgmanufacturer.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dlgmanufacturer.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dlgsubnetwork.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dlgsubnetwork.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_inputsthread.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_inputsthread.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_scliedstablewidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_scliedstablewidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_subnetworkdelegate.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_subnetworkdelegate.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_view_plugin_scl_import.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_view_plugin_scl_import.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_xmlparsethread.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_xmlparsethread.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\oms_hmi.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\datasetdelegate.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dbimportthread.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dlgacksubstation.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dlggrouptype.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dlgimportwarntext.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dlgmanufacturer.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dlgsubnetwork.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\inputsthread.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\scliedstablewidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\subnetworkdelegate.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\view_plugin_scl_import.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\xmlparsethread.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\view_plugin_scl_import.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dlgacksubstation.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dlggrouptype.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dlgimportwarntext.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dlgmanufacturer.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\dlgsubnetwork.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Resources\image\seting.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\model.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\lamp.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\texture.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\eye.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\secne.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\vieweye.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\viewpoint.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\cancel.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\import.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\ok.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\preferences.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\remove.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\info_red.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\device.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\down.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\station.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\swap.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\up.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\reorder.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\reset.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\rsled.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\switch.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\recycling.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\cpu.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\add.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\new.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\save.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\pause.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\start.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\stop.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\color.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\link.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\point.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\call.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\query.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\time.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\database.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\visible.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\open.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\alert.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\debug.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\fatal.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\warning.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\script.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\root.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\printer.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\next.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\previous.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\after.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\before.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\edit.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\break.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\comment.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\condition.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\define.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\return.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\variable.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\bottom.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\scrollbar_bar_highlight.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\scrollbar_bar_normal.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\transformer.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\top.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\circuit.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\line.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\vip.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\generator.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\volt.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\image\wave.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\scl\initScl.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\scl\initDataTemplates.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\scl\initCim.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\Resources\scl\initTop.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\plugin_scl_import.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xmlobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xmlobjectprivate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cim_substation.h">
+      <Filter>Header Files\cim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\na_comm_device_port.h">
+      <Filter>Header Files\na</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\na_sub_network.h">
+      <Filter>Header Files\na</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_smv_ctrl_block.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_cpu.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_element_general.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_element_input_extref.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_element_state.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_goose_ap.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_goose_ctrl_block.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_group.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_ied.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_ied_model.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_ied_model_version.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_ied_param.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_ied_physconn.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_mms_ap.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_run_device.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oe_smv_ap.h">
+      <Filter>Header Files\oe</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_view_plugin_scl_import.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_dlgacksubstation.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_dlggrouptype.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_dlgimportwarntext.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_dlgmanufacturer.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_dlgsubnetwork.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

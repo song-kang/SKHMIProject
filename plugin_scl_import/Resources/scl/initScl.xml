@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SCL xmlns="http://www.iec.ch/61850/2003/SCL" xmlns:uk="http://www.wiscom.com.cn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.iec.ch/61850/2003/SCL SCL.xsd">
+  <Header id="运维网关机" nameStructure="IEDName" revision="0" toolID="oms_hmi" version="1"/>
+  <Substation desc="ToDo" name="ToDo"/>
+  <Communication/>
+</SCL>

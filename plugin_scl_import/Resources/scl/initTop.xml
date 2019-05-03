@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model timestmp="">
+  <header>
+    <systype>1</systype>
+    <sysname>uk9001</sysname>
+    <sysdomain>1</sysdomain>
+    <msgtype>1</msgtype>
+  </header>
+  <body>
+    <devices/>
+	<ip_subnets/>
+	<vlans/>
+	<relations/>
+	<delete_objects/>
+  </body>
+</model>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>view_plugin_scl_import</class>
+ <widget class="QWidget" name="view_plugin_scl_import">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>752</width>
+    <height>421</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SCL导入</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <property name="margin">
+    <number>3</number>
+   </property>
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="pushButton_reslove">
+           <property name="text">
+            <string>导入解析(&amp;R)</string>
+           </property>
+           <property name="icon">
+            <iconset resource="oms_hmi.qrc">
+             <normaloff>:/image/preferences</normaloff>:/image/preferences</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_path"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QWidget" name="widget_ieds" native="true">
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="SCLIedsTableWidget" name="tableWidget_ieds">
+          <column>
+           <property name="text">
+            <string>名称</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>描述</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>类型</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>制造厂商</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="checkBox_s1">
+            <property name="text">
+             <string>SMV访问点</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_g1">
+            <property name="text">
+             <string>GOOSE访问点</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_m1">
+            <property name="text">
+             <string>MMS访问点</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_desc">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QProgressBar" name="progressBar">
+            <property name="value">
+             <number>24</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_smart_import">
+            <property name="text">
+             <string>智能导入(&amp;S)</string>
+            </property>
+            <property name="icon">
+             <iconset resource="oms_hmi.qrc">
+              <normaloff>:/image/import</normaloff>:/image/import</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_import">
+            <property name="text">
+             <string>导入(&amp;I)</string>
+            </property>
+            <property name="icon">
+             <iconset resource="oms_hmi.qrc">
+              <normaloff>:/image/import</normaloff>:/image/import</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_abort">
+            <property name="text">
+             <string>中止(&amp;A)</string>
+            </property>
+            <property name="icon">
+             <iconset resource="oms_hmi.qrc">
+              <normaloff>:/image/remove</normaloff>:/image/remove</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>SCLIedsTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>scliedstablewidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="oms_hmi.qrc"/>
+ </resources>
+ <connections/>
+</ui>

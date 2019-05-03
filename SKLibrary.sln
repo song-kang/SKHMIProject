@@ -69,6 +69,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sys_watch", "sys_watch\sys_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SKWatch", "SKWatch\SKWatch.vcxproj", "{6601A792-1A32-44D0-A765-C4DEAC90BB09}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugin_scl_import", "plugin_scl_import\proj\win32-msvc2010\plugin_scl_import.vcxproj", "{BABEAE12-D3BE-4322-5060-201708100950}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -135,6 +137,10 @@ Global
 		{6601A792-1A32-44D0-A765-C4DEAC90BB09}.Debug|Win32.Build.0 = Debug|Win32
 		{6601A792-1A32-44D0-A765-C4DEAC90BB09}.Release|Win32.ActiveCfg = Release|Win32
 		{6601A792-1A32-44D0-A765-C4DEAC90BB09}.Release|Win32.Build.0 = Release|Win32
+		{BABEAE12-D3BE-4322-5060-201708100950}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BABEAE12-D3BE-4322-5060-201708100950}.Debug|Win32.Build.0 = Debug|Win32
+		{BABEAE12-D3BE-4322-5060-201708100950}.Release|Win32.ActiveCfg = Release|Win32
+		{BABEAE12-D3BE-4322-5060-201708100950}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

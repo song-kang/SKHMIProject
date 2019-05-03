@@ -14,13 +14,13 @@ bool CPlugin::Load(SString sPluginFile)
 		return false;
 	}
 
-	m_pPlugin_Init = (pFunPluginInit)GetProcAddress(m_hInstance, "PluginInit");
-	m_pPlugin_Exit = (pFunPluginExit)GetProcAddress(m_hInstance, "PluginExit");
-	m_pPlugin_NewView = (pFunPluginNewView)GetProcAddress(m_hInstance, "PluginNewView");
-	m_pPlugin_GetPluginVer = (pFunPluginGetPluginVer)GetProcAddress(m_hInstance, "PluginGetVer");
-	m_pPlugin_GetPluginName = (pFunPluginGetPluginName)GetProcAddress(m_hInstance, "PluginGetName");
-	m_pPlugin_GActSupported = (pFunPluginGActSupported)GetProcAddress(m_hInstance, "PluginGActSupported");
-	m_pPlugin_FunPointSupported = (pFunPluginFunPointSupported)GetProcAddress(m_hInstance, "PluginFunPointSupported");
+	m_pPlugin_Init = (pFunPluginInit)GetProcAddress(m_hInstance, "SSP_Init");
+	m_pPlugin_Exit = (pFunPluginExit)GetProcAddress(m_hInstance, "SSP_Exit");
+	m_pPlugin_NewView = (pFunPluginNewView)GetProcAddress(m_hInstance, "SSP_NewView");
+	m_pPlugin_GetPluginVer = (pFunPluginGetPluginVer)GetProcAddress(m_hInstance, "SSP_GetPluginVer");
+	m_pPlugin_GetPluginName = (pFunPluginGetPluginName)GetProcAddress(m_hInstance, "SSP_GetPluginName");
+	m_pPlugin_GActSupported = (pFunPluginGActSupported)GetProcAddress(m_hInstance, "SSP_GActSupported");
+	m_pPlugin_FunPointSupported = (pFunPluginFunPointSupported)GetProcAddress(m_hInstance, "SSP_FunPointSupported");
 
 #else
 	m_hInstance = dlopen(sPluginFile.data(),RTLD_LAZY);
@@ -36,43 +36,43 @@ bool CPlugin::Load(SString sPluginFile)
 		LOGWARN("º”‘ÿ≤Âº˛%s ß∞‹!",sPluginFile.data());
 		return false;
 	}
-	m_pPlugin_Init = (pFunPluginInit)dlsym(m_hInstance, "PluginInit");
+	m_pPlugin_Init = (pFunPluginInit)dlsym(m_hInstance, "SSP_Init");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;
 		LOGWARN("dlsym error:%s\n",pErr);
 	}
-	m_pPlugin_Exit = (pFunPluginExit)dlsym(m_hInstance, "PluginExit");
+	m_pPlugin_Exit = (pFunPluginExit)dlsym(m_hInstance, "SSP_Exit");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;
 		LOGWARN("dlsym error:%s\n",pErr);
 	}
-	m_pPlugin_GetPluginName = (pFunPluginGetPluginName)dlsym(m_hInstance, "PluginGetName");
+	m_pPlugin_GetPluginName = (pFunPluginGetPluginName)dlsym(m_hInstance, "SSP_GetPluginName");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;
 		LOGWARN("dlsym error:%s\n",pErr);
 	}
-	m_pPlugin_GetPluginVer = (pFunPluginGetPluginVer)dlsym(m_hInstance, "PluginGetVer");
+	m_pPlugin_GetPluginVer = (pFunPluginGetPluginVer)dlsym(m_hInstance, "SSP_GetPluginVer");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;
 		LOGWARN("dlsym error:%s\n",pErr);
 	}
-	m_pPlugin_FunPointSupported = (pFunPluginFunPointSupported)dlsym(m_hInstance, "PluginFunPointSupported");
+	m_pPlugin_FunPointSupported = (pFunPluginFunPointSupported)dlsym(m_hInstance, "SSP_FunPointSupported");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;
 		LOGWARN("dlsym error:%s\n",pErr);
 	}
-	m_pPlugin_NewView = (pFunPluginNewView)dlsym(m_hInstance, "PluginNewView");
+	m_pPlugin_NewView = (pFunPluginNewView)dlsym(m_hInstance, "SSP_NewView");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;
 		LOGWARN("dlsym error:%s\n",pErr);
 	}
-	m_pPlugin_GActSupported = (pFunPluginGActSupported)dlsym(m_hInstance, "PluginGActSupported");
+	m_pPlugin_GActSupported = (pFunPluginGActSupported)dlsym(m_hInstance, "SSP_GActSupported");
 	if ((pErr = dlerror()) != NULL)
 	{
 		err = true;

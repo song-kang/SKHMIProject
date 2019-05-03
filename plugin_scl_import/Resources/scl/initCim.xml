@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xml:base="WISCOM-UK" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cim="http://iec.ch/TC57/2003/CIM-schema-cim10#">
+  <cim:Substation rdf:ID="ToDo"/>
+</rdf:RDF>

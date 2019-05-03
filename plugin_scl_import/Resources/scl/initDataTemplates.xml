@@ -1,0 +1,3311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataTypeTemplates>
+    <LNodeType lnClass="LLN0" id="UK_LLN0" desc="逻辑节点零">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL_LN0" desc="铭牌"></DO>
+		<DO name="Loc" type="CN_SPS" desc="远方就地"/>
+	</LNodeType>
+	<LNodeType lnClass="LLN0" id="UK_LLN0_LD0" desc="逻辑节点零(LD0)">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL_LN0" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPS" name="Loc" desc="远方就地"></DO>
+		<DO type="CN_SPC_DC" name="LEDRs" desc="复归"></DO>
+		<DO type="CN_SPC_EX" name="RemSetEna" desc="远方修改定值"></DO>
+		<DO type="CN_SPC_EX" name="RemGoEna" desc="远方控制压板"></DO>
+		<DO type="CN_SPC_EX" name="RemSetGrpEna" desc="远方切换定值区"></DO>
+		<DO type="CN_SPC_EX" name="CBFlt" desc="事故总信号及人工复归"></DO>
+		<DO type="CN_SPS_EX" name="SelfRstCBFlt" desc="自复归事故总信号"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna1" desc="压板1"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna2" desc="压板2"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna3" desc="压板3"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna4" desc="压板4"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna5" desc="压板5"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna6" desc="压板6"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna7" desc="压板7"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna8" desc="压板8"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna9" desc="压板9"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna10" desc="压板10"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna11" desc="压板11"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna12" desc="压板12"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna13" desc="压板13"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna14" desc="压板14"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna15" desc="压板15"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna16" desc="压板16"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna17" desc="压板17"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna18" desc="压板18"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna19" desc="压板19"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna20" desc="压板20"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna21" desc="压板21"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna22" desc="压板22"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna23" desc="压板23"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna24" desc="压板24"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna25" desc="压板25"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna26" desc="压板26"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna27" desc="压板27"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna28" desc="压板28"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna29" desc="压板29"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna30" desc="压板30"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna31" desc="压板31"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna32" desc="压板32"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna33" desc="压板33"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna34" desc="压板27" ></DO>
+		<DO type="CN_SPC_EX" name="FuncEna35" desc="压板35"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna36" desc="压板36"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna37" desc="压板37"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna38" desc="压板38"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna39" desc="压板39"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna40" desc="压板40"></DO>
+	</LNodeType>
+	<LNodeType lnClass="LLN0" id="UK_LLN0_PROT" desc="逻辑节点零(保护)">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL_LN0" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPS" name="Loc" desc="远方就地"></DO>
+		<DO type="CN_SPC_DC" name="LEDRs" desc="复归"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna1" desc="压板1"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna2" desc="压板2"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna3" desc="压板3"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna4" desc="压板4"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna5" desc="压板5"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna6" desc="压板6"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna7" desc="压板7"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna8" desc="压板8"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna9" desc="压板9"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna10" desc="压板10"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna11" desc="压板11"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna12" desc="压板12"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna13" desc="压板13"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna14" desc="压板14"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna15" desc="压板15"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna16" desc="压板16"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna17" desc="压板17"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna18" desc="压板18"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna19" desc="压板19"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna20" desc="压板20"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna21" desc="压板21"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna22" desc="压板22"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna23" desc="压板23"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna24" desc="压板24"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna25" desc="压板25"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna26" desc="压板26"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna27" desc="压板27"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna28" desc="压板28"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna29" desc="压板29"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna30" desc="压板30"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna31" desc="压板31"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna32" desc="压板32"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna33" desc="压板33"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna34" desc="压板27"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna35" desc="压板35"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna36" desc="压板36"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna37" desc="压板37"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna38" desc="压板38"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna39" desc="压板39"></DO>
+		<DO type="CN_SPC_EX" name="FuncEna40" desc="压板40"></DO>
+		<DO type="CN_SPC_EX" name="TestEna" desc="检修压板"></DO>
+		<DO type="CN_SPC_EX" name="FuncSPRec" desc="单重压板"></DO>
+		<DO type="CN_SPC_EX" name="FuncTPRec" desc="三重压板"></DO>
+		<DO type="CN_SPC_EX" name="FuncZPRec" desc="综重压板"></DO>
+		<DO type="CN_SPC_EX" name="FuncStopRec" desc="重合闸停用压板"></DO>
+		<DO type="CN_SPC_EX" name="FuncRTrEna" desc="远跳投入压板"></DO>
+		<DO type="CN_SPC_EX" name="RemSetGrpEna" desc="远方切换定值区"></DO>
+		<DO type="CN_SPC_EX" name="RemSetEna" desc="远方修改定值"></DO>
+		<DO type="CN_SPC_EX" name="RemGoEna" desc="远方控制压板"></DO>
+		<DO type="CN_SPG_SG_EX" name="LinTVMod" desc="电压PT取自线路"></DO>
+		<DO type="CN_ING_SG_EX" name="KG1" desc="控制字1"></DO>
+		<DO type="CN_ING_SG_EX" name="KG2" desc="控制字2"></DO>
+		<DO type="CN_ING_SG_EX" name="KG3" desc="控制字3"></DO>
+		<DO type="CN_ING_SG_EX" name="KG4" desc="控制字4"></DO>
+		<DO type="CN_ING_SG_EX" name="KG5" desc="控制字5"></DO>
+		<DO type="CN_ING_SG_EX" name="KG6" desc="控制字6"></DO>
+		<DO type="CN_ING_SG_EX" name="KG8" desc="控制字8"></DO>
+		<DO type="CN_ING_SG_EX" name="KG9" desc="控制字9"></DO>
+		<DO type="CN_ING_SG_EX" name="KG10" desc="控制字10"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable1" desc="投入1"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable2" desc="投入2"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable3" desc="投入3"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable4" desc="投入4"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable5" desc="投入5"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable6" desc="投入6"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable7" desc="投入7"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable8" desc="投入8"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable9" desc="投入9"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable10" desc="投入10"></DO>
+		<DO type="CN_ASG_SG_EX" name="DPFCStr" desc="变化量启动电流定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="ROCStr" desc="零序启动电流定值"></DO>
+		<DO type="CN_ING_SG_EX" name="SetZone" desc="定值区号"></DO>
+		<DO type="CN_STG_SG_EX" name="DevName" desc="被保护设备"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT1" desc="CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT2" desc="CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L1CT1" desc="支路1CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L1CT2" desc="支路1CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L2CT1" desc="支路2CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L2CT2" desc="支路2CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L3CT1" desc="支路3CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L3CT2" desc="支路3CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L4CT1" desc="支路4CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L4CT2" desc="支路4CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L5CT1" desc="支路5CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L5CT2" desc="支路5CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L6CT1" desc="支路6CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L6CT2" desc="支路6CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L7CT1" desc="支路7CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L7CT2" desc="支路7CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L8CT1" desc="支路8CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L8CT2" desc="支路8CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L9CT1" desc="支路9CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L9CT2" desc="支路9CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L10CT1" desc="支路10CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L10CT2" desc="支路10CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L11CT1" desc="支路11CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L11CT2" desc="支路11CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L12CT1" desc="支路12CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L12CT2" desc="支路12CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L13CT1" desc="支路13CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L13CT2" desc="支路13CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L14CT1" desc="支路14CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L14CT2" desc="支路14CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L15CT1" desc="支路15CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L15CT2" desc="支路15CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L16CT1" desc="支路16CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L16CT2" desc="支路16CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L17CT1" desc="支路17CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L17CT2" desc="支路17CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L18CT1" desc="支路18CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L18CT2" desc="支路18CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L19CT1" desc="支路19CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L19CT2" desc="支路19CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L20CT1" desc="支路20CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="L20CT2" desc="支路20CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="PT" desc="PT变比"></DO>
+		<DO type="CN_ASG_SG_EX" name="SnHM" desc="主变高中压侧额定容量"></DO>
+		<DO type="CN_ASG_SG_EX" name="SnH" desc="主变高压侧额定容量"></DO>
+		<DO type="CN_ASG_SG_EX" name="SnM" desc="主变中压侧额定容量"></DO>
+		<DO type="CN_ASG_SG_EX" name="SnL" desc="主变低压侧额定容量"></DO>
+		<DO type="CN_ASG_SG_EX" name="UnH" desc="高压侧额定电压"></DO>
+		<DO type="CN_ASG_SG_EX" name="UnM" desc="中压侧额定电压"></DO>
+		<DO type="CN_ASG_SG_EX" name="UnL" desc="低压侧额定电压"></DO>
+		<DO type="CN_ASG_SG_EX" name="PTH" desc="高压侧PT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="PTM" desc="中压侧PT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="PTL" desc="低压侧PT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT1H" desc="高压侧CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT2H" desc="高压侧CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT1M" desc="中压侧CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT2M" desc="中压侧CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT1L1" desc="低压侧外附CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT2L1" desc="低压侧外附CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT1L2" desc="低压侧套管CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT2L2" desc="低压侧套管CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT1G" desc="公共绕组CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT2G" desc="公共绕组CT二次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT1Zg" desc="中性点零序CT一次值"></DO>
+		<DO type="CN_ASG_SG_EX" name="CT2Zg" desc="中性点零序CT二次值"></DO>
+		<DO type="CN_SPC_EX" name="CBFlt" desc="事故总信号及人工复归"></DO>
+		<DO type="CN_SPS_EX" name="SelfRstCBFlt" desc="自复归事故总信号"></DO>
+		<DO type="CN_SPS_EX" name="EvtSig" desc="事故总信号"></DO>
+		<DO type="CN_SPS_EX" name="AlmSig" desc="告警总信号"></DO>
+		<DO type="CN_SPS_EX" name="WarSig" desc="呼唤总信号"></DO>
+	</LNodeType>
+	<LNodeType lnClass="LPHD" id="UK_LPHD" desc="物理装置信息">
+		<DO name="PhyNam" type="CN_DPL" desc="物理装置铭牌"></DO>
+		<DO name="PhyHealth" type="CN_INS" desc="物理装置健康状况"></DO>
+		<DO name="Proxy" type="CN_SPS" desc="说明该逻辑节点是否为代理"></DO>
+	</LNodeType>
+	<LNodeType lnClass="GGIO" id="UK_GGIO_War" desc="呼唤">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPS" name="Alm1" desc="呼唤1"></DO>
+		<DO type="CN_SPS" name="Alm2" desc="呼唤2"></DO>
+		<DO type="CN_SPS" name="Alm3" desc="呼唤3"></DO>
+		<DO type="CN_SPS" name="Alm4" desc="呼唤4"></DO>
+		<DO type="CN_SPS" name="Alm5" desc="呼唤5"></DO>
+		<DO type="CN_SPS" name="Alm6" desc="呼唤6"></DO>
+		<DO type="CN_SPS" name="Alm7" desc="呼唤7"></DO>
+		<DO type="CN_SPS" name="Alm8" desc="呼唤8"></DO>
+		<DO type="CN_SPS" name="Alm9" desc="呼唤9"></DO>
+		<DO type="CN_SPS" name="Alm10" desc="呼唤10"></DO>
+		<DO type="CN_SPS" name="Alm11" desc="呼唤11"></DO>
+		<DO type="CN_SPS" name="Alm12" desc="呼唤12"></DO>
+		<DO type="CN_SPS" name="Alm13" desc="呼唤13"></DO>
+		<DO type="CN_SPS" name="Alm14" desc="呼唤14"></DO>
+		<DO type="CN_SPS" name="Alm15" desc="呼唤15"></DO>
+		<DO type="CN_SPS" name="Alm16" desc="呼唤16"></DO>
+		<DO type="CN_SPS" name="Alm17" desc="呼唤17"></DO>
+		<DO type="CN_SPS" name="Alm18" desc="呼唤18"></DO>
+		<DO type="CN_SPS" name="Alm19" desc="呼唤19"></DO>
+		<DO type="CN_SPS" name="Alm20" desc="呼唤20"></DO>
+		<DO type="CN_SPS" name="Alm21" desc="呼唤21"></DO>
+		<DO type="CN_SPS" name="Alm22" desc="呼唤22"></DO>
+		<DO type="CN_SPS" name="Alm23" desc="呼唤23"></DO>
+		<DO type="CN_SPS" name="Alm24" desc="呼唤24"></DO>
+		<DO type="CN_SPS" name="Alm25" desc="呼唤25"></DO>
+		<DO type="CN_SPS" name="Alm26" desc="呼唤26"></DO>
+		<DO type="CN_SPS" name="Alm27" desc="呼唤27"></DO>
+		<DO type="CN_SPS" name="Alm28" desc="呼唤28"></DO>
+		<DO type="CN_SPS" name="Alm29" desc="呼唤29"></DO>
+		<DO type="CN_SPS" name="Alm30" desc="呼唤30"></DO>
+		<DO type="CN_SPS" name="Alm31" desc="呼唤31"></DO>
+		<DO type="CN_SPS" name="Alm32" desc="呼唤32"></DO>
+		<DO type="CN_SPS" name="Alm33" desc="呼唤33"></DO>
+		<DO type="CN_SPS" name="Alm34" desc="呼唤34"></DO>
+		<DO type="CN_SPS" name="Alm35" desc="呼唤35"></DO>
+		<DO type="CN_SPS" name="Alm36" desc="呼唤36"></DO>
+		<DO type="CN_SPS" name="Alm37" desc="呼唤37"></DO>
+		<DO type="CN_SPS" name="Alm38" desc="呼唤38"></DO>
+		<DO type="CN_SPS" name="Alm39" desc="呼唤39"></DO>
+		<DO type="CN_SPS" name="Alm40" desc="呼唤40"></DO>
+		<DO type="CN_SPS" name="Alm41" desc="呼唤41"></DO>
+		<DO type="CN_SPS" name="Alm42" desc="呼唤42"></DO>
+		<DO type="CN_SPS" name="Alm43" desc="呼唤43"></DO>
+		<DO type="CN_SPS" name="Alm44" desc="呼唤44"></DO>
+		<DO type="CN_SPS" name="Alm45" desc="呼唤45"></DO>
+		<DO type="CN_SPS" name="Alm46" desc="呼唤46"></DO>
+		<DO type="CN_SPS" name="Alm47" desc="呼唤47"></DO>
+		<DO type="CN_SPS" name="Alm48" desc="呼唤48"></DO>
+		<DO type="CN_SPS" name="Alm49" desc="呼唤49"></DO>
+		<DO type="CN_SPS" name="Alm50" desc="呼唤50"></DO>
+	</LNodeType>
+	<LNodeType lnClass="GGIO" id="UK_GGIO_GOAlm" desc="GOOSE告警">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPS" name="Alm1" desc="告警1"></DO>
+		<DO type="CN_SPS" name="Alm2" desc="告警2"></DO>
+		<DO type="CN_SPS" name="Alm3" desc="告警3"></DO>
+		<DO type="CN_SPS" name="Alm4" desc="告警4"></DO>
+		<DO type="CN_SPS" name="Alm5" desc="告警5"></DO>
+		<DO type="CN_SPS" name="Alm6" desc="告警6"></DO>
+		<DO type="CN_SPS" name="Alm7" desc="告警7"></DO>
+		<DO type="CN_SPS" name="Alm8" desc="告警8"></DO>
+		<DO type="CN_SPS" name="Alm9" desc="告警9"></DO>
+		<DO type="CN_SPS" name="Alm10" desc="告警10"></DO>
+		<DO type="CN_SPS" name="Alm11" desc="告警11"></DO>
+		<DO type="CN_SPS" name="Alm12" desc="告警12"></DO>
+		<DO type="CN_SPS" name="Alm13" desc="告警13"></DO>
+		<DO type="CN_SPS" name="Alm14" desc="告警14"></DO>
+		<DO type="CN_SPS" name="Alm15" desc="告警15"></DO>
+		<DO type="CN_SPS" name="Alm16" desc="告警16"></DO>
+		<DO type="CN_SPS" name="Alm17" desc="告警17"></DO>
+		<DO type="CN_SPS" name="Alm18" desc="告警18"></DO>
+		<DO type="CN_SPS" name="Alm19" desc="告警19"></DO>
+		<DO type="CN_SPS" name="Alm20" desc="告警20"></DO>
+		<DO type="CN_SPS" name="Alm21" desc="告警21"></DO>
+		<DO type="CN_SPS" name="Alm22" desc="告警22"></DO>
+		<DO type="CN_SPS" name="Alm23" desc="告警23"></DO>
+		<DO type="CN_SPS" name="Alm24" desc="告警24"></DO>
+		<DO type="CN_SPS" name="Alm25" desc="告警25"></DO>
+		<DO type="CN_SPS" name="Alm26" desc="告警26"></DO>
+		<DO type="CN_SPS" name="Alm27" desc="告警27"></DO>
+		<DO type="CN_SPS" name="Alm28" desc="告警28"></DO>
+		<DO type="CN_SPS" name="Alm29" desc="告警29"></DO>
+		<DO type="CN_SPS" name="Alm30" desc="告警30"></DO>
+		<DO type="CN_SPS" name="Alm31" desc="告警31"></DO>
+		<DO type="CN_SPS" name="Alm32" desc="告警32"></DO>
+		<DO type="CN_SPS" name="Alm33" desc="告警33"></DO>
+		<DO type="CN_SPS" name="Alm34" desc="告警34"></DO>
+		<DO type="CN_SPS" name="Alm35" desc="告警35"></DO>
+		<DO type="CN_SPS" name="Alm36" desc="告警36"></DO>
+		<DO type="CN_SPS" name="Alm37" desc="告警37"></DO>
+		<DO type="CN_SPS" name="Alm38" desc="告警38"></DO>
+		<DO type="CN_SPS" name="Alm39" desc="告警39"></DO>
+		<DO type="CN_SPS" name="Alm40" desc="告警40"></DO>
+		<DO type="CN_SPS" name="Alm41" desc="告警41"></DO>
+		<DO type="CN_SPS" name="Alm42" desc="告警42"></DO>
+		<DO type="CN_SPS" name="Alm43" desc="告警43"></DO>
+		<DO type="CN_SPS" name="Alm44" desc="告警44"></DO>
+		<DO type="CN_SPS" name="Alm45" desc="告警45"></DO>
+		<DO type="CN_SPS" name="Alm46" desc="告警46"></DO>
+		<DO type="CN_SPS" name="Alm47" desc="告警47"></DO>
+		<DO type="CN_SPS" name="Alm48" desc="告警48"></DO>
+		<DO type="CN_SPS" name="Alm49" desc="告警49"></DO>
+		<DO type="CN_SPS" name="Alm50" desc="告警50"></DO>
+	</LNodeType>
+	<LNodeType lnClass="GGIO" id="UK_GGIO_Set" desc="保护定值">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet1" desc="整数定值1"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet2" desc="整数定值2"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet3" desc="整数定值3"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet4" desc="整数定值4"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet5" desc="整数定值5"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet6" desc="整数定值6"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet7" desc="整数定值7"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet8" desc="整数定值8"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet9" desc="整数定值9"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet10" desc="整数定值10"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet11" desc="整数定值11"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet12" desc="整数定值12"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet13" desc="整数定值13"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet14" desc="整数定值14"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet15" desc="整数定值15"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet16" desc="整数定值16"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet17" desc="整数定值17"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet18" desc="整数定值18"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet19" desc="整数定值19"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet20" desc="整数定值20"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet21" desc="整数定值21"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet22" desc="整数定值22"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet23" desc="整数定值23"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet24" desc="整数定值24"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet25" desc="整数定值25"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet26" desc="整数定值26"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet27" desc="整数定值27"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet28" desc="整数定值28"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet29" desc="整数定值29"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet30" desc="整数定值30"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet31" desc="整数定值31"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet32" desc="整数定值32"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet33" desc="整数定值33"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet34" desc="整数定值34"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet35" desc="整数定值35"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet36" desc="整数定值36"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet37" desc="整数定值37"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet38" desc="整数定值38"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet39" desc="整数定值39"></DO>
+		<DO type="CN_ING_SG_EX" name="IngSet40" desc="整数定值40"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet1Tmms" desc="时间定值1"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet2Tmms" desc="时间定值2"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet3Tmms" desc="时间定值3"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet4Tmms" desc="时间定值4"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet5Tmms" desc="时间定值5"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet6Tmms" desc="时间定值6"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet7Tmms" desc="时间定值7"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet8Tmms" desc="时间定值8"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet9Tmms" desc="时间定值9"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet10Tmms" desc="时间定值10"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet11Tmms" desc="时间定值11"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet12Tmms" desc="时间定值12"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet13Tmms" desc="时间定值13"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet14Tmms" desc="时间定值14"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet15Tmms" desc="时间定值15"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet16Tmms" desc="时间定值16"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet17Tmms" desc="时间定值17"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet18Tmms" desc="时间定值18"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet19Tmms" desc="时间定值19"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet20Tmms" desc="时间定值20"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet21Tmms" desc="时间定值21"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet22Tmms" desc="时间定值22"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet23Tmms" desc="时间定值23"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet24Tmms" desc="时间定值24"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet25Tmms" desc="时间定值25"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet26Tmms" desc="时间定值26"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet27Tmms" desc="时间定值27"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet28Tmms" desc="时间定值28"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet29Tmms" desc="时间定值29"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet30Tmms" desc="时间定值30"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet31Tmms" desc="时间定值31"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet32Tmms" desc="时间定值32"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet33Tmms" desc="时间定值33"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet34Tmms" desc="时间定值34"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet35Tmms" desc="时间定值35"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet36Tmms" desc="时间定值36"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet37Tmms" desc="时间定值37"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet38Tmms" desc="时间定值38"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet39Tmms" desc="时间定值39"></DO>
+		<DO type="CN_ING_SG_EX" name="TmSet40Tmms" desc="时间定值40"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet1" desc="浮点定值1"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet2" desc="浮点定值2"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet3" desc="浮点定值3"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet4" desc="浮点定值4"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet5" desc="浮点定值5"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet6" desc="浮点定值6"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet7" desc="浮点定值7"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet8" desc="浮点定值8"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet9" desc="浮点定值9"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet10" desc="浮点定值10"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet11" desc="浮点定值11"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet12" desc="浮点定值12"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet13" desc="浮点定值13"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet14" desc="浮点定值14"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet15" desc="浮点定值15"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet16" desc="浮点定值16"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet17" desc="浮点定值17"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet18" desc="浮点定值18"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet19" desc="浮点定值19"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet20" desc="浮点定值20"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet21" desc="浮点定值21"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet22" desc="浮点定值22"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet23" desc="浮点定值23"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet24" desc="浮点定值24"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet25" desc="浮点定值25"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet26" desc="浮点定值26"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet27" desc="浮点定值27"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet28" desc="浮点定值28"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet29" desc="浮点定值29"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet30" desc="浮点定值30"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet31" desc="浮点定值31"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet32" desc="浮点定值32"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet33" desc="浮点定值33"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet34" desc="浮点定值34"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet35" desc="浮点定值35"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet36" desc="浮点定值36"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet37" desc="浮点定值37"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet38" desc="浮点定值38"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet39" desc="浮点定值39"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet40" desc="浮点定值40"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet41" desc="浮点定值41"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet42" desc="浮点定值42"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet43" desc="浮点定值43"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet44" desc="浮点定值44"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet45" desc="浮点定值45"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet46" desc="浮点定值46"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet47" desc="浮点定值47"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet48" desc="浮点定值48"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet49" desc="浮点定值49"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet50" desc="浮点定值50"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet51" desc="浮点定值51"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet52" desc="浮点定值52"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet53" desc="浮点定值53"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet54" desc="浮点定值54"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet55" desc="浮点定值55"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet56" desc="浮点定值56"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet57" desc="浮点定值57"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet58" desc="浮点定值58"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet59" desc="浮点定值59"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet60" desc="浮点定值60"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet61" desc="浮点定值61"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet62" desc="浮点定值62"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet63" desc="浮点定值63"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet64" desc="浮点定值64"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet65" desc="浮点定值65"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet66" desc="浮点定值66"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet67" desc="浮点定值67"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet68" desc="浮点定值68"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet69" desc="浮点定值69"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet70" desc="浮点定值70"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet71" desc="浮点定值71"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet72" desc="浮点定值72"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet73" desc="浮点定值73"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet74" desc="浮点定值74"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet75" desc="浮点定值75"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet76" desc="浮点定值76"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet77" desc="浮点定值77"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet78" desc="浮点定值78"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet79" desc="浮点定值79"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet80" desc="浮点定值80"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet81" desc="浮点定值81"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet82" desc="浮点定值82"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet83" desc="浮点定值83"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet84" desc="浮点定值84"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet85" desc="浮点定值85"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet86" desc="浮点定值86"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet87" desc="浮点定值87"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet88" desc="浮点定值88"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet89" desc="浮点定值89"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet90" desc="浮点定值90"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet91" desc="浮点定值91"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet92" desc="浮点定值92"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet93" desc="浮点定值93"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet94" desc="浮点定值94"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet95" desc="浮点定值95"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet96" desc="浮点定值96"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet97" desc="浮点定值97"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet98" desc="浮点定值98"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet99" desc="浮点定值99"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet100" desc="浮点定值100"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet101" desc="浮点定值101"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet102" desc="浮点定值102"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet103" desc="浮点定值103"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet104" desc="浮点定值104"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet105" desc="浮点定值105"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet106" desc="浮点定值106"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet107" desc="浮点定值107"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet108" desc="浮点定值108"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet109" desc="浮点定值109"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet110" desc="浮点定值110"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet111" desc="浮点定值111"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet112" desc="浮点定值112"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet113" desc="浮点定值113"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet114" desc="浮点定值114"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet115" desc="浮点定值115"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet116" desc="浮点定值116"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet117" desc="浮点定值117"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet118" desc="浮点定值118"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet119" desc="浮点定值119"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet120" desc="浮点定值120"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet121" desc="浮点定值121"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet122" desc="浮点定值122"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet123" desc="浮点定值123"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet124" desc="浮点定值124"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet125" desc="浮点定值125"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet126" desc="浮点定值126"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet127" desc="浮点定值127"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet128" desc="浮点定值128"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet129" desc="浮点定值129"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet130" desc="浮点定值130"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet131" desc="浮点定值131"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet132" desc="浮点定值132"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet133" desc="浮点定值133"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet134" desc="浮点定值134"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet135" desc="浮点定值135"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet136" desc="浮点定值136"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet137" desc="浮点定值137"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet138" desc="浮点定值138"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet139" desc="浮点定值139"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet140" desc="浮点定值140"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet141" desc="浮点定值141"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet142" desc="浮点定值142"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet143" desc="浮点定值143"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet144" desc="浮点定值144"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet145" desc="浮点定值145"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet146" desc="浮点定值146"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet147" desc="浮点定值147"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet148" desc="浮点定值148"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet149" desc="浮点定值149"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet150" desc="浮点定值150"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet151" desc="浮点定值151"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet152" desc="浮点定值152"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet153" desc="浮点定值153"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet154" desc="浮点定值154"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet155" desc="浮点定值155"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet156" desc="浮点定值156"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet157" desc="浮点定值157"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet158" desc="浮点定值158"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet159" desc="浮点定值159"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet160" desc="浮点定值160"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet161" desc="浮点定值161"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet162" desc="浮点定值162"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet163" desc="浮点定值163"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet164" desc="浮点定值164"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet165" desc="浮点定值165"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet166" desc="浮点定值166"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet167" desc="浮点定值167"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet168" desc="浮点定值168"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet169" desc="浮点定值169"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet170" desc="浮点定值170"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet171" desc="浮点定值171"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet172" desc="浮点定值172"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet173" desc="浮点定值173"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet174" desc="浮点定值174"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet175" desc="浮点定值175"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet176" desc="浮点定值176"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet177" desc="浮点定值177"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet178" desc="浮点定值178"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet179" desc="浮点定值179"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet180" desc="浮点定值180"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet181" desc="浮点定值181"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet182" desc="浮点定值182"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet183" desc="浮点定值183"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet184" desc="浮点定值184"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet185" desc="浮点定值185"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet186" desc="浮点定值186"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet187" desc="浮点定值187"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet188" desc="浮点定值188"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet189" desc="浮点定值189"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet190" desc="浮点定值190"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet191" desc="浮点定值191"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet192" desc="浮点定值192"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet193" desc="浮点定值193"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet194" desc="浮点定值194"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet195" desc="浮点定值195"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet196" desc="浮点定值196"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet197" desc="浮点定值197"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet198" desc="浮点定值198"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet199" desc="浮点定值199"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet200" desc="浮点定值200"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet201" desc="浮点定值201"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet202" desc="浮点定值202"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet203" desc="浮点定值203"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet204" desc="浮点定值204"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet205" desc="浮点定值205"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet206" desc="浮点定值206"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet207" desc="浮点定值207"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet208" desc="浮点定值208"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet209" desc="浮点定值209"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet210" desc="浮点定值210"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet211" desc="浮点定值211"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet212" desc="浮点定值212"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet213" desc="浮点定值213"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet214" desc="浮点定值214"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet215" desc="浮点定值215"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet216" desc="浮点定值216"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet217" desc="浮点定值217"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet218" desc="浮点定值218"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet219" desc="浮点定值219"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet220" desc="浮点定值220"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet221" desc="浮点定值221"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet222" desc="浮点定值222"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet223" desc="浮点定值223"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet224" desc="浮点定值224"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet225" desc="浮点定值225"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet226" desc="浮点定值226"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet227" desc="浮点定值227"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet228" desc="浮点定值228"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet229" desc="浮点定值229"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet230" desc="浮点定值230"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet231" desc="浮点定值231"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet232" desc="浮点定值232"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet233" desc="浮点定值233"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet234" desc="浮点定值234"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet235" desc="浮点定值235"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet236" desc="浮点定值236"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet237" desc="浮点定值237"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet238" desc="浮点定值238"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet239" desc="浮点定值239"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet240" desc="浮点定值240"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet241" desc="浮点定值241"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet242" desc="浮点定值242"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet243" desc="浮点定值243"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet244" desc="浮点定值244"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet245" desc="浮点定值245"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet246" desc="浮点定值246"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet247" desc="浮点定值247"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet248" desc="浮点定值248"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet249" desc="浮点定值249"></DO>
+		<DO type="CN_ASG_SG_EX" name="AsgSet250" desc="浮点定值250"></DO>	
+		<DO type="CN_SPG_SG_EX" name="SpgSet1" desc="状态定值1"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet2" desc="状态定值2"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet3" desc="状态定值3"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet4" desc="状态定值4"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet5" desc="状态定值5"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet6" desc="状态定值6"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet7" desc="状态定值7"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet8" desc="状态定值8"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet9" desc="状态定值9"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet10" desc="状态定值10"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet11" desc="状态定值11"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet12" desc="状态定值12"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet13" desc="状态定值13"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet14" desc="状态定值14"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet15" desc="状态定值15"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet16" desc="状态定值16"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet17" desc="状态定值17"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet18" desc="状态定值18"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet19" desc="状态定值19"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet20" desc="状态定值20"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet21" desc="状态定值21"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet22" desc="状态定值22"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet23" desc="状态定值23"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet24" desc="状态定值24"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet25" desc="状态定值25"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet26" desc="状态定值26"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet27" desc="状态定值27"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet28" desc="状态定值28"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet29" desc="状态定值29"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet30" desc="状态定值30"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet31" desc="状态定值31"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet32" desc="状态定值32"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet33" desc="状态定值33"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet34" desc="状态定值34"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet35" desc="状态定值35"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet36" desc="状态定值36"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet37" desc="状态定值37"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet38" desc="状态定值38"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet39" desc="状态定值39"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpgSet40" desc="状态定值40"></DO>
+	</LNodeType>
+	<LNodeType lnClass="GGIO" id="UK_GGIO_Evt" desc="保护动作">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPS" name="Ind1" desc="动作1"></DO>
+		<DO type="CN_SPS" name="Ind2" desc="动作2"></DO>
+		<DO type="CN_SPS" name="Ind3" desc="动作3"></DO>
+		<DO type="CN_SPS" name="Ind4" desc="动作4"></DO>
+		<DO type="CN_SPS" name="Ind5" desc="动作5"></DO>
+		<DO type="CN_SPS" name="Ind6" desc="动作6"></DO>
+		<DO type="CN_SPS" name="Ind7" desc="动作7"></DO>
+		<DO type="CN_SPS" name="Ind8" desc="动作8"></DO>
+		<DO type="CN_SPS" name="Ind9" desc="动作9"></DO>
+		<DO type="CN_SPS" name="Ind10" desc="动作10"></DO>
+		<DO type="CN_SPS" name="Ind11" desc="动作11"></DO>
+		<DO type="CN_SPS" name="Ind12" desc="动作12"></DO>
+		<DO type="CN_SPS" name="Ind13" desc="动作13"></DO>
+		<DO type="CN_SPS" name="Ind14" desc="动作14"></DO>
+		<DO type="CN_SPS" name="Ind15" desc="动作15"></DO>
+		<DO type="CN_SPS" name="Ind16" desc="动作16"></DO>
+		<DO type="CN_SPS" name="Ind17" desc="动作17"></DO>
+		<DO type="CN_SPS" name="Ind18" desc="动作18"></DO>
+		<DO type="CN_SPS" name="Ind19" desc="动作19"></DO>
+		<DO type="CN_SPS" name="Ind20" desc="动作20"></DO>
+		<DO type="CN_SPS" name="Ind21" desc="动作21"></DO>
+		<DO type="CN_SPS" name="Ind22" desc="动作22"></DO>
+		<DO type="CN_SPS" name="Ind23" desc="动作23"></DO>
+		<DO type="CN_SPS" name="Ind24" desc="动作24"></DO>
+		<DO type="CN_SPS" name="Ind25" desc="动作25"></DO>
+		<DO type="CN_SPS" name="Ind26" desc="动作26"></DO>
+		<DO type="CN_SPS" name="Ind27" desc="动作27"></DO>
+		<DO type="CN_SPS" name="Ind28" desc="动作28"></DO>
+		<DO type="CN_SPS" name="Ind29" desc="动作29"></DO>
+		<DO type="CN_SPS" name="Ind30" desc="动作30"></DO>
+		<DO type="CN_SPS" name="Ind31" desc="动作31"></DO>
+		<DO type="CN_SPS" name="Ind32" desc="动作32"></DO>
+		<DO type="CN_SPS" name="Ind33" desc="动作33"></DO>
+		<DO type="CN_SPS" name="Ind34" desc="动作34"></DO>
+		<DO type="CN_SPS" name="Ind35" desc="动作35"></DO>
+		<DO type="CN_SPS" name="Ind36" desc="动作36"></DO>
+		<DO type="CN_SPS" name="Ind37" desc="动作37"></DO>
+		<DO type="CN_SPS" name="Ind38" desc="动作38"></DO>
+		<DO type="CN_SPS" name="Ind39" desc="动作39"></DO>
+		<DO type="CN_SPS" name="Ind40" desc="动作40"></DO>
+		<DO type="CN_SPS" name="Ind41" desc="动作41"></DO>
+		<DO type="CN_SPS" name="Ind42" desc="动作42"></DO>
+		<DO type="CN_SPS" name="Ind43" desc="动作43"></DO>
+		<DO type="CN_SPS" name="Ind44" desc="动作44"></DO>
+		<DO type="CN_SPS" name="Ind45" desc="动作45"></DO>
+		<DO type="CN_SPS" name="Ind46" desc="动作46"></DO>
+		<DO type="CN_SPS" name="Ind47" desc="动作47"></DO>
+		<DO type="CN_SPS" name="Ind48" desc="动作48"></DO>
+		<DO type="CN_SPS" name="Ind49" desc="动作49"></DO>
+		<DO type="CN_SPS" name="Ind50" desc="动作50"></DO>
+		<DO type="CN_SPS" name="Ind51" desc="动作51"></DO>
+		<DO type="CN_SPS" name="Ind52" desc="动作52"></DO>
+		<DO type="CN_SPS" name="Ind53" desc="动作53"></DO>
+		<DO type="CN_SPS" name="Ind54" desc="动作54"></DO>
+		<DO type="CN_SPS" name="Ind55" desc="动作55"></DO>
+		<DO type="CN_SPS" name="Ind56" desc="动作56"></DO>
+		<DO type="CN_SPS" name="Ind57" desc="动作57"></DO>
+		<DO type="CN_SPS" name="Ind58" desc="动作58"></DO>
+		<DO type="CN_SPS" name="Ind59" desc="动作59"></DO>
+		<DO type="CN_SPS" name="Ind60" desc="动作60"></DO>
+		<DO type="CN_SPS" name="Ind61" desc="动作61"></DO>
+		<DO type="CN_SPS" name="Ind62" desc="动作62"></DO>
+		<DO type="CN_SPS" name="Ind63" desc="动作63"></DO>
+		<DO type="CN_SPS" name="Ind64" desc="动作64"></DO>
+		<DO type="CN_SPS" name="Ind65" desc="动作65"></DO>
+		<DO type="CN_SPS" name="Ind66" desc="动作66"></DO>
+		<DO type="CN_SPS" name="Ind67" desc="动作67"></DO>
+		<DO type="CN_SPS" name="Ind68" desc="动作68"></DO>
+		<DO type="CN_SPS" name="Ind69" desc="动作69"></DO>
+		<DO type="CN_SPS" name="Ind70" desc="动作70"></DO>
+		<DO type="CN_SPS" name="Ind71" desc="动作71"></DO>
+		<DO type="CN_SPS" name="Ind72" desc="动作72"></DO>
+		<DO type="CN_SPS" name="Ind73" desc="动作73"></DO>
+		<DO type="CN_SPS" name="Ind74" desc="动作74"></DO>
+		<DO type="CN_SPS" name="Ind75" desc="动作75"></DO>
+		<DO type="CN_SPS" name="Ind76" desc="动作76"></DO>
+		<DO type="CN_SPS" name="Ind77" desc="动作77"></DO>
+		<DO type="CN_SPS" name="Ind78" desc="动作78"></DO>
+		<DO type="CN_SPS" name="Ind79" desc="动作79"></DO>
+		<DO type="CN_SPS" name="Ind80" desc="动作80"></DO>
+		<DO type="CN_SPS" name="Ind81" desc="动作81"></DO>
+		<DO type="CN_SPS" name="Ind82" desc="动作82"></DO>
+		<DO type="CN_SPS" name="Ind83" desc="动作83"></DO>
+		<DO type="CN_SPS" name="Ind84" desc="动作84"></DO>
+		<DO type="CN_SPS" name="Ind85" desc="动作85"></DO>
+		<DO type="CN_SPS" name="Ind86" desc="动作86"></DO>
+		<DO type="CN_SPS" name="Ind87" desc="动作87"></DO>
+		<DO type="CN_SPS" name="Ind88" desc="动作88"></DO>
+		<DO type="CN_SPS" name="Ind89" desc="动作89"></DO>
+		<DO type="CN_SPS" name="Ind90" desc="动作90"></DO>
+		<DO type="CN_SPS" name="Ind91" desc="动作91"></DO>
+		<DO type="CN_SPS" name="Ind92" desc="动作92"></DO>
+		<DO type="CN_SPS" name="Ind93" desc="动作93"></DO>
+		<DO type="CN_SPS" name="Ind94" desc="动作94"></DO>
+		<DO type="CN_SPS" name="Ind95" desc="动作95"></DO>
+		<DO type="CN_SPS" name="Ind96" desc="动作96"></DO>
+		<DO type="CN_SPS" name="Ind97" desc="动作97"></DO>
+		<DO type="CN_SPS" name="Ind98" desc="动作98"></DO>
+		<DO type="CN_SPS" name="Ind99" desc="动作99"></DO>
+		<DO type="CN_SPS" name="Ind100" desc="动作100"></DO>
+		<DO type="CN_SPS" name="Ind101" desc="动作101"></DO>
+		<DO type="CN_SPS" name="Ind102" desc="动作102"></DO>
+		<DO type="CN_SPS" name="Ind103" desc="动作103"></DO>
+		<DO type="CN_SPS" name="Ind104" desc="动作104"></DO>
+		<DO type="CN_SPS" name="Ind105" desc="动作105"></DO>
+		<DO type="CN_SPS" name="Ind106" desc="动作106"></DO>
+		<DO type="CN_SPS" name="Ind107" desc="动作107"></DO>
+		<DO type="CN_SPS" name="Ind108" desc="动作108"></DO>
+		<DO type="CN_SPS" name="Ind109" desc="动作109"></DO>
+		<DO type="CN_SPS" name="Ind110" desc="动作110"></DO>
+		<DO type="CN_SPS" name="Ind111" desc="动作111"></DO>
+		<DO type="CN_SPS" name="Ind112" desc="动作112"></DO>
+		<DO type="CN_SPS" name="Ind113" desc="动作113"></DO>
+		<DO type="CN_SPS" name="Ind114" desc="动作114"></DO>
+		<DO type="CN_SPS" name="Ind115" desc="动作115"></DO>
+		<DO type="CN_SPS" name="Ind116" desc="动作116"></DO>
+		<DO type="CN_SPS" name="Ind117" desc="动作117"></DO>
+		<DO type="CN_SPS" name="Ind118" desc="动作118"></DO>
+		<DO type="CN_SPS" name="Ind119" desc="动作119"></DO>
+		<DO type="CN_SPS" name="Ind120" desc="动作120"></DO>
+		<DO type="CN_SPS" name="Ind121" desc="动作121"></DO>
+		<DO type="CN_SPS" name="Ind122" desc="动作122"></DO>
+		<DO type="CN_SPS" name="Ind123" desc="动作123"></DO>
+		<DO type="CN_SPS" name="Ind124" desc="动作124"></DO>
+		<DO type="CN_SPS" name="Ind125" desc="动作125"></DO>
+		<DO type="CN_SPS" name="Ind126" desc="动作126"></DO>
+		<DO type="CN_SPS" name="Ind127" desc="动作127"></DO>
+		<DO type="CN_SPS" name="Ind128" desc="动作128"></DO>
+		<DO type="CN_SPS" name="Ind129" desc="动作129"></DO>
+		<DO type="CN_SPS" name="Ind130" desc="动作130"></DO>
+		<DO type="CN_SPS" name="Ind131" desc="动作131"></DO>
+		<DO type="CN_SPS" name="Ind132" desc="动作132"></DO>
+		<DO type="CN_SPS" name="Ind133" desc="动作133"></DO>
+		<DO type="CN_SPS" name="Ind134" desc="动作134"></DO>
+		<DO type="CN_SPS" name="Ind135" desc="动作135"></DO>
+		<DO type="CN_SPS" name="Ind136" desc="动作136"></DO>
+		<DO type="CN_SPS" name="Ind137" desc="动作137"></DO>
+		<DO type="CN_SPS" name="Ind138" desc="动作138"></DO>
+		<DO type="CN_SPS" name="Ind139" desc="动作139"></DO>
+		<DO type="CN_SPS" name="Ind140" desc="动作140"></DO>
+		<DO type="CN_SPS" name="Ind141" desc="动作141"></DO>
+		<DO type="CN_SPS" name="Ind142" desc="动作142"></DO>
+		<DO type="CN_SPS" name="Ind143" desc="动作143"></DO>
+		<DO type="CN_SPS" name="Ind144" desc="动作144"></DO>
+		<DO type="CN_SPS" name="Ind145" desc="动作145"></DO>
+		<DO type="CN_SPS" name="Ind146" desc="动作146"></DO>
+		<DO type="CN_SPS" name="Ind147" desc="动作147"></DO>
+		<DO type="CN_SPS" name="Ind148" desc="动作148"></DO>
+		<DO type="CN_SPS" name="Ind149" desc="动作149"></DO>
+		<DO type="CN_SPS" name="Ind150" desc="动作150"></DO>
+		<DO type="CN_SPS" name="Ind151" desc="动作151"></DO>
+		<DO type="CN_SPS" name="Ind152" desc="动作152"></DO>
+		<DO type="CN_SPS" name="Ind153" desc="动作153"></DO>
+		<DO type="CN_SPS" name="Ind154" desc="动作154"></DO>
+		<DO type="CN_SPS" name="Ind155" desc="动作155"></DO>
+		<DO type="CN_SPS" name="Ind156" desc="动作156"></DO>
+		<DO type="CN_SPS" name="Ind157" desc="动作157"></DO>
+		<DO type="CN_SPS" name="Ind158" desc="动作158"></DO>
+		<DO type="CN_SPS" name="Ind159" desc="动作159"></DO>
+		<DO type="CN_SPS" name="Ind160" desc="动作160"></DO>
+		<DO type="CN_SPS" name="Ind161" desc="动作161"></DO>
+		<DO type="CN_SPS" name="Ind162" desc="动作162"></DO>
+		<DO type="CN_SPS" name="Ind163" desc="动作163"></DO>
+		<DO type="CN_SPS" name="Ind164" desc="动作164"></DO>
+		<DO type="CN_SPS" name="Ind165" desc="动作165"></DO>
+		<DO type="CN_SPS" name="Ind166" desc="动作166"></DO>
+		<DO type="CN_SPS" name="Ind167" desc="动作167"></DO>
+		<DO type="CN_SPS" name="Ind168" desc="动作168"></DO>
+		<DO type="CN_SPS" name="Ind169" desc="动作169"></DO>
+		<DO type="CN_SPS" name="Ind170" desc="动作170"></DO>
+		<DO type="CN_SPS" name="Ind171" desc="动作171"></DO>
+		<DO type="CN_SPS" name="Ind172" desc="动作172"></DO>
+		<DO type="CN_SPS" name="Ind173" desc="动作173"></DO>
+		<DO type="CN_SPS" name="Ind174" desc="动作174"></DO>
+		<DO type="CN_SPS" name="Ind175" desc="动作175"></DO>
+		<DO type="CN_SPS" name="Ind176" desc="动作176"></DO>
+		<DO type="CN_SPS" name="Ind177" desc="动作177"></DO>
+		<DO type="CN_SPS" name="Ind178" desc="动作178"></DO>
+		<DO type="CN_SPS" name="Ind179" desc="动作179"></DO>
+		<DO type="CN_SPS" name="Ind180" desc="动作180"></DO>
+		<DO type="CN_SPS" name="Ind181" desc="动作181"></DO>
+		<DO type="CN_SPS" name="Ind182" desc="动作182"></DO>
+		<DO type="CN_SPS" name="Ind183" desc="动作183"></DO>
+		<DO type="CN_SPS" name="Ind184" desc="动作184"></DO>
+		<DO type="CN_SPS" name="Ind185" desc="动作185"></DO>
+		<DO type="CN_SPS" name="Ind186" desc="动作186"></DO>
+		<DO type="CN_SPS" name="Ind187" desc="动作187"></DO>
+		<DO type="CN_SPS" name="Ind188" desc="动作188"></DO>
+		<DO type="CN_SPS" name="Ind189" desc="动作189"></DO>
+		<DO type="CN_SPS" name="Ind190" desc="动作190"></DO>
+		<DO type="CN_SPS" name="Ind191" desc="动作191"></DO>
+		<DO type="CN_SPS" name="Ind192" desc="动作192"></DO>
+		<DO type="CN_SPS" name="Ind193" desc="动作193"></DO>
+		<DO type="CN_SPS" name="Ind194" desc="动作194"></DO>
+		<DO type="CN_SPS" name="Ind195" desc="动作195"></DO>
+		<DO type="CN_SPS" name="Ind196" desc="动作196"></DO>
+		<DO type="CN_SPS" name="Ind197" desc="动作197"></DO>
+		<DO type="CN_SPS" name="Ind198" desc="动作198"></DO>
+		<DO type="CN_SPS" name="Ind199" desc="动作199"></DO>
+		<DO type="CN_SPS" name="Ind200" desc="动作200"></DO>
+		<DO type="CN_SPS" name="Ind201" desc="动作201"></DO>
+		<DO type="CN_SPS" name="Ind202" desc="动作202"></DO>
+		<DO type="CN_SPS" name="Ind203" desc="动作203"></DO>
+		<DO type="CN_SPS" name="Ind204" desc="动作204"></DO>
+		<DO type="CN_SPS" name="Ind205" desc="动作205"></DO>
+		<DO type="CN_SPS" name="Ind206" desc="动作206"></DO>
+		<DO type="CN_SPS" name="Ind207" desc="动作207"></DO>
+		<DO type="CN_SPS" name="Ind208" desc="动作208"></DO>
+		<DO type="CN_SPS" name="Ind209" desc="动作209"></DO>
+		<DO type="CN_SPS" name="Ind210" desc="动作210"></DO>
+		<DO type="CN_SPS" name="Ind211" desc="动作211"></DO>
+		<DO type="CN_SPS" name="Ind212" desc="动作212"></DO>
+		<DO type="CN_SPS" name="Ind213" desc="动作213"></DO>
+		<DO type="CN_SPS" name="Ind214" desc="动作214"></DO>
+		<DO type="CN_SPS" name="Ind215" desc="动作215"></DO>
+		<DO type="CN_SPS" name="Ind216" desc="动作216"></DO>
+		<DO type="CN_SPS" name="Ind217" desc="动作217"></DO>
+		<DO type="CN_SPS" name="Ind218" desc="动作218"></DO>
+		<DO type="CN_SPS" name="Ind219" desc="动作219"></DO>
+		<DO type="CN_SPS" name="Ind220" desc="动作220"></DO>
+		<DO type="CN_SPS" name="Ind221" desc="动作221"></DO>
+		<DO type="CN_SPS" name="Ind222" desc="动作222"></DO>
+		<DO type="CN_SPS" name="Ind223" desc="动作223"></DO>
+		<DO type="CN_SPS" name="Ind224" desc="动作224"></DO>
+		<DO type="CN_SPS" name="Ind225" desc="动作225"></DO>
+		<DO type="CN_SPS" name="Ind226" desc="动作226"></DO>
+		<DO type="CN_SPS" name="Ind227" desc="动作227"></DO>
+		<DO type="CN_SPS" name="Ind228" desc="动作228"></DO>
+		<DO type="CN_SPS" name="Ind229" desc="动作229"></DO>
+		<DO type="CN_SPS" name="Ind230" desc="动作230"></DO>
+		<DO type="CN_SPS" name="Ind231" desc="动作231"></DO>
+		<DO type="CN_SPS" name="Ind232" desc="动作232"></DO>
+		<DO type="CN_SPS" name="Ind233" desc="动作233"></DO>
+		<DO type="CN_SPS" name="Ind234" desc="动作234"></DO>
+		<DO type="CN_SPS" name="Ind235" desc="动作235"></DO>
+		<DO type="CN_SPS" name="Ind236" desc="动作236"></DO>
+		<DO type="CN_SPS" name="Ind237" desc="动作237"></DO>
+		<DO type="CN_SPS" name="Ind238" desc="动作238"></DO>
+		<DO type="CN_SPS" name="Ind239" desc="动作239"></DO>
+		<DO type="CN_SPS" name="Ind240" desc="动作240"></DO>
+		<DO type="CN_SPS" name="Ind241" desc="动作241"></DO>
+		<DO type="CN_SPS" name="Ind242" desc="动作242"></DO>
+		<DO type="CN_SPS" name="Ind243" desc="动作243"></DO>
+		<DO type="CN_SPS" name="Ind244" desc="动作244"></DO>
+		<DO type="CN_SPS" name="Ind245" desc="动作245"></DO>
+		<DO type="CN_SPS" name="Ind246" desc="动作246"></DO>
+		<DO type="CN_SPS" name="Ind247" desc="动作247"></DO>
+		<DO type="CN_SPS" name="Ind248" desc="动作248"></DO>
+		<DO type="CN_SPS" name="Ind249" desc="动作249"></DO>
+		<DO type="CN_SPS" name="Ind250" desc="动作250"></DO>	
+	</LNodeType>  
+	<LNodeType lnClass="GGIO" id="UK_GGIO_PMeas" desc="模拟量">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_MV" name="AnIn1" desc="模拟量1"></DO>
+		<DO type="CN_MV" name="AnIn2" desc="模拟量2"></DO>
+		<DO type="CN_MV" name="AnIn3" desc="模拟量3"></DO>
+		<DO type="CN_MV" name="AnIn4" desc="模拟量4"></DO>
+		<DO type="CN_MV" name="AnIn5" desc="模拟量5"></DO>
+		<DO type="CN_MV" name="AnIn6" desc="模拟量6"></DO>
+		<DO type="CN_MV" name="AnIn7" desc="模拟量7"></DO>
+		<DO type="CN_MV" name="AnIn8" desc="模拟量8"></DO>
+		<DO type="CN_MV" name="AnIn9" desc="模拟量9"></DO>
+		<DO type="CN_MV" name="AnIn10" desc="模拟量10"></DO>
+		<DO type="CN_MV" name="AnIn11" desc="模拟量11"></DO>
+		<DO type="CN_MV" name="AnIn12" desc="模拟量12"></DO>
+		<DO type="CN_MV" name="AnIn13" desc="模拟量13"></DO>
+		<DO type="CN_MV" name="AnIn14" desc="模拟量14"></DO>
+		<DO type="CN_MV" name="AnIn15" desc="模拟量15"></DO>
+		<DO type="CN_MV" name="AnIn16" desc="模拟量16"></DO>
+		<DO type="CN_MV" name="AnIn17" desc="模拟量17"></DO>
+		<DO type="CN_MV" name="AnIn18" desc="模拟量18"></DO>
+		<DO type="CN_MV" name="AnIn19" desc="模拟量19"></DO>
+		<DO type="CN_MV" name="AnIn20" desc="模拟量20"></DO>
+		<DO type="CN_MV" name="AnIn21" desc="模拟量21"></DO>
+		<DO type="CN_MV" name="AnIn22" desc="模拟量22"></DO>
+		<DO type="CN_MV" name="AnIn23" desc="模拟量23"></DO>
+		<DO type="CN_MV" name="AnIn24" desc="模拟量24"></DO>
+		<DO type="CN_MV" name="AnIn25" desc="模拟量25"></DO>
+		<DO type="CN_MV" name="AnIn26" desc="模拟量26"></DO>
+		<DO type="CN_MV" name="AnIn27" desc="模拟量27"></DO>
+		<DO type="CN_MV" name="AnIn28" desc="模拟量28"></DO>
+		<DO type="CN_MV" name="AnIn29" desc="模拟量29"></DO>
+		<DO type="CN_MV" name="AnIn30" desc="模拟量30"></DO>
+		<DO type="CN_MV" name="AnIn31" desc="模拟量31"></DO>
+		<DO type="CN_MV" name="AnIn32" desc="模拟量32"></DO>
+		<DO type="CN_MV" name="AnIn33" desc="模拟量33"></DO>
+		<DO type="CN_MV" name="AnIn34" desc="模拟量34"></DO>
+		<DO type="CN_MV" name="AnIn35" desc="模拟量35"></DO>
+		<DO type="CN_MV" name="AnIn36" desc="模拟量36"></DO>
+		<DO type="CN_MV" name="AnIn37" desc="模拟量37"></DO>
+		<DO type="CN_MV" name="AnIn38" desc="模拟量38"></DO>
+		<DO type="CN_MV" name="AnIn39" desc="模拟量39"></DO>
+		<DO type="CN_MV" name="AnIn40" desc="模拟量40"></DO>
+		<DO type="CN_MV" name="AnIn41" desc="模拟量41"></DO>
+		<DO type="CN_MV" name="AnIn42" desc="模拟量42"></DO>
+		<DO type="CN_MV" name="AnIn43" desc="模拟量43"></DO>
+		<DO type="CN_MV" name="AnIn44" desc="模拟量44"></DO>
+		<DO type="CN_MV" name="AnIn45" desc="模拟量45"></DO>
+		<DO type="CN_MV" name="AnIn46" desc="模拟量46"></DO>
+		<DO type="CN_MV" name="AnIn47" desc="模拟量47"></DO>
+		<DO type="CN_MV" name="AnIn48" desc="模拟量48"></DO>
+		<DO type="CN_MV" name="AnIn49" desc="模拟量49"></DO>
+		<DO type="CN_MV" name="AnIn50" desc="模拟量50"></DO>
+		<DO type="CN_MV" name="AnIn51" desc="模拟量51"></DO>    
+		<DO type="CN_MV" name="AnIn52" desc="模拟量52"></DO>    
+		<DO type="CN_MV" name="AnIn53" desc="模拟量53"></DO>    
+		<DO type="CN_MV" name="AnIn54" desc="模拟量54"></DO>    
+		<DO type="CN_MV" name="AnIn55" desc="模拟量55"></DO>    
+		<DO type="CN_MV" name="AnIn56" desc="模拟量56"></DO>    
+		<DO type="CN_MV" name="AnIn57" desc="模拟量57"></DO>    
+		<DO type="CN_MV" name="AnIn58" desc="模拟量58"></DO>    
+		<DO type="CN_MV" name="AnIn59" desc="模拟量59"></DO>    
+		<DO type="CN_MV" name="AnIn60" desc="模拟量60"></DO>    
+		<DO type="CN_MV" name="AnIn61" desc="模拟量61"></DO>    
+		<DO type="CN_MV" name="AnIn62" desc="模拟量62"></DO>    
+		<DO type="CN_MV" name="AnIn63" desc="模拟量63"></DO>    
+		<DO type="CN_MV" name="AnIn64" desc="模拟量64"></DO>    
+		<DO type="CN_MV" name="AnIn65" desc="模拟量65"></DO>    
+		<DO type="CN_MV" name="AnIn66" desc="模拟量66"></DO>    
+		<DO type="CN_MV" name="AnIn67" desc="模拟量67"></DO>    
+		<DO type="CN_MV" name="AnIn68" desc="模拟量68"></DO>    
+		<DO type="CN_MV" name="AnIn69" desc="模拟量69"></DO>    
+		<DO type="CN_MV" name="AnIn70" desc="模拟量70"></DO>    
+		<DO type="CN_MV" name="AnIn71" desc="模拟量71"></DO>    
+		<DO type="CN_MV" name="AnIn72" desc="模拟量72"></DO>    
+		<DO type="CN_MV" name="AnIn73" desc="模拟量73"></DO>    
+		<DO type="CN_MV" name="AnIn74" desc="模拟量74"></DO>    
+		<DO type="CN_MV" name="AnIn75" desc="模拟量75"></DO>    
+		<DO type="CN_MV" name="AnIn76" desc="模拟量76"></DO>    
+		<DO type="CN_MV" name="AnIn77" desc="模拟量77"></DO>    
+		<DO type="CN_MV" name="AnIn78" desc="模拟量78"></DO>    
+		<DO type="CN_MV" name="AnIn79" desc="模拟量79"></DO>    
+		<DO type="CN_MV" name="AnIn80" desc="模拟量80"></DO>    
+		<DO type="CN_MV" name="AnIn81" desc="模拟量81"></DO>    
+		<DO type="CN_MV" name="AnIn82" desc="模拟量82"></DO>    
+		<DO type="CN_MV" name="AnIn83" desc="模拟量83"></DO>    
+		<DO type="CN_MV" name="AnIn84" desc="模拟量84"></DO>    
+		<DO type="CN_MV" name="AnIn85" desc="模拟量85"></DO>    
+		<DO type="CN_MV" name="AnIn86" desc="模拟量86"></DO>    
+		<DO type="CN_MV" name="AnIn87" desc="模拟量87"></DO>    
+		<DO type="CN_MV" name="AnIn88" desc="模拟量88"></DO>    
+		<DO type="CN_MV" name="AnIn89" desc="模拟量89"></DO>    
+		<DO type="CN_MV" name="AnIn90" desc="模拟量90"></DO>    
+		<DO type="CN_MV" name="AnIn91" desc="模拟量91"></DO>    
+		<DO type="CN_MV" name="AnIn92" desc="模拟量92"></DO>    
+		<DO type="CN_MV" name="AnIn93" desc="模拟量93"></DO>    
+		<DO type="CN_MV" name="AnIn94" desc="模拟量94"></DO>    
+		<DO type="CN_MV" name="AnIn95" desc="模拟量95"></DO>    
+		<DO type="CN_MV" name="AnIn96" desc="模拟量96"></DO>    
+		<DO type="CN_MV" name="AnIn97" desc="模拟量97"></DO>    
+		<DO type="CN_MV" name="AnIn98" desc="模拟量98"></DO>    
+		<DO type="CN_MV" name="AnIn99" desc="模拟量99"></DO>    
+		<DO type="CN_MV" name="AnIn100" desc="模拟量100"></DO>  
+		<DO type="CN_MV" name="AnIn101" desc="模拟量101"></DO>  
+		<DO type="CN_MV" name="AnIn102" desc="模拟量102"></DO>  
+		<DO type="CN_MV" name="AnIn103" desc="模拟量103"></DO>  
+		<DO type="CN_MV" name="AnIn104" desc="模拟量104"></DO>  
+		<DO type="CN_MV" name="AnIn105" desc="模拟量105"></DO>  
+		<DO type="CN_MV" name="AnIn106" desc="模拟量106"></DO>  
+		<DO type="CN_MV" name="AnIn107" desc="模拟量107"></DO>  
+		<DO type="CN_MV" name="AnIn108" desc="模拟量108"></DO>  
+		<DO type="CN_MV" name="AnIn109" desc="模拟量109"></DO>  
+		<DO type="CN_MV" name="AnIn110" desc="模拟量110"></DO>  
+		<DO type="CN_MV" name="AnIn111" desc="模拟量111"></DO>  
+		<DO type="CN_MV" name="AnIn112" desc="模拟量112"></DO>  
+		<DO type="CN_MV" name="AnIn113" desc="模拟量113"></DO>  
+		<DO type="CN_MV" name="AnIn114" desc="模拟量114"></DO>  
+		<DO type="CN_MV" name="AnIn115" desc="模拟量115"></DO>  
+		<DO type="CN_MV" name="AnIn116" desc="模拟量116"></DO>  
+		<DO type="CN_MV" name="AnIn117" desc="模拟量117"></DO>  
+		<DO type="CN_MV" name="AnIn118" desc="模拟量118"></DO>  
+		<DO type="CN_MV" name="AnIn119" desc="模拟量119"></DO>  
+		<DO type="CN_MV" name="AnIn120" desc="模拟量120"></DO>  
+		<DO type="CN_MV" name="AnIn121" desc="模拟量121"></DO>  
+		<DO type="CN_MV" name="AnIn122" desc="模拟量122"></DO>  
+		<DO type="CN_MV" name="AnIn123" desc="模拟量123"></DO>  
+		<DO type="CN_MV" name="AnIn124" desc="模拟量124"></DO>  
+		<DO type="CN_MV" name="AnIn125" desc="模拟量125"></DO>  
+		<DO type="CN_MV" name="AnIn126" desc="模拟量126"></DO>  
+		<DO type="CN_MV" name="AnIn127" desc="模拟量127"></DO>  
+		<DO type="CN_MV" name="AnIn128" desc="模拟量128"></DO>  
+		<DO type="CN_MV" name="AnIn129" desc="模拟量129"></DO>  
+		<DO type="CN_MV" name="AnIn130" desc="模拟量130"></DO>  
+		<DO type="CN_MV" name="AnIn131" desc="模拟量131"></DO>  
+		<DO type="CN_MV" name="AnIn132" desc="模拟量132"></DO>  
+		<DO type="CN_MV" name="AnIn133" desc="模拟量133"></DO>  
+		<DO type="CN_MV" name="AnIn134" desc="模拟量134"></DO>  
+		<DO type="CN_MV" name="AnIn135" desc="模拟量135"></DO>  
+		<DO type="CN_MV" name="AnIn136" desc="模拟量136"></DO>  
+		<DO type="CN_MV" name="AnIn137" desc="模拟量137"></DO>  
+		<DO type="CN_MV" name="AnIn138" desc="模拟量138"></DO>  
+		<DO type="CN_MV" name="AnIn139" desc="模拟量139"></DO>  
+		<DO type="CN_MV" name="AnIn140" desc="模拟量140"></DO>  
+		<DO type="CN_MV" name="AnIn141" desc="模拟量141"></DO>  
+		<DO type="CN_MV" name="AnIn142" desc="模拟量142"></DO>  
+		<DO type="CN_MV" name="AnIn143" desc="模拟量143"></DO>  
+		<DO type="CN_MV" name="AnIn144" desc="模拟量144"></DO>  
+		<DO type="CN_MV" name="AnIn145" desc="模拟量145"></DO>  
+		<DO type="CN_MV" name="AnIn146" desc="模拟量146"></DO>  
+		<DO type="CN_MV" name="AnIn147" desc="模拟量147"></DO>  
+		<DO type="CN_MV" name="AnIn148" desc="模拟量148"></DO>  
+		<DO type="CN_MV" name="AnIn149" desc="模拟量149"></DO>  
+		<DO type="CN_MV" name="AnIn150" desc="模拟量150"></DO>  
+		<DO type="CN_MV" name="AnIn151" desc="模拟量151"></DO>  
+		<DO type="CN_MV" name="AnIn152" desc="模拟量152"></DO>  
+		<DO type="CN_MV" name="AnIn153" desc="模拟量153"></DO>  
+		<DO type="CN_MV" name="AnIn154" desc="模拟量154"></DO>  
+		<DO type="CN_MV" name="AnIn155" desc="模拟量155"></DO>  
+		<DO type="CN_MV" name="AnIn156" desc="模拟量156"></DO>  
+		<DO type="CN_MV" name="AnIn157" desc="模拟量157"></DO>  
+		<DO type="CN_MV" name="AnIn158" desc="模拟量158"></DO>  
+		<DO type="CN_MV" name="AnIn159" desc="模拟量159"></DO>  
+		<DO type="CN_MV" name="AnIn160" desc="模拟量160"></DO>  
+		<DO type="CN_MV" name="AnIn161" desc="模拟量161"></DO>  
+		<DO type="CN_MV" name="AnIn162" desc="模拟量162"></DO>  
+		<DO type="CN_MV" name="AnIn163" desc="模拟量163"></DO>  
+		<DO type="CN_MV" name="AnIn164" desc="模拟量164"></DO>  
+		<DO type="CN_MV" name="AnIn165" desc="模拟量165"></DO>  
+		<DO type="CN_MV" name="AnIn166" desc="模拟量166"></DO>  
+		<DO type="CN_MV" name="AnIn167" desc="模拟量167"></DO>  
+		<DO type="CN_MV" name="AnIn168" desc="模拟量168"></DO>  
+		<DO type="CN_MV" name="AnIn169" desc="模拟量169"></DO>  
+		<DO type="CN_MV" name="AnIn170" desc="模拟量170"></DO>  
+		<DO type="CN_MV" name="AnIn171" desc="模拟量171"></DO>  
+		<DO type="CN_MV" name="AnIn172" desc="模拟量172"></DO>  
+		<DO type="CN_MV" name="AnIn173" desc="模拟量173"></DO>  
+		<DO type="CN_MV" name="AnIn174" desc="模拟量174"></DO>  
+		<DO type="CN_MV" name="AnIn175" desc="模拟量175"></DO>  
+		<DO type="CN_MV" name="AnIn176" desc="模拟量176"></DO>  
+		<DO type="CN_MV" name="AnIn177" desc="模拟量177"></DO>  
+		<DO type="CN_MV" name="AnIn178" desc="模拟量178"></DO>  
+		<DO type="CN_MV" name="AnIn179" desc="模拟量179"></DO>  
+		<DO type="CN_MV" name="AnIn180" desc="模拟量180"></DO>  
+		<DO type="CN_MV" name="AnIn181" desc="模拟量181"></DO>  
+		<DO type="CN_MV" name="AnIn182" desc="模拟量182"></DO>  
+		<DO type="CN_MV" name="AnIn183" desc="模拟量183"></DO>  
+		<DO type="CN_MV" name="AnIn184" desc="模拟量184"></DO>  
+		<DO type="CN_MV" name="AnIn185" desc="模拟量185"></DO>  
+		<DO type="CN_MV" name="AnIn186" desc="模拟量186"></DO>  
+		<DO type="CN_MV" name="AnIn187" desc="模拟量187"></DO>  
+		<DO type="CN_MV" name="AnIn188" desc="模拟量188"></DO>  
+		<DO type="CN_MV" name="AnIn189" desc="模拟量189"></DO>  
+		<DO type="CN_MV" name="AnIn190" desc="模拟量190"></DO>  
+		<DO type="CN_MV" name="AnIn191" desc="模拟量191"></DO>  
+		<DO type="CN_MV" name="AnIn192" desc="模拟量192"></DO>  
+		<DO type="CN_MV" name="AnIn193" desc="模拟量193"></DO>  
+		<DO type="CN_MV" name="AnIn194" desc="模拟量194"></DO>  
+		<DO type="CN_MV" name="AnIn195" desc="模拟量195"></DO>  
+		<DO type="CN_MV" name="AnIn196" desc="模拟量196"></DO>  
+		<DO type="CN_MV" name="AnIn197" desc="模拟量197"></DO>  
+		<DO type="CN_MV" name="AnIn198" desc="模拟量198"></DO>  
+		<DO type="CN_MV" name="AnIn199" desc="模拟量199"></DO>  
+		<DO type="CN_MV" name="AnIn200" desc="模拟量200"></DO>  
+		<DO type="CN_MV" name="AnIn201" desc="模拟量201"></DO>  
+		<DO type="CN_MV" name="AnIn202" desc="模拟量202"></DO>  
+		<DO type="CN_MV" name="AnIn203" desc="模拟量203"></DO>  
+		<DO type="CN_MV" name="AnIn204" desc="模拟量204"></DO>  
+		<DO type="CN_MV" name="AnIn205" desc="模拟量205"></DO>  
+		<DO type="CN_MV" name="AnIn206" desc="模拟量206"></DO>  
+		<DO type="CN_MV" name="AnIn207" desc="模拟量207"></DO>  
+		<DO type="CN_MV" name="AnIn208" desc="模拟量208"></DO>  
+		<DO type="CN_MV" name="AnIn209" desc="模拟量209"></DO>  
+		<DO type="CN_MV" name="AnIn210" desc="模拟量210"></DO>  
+		<DO type="CN_MV" name="AnIn211" desc="模拟量211"></DO>  
+		<DO type="CN_MV" name="AnIn212" desc="模拟量212"></DO>  
+		<DO type="CN_MV" name="AnIn213" desc="模拟量213"></DO>  
+		<DO type="CN_MV" name="AnIn214" desc="模拟量214"></DO>  
+		<DO type="CN_MV" name="AnIn215" desc="模拟量215"></DO>  
+		<DO type="CN_MV" name="AnIn216" desc="模拟量216"></DO>  
+		<DO type="CN_MV" name="AnIn217" desc="模拟量217"></DO>  
+		<DO type="CN_MV" name="AnIn218" desc="模拟量218"></DO>  
+		<DO type="CN_MV" name="AnIn219" desc="模拟量219"></DO>  
+		<DO type="CN_MV" name="AnIn220" desc="模拟量220"></DO>  
+		<DO type="CN_MV" name="AnIn221" desc="模拟量221"></DO>  
+		<DO type="CN_MV" name="AnIn222" desc="模拟量222"></DO>  
+		<DO type="CN_MV" name="AnIn223" desc="模拟量223"></DO>  
+		<DO type="CN_MV" name="AnIn224" desc="模拟量224"></DO>  
+		<DO type="CN_MV" name="AnIn225" desc="模拟量225"></DO>  
+		<DO type="CN_MV" name="AnIn226" desc="模拟量226"></DO>  
+		<DO type="CN_MV" name="AnIn227" desc="模拟量227"></DO>  
+		<DO type="CN_MV" name="AnIn228" desc="模拟量228"></DO>  
+		<DO type="CN_MV" name="AnIn229" desc="模拟量229"></DO>  
+		<DO type="CN_MV" name="AnIn230" desc="模拟量230"></DO>  
+		<DO type="CN_MV" name="AnIn231" desc="模拟量231"></DO>  
+		<DO type="CN_MV" name="AnIn232" desc="模拟量232"></DO>  
+		<DO type="CN_MV" name="AnIn233" desc="模拟量233"></DO>  
+		<DO type="CN_MV" name="AnIn234" desc="模拟量234"></DO>  
+		<DO type="CN_MV" name="AnIn235" desc="模拟量235"></DO>  
+		<DO type="CN_MV" name="AnIn236" desc="模拟量236"></DO>  
+		<DO type="CN_MV" name="AnIn237" desc="模拟量237"></DO>  
+		<DO type="CN_MV" name="AnIn238" desc="模拟量238"></DO>  
+		<DO type="CN_MV" name="AnIn239" desc="模拟量239"></DO>  
+		<DO type="CN_MV" name="AnIn240" desc="模拟量240"></DO>  
+		<DO type="CN_MV" name="AnIn241" desc="模拟量241"></DO>  
+		<DO type="CN_MV" name="AnIn242" desc="模拟量242"></DO>  
+		<DO type="CN_MV" name="AnIn243" desc="模拟量243"></DO>  
+		<DO type="CN_MV" name="AnIn244" desc="模拟量244"></DO>  
+		<DO type="CN_MV" name="AnIn245" desc="模拟量245"></DO>  
+		<DO type="CN_MV" name="AnIn246" desc="模拟量246"></DO>  
+		<DO type="CN_MV" name="AnIn247" desc="模拟量247"></DO>  
+		<DO type="CN_MV" name="AnIn248" desc="模拟量248"></DO>  
+		<DO type="CN_MV" name="AnIn249" desc="模拟量249"></DO>  
+		<DO type="CN_MV" name="AnIn250" desc="模拟量250"></DO>
+	</LNodeType>
+	<LNodeType lnClass="GGIO" id="UK_GGIO_Crtl" desc="遥控">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPC" name="SPCSO1" desc="遥控1"></DO>
+		<DO type="CN_SPC" name="SPCSO2" desc="遥控2"></DO>
+		<DO type="CN_SPC" name="SPCSO3" desc="遥控3"></DO>
+		<DO type="CN_SPC" name="SPCSO4" desc="遥控4"></DO>
+		<DO type="CN_SPC" name="SPCSO5" desc="遥控5"></DO>
+		<DO type="CN_SPC" name="SPCSO6" desc="遥控6"></DO>
+		<DO type="CN_SPC" name="SPCSO7" desc="遥控7"></DO>
+		<DO type="CN_SPC" name="SPCSO8" desc="遥控8"></DO>
+		<DO type="CN_SPC" name="SPCSO9" desc="遥控9"></DO>
+		<DO type="CN_SPC" name="SPCSO10" desc="遥控10"></DO>
+		<DO type="CN_SPC" name="SPCSO11" desc="遥控11"></DO>
+		<DO type="CN_SPC" name="SPCSO12" desc="遥控12"></DO>
+		<DO type="CN_SPC" name="SPCSO13" desc="遥控13"></DO>
+		<DO type="CN_SPC" name="SPCSO14" desc="遥控14"></DO>
+		<DO type="CN_SPC" name="SPCSO15" desc="遥控15"></DO>
+		<DO type="CN_SPC" name="SPCSO16" desc="遥控16"></DO>
+		<DO type="CN_SPC" name="SPCSO17" desc="遥控17"></DO>
+		<DO type="CN_SPC" name="SPCSO18" desc="遥控18"></DO>
+		<DO type="CN_SPC" name="SPCSO19" desc="遥控19"></DO>
+		<DO type="CN_SPC" name="SPCSO20" desc="遥控20"></DO>
+		<DO type="CN_SPC" name="SPCSO21" desc="遥控21"></DO>
+		<DO type="CN_SPC" name="SPCSO22" desc="遥控22"></DO>
+		<DO type="CN_SPC" name="SPCSO23" desc="遥控23"></DO>
+		<DO type="CN_SPC" name="SPCSO24" desc="遥控24"></DO>
+		<DO type="CN_SPC" name="SPCSO25" desc="遥控25"></DO>
+		<DO type="CN_SPC" name="SPCSO26" desc="遥控26"></DO>
+		<DO type="CN_SPC" name="SPCSO27" desc="遥控27"></DO>
+		<DO type="CN_SPC" name="SPCSO28" desc="遥控28"></DO>
+		<DO type="CN_SPC" name="SPCSO29" desc="遥控29"></DO>
+		<DO type="CN_SPC" name="SPCSO30" desc="遥控30"></DO>
+		<DO type="CN_SPC" name="SPCSO31" desc="遥控31"></DO>
+		<DO type="CN_SPC" name="SPCSO32" desc="遥控32"></DO>
+		<DO type="CN_SPC" name="SPCSO33" desc="遥控33"></DO>
+		<DO type="CN_SPC" name="SPCSO34" desc="遥控34"></DO>
+		<DO type="CN_SPC" name="SPCSO35" desc="遥控35"></DO>
+		<DO type="CN_SPC" name="SPCSO36" desc="遥控36"></DO>
+		<DO type="CN_SPC" name="SPCSO37" desc="遥控37"></DO>
+		<DO type="CN_SPC" name="SPCSO38" desc="遥控38"></DO>
+		<DO type="CN_SPC" name="SPCSO39" desc="遥控39"></DO>
+		<DO type="CN_SPC" name="SPCSO40" desc="遥控40"></DO>
+		<DO type="CN_SPC" name="SPCSO41" desc="遥控41"></DO>
+		<DO type="CN_SPC" name="SPCSO42" desc="遥控42"></DO>
+		<DO type="CN_SPC" name="SPCSO43" desc="遥控43"></DO>
+		<DO type="CN_SPC" name="SPCSO44" desc="遥控44"></DO>
+		<DO type="CN_SPC" name="SPCSO45" desc="遥控45"></DO>
+		<DO type="CN_SPC" name="SPCSO46" desc="遥控46"></DO>
+		<DO type="CN_SPC" name="SPCSO47" desc="遥控47"></DO>
+		<DO type="CN_SPC" name="SPCSO48" desc="遥控48"></DO>
+		<DO type="CN_SPC" name="SPCSO49" desc="遥控49"></DO>
+		<DO type="CN_SPC" name="SPCSO50" desc="遥控50"></DO>			
+		<DO type="CN_SPC" name="SPCSO51" desc="遥控51"></DO>    
+		<DO type="CN_SPC" name="SPCSO52" desc="遥控52"></DO>    
+		<DO type="CN_SPC" name="SPCSO53" desc="遥控53"></DO>    
+		<DO type="CN_SPC" name="SPCSO54" desc="遥控54"></DO>    
+		<DO type="CN_SPC" name="SPCSO55" desc="遥控55"></DO>    
+		<DO type="CN_SPC" name="SPCSO56" desc="遥控56"></DO>    
+		<DO type="CN_SPC" name="SPCSO57" desc="遥控57"></DO>    
+		<DO type="CN_SPC" name="SPCSO58" desc="遥控58"></DO>    
+		<DO type="CN_SPC" name="SPCSO59" desc="遥控59"></DO>    
+		<DO type="CN_SPC" name="SPCSO60" desc="遥控60"></DO>    
+		<DO type="CN_SPC" name="SPCSO61" desc="遥控61"></DO>    
+		<DO type="CN_SPC" name="SPCSO62" desc="遥控62"></DO>    
+		<DO type="CN_SPC" name="SPCSO63" desc="遥控63"></DO>    
+		<DO type="CN_SPC" name="SPCSO64" desc="遥控64"></DO>    
+		<DO type="CN_SPC" name="SPCSO65" desc="遥控65"></DO>    
+		<DO type="CN_SPC" name="SPCSO66" desc="遥控66"></DO>    
+		<DO type="CN_SPC" name="SPCSO67" desc="遥控67"></DO>    
+		<DO type="CN_SPC" name="SPCSO68" desc="遥控68"></DO>    
+		<DO type="CN_SPC" name="SPCSO69" desc="遥控69"></DO>    
+		<DO type="CN_SPC" name="SPCSO70" desc="遥控70"></DO>    
+		<DO type="CN_SPC" name="SPCSO71" desc="遥控71"></DO>    
+		<DO type="CN_SPC" name="SPCSO72" desc="遥控72"></DO>    
+		<DO type="CN_SPC" name="SPCSO73" desc="遥控73"></DO>    
+		<DO type="CN_SPC" name="SPCSO74" desc="遥控74"></DO>    
+		<DO type="CN_SPC" name="SPCSO75" desc="遥控75"></DO>    
+		<DO type="CN_SPC" name="SPCSO76" desc="遥控76"></DO>    
+		<DO type="CN_SPC" name="SPCSO77" desc="遥控77"></DO>    
+		<DO type="CN_SPC" name="SPCSO78" desc="遥控78"></DO>    
+		<DO type="CN_SPC" name="SPCSO79" desc="遥控79"></DO>    
+		<DO type="CN_SPC" name="SPCSO80" desc="遥控80"></DO>    
+		<DO type="CN_SPC" name="SPCSO81" desc="遥控81"></DO>    
+		<DO type="CN_SPC" name="SPCSO82" desc="遥控82"></DO>    
+		<DO type="CN_SPC" name="SPCSO83" desc="遥控83"></DO>    
+		<DO type="CN_SPC" name="SPCSO84" desc="遥控84"></DO>    
+		<DO type="CN_SPC" name="SPCSO85" desc="遥控85"></DO>    
+		<DO type="CN_SPC" name="SPCSO86" desc="遥控86"></DO>    
+		<DO type="CN_SPC" name="SPCSO87" desc="遥控87"></DO>    
+		<DO type="CN_SPC" name="SPCSO88" desc="遥控88"></DO>    
+		<DO type="CN_SPC" name="SPCSO89" desc="遥控89"></DO>    
+		<DO type="CN_SPC" name="SPCSO90" desc="遥控90"></DO>    
+		<DO type="CN_SPC" name="SPCSO91" desc="遥控91"></DO>    
+		<DO type="CN_SPC" name="SPCSO92" desc="遥控92"></DO>    
+		<DO type="CN_SPC" name="SPCSO93" desc="遥控93"></DO>    
+		<DO type="CN_SPC" name="SPCSO94" desc="遥控94"></DO>    
+		<DO type="CN_SPC" name="SPCSO95" desc="遥控95"></DO>    
+		<DO type="CN_SPC" name="SPCSO96" desc="遥控96"></DO>    
+		<DO type="CN_SPC" name="SPCSO97" desc="遥控97"></DO>    
+		<DO type="CN_SPC" name="SPCSO98" desc="遥控98"></DO>    
+		<DO type="CN_SPC" name="SPCSO99" desc="遥控99"></DO>    
+		<DO type="CN_SPC" name="SPCSO100" desc="遥控100"></DO>  
+		<DO type="CN_SPC" name="SPCSO101" desc="遥控101"></DO>  
+		<DO type="CN_SPC" name="SPCSO102" desc="遥控102"></DO>  
+		<DO type="CN_SPC" name="SPCSO103" desc="遥控103"></DO>  
+		<DO type="CN_SPC" name="SPCSO104" desc="遥控104"></DO>  
+		<DO type="CN_SPC" name="SPCSO105" desc="遥控105"></DO>  
+		<DO type="CN_SPC" name="SPCSO106" desc="遥控106"></DO>  
+		<DO type="CN_SPC" name="SPCSO107" desc="遥控107"></DO>  
+		<DO type="CN_SPC" name="SPCSO108" desc="遥控108"></DO>  
+		<DO type="CN_SPC" name="SPCSO109" desc="遥控109"></DO>  
+		<DO type="CN_SPC" name="SPCSO110" desc="遥控110"></DO>  
+		<DO type="CN_SPC" name="SPCSO111" desc="遥控111"></DO>  
+		<DO type="CN_SPC" name="SPCSO112" desc="遥控112"></DO>  
+		<DO type="CN_SPC" name="SPCSO113" desc="遥控113"></DO>  
+		<DO type="CN_SPC" name="SPCSO114" desc="遥控114"></DO>  
+		<DO type="CN_SPC" name="SPCSO115" desc="遥控115"></DO>  
+		<DO type="CN_SPC" name="SPCSO116" desc="遥控116"></DO>  
+		<DO type="CN_SPC" name="SPCSO117" desc="遥控117"></DO>  
+		<DO type="CN_SPC" name="SPCSO118" desc="遥控118"></DO>  
+		<DO type="CN_SPC" name="SPCSO119" desc="遥控119"></DO>  
+		<DO type="CN_SPC" name="SPCSO120" desc="遥控120"></DO>  
+		<DO type="CN_SPC" name="SPCSO121" desc="遥控121"></DO>  
+		<DO type="CN_SPC" name="SPCSO122" desc="遥控122"></DO>  
+		<DO type="CN_SPC" name="SPCSO123" desc="遥控123"></DO>  
+		<DO type="CN_SPC" name="SPCSO124" desc="遥控124"></DO>  
+		<DO type="CN_SPC" name="SPCSO125" desc="遥控125"></DO>  
+		<DO type="CN_SPC" name="SPCSO126" desc="遥控126"></DO>  
+		<DO type="CN_SPC" name="SPCSO127" desc="遥控127"></DO>  
+		<DO type="CN_SPC" name="SPCSO128" desc="遥控128"></DO>  
+	</LNodeType>
+	<LNodeType lnClass="GGIO" id="UK_GGIO_DPS" desc="双点开入">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_DPC" name="DPCSO1" desc="双点开入1"></DO>
+		<DO type="CN_DPC" name="DPCSO2" desc="双点开入2"></DO>
+		<DO type="CN_DPC" name="DPCSO3" desc="双点开入3"></DO>
+		<DO type="CN_DPC" name="DPCSO4" desc="双点开入4"></DO>
+		<DO type="CN_DPC" name="DPCSO5" desc="双点开入5"></DO>
+		<DO type="CN_DPC" name="DPCSO6" desc="双点开入6"></DO>
+		<DO type="CN_DPC" name="DPCSO7" desc="双点开入7"></DO>
+		<DO type="CN_DPC" name="DPCSO8" desc="双点开入8"></DO>
+		<DO type="CN_DPC" name="DPCSO9" desc="双点开入9"></DO>
+		<DO type="CN_DPC" name="DPCSO10" desc="双点开入10"></DO>
+		<DO type="CN_DPC" name="DPCSO11" desc="双点开入11"></DO>
+		<DO type="CN_DPC" name="DPCSO12" desc="双点开入12"></DO>
+		<DO type="CN_DPC" name="DPCSO13" desc="双点开入13"></DO>
+		<DO type="CN_DPC" name="DPCSO14" desc="双点开入14"></DO>
+		<DO type="CN_DPC" name="DPCSO15" desc="双点开入15"></DO>
+		<DO type="CN_DPC" name="DPCSO16" desc="双点开入16"></DO>
+		<DO type="CN_DPC" name="DPCSO17" desc="双点开入17"></DO>
+		<DO type="CN_DPC" name="DPCSO18" desc="双点开入18"></DO>
+		<DO type="CN_DPC" name="DPCSO19" desc="双点开入19"></DO>
+		<DO type="CN_DPC" name="DPCSO20" desc="双点开入20"></DO>
+		<DO type="CN_DPC" name="DPCSO21" desc="双点开入21"></DO>
+		<DO type="CN_DPC" name="DPCSO22" desc="双点开入22"></DO>
+		<DO type="CN_DPC" name="DPCSO23" desc="双点开入23"></DO>
+		<DO type="CN_DPC" name="DPCSO24" desc="双点开入24"></DO>
+		<DO type="CN_DPC" name="DPCSO25" desc="双点开入25"></DO>
+		<DO type="CN_DPC" name="DPCSO26" desc="双点开入26"></DO>
+		<DO type="CN_DPC" name="DPCSO27" desc="双点开入27"></DO>
+		<DO type="CN_DPC" name="DPCSO28" desc="双点开入28"></DO>
+		<DO type="CN_DPC" name="DPCSO29" desc="双点开入29"></DO>
+		<DO type="CN_DPC" name="DPCSO30" desc="双点开入30"></DO>
+		<DO type="CN_DPC" name="DPCSO31" desc="双点开入31"></DO>
+		<DO type="CN_DPC" name="DPCSO32" desc="双点开入32"></DO>
+		<DO type="CN_DPC" name="DPCSO33" desc="双点开入33"></DO>
+		<DO type="CN_DPC" name="DPCSO34" desc="双点开入34"></DO>
+		<DO type="CN_DPC" name="DPCSO35" desc="双点开入35"></DO>
+		<DO type="CN_DPC" name="DPCSO36" desc="双点开入36"></DO>
+		<DO type="CN_DPC" name="DPCSO37" desc="双点开入37"></DO>
+		<DO type="CN_DPC" name="DPCSO38" desc="双点开入38"></DO>
+		<DO type="CN_DPC" name="DPCSO39" desc="双点开入39"></DO>
+		<DO type="CN_DPC" name="DPCSO40" desc="双点开入40"></DO>
+		<DO type="CN_DPC" name="DPCSO41" desc="双点开入41"></DO>
+		<DO type="CN_DPC" name="DPCSO42" desc="双点开入42"></DO>
+		<DO type="CN_DPC" name="DPCSO43" desc="双点开入43"></DO>
+		<DO type="CN_DPC" name="DPCSO44" desc="双点开入44"></DO>
+		<DO type="CN_DPC" name="DPCSO45" desc="双点开入45"></DO>
+		<DO type="CN_DPC" name="DPCSO46" desc="双点开入46"></DO>
+		<DO type="CN_DPC" name="DPCSO47" desc="双点开入47"></DO>
+		<DO type="CN_DPC" name="DPCSO48" desc="双点开入48"></DO>
+		<DO type="CN_DPC" name="DPCSO49" desc="双点开入49"></DO>
+		<DO type="CN_DPC" name="DPCSO50" desc="双点开入50"></DO>
+	</LNodeType>
+	<LNodeType lnClass="GGIO" id="UK_GGIO_SPS" desc="单点开入">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPC" name="SPCSO1" desc="单点开入1"></DO>
+		<DO type="CN_SPC" name="SPCSO2" desc="单点开入2"></DO>
+		<DO type="CN_SPC" name="SPCSO3" desc="单点开入3"></DO>
+		<DO type="CN_SPC" name="SPCSO4" desc="单点开入4"></DO>
+		<DO type="CN_SPC" name="SPCSO5" desc="单点开入5"></DO>
+		<DO type="CN_SPC" name="SPCSO6" desc="单点开入6"></DO>
+		<DO type="CN_SPC" name="SPCSO7" desc="单点开入7"></DO>
+		<DO type="CN_SPC" name="SPCSO8" desc="单点开入8"></DO>
+		<DO type="CN_SPC" name="SPCSO9" desc="单点开入9"></DO>
+		<DO type="CN_SPC" name="SPCSO10" desc="单点开入10"></DO>
+		<DO type="CN_SPC" name="SPCSO11" desc="单点开入11"></DO>
+		<DO type="CN_SPC" name="SPCSO12" desc="单点开入12"></DO>
+		<DO type="CN_SPC" name="SPCSO13" desc="单点开入13"></DO>
+		<DO type="CN_SPC" name="SPCSO14" desc="单点开入14"></DO>
+		<DO type="CN_SPC" name="SPCSO15" desc="单点开入15"></DO>
+		<DO type="CN_SPC" name="SPCSO16" desc="单点开入16"></DO>
+		<DO type="CN_SPC" name="SPCSO17" desc="单点开入17"></DO>
+		<DO type="CN_SPC" name="SPCSO18" desc="单点开入18"></DO>
+		<DO type="CN_SPC" name="SPCSO19" desc="单点开入19"></DO>
+		<DO type="CN_SPC" name="SPCSO20" desc="单点开入20"></DO>
+		<DO type="CN_SPC" name="SPCSO21" desc="单点开入21"></DO>
+		<DO type="CN_SPC" name="SPCSO22" desc="单点开入22"></DO>
+		<DO type="CN_SPC" name="SPCSO23" desc="单点开入23"></DO>
+		<DO type="CN_SPC" name="SPCSO24" desc="单点开入24"></DO>
+		<DO type="CN_SPC" name="SPCSO25" desc="单点开入25"></DO>
+		<DO type="CN_SPC" name="SPCSO26" desc="单点开入26"></DO>
+		<DO type="CN_SPC" name="SPCSO27" desc="单点开入27"></DO>
+		<DO type="CN_SPC" name="SPCSO28" desc="单点开入28"></DO>
+		<DO type="CN_SPC" name="SPCSO29" desc="单点开入29"></DO>
+		<DO type="CN_SPC" name="SPCSO30" desc="单点开入30"></DO>
+		<DO type="CN_SPC" name="SPCSO31" desc="单点开入31"></DO>
+		<DO type="CN_SPC" name="SPCSO32" desc="单点开入32"></DO>
+		<DO type="CN_SPC" name="SPCSO33" desc="单点开入33"></DO>
+		<DO type="CN_SPC" name="SPCSO34" desc="单点开入34"></DO>
+		<DO type="CN_SPC" name="SPCSO35" desc="单点开入35"></DO>
+		<DO type="CN_SPC" name="SPCSO36" desc="单点开入36"></DO>
+		<DO type="CN_SPC" name="SPCSO37" desc="单点开入37"></DO>
+		<DO type="CN_SPC" name="SPCSO38" desc="单点开入38"></DO>
+		<DO type="CN_SPC" name="SPCSO39" desc="单点开入39"></DO>
+		<DO type="CN_SPC" name="SPCSO40" desc="单点开入40"></DO>
+		<DO type="CN_SPC" name="SPCSO41" desc="单点开入41"></DO>
+		<DO type="CN_SPC" name="SPCSO42" desc="单点开入42"></DO>
+		<DO type="CN_SPC" name="SPCSO43" desc="单点开入43"></DO>
+		<DO type="CN_SPC" name="SPCSO44" desc="单点开入44"></DO>
+		<DO type="CN_SPC" name="SPCSO45" desc="单点开入45"></DO>
+		<DO type="CN_SPC" name="SPCSO46" desc="单点开入46"></DO>
+		<DO type="CN_SPC" name="SPCSO47" desc="单点开入47"></DO>
+		<DO type="CN_SPC" name="SPCSO48" desc="单点开入48"></DO>
+		<DO type="CN_SPC" name="SPCSO49" desc="单点开入49"></DO>
+		<DO type="CN_SPC" name="SPCSO50" desc="单点开入50"></DO>
+	</LNodeType>
+	<LNodeType lnClass="GGIO" id="UK_GGIO_Crtl_Yt" desc="遥调">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_APC" name="APCSO1" desc="遥调1"/>
+		<DO type="CN_APC" name="APCSO2" desc="遥调2"/>
+		<DO type="CN_APC" name="APCSO3" desc="遥调3"/>
+		<DO type="CN_APC" name="APCSO4" desc="遥调4"/>
+		<DO type="CN_APC" name="APCSO5" desc="遥调5"/>
+		<DO type="CN_APC" name="APCSO6" desc="遥调6"/>
+		<DO type="CN_APC" name="APCSO7" desc="遥调7"/>
+		<DO type="CN_APC" name="APCSO8" desc="遥调8"/>
+		<DO type="CN_APC" name="APCSO9" desc="遥调9"/>
+		<DO type="CN_APC" name="APCSO10" desc="遥调10"/>
+		<DO type="CN_APC" name="APCSO11" desc="遥调11"/>
+		<DO type="CN_APC" name="APCSO12" desc="遥调12"/>
+		<DO type="CN_APC" name="APCSO13" desc="遥调13"/>
+		<DO type="CN_APC" name="APCSO14" desc="遥调14"/>
+		<DO type="CN_APC" name="APCSO15" desc="遥调15"/>
+		<DO type="CN_APC" name="APCSO16" desc="遥调16"/>
+		<DO type="CN_APC" name="APCSO17" desc="遥调17"/>
+		<DO type="CN_APC" name="APCSO18" desc="遥调18"/>
+		<DO type="CN_APC" name="APCSO19" desc="遥调19"/>
+		<DO type="CN_APC" name="APCSO20" desc="遥调20"/>
+		<DO type="CN_APC" name="APCSO21" desc="遥调21"/>
+		<DO type="CN_APC" name="APCSO22" desc="遥调22"/>
+		<DO type="CN_APC" name="APCSO23" desc="遥调23"/>
+		<DO type="CN_APC" name="APCSO24" desc="遥调24"/>
+		<DO type="CN_APC" name="APCSO25" desc="遥调25"/>
+		<DO type="CN_APC" name="APCSO26" desc="遥调26"/>
+		<DO type="CN_APC" name="APCSO27" desc="遥调27"/>
+		<DO type="CN_APC" name="APCSO28" desc="遥调28"/>
+		<DO type="CN_APC" name="APCSO29" desc="遥调29"/>
+		<DO type="CN_APC" name="APCSO30" desc="遥调30"/>
+		<DO type="CN_APC" name="APCSO31" desc="遥调31"/>
+		<DO type="CN_APC" name="APCSO32" desc="遥调32"/>
+		<DO type="CN_APC" name="APCSO33" desc="遥调33"/>
+		<DO type="CN_APC" name="APCSO34" desc="遥调34"/>
+		<DO type="CN_APC" name="APCSO35" desc="遥调35"/>
+		<DO type="CN_APC" name="APCSO36" desc="遥调36"/>
+		<DO type="CN_APC" name="APCSO37" desc="遥调37"/>
+		<DO type="CN_APC" name="APCSO38" desc="遥调38"/>
+		<DO type="CN_APC" name="APCSO39" desc="遥调39"/>
+		<DO type="CN_APC" name="APCSO40" desc="遥调40"/>
+		<DO type="CN_APC" name="APCSO41" desc="遥调41"/>
+		<DO type="CN_APC" name="APCSO42" desc="遥调42"/>
+		<DO type="CN_APC" name="APCSO43" desc="遥调43"/>
+		<DO type="CN_APC" name="APCSO44" desc="遥调44"/>
+		<DO type="CN_APC" name="APCSO45" desc="遥调45"/>
+		<DO type="CN_APC" name="APCSO46" desc="遥调46"/>
+		<DO type="CN_APC" name="APCSO47" desc="遥调47"/>
+		<DO type="CN_APC" name="APCSO48" desc="遥调48"/>
+		<DO type="CN_APC" name="APCSO49" desc="遥调49"/>
+		<DO type="CN_APC" name="APCSO50" desc="遥调50"/>		
+		<DO type="CN_INC" name="INCSO1" desc="遥调1"/>
+		<DO type="CN_INC" name="INCSO2" desc="遥调2"/>
+		<DO type="CN_INC" name="INCSO3" desc="遥调3"/>
+		<DO type="CN_INC" name="INCSO4" desc="遥调4"/>
+		<DO type="CN_INC" name="INCSO5" desc="遥调5"/>
+		<DO type="CN_INC" name="INCSO6" desc="遥调6"/>
+		<DO type="CN_INC" name="INCSO7" desc="遥调7"/>
+		<DO type="CN_INC" name="INCSO8" desc="遥调8"/>
+		<DO type="CN_INC" name="INCSO9" desc="遥调9"/>
+		<DO type="CN_INC" name="INCSO10" desc="遥调10"/>
+		<DO type="CN_INC" name="INCSO11" desc="遥调11"/>
+		<DO type="CN_INC" name="INCSO12" desc="遥调12"/>
+		<DO type="CN_INC" name="INCSO13" desc="遥调13"/>
+		<DO type="CN_INC" name="INCSO14" desc="遥调14"/>
+		<DO type="CN_INC" name="INCSO15" desc="遥调15"/>
+		<DO type="CN_INC" name="INCSO16" desc="遥调16"/>
+		<DO type="CN_INC" name="INCSO17" desc="遥调17"/>
+		<DO type="CN_INC" name="INCSO18" desc="遥调18"/>
+		<DO type="CN_INC" name="INCSO19" desc="遥调19"/>
+		<DO type="CN_INC" name="INCSO20" desc="遥调20"/>
+		<DO type="CN_INC" name="INCSO21" desc="遥调21"/>
+		<DO type="CN_INC" name="INCSO22" desc="遥调22"/>
+		<DO type="CN_INC" name="INCSO23" desc="遥调23"/>
+		<DO type="CN_INC" name="INCSO24" desc="遥调24"/>
+		<DO type="CN_INC" name="INCSO25" desc="遥调25"/>
+		<DO type="CN_INC" name="INCSO26" desc="遥调26"/>
+		<DO type="CN_INC" name="INCSO27" desc="遥调27"/>
+		<DO type="CN_INC" name="INCSO28" desc="遥调28"/>
+		<DO type="CN_INC" name="INCSO29" desc="遥调29"/>
+		<DO type="CN_INC" name="INCSO30" desc="遥调30"/>
+		<DO type="CN_INC" name="INCSO31" desc="遥调31"/>
+		<DO type="CN_INC" name="INCSO32" desc="遥调32"/>
+		<DO type="CN_INC" name="INCSO33" desc="遥调33"/>
+		<DO type="CN_INC" name="INCSO34" desc="遥调34"/>
+		<DO type="CN_INC" name="INCSO35" desc="遥调35"/>
+		<DO type="CN_INC" name="INCSO36" desc="遥调36"/>
+		<DO type="CN_INC" name="INCSO37" desc="遥调37"/>
+		<DO type="CN_INC" name="INCSO38" desc="遥调38"/>
+		<DO type="CN_INC" name="INCSO39" desc="遥调39"/>
+		<DO type="CN_INC" name="INCSO40" desc="遥调40"/>
+		<DO type="CN_INC" name="INCSO41" desc="遥调41"/>
+		<DO type="CN_INC" name="INCSO42" desc="遥调42"/>
+		<DO type="CN_INC" name="INCSO43" desc="遥调43"/>
+		<DO type="CN_INC" name="INCSO44" desc="遥调44"/>
+		<DO type="CN_INC" name="INCSO45" desc="遥调45"/>
+		<DO type="CN_INC" name="INCSO46" desc="遥调46"/>
+		<DO type="CN_INC" name="INCSO47" desc="遥调47"/>
+		<DO type="CN_INC" name="INCSO48" desc="遥调48"/>
+		<DO type="CN_INC" name="INCSO49" desc="遥调49"/>
+		<DO type="CN_INC" name="INCSO50" desc="遥调50"/>		
+	</LNodeType>
+	<LNodeType lnClass="GGIO" id="UK_GGIO_PUL" desc="计量">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"/>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"/>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"/>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"/>
+		<DO type="CN_BCR" name="BCR1" desc="脉冲1"/>
+		<DO type="CN_BCR" name="BCR2" desc="脉冲2"/>
+		<DO type="CN_BCR" name="BCR3" desc="脉冲3"/>
+		<DO type="CN_BCR" name="BCR4" desc="脉冲4"/>
+		<DO type="CN_BCR" name="BCR5" desc="脉冲5"/>
+		<DO type="CN_BCR" name="BCR6" desc="脉冲6"/>
+		<DO type="CN_BCR" name="BCR7" desc="脉冲7"/>
+		<DO type="CN_BCR" name="BCR8" desc="脉冲8"/>
+		<DO type="CN_BCR" name="BCR9" desc="脉冲9"/>
+		<DO type="CN_BCR" name="BCR10" desc="脉冲10"/>
+		<DO type="CN_BCR" name="BCR11" desc="脉冲11"/>
+		<DO type="CN_BCR" name="BCR12" desc="脉冲12"/>
+		<DO type="CN_BCR" name="BCR13" desc="脉冲13"/>
+		<DO type="CN_BCR" name="BCR14" desc="脉冲14"/>
+		<DO type="CN_BCR" name="BCR15" desc="脉冲15"/>
+		<DO type="CN_BCR" name="BCR16" desc="脉冲16"/>
+		<DO type="CN_BCR" name="BCR17" desc="脉冲17"/>
+		<DO type="CN_BCR" name="BCR18" desc="脉冲18"/>
+		<DO type="CN_BCR" name="BCR19" desc="脉冲19"/>
+		<DO type="CN_BCR" name="BCR20" desc="脉冲20"/>
+		<DO type="CN_BCR" name="BCR21" desc="脉冲21"/>
+		<DO type="CN_BCR" name="BCR22" desc="脉冲22"/>
+		<DO type="CN_BCR" name="BCR23" desc="脉冲23"/>
+		<DO type="CN_BCR" name="BCR24" desc="脉冲24"/>
+		<DO type="CN_BCR" name="BCR25" desc="脉冲25"/>
+	</LNodeType>
+	<LNodeType lnClass="GAPC" id="UK_GAPC" desc="通用过程自动控制">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL" desc="铭牌"></DO>
+		<DO name="Str" type="CN_ACD" desc="启动"></DO>
+		<DO name="Op" type="CN_ACT" desc="动作"></DO>
+		<DO name="SPCSO" type="CN_SPC" desc="可控单点"></DO>
+		<DO name="StrVal" type="CN_ASG_SG" desc="动作定值"></DO>
+	</LNodeType>
+	<LNodeType lnClass="MMXU" id="UK_MMXU" desc="遥测">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_DEL" name="PPV" desc="线电压"></DO>
+		<DO type="CN_WYE" name="A" desc="电流"></DO>
+		<DO type="CN_MV" name="TotW" desc="总有功"></DO>
+		<DO type="CN_MV" name="TotVAr" desc="总无功"></DO>
+		<DO type="CN_MV" name="TotVA" desc="总视在"></DO>
+		<DO type="CN_MV" name="TotPF" desc="功率因数"></DO>
+		<DO type="CN_MV" name="Hz" desc="频率"></DO>
+		<DO type="CN_WYE" name="PhV" desc="相电压"></DO>
+	</LNodeType>
+	<LNodeType lnClass="MMXN" id="UK_MMXN" desc="相无关值测量">
+		<DO type="CN_INC_Mod" desc="模式" name="Mod"></DO>
+		<DO type="CN_INS_Beh" desc="性能" name="Beh"></DO>
+		<DO type="CN_INS_Health" desc="健康状态" name="Health"></DO>
+		<DO type="CN_LPL" desc="铭牌" name="NamPlt"></DO>
+		<DO type="CN_MV" desc="电流" name="Amp"></DO>
+	</LNodeType>
+	<LNodeType lnClass="MSQI" id="UK_MSQI" desc="不平衡测量">
+		<DO type="CN_INC" desc="模式" name="Mod"></DO>
+		<DO type="CN_INS" desc="性能" name="Beh"></DO>
+		<DO type="CN_INS" desc="健康状态" name="Health"></DO>
+		<DO type="CN_LPL" desc="铭牌" name="NamPlt"></DO>
+		<DO type="CN_WYE" desc="不平衡电流" name="ImbA"></DO>
+		<DO type="CN_MV" desc="不平衡负序电流" name="ImbNgA"></DO>
+		<DO type="CN_MV" desc="不平衡负序电压" name="ImbNgV"></DO>
+		<DO type="CN_DEL" desc="不平衡线电压" name="ImbPPV"></DO>
+		<DO type="CN_WYE" desc="不平衡电压" name="ImbV"></DO>
+		<DO type="CN_MV" desc="不平衡零序电流" name="ImbZroA"></DO>
+		<DO type="CN_MV" desc="不平衡零序电压" name="ImbZroV"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PDIS" id="UK_PDIS" desc="距离保护">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="动作"></DO>
+		<DO type="CN_ASG_SG" name="StrVal" desc="阻抗定值（在不同的实例中分别表示相间和接地阻抗）"></DO>
+		<DO type="CN_ING_SG" name="OpDlTmms" desc="时间定值"></DO>
+		<DO type="CN_ASG_SG" name="PhStr" desc="相间阻抗定值"></DO>
+		<DO type="CN_ING_SG" name="PhDlTmms" desc="相间时间定值"></DO>
+		<DO type="CN_ASG_SG" name="GndStr" desc="接地阻抗定值"></DO>
+		<DO type="CN_ING_SG" name="GndPhDlTmms" desc="接地时间定值"></DO>
+		<DO type="CN_ASG_SG" name="RisLod" desc="负荷限制电阻"></DO>
+		<DO type="CN_ASG_SG" name="LinAng" desc="线路正序灵敏角"></DO>
+		<DO type="CN_ASG_SG_EX" name="LinAng0" desc="线路零序灵敏角"></DO>
+		<DO type="CN_ASG_SG" name="Z1" desc="线路正序阻抗定值"></DO>
+		<DO type="CN_ASG_SG" name="Z0" desc="线路零序阻抗定值"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable" desc="投入"></DO>
+		<DO type="CN_ASG_SG" name="K0Fact" desc="零序补偿系数KZ"></DO>
+		<DO type="CN_ASG_SG_EX" name="K0FactX" desc="零序电抗补偿系数KX"></DO>
+		<DO type="CN_ASG_SG_EX" name="K0FactR" desc="零序电阻补偿系数KR"></DO>
+		<DO type="CN_ASG_SG_EX" name="LineAngOfsPG" desc="接地距离偏移角"></DO>
+		<DO type="CN_ASG_SG_EX" name="LineAngOfsPP" desc="相间距离偏移角"></DO>
+		<DO type="CN_ASG_SG_EX" name="StrValueToTfm" desc="指向主变阻抗定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="StrValueToBus" desc="指向母线阻抗定值"></DO>
+		<DO type="CN_ACT_EX" name="OpA" desc="A相动作"></DO>
+		<DO type="CN_ACT_EX" name="OpB" desc="B相动作"></DO>
+		<DO type="CN_ACT_EX" name="OpC" desc="C相动作"></DO>
+		<DO type="CN_SPG_SG_EX" name="BlkRec" desc="永跳投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="PPBlkRec" desc="相间故障投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="TPBlkRec" desc="三相故障投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="RecAcc" desc="重合加速投入"></DO>
+		<DO type="CN_ASG_SG" name="R0" desc="零序电阻"></DO>
+		<DO type="CN_ASG_SG" name="R1" desc="正序电阻"></DO>
+		<DO type="CN_ASG_SG" name="X0" desc="零序电抗"></DO>
+		<DO type="CN_ASG_SG" name="X1" desc="正序电抗"></DO>
+		<DO type="CN_ASG_SG" name="Capac0" desc="零序容抗"></DO>
+		<DO type="CN_ASG_SG" name="Capac1" desc="正序容抗"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PDIF" id="UK_PDIF" desc="差动保护">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="动作"></DO>
+		<DO type="CN_WYE" name="DifAClc" desc="差动电流"></DO>
+		<DO type="CN_WYE" name="RstA" desc="制动电流"></DO>
+		<DO type="CN_ASG_SG_EX" name="LinCapac" desc="线路正序容抗"></DO>
+		<DO type="CN_ASG_SG_EX" name="LinCapacC0" desc="线路零序容抗"></DO>
+		<DO type="CN_ASG_SG_EX" name="LocShReactX" desc="电抗器阻抗定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="LocNReactX" desc="中性点电抗器阻抗定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="TAFact" desc="CT变比系数"></DO>
+		<DO type="CN_ASG_SG_EX" name="StrValSG" desc="差动动作电流定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="StrValTABrk" desc="CT断线差流定值"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable" desc="投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="TABlkEna" desc="CT断线闭锁差动投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="BlkDifEna1" desc="闭锁差动1投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="BlkDifEna2" desc="闭锁差动2投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="BlkDifEna3" desc="闭锁差动3投入"></DO>
+		<DO type="CN_ASG_SG_EX" name="RemShReactX" desc="对侧电抗器阻抗"></DO>
+		<DO type="CN_ASG_SG_EX" name="RemNReactX" desc="对侧中性点电抗器阻抗"></DO>
+		<DO type="CN_SPG_SG_EX" name="CCCEna" desc="电容电流补偿"></DO>
+		<DO type="CN_ASG_SG_EX" name="Ha2RstFact" desc="二次谐波制动系数"></DO>
+		<DO type="CN_ASG_SG_EX" name="TAWrnSet" desc="CT断线告警定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="TABlkSet" desc="CT断线闭锁定值"></DO>
+		<DO type="CN_SPG_SG_EX" name="Ha2RstMod" desc="二次谐波制动"></DO>
+		<DO type="CN_SPG_SG_EX" name="BrkPDIFEnab" desc="突变量差动保护投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="ZeroPDIFBlkRec" desc="零序差动动作永跳"></DO>
+		<DO type="CN_ASG_SG_EX" name="InfVal" desc="差动拐点电流"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PTOC" id="UK_PTOC" desc="过流">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO name="Op" desc="动作" type="CN_ACT_3P"></DO>
+		<DO type="CN_ASG_SG" name="StrVal" desc="动作定值"></DO>
+		<DO type="CN_ING_SG" name="OpDlTmms" desc="时间定值"></DO>
+		<DO type="CN_ING_SG" name="MinOpTmms" desc="最小动作时间"></DO>
+		<DO type="CN_ING_SG_EX" name="AlmDlTmms" desc="告警延时"></DO>
+		<DO type="CN_SPG_SG_EX" name="DirEna" desc="经方向"></DO>
+		<DO type="CN_SPG_SG_EX" name="DirToBus" desc="方向指向母线（元件用）"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable" desc="投入"></DO>
+		<DO type="CN_SPC_EX" name="Strp" desc="压板"></DO>
+		<DO type="CN_ASG_SG_EX" name="ZeroINVTmmFac" desc="零序反时限时间系数"></DO>
+		<DO type="CN_ASG_SG_EX" name="ZeroINVTmmInd" desc="零序反时限指数定值"></DO>
+		<DO type="CN_SPG_SG_EX" name="ZeroINVBlkRec" desc="零序反时限永跳投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="VolBlk" desc="3U0突变量闭锁投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="SpdEna" desc="加速段投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="I0Self" desc="自产I0"></DO>
+		<DO type="CN_ASG_SG_EX" name="TmmsInd" desc="时间指数"></DO>
+		<DO type="CN_ASG_SG_EX" name="InvertExp" desc="反时限指数"></DO>
+		<DO type="CN_ING_SG_EX" name="TrPsw" desc="跳闸密码"></DO>
+		<DO type="CN_SPG_SG_EX" name="BlkRec" desc="永跳投入"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PTUV" id="UK_PTUV" desc="低电压">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL" desc="铭牌"></DO>
+		<DO name="Str" type="CN_ACD_3P" desc="启动"></DO>
+		<DO name="Op" type="CN_ACT_3P" desc="动作"></DO>
+		<DO name="StrVal" type="CN_ASG_SG" desc="动作定值"></DO>
+		<DO name="OpDlTmms" type="CN_ING_SG" desc="时间定值"></DO>
+		<DO name="BlkVal" type="CN_ASG_SG_EX" desc="闭锁电流"></DO>
+		<DO name="Strp" type="CN_SPC_EX" desc="压板"></DO>
+		<DO name="Enable" type="CN_SPG_SG_EX" desc="投入"></DO>
+		<DO name="TrPsw" type="CN_ING_SG_EX" desc="跳闸密码"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PTOV" id="UK_PTOV" desc="过电压">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL" desc="铭牌"></DO>
+		<DO name="Str" type="CN_ACD_3P" desc="启动"></DO>
+		<DO name="Op" type="CN_ACT_3P" desc="动作"></DO>
+		<DO name="StrVal" type="CN_ASG_SG" desc="动作定值"></DO>
+		<DO name="OpDlTmms" type="CN_ING_SG" desc="时间定值"></DO>
+		<DO name="Strp" type="CN_SPC_EX" desc="压板"></DO>
+		<DO name="Enable" type="CN_SPG_SG_EX" desc="投入"></DO>
+		<DO name="CBOpnBlkRT" type="CN_SPG_SG_EX" desc="过电压远跳经跳位闭锁"></DO>
+		<DO name="TrPsw" type="CN_ING_SG_EX" desc="跳闸密码"></DO>
+		<DO name="OnePhOVMod" type="CN_SPG_SG_EX" desc="过点压三取一方式"></DO>
+		<DO name="OpTxTmms" type="CN_ING_SG_EX" desc="过电压发信动作时间"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PTUF" id="UK_PTUF" desc="低周保护">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL" desc="铭牌"></DO>
+		<DO name="Str" type="CN_ACD_3P" desc="启动"></DO>
+		<DO name="Op" type="CN_ACT_3P" desc="动作"></DO>
+		<DO name="BlkV" type="CN_SPS" desc="电压闭锁"></DO>
+		<DO name="StrVal" type="CN_ASG_SG" desc="动作定值"></DO>
+		<DO name="BlkVal" type="CN_ASG_SG" desc="电压闭锁定值"></DO>
+		<DO name="OpDlTmms" type="CN_ING_SG" desc="动作延时时间"></DO>
+		<DO name="BlkValRteHz" type="CN_ASG_SG_EX" desc="滑差闭锁定值"></DO>
+		<DO name="BlkValA" type="CN_ASG_SG_EX" desc="电流闭锁定值"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PVOC" id="UK_PVOC" desc="电压闭锁延时过电流">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="动作"></DO>
+		<DO type="CN_ASG_SG_EX" name="StrValSG" desc="电流定值"></DO>
+		<DO type="CN_ING_SG" name="OpDlTmms" desc="时间定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="BlkValVpp" desc="低电压闭锁定值（线电压，用于复压闭锁）"></DO>
+		<DO type="CN_ASG_SG" name="BlkValV2" desc="负序电压闭锁定值（相电压，用于复压闭锁）"></DO>
+		<DO type="CN_ING_SG_EX" name="DirToBus" desc="方向指向母线"></DO>
+		<DO type="CN_SPG_SG_EX" name="BlkDirEna" desc="经方向闭锁投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="BlkVolEna" desc="经复压闭锁投入"></DO>
+		<DO type="CN_SPG_SG_EX" name="PTBlkVolEna" desc="PT断线退复压闭锁"></DO>
+		<DO type="CN_SPC_EX" name="Strp" desc="压板"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable" desc="投入"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PVPH" id="UK_PVPH" desc="电压频率(过励磁)">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="动作"></DO>
+		<DO type="CN_ACT_EX" name="OpA" desc="A相动作"></DO>
+		<DO type="CN_ACT_EX" name="OpB" desc="B相动作"></DO>
+		<DO type="CN_ACT_EX" name="OpC" desc="C相动作"></DO>
+		<DO type="CN_ASG_SG" name="StrVal" desc="动作定值"></DO>
+		<DO type="CN_ING_SG_EX" name="WarnDlTmms" desc="告警延时时间"></DO>
+		<DO type="CN_ASG_SG" name="TmMult1" desc="时间标度倍率"></DO>
+		<DO type="CN_ING_SG_EX" name="OpDl1Tmms" desc="动作延时时间1"></DO>
+		<DO type="CN_ING_SG_EX" name="OpDl2Tmms" desc="动作延时时间2"></DO>
+		<DO type="CN_ING_SG_EX" name="OpDl3Tmms" desc="动作延时时间3"></DO>
+		<DO type="CN_ING_SG_EX" name="OpDl4Tmms" desc="动作延时时间4"></DO>
+		<DO type="CN_ING_SG_EX" name="OpDl5Tmms" desc="动作延时时间5"></DO>
+		<DO type="CN_ING_SG_EX" name="OpDl6Tmms" desc="动作延时时间6"></DO>
+		<DO type="CN_ING_SG_EX" name="OpDl7Tmms" desc="动作延时时间7"></DO>
+		<DO type="CN_SPG_SG_EX" name="TrEna" desc="保护跳闸控制字"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PPDP" id="UK_PPDP" desc="三相不一致保护">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL_EX" desc="铭牌"></DO>
+		<DO name="Str" type="CN_ACD_3P" desc="启动"></DO>
+		<DO name="Op" type="CN_ACT_3P" desc="动作"></DO>
+		<DO name="ABlkVal" type="CN_ASG_SG_EX" desc="不一致零负序电流"></DO>
+		<DO name="I0BlkVal" type="CN_ASG_SG_EX" desc="不一致零序电流"></DO>
+		<DO name="I2BlkVal" type="CN_ASG_SG_EX" desc="不一致负序电流"></DO>
+		<DO name="OpDlTmms" type="CN_ING_SG_EX" desc="三相不一致保护时间"></DO>
+		<DO name="Enable" type="CN_SPG_SG_EX" desc="三相不一致保护"></DO>
+		<DO name="ABlkEna" type="CN_SPG_SG_EX" desc="不一致经零负序电流"></DO>
+		<DO name="TWJEna" type="CN_SPG_SG_EX" desc="不一致用TWJ"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PSCH" id="UK_PSCH" desc="保护通道">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPS" name="ProTx" desc="纵联保护发信或远跳保护发信"></DO>
+		<DO type="CN_SPS" name="ProRx" desc="纵联保护收信或远跳保护收信"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="纵联保护动作或远跳保护动作"></DO>
+		<DO type="CN_ING_SG_EX" name="Type" desc="通道类型"></DO>
+		<DO type="CN_ING_SG_EX" name="LocChnID" desc="本侧识别码"></DO>
+		<DO type="CN_ING_SG_EX" name="RemChnID" desc="对侧识别码"></DO>
+		<DO type="CN_ING_SG_EX" name="ChkTmh" desc="通道交换时间定值"></DO>
+		<DO type="CN_SPG_SG_EX" name="PermSchTyp" desc="允许式通道"></DO>
+		<DO type="CN_SPG_SG_EX" name="UnBlkEna" desc="解除闭锁功能"></DO>
+		<DO type="CN_SPG_SG_EX" name="WeakEnd" desc="弱电源侧"></DO>
+		<DO type="CN_SPG_SG_EX" name="IntClkMod" desc="通信内时钟"></DO>
+		<DO type="CN_SPG_SG_EX" name="AutChk" desc="自动交换通道"></DO>
+		<DO type="CN_SPG_SG_EX" name="ChnSpd" desc="通道速率"></DO>
+		<DO type="CN_SPG_SG_EX" name="StrEnaRT" desc="远跳受本侧启动控制"></DO>
+		<DO type="CN_SPC_EX" name="ProTxEna" desc="发信出口压板"></DO>
+		<DO type="CN_SPG_SG_EX" name="IntClkMod1" desc="通信内时钟2"></DO>
+		<DO type="CN_ASG_SG_EX" name="ShX" desc="并联电抗"></DO>
+		<DO type="CN_ASG_SG_EX" name="GndX" desc="接地电抗"></DO>
+		<DO type="CN_ASG_SG_EX" name="ShX1" desc="并联电抗1"></DO>
+		<DO type="CN_ASG_SG_EX" name="GndX1" desc="接地电抗1"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PSDE" id="UK_PSDE" desc="接地故障">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="纵联保护动作或远跳保护动作"></DO>
+		<DO type="CN_ASG_SG" name="Ang" desc="电压(U0)和电流(I0)间相角"></DO>
+		<DO type="CN_ASG_SG" name="GndStr" desc="接地启动值(3U0)"></DO>
+		<DO type="CN_ASG_SG" name="GndOp" desc="接地启动值(3I0)"></DO>
+		<DO type="CN_ING_SG" name="StrDlTmms" desc="启动延时"></DO>
+		<DO type="CN_ING_SG" name="OpDlTmms" desc="动作延时"></DO>
+		<DO type="CN_ING_SG" name="DirMod" desc="方向模式"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PTRC" id="UK_PTRC" desc="保护跳闸条件">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPC_EX" name="TrStrp" desc="跳闸出口压板"></DO>
+		<DO type="CN_SPC_EX" name="StrBFStrp" desc="启动失灵出口压板"></DO>
+		<DO type="CN_SPC_EX" name="BlkRecStrp" desc="闭锁重合出口压板"></DO>
+		<DO type="CN_ACT_3P" name="Tr" desc="跳闸"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="动作"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO type="CN_ACT_3P_EX" name="StrBF" desc="启动失灵"></DO>
+		<DO type="CN_SPS" name="BlkRec" desc="闭锁重合"></DO>
+		<DO type="CN_SPG_SG_EX" name="TPTrMod" desc="三相跳闸模式"></DO>
+		<DO type="CN_SPG_SG_EX" name="Z2BlkRec" desc="Ⅱ段保护闭锁重合闸"></DO>
+		<DO type="CN_SPG_SG_EX" name="MPFltBlkRec" desc="多相故障闭锁重合闸"></DO>
+		<DO type="CN_SPG_SG_EX" name="DPTrEna" desc="分相跳闸允许"></DO>
+		<DO type="CN_SPC_EX" name="TrStrp1" desc="联跳出口压板1"></DO>
+		<DO type="CN_SPC_EX" name="TrStrp2" desc="联跳出口压板2"></DO>
+		<DO type="CN_SPC_EX" name="TrStrp3" desc="联跳出口压板3"></DO>
+		<DO type="CN_SPC_EX" name="TrStrp4" desc="联跳出口压板4"></DO>
+		<DO type="CN_SPC_EX" name="StrBFStrp1" desc="启动失灵出口压板1"></DO>
+		<DO type="CN_SPC_EX" name="StrBFStrp2" desc="启动失灵出口压板2"></DO>
+		<DO type="CN_SPC_EX" name="StrBFStrp3" desc="启动失灵出口压板3"></DO>
+		<DO type="CN_SPC_EX" name="StrBFStrp4" desc="启动失灵出口压板4"></DO>
+		<DO type="CN_ACT_EX" name="TrA" desc="A相跳闸"></DO>
+		<DO type="CN_ACT_EX" name="TrB" desc="B相跳闸"></DO>
+		<DO type="CN_ACT_EX" name="TrC" desc="C相跳闸"></DO>
+		<DO type="CN_ACT_EX" name="OpA" desc="A相动作"></DO>
+		<DO type="CN_ACT_EX" name="OpB" desc="B相动作"></DO>
+		<DO type="CN_ACT_EX" name="OpC" desc="C相动作"></DO>
+	</LNodeType>
+	<LNodeType lnClass="PTTR" id="UK_PTTR" desc="过热保护">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_MV" name="Amp" desc="热负荷模型电流"></DO>
+		<DO type="CN_MV" name="Tmp" desc="热负荷温度"></DO>
+		<DO type="CN_MV" name="TmpRl" desc="温度和最大温度之间关系"></DO>
+		<DO type="CN_MV" name="LodRsvAlm" desc="报警前负荷裕度"></DO>
+		<DO type="CN_MV" name="LodRsvTr" desc="跳闸前负荷裕度"></DO>
+		<DO type="CN_MV" name="AgeRat" desc="老化速率"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="动作"></DO>
+		<DO type="CN_ACT_3P" name="AlmThm" desc="热告警"></DO>
+		<DO type="CN_ASG_SG" name="TmpMax" desc="最大允许温度"></DO>
+		<DO type="CN_ASG_SG" name="StrVal" desc="启动值"></DO>
+		<DO type="CN_ING_SG" name="OpDlTmms" desc="动作延时时间"></DO>
+		<DO type="CN_ING_SG" name="MinOpTmms" desc="最小动作时间"></DO>
+		<DO type="CN_ING_SG" name="MaxOpTmms" desc="最大动作时间"></DO>
+		<DO type="CN_ING_SG" name="RsDlTmms" desc="复位延时时间时间"></DO>
+		<DO type="CN_ING_SG" name="ConsTms" desc="热负荷模型时间常数"></DO>
+		<DO type="CN_ASG_SG" name="AlmVal" desc="告警值"></DO>
+	</LNodeType>
+	<LNodeType lnClass="RREC" id="UK_RREC" desc="自动重合闸">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPC_EX" name="OpStrp" desc="重合闸出口软压板"></DO>
+		<DO type="CN_SPC_EX" name="PhRecEna" desc="按相重合闸"></DO>
+		<DO type="CN_SPC_EX" name="StopRecEna" desc="停用重合闸"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="重合闸动作信号"></DO>
+		<DO type="CN_INS_ARST" name="AutoRecSt" desc="重合闸状态"></DO>
+		<DO type="CN_ING_SG_EX" name="SPRecTmms" desc="单相重合闸时间"></DO>
+		<DO type="CN_ING_SG_EX" name="TPRecTmms" desc="三相重合闸时间"></DO>
+		<DO type="CN_ASG_SG_EX" name="RecDifAng" desc="同期合闸角"></DO>
+		<DO type="CN_SPG_SG_EX" name="RecChkSyn" desc="重合闸检同期方式"></DO>
+		<DO type="CN_SPG_SG_EX" name="RecChkDea" desc="重合闸检无压方式"></DO>
+		<DO type="CN_SPG_SG_EX" name="SPRChkLiv" desc="单相重合闸检线路有压"></DO>
+		<DO type="CN_SPG_SG_EX" name="CbOpnStrSPR" desc="TWJ启动单相重合闸"></DO>
+		<DO type="CN_SPG_SG_EX" name="CbOpnStrTPR" desc="TWJ启动三相重合闸"></DO>
+		<DO type="CN_SPG_SG_EX" name="FlRecChkLiv" desc="后合检线路有压"></DO>
+		<DO type="CN_SPG_SG_EX" name="SPRecMod" desc="单相重合闸"></DO>
+		<DO type="CN_SPG_SG_EX" name="TPRecMod" desc="三相重合闸"></DO>
+		<DO type="CN_SPG_SG_EX" name="InhRec" desc="禁止重合闸"></DO>
+		<DO type="CN_SPG_SG_EX" name="StopRec" desc="停用重合闸"></DO>
+		<DO type="CN_SPC_EX" name="RecStrpMod1" desc="重合方式1"></DO>
+		<DO type="CN_SPC_EX" name="RecStrpMod2" desc="重合方式2"></DO>
+		<DO type="CN_ASG_SG_EX" name="SynBlkDifV" desc="准同期电压差闭锁"></DO>
+		<DO type="CN_ASG_SG_EX" name="SynBlkDifHz" desc="准同期频率差闭锁"></DO>
+		<DO type="CN_ASG_SG_EX" name="SynBlkAcc" desc="准同期加速度闭锁"></DO>
+		<DO type="CN_ING_SG_EX" name="RecForTmms" desc="合闸导前时间"></DO>
+		<DO type="CN_ING_SG_EX" name="Rec2Tmms" desc="二次重合时间"></DO>
+		<DO type="CN_SPG_SG_EX" name="SynChkPh" desc="同期相别选择"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable" desc="投入"></DO>
+		<DO desc="Ux超前Uab角度" name="LeadAng" type="CN_ASG_SG_EX"></DO>
+		<DO type="CN_ACT_3P" name="RecStart" desc="重合闸启动"></DO>
+		<DO type="CN_ACT_3P" name="RecTimeout" desc="重合闸超时"></DO>
+	</LNodeType>
+	<LNodeType lnClass="RDRE" id="UK_RDRE" desc="扰动记录功能">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL" desc="铭牌"></DO>
+		<DO name="RcdMade" type="CN_SPS" desc="在记录"></DO>
+		<DO name="FltNum" type="CN_INS" desc="故障序号"></DO>
+	</LNodeType>
+	<LNodeType lnClass="RSYN" id="UK_RSYN" desc="同期检查">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_MV" name="DifVClc" desc="压差测量值"></DO>
+		<DO type="CN_MV" name="DifHzClc" desc="频差测量值"></DO>
+		<DO type="CN_MV" name="DifAngClc" desc="角差测量值"></DO>
+		<DO type="CN_SPS" name="Rel" desc="同期条件满足"></DO>
+		<DO type="CN_SPS" name="VInd" desc="压差条件不满足"></DO>
+		<DO type="CN_SPS" name="AngInd" desc="角差条件不满足"></DO>
+		<DO type="CN_SPS" name="HzInd" desc="频差条件不满足"></DO>
+		<DO type="CN_ASG_SG_EX" name="DifV" desc="压差定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="DifHz" desc="频差定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="DifAng" desc="角差定值"></DO>
+		<DO type="CN_ING_SG_EX" name="LivDeaMod" desc="无压模式"></DO>
+		<DO type="CN_ASG_SG_EX" name="DeaLinVal" desc="线路无压定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="LivLinVal" desc="线路有压定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="DeaBusVal" desc="母线无压定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="LivBusVal" desc="母线有压定值"></DO>
+		<DO type="CN_ING_SG_EX" name="PlsTmms" desc="断路器合闸脉宽"></DO>
+		<DO type="CN_ING_SG_EX" name="BkrTmms" desc="断路器合闸时间"></DO>
+	</LNodeType>
+	<LNodeType lnClass="RBRF" id="UK_RBRF" desc="断路器失灵">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL" desc="铭牌"></DO>
+		<DO name="Str" type="CN_ACD_3P" desc="启动"></DO>
+		<DO name="OpEx" type="CN_ACT_3P" desc="失灵跳闸（跳母线）"></DO>
+		<DO name="OpIn" type="CN_ACT_3P" desc="失灵跟跳"></DO>
+		<DO name="FailMod" type="CN_ING_SG" desc="失灵检测模式"></DO>
+		<DO name="SPlTrTmms" type="CN_ING_SG" desc="单相再跳闸延时"></DO>
+		<DO name="TPTrTmms" type="CN_ING_SG" desc="三相再跳闸延时"></DO>
+		<DO name="FailTmms" type="CN_ING_SG" desc="失灵保护跳相邻断路器延时（母联分段失灵时间、失灵保护2时限）"></DO>
+		<DO name="ReTrTmms" type="CN_ING_SG_EX" desc="失灵保护跟跳本断路器时间"></DO>
+		<DO name="StrValA" type="CN_ASG_SG_EX" desc="失灵保护相电流定值"></DO>
+		<DO name="StrVal3I0" type="CN_ASG_SG_EX" desc="失灵保护零序电流定值"></DO>
+		<DO name="StrValI2" type="CN_ASG_SG_EX" desc="失灵保护负序电流定值"></DO>
+		<DO name="LoPFAng" type="CN_ING_SG_EX" desc="低功率因数角"></DO>
+		<DO name="Enable" type="CN_SPG_SG_EX" desc="投入"></DO>
+		<DO name="ReTrEna" type="CN_SPG_SG_EX" desc="跟跳本断路器"></DO>
+		<DO name="FailTrTieTmms" type="CN_ING_SG_EX" desc="失灵保护1时限"></DO>
+		<DO name="UVBlkVal" type="CN_ASG_SG_EX" desc="低电压闭锁定值(相电压)"></DO>
+		<DO name="V0BlkVal" type="CN_ASG_SG_EX" desc="零序电压闭锁定值"></DO>
+		<DO name="V2BlkVal" type="CN_ASG_SG_EX" desc="负序电压闭锁定值"></DO>
+		<DO name="DetValA" type="CN_ASG_SG" desc="电流检测值"></DO>
+		<DO name="ReTrMod" type="CN_ING_SG" desc="再跳闸模式"></DO>
+	</LNodeType>
+	<LNodeType lnClass="RRTC" id="UK_RRTC" desc="远跳就地判别">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL_EX" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="动作"></DO>
+		<DO type="CN_ASG_SG_EX" name="StrVal3I0" desc="零序电流定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="StrValI2" desc="负序电流定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="StrVal3U0" desc="零序电压定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="StrValU2" desc="负序电压定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="LoA" desc="低电流定值"></DO>
+		<DO type="CN_ASG_SG_EX" name="LoW" desc="低有功功率"></DO>
+		<DO type="CN_ASG_SG_EX" name="LoPFAng" desc="低功率因数角"></DO>
+		<DO type="CN_ING_SG" name="RTCDlTmms" desc="远跳经故障判据时间"></DO>
+		<DO type="CN_ING_SG" name="RTDlTmms" desc="远跳不经故障判据时间"></DO>
+		<DO type="CN_SPG_SG_EX" name="AVStrEna" desc="故障电流、电压启动"></DO>
+		<DO type="CN_SPG_SG_EX" name="LoAWStrEna" desc="低电流、低有功启动"></DO>
+		<DO type="CN_SPG_SG_EX" name="LoPFAngEna" desc="低功率因数角启动"></DO>
+		<DO type="CN_SPG_SG_EX" name="NoCrtrnEna" desc="远方跳闸不经故障判据"></DO>
+		<DO type="CN_SPG_SG_EX" name="TVFailDisCrtrn" desc="PT断线转无判据"></DO>
+		<DO type="CN_ING_SG_EX" name="APlsTmms" desc="电流变化量展宽时间"></DO>
+	</LNodeType>
+	<LNodeType lnClass="RFLO" id="UK_RFLO" desc="故障定位">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_CMV" name="FltZ" desc="故障阻抗"></DO>
+		<DO type="CN_MV" name="FltDiskm" desc="故障距离"></DO>
+		<DO type="CN_INS" name="FltLoop" desc="故障相别"></DO>
+		<DO type="CN_INC" name="OpCntRs" desc="可复位动作计数"></DO>
+		<DO type="CN_ASG_SG" name="LinLenKm" desc="线路全长（km）"></DO>
+		<DO type="CN_ASG_SG" name="R1" desc="线路正序电阻"></DO>
+		<DO type="CN_ASG_SG" name="X1" desc="线路正序电抗"></DO>
+		<DO type="CN_ASG_SG" name="R0" desc="线路零序电阻"></DO>
+		<DO type="CN_ASG_SG" name="X0" desc="线路零序电抗"></DO>
+	</LNodeType>
+	<LNodeType lnClass="RPSB" id="UK_RPSB" desc="振荡闭锁">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_ASG_SG_EX" name="BlkValASG" desc="振荡闭锁过流定值"></DO>
+		<DO type="CN_SPG_SG_EX" name="Enable" desc="振荡闭锁元件（控制字）"></DO>
+	</LNodeType>
+	<LNodeType lnClass="RBZT" id="UK_RBZT" desc="备用电源自投">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_ACD_3P" name="Str" desc="启动"></DO>
+		<DO type="CN_ACT_3P" name="Op" desc="动作"></DO>
+		<DO type="CN_ASG_SG" name="StrVal" desc="启动值"></DO>
+	</LNodeType>
+	<LNodeType lnClass="TCTR" id="UK_TCTR" desc="电流互感器">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_INS" name="EEHealth" desc="外部设备健康"></DO>
+		<DO type="CN_DPL" name="EEName" desc="外部设备铭牌"></DO>
+		<DO type="CN_INS" name="OpTmh" desc="运行时间"></DO>
+		<DO type="CN_SAV" name="Amp" desc="电流采样值"></DO>
+		<DO type="CN_ASG_SG_EX" name="ARtg" desc="额定电流"></DO>
+		<DO type="CN_ASG_SG_EX" name="HzRtg" desc="额定频率"></DO>
+		<DO type="CN_ASG_SG_EX" name="ARtgSnd" desc="二次额定电流"></DO>
+	</LNodeType>
+	<LNodeType lnClass="TVTR" id="UK_TVTR" desc="电压互感器">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_INS" name="EEHealth" desc="外部设备健康"></DO>
+		<DO type="CN_DPL" name="EEName" desc="外部设备铭牌"></DO>
+		<DO type="CN_INS" name="OpTmh" desc="运行时间"></DO>
+		<DO type="CN_SAV" name="Vol" desc="电压采样值"></DO>
+		<DO type="CN_SPS" name="FuFail" desc="TV断线"></DO>
+		<DO type="CN_ASG_SG_EX" name="VRtg" desc="一次额定电压"></DO>
+		<DO type="CN_ASG_SG_EX" name="HzRtg" desc="额定频率"></DO>
+		<DO type="CN_ASG_SG_EX" name="VRtgSnd" desc="二次额定电压"></DO>
+		<DO type="CN_SPG_SG_EX" name="LinTVMod" desc="电压取线路PT电压"></DO>
+	</LNodeType>
+	<LNodeType lnClass="CILO" id="UK_CILO" desc="联闭锁">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPS" name="EnaOpn" desc="允许分闸"></DO>
+		<DO type="CN_SPS" name="EnaCls" desc="允许合闸"></DO>
+		<DO type="CN_SPS_EX" name="EnaOp" desc="允许操作"></DO>
+	</LNodeType>
+	<LNodeType lnClass="CSWI" id="UK_CSWI" desc="开关控制器">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL" desc="铭牌"></DO>
+		<DO name="Pos" type="CN_DPC" desc="开断"></DO>
+	</LNodeType>
+	<LNodeType lnClass="ATCC" id="UK_ATCC" desc="自动分接头调节控制">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_SPS" name="Loc" desc="本地操作"></DO>
+		<DO type="CN_BSC" name="TapChg" desc="调节分接头位置（急停，上升，下降）"></DO>
+		<DO type="CN_DPC" name="ParOp" desc="并列、独立操作"></DO>
+		<DO type="CN_ACT_EX" name="OpStop" desc="分接头急停操作"></DO>
+		<DO type="CN_ACT_EX" name="OpHi" desc="分接头升操作"></DO>
+		<DO type="CN_ACT_EX" name="OpLo" desc="分接头降操作"></DO>
+		<DO type="CN_MV" name="CtlV" desc="控制电压"></DO>
+	</LNodeType>
+	<LNodeType lnClass="XCBR" id="UK_XCBR" desc="断路器">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL" desc="铭牌"></DO>
+		<DO name="Loc" type="CN_SPS" desc="本地操作"></DO>
+		<DO name="OpCnt" type="CN_INS" desc="操作计数"></DO>
+		<DO name="Pos" type="CN_DPC" desc="开关位置"></DO>
+		<DO name="BlkOpn" type="CN_SPC" desc="跳闸闭锁"></DO>
+		<DO name="BlkCls" type="CN_SPC" desc="合闸闭锁"></DO>
+		<DO name="CBOpCap" type="CN_INS" desc="断路器操作能力"></DO>
+	</LNodeType>
+	<LNodeType lnClass="XSWI" id="UK_XSWI" desc="隔离开关">
+		<DO name="Mod" type="CN_INC_Mod" desc="模式"></DO>
+		<DO name="Beh" type="CN_INS_Beh" desc="性能"></DO>
+		<DO name="Health" type="CN_INS_Health" desc="健康状态"></DO>
+		<DO name="NamPlt" type="CN_LPL" desc="铭牌"></DO>
+		<DO name="Loc" type="CN_SPS" desc="本地操作"></DO>
+		<DO name="OpCnt" type="CN_INS" desc="操作计数"></DO>
+		<DO name="Pos" type="CN_DPC" desc="开关位置"></DO>
+		<DO name="BlkOpn" type="CN_SPC" desc="跳闸闭锁"></DO>
+		<DO name="BlkCls" type="CN_SPC" desc="合闸闭锁"></DO>
+		<DO name="SwTyp" type="CN_INS" desc="开关类型"></DO>
+		<DO name="SwOpCap" type="CN_INS" desc="断路器操作能力"></DO>
+	</LNodeType>
+	<LNodeType lnClass="YPTR" id="UK_YPTR" desc="电力变压器">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_INS" name="EEHealth" desc="外部设备健康"></DO>
+		<DO type="CN_DPL" name="EEName" desc="外部设备铭牌"></DO>
+		<DO type="CN_INS" name="OpTmh" desc="运行时间"></DO>
+		<DO type="CN_ASG_SG" name="HiVRtg" desc="高压侧额定电压"></DO>
+		<DO type="CN_ASG_SG_EX" name="MdVRtg" desc="中压侧额定电压"></DO>
+		<DO type="CN_ASG_SG" name="LoVRtg" desc="低压侧额定电压"></DO>
+		<DO type="CN_ASG_SG" name="PwrRtg" desc="额定功率"></DO>
+		<DO type="CN_ASG_SG_EX" name="LoVPwrRtg" desc="低压侧额定功率"></DO>
+		<DO type="CN_ING_SG_EX" name="HiVTmode" desc="高压侧接线方式"></DO>
+		<DO type="CN_ING_SG_EX" name="MdVTmode" desc="中压侧接线方式"></DO>
+		<DO type="CN_ING_SG_EX" name="LoVTmode" desc="低压侧接线方式"></DO>
+	</LNodeType>
+	<LNodeType lnClass="ZMOT" id="UK_ZMOT" desc="电动机">
+		<DO type="CN_INC_Mod" name="Mod" desc="模式"></DO>
+		<DO type="CN_INS_Beh" name="Beh" desc="性能"></DO>
+		<DO type="CN_INS_Health" name="Health" desc="健康状态"></DO>
+		<DO type="CN_LPL" name="NamPlt" desc="铭牌"></DO>
+		<DO type="CN_INS" name="EEHealth" desc="外部设备健康"></DO>
+		<DO type="CN_DPL" name="EEName" desc="外部设备铭牌"></DO>
+		<DO type="CN_INS" name="OpTmh" desc="运行时间"></DO>
+		<DO type="CN_SPC" name="DExt" desc="去磁"></DO>
+		<DO type="CN_ASG_SG_EX" name="ARtg" desc="额定电流"></DO>
+		<DO type="CN_ING_SG_EX" name="StrTmms" desc="启动时间"></DO>
+	</LNodeType>
+	<DOType id="CN_INC" cdc="INC" desc="可控整数状态">
+        <DA name="SBO" bType="VisString64" fc="CO"></DA>
+		<DA name="SBOw" bType="Struct" type="CN_SBOw_Oper_INC" fc="CO"></DA>
+		<DA name="Oper" bType="Struct" type="CN_SBOw_Oper_INC" fc="CO"></DA>
+		<DA name="Cancel" bType="Struct" type="CN_Cancel_INC" fc="CO"></DA>					
+		<DA name="stVal" bType="INT32" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="stSeld" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="INT32" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="ctlModel" bType="Enum" type="ctlModel" fc="CF"></DA>
+		<DA name="sboTimeout"  bType="INT32U" fc="CF"></DA>
+		<DA name="sboClass" bType="Enum" type="sboClass" fc="CF"></DA>
+		<DA name="minVal" bType="INT32" fc="CF"></DA>
+		<DA name="maxVal" bType="INT32" fc="CF"></DA>
+		<DA name="stepSize" bType="INT32U" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>			
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_INC_Mod" cdc="INC" desc="可控整数状态(模式)">
+		<DA name="SBOw" bType="Struct" type="CN_SBOw_Oper_Mod" fc="CO"></DA>
+		<DA name="Oper" bType="Struct" type="CN_SBOw_Oper_Mod" fc="CO"></DA>
+		<DA name="Cancel" bType="Struct" type="CN_Cancel_Mod" fc="CO"></DA>
+		<DA name="stVal" bType="Enum" type="Mod" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="Enum" type="Mod" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="ctlModel" bType="Enum" type="ctlModel" fc="CF"></DA>
+		<DA name="sboClass" bType="Enum" type="sboClass" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_INS" cdc="INS" desc="整数状态">
+		<DA name="stVal" bType="INT32" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="INT32" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>			
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_INS_Beh" cdc="INS" desc="整数状态(性能)">
+		<DA name="stVal" bType="Enum" type="Beh" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="Enum" type="Beh" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_INS_Health" cdc="INS" desc="整数状态(健康状况)">
+		<DA name="stVal" bType="Enum" type="Health" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="Enum" type="Health" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_INS_ARST" cdc="INS" desc="整数状态(自动重合闸)">
+		<DA name="stVal" bType="Enum" type="AutoRecSt" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="Enum" type="AutoRecSt" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_ACT" cdc="ACT" desc="保护激活信息">
+		<DA name="general" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_ACT_EX" cdc="ACT" desc="保护激活信息(扩展)">
+		<DA name="general" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_ACT_3P" cdc="ACT" desc="保护激活信息(三相)">
+		<DA name="general" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="phsA" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="phsB" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="phsC" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="neut" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_ACT_3P_EX" cdc="ACT" desc="保护激活信息(三相扩展)">
+		<DA name="general" bType="BOOLEAN" dchg="true" dupd="false" qchg="false" fc="ST"></DA>
+		<DA name="phsA" bType="BOOLEAN" dchg="true" dupd="false" qchg="false" fc="ST"></DA>
+		<DA name="phsB" bType="BOOLEAN" dchg="true" dupd="false" qchg="false" fc="ST"></DA>
+		<DA name="phsC" bType="BOOLEAN" dchg="true" dupd="false" qchg="false" fc="ST"></DA>
+		<DA name="neut" bType="BOOLEAN" dchg="true" dupd="false" qchg="false" fc="ST"></DA>
+		<DA name="q" bType="Quality" dchg="false" dupd="false" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" dchg="false" dupd="false" qchg="false" fc="ST"></DA>
+		<DA name="dU" bType="Unicode255" dchg="false" dupd="false" qchg="false" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" dchg="false" dupd="false" qchg="false" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_ACD" cdc="ACD" desc="方向保护激活信息">
+		<DA name="general" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirGeneral" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_ACD_EX" cdc="ACD" desc="方向保护激活信息(扩展)">
+		<DA name="general" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirGeneral" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_ACD_3P" cdc="ACD" desc="方向保护激活信息(三相)">
+		<DA name="general" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirGeneral" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="phsA" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirPhsA" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="phsB" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirPhsB" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="phsC" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirPhsC" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="neut" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirNeut" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+	</DOType>
+	<DOType id="CN_ACD_3P_EX" cdc="ACD" desc="方向保护激活信息(三相扩展)">
+		<DA name="general" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirGeneral" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="phsA" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirPhsA" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="phsB" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirPhsB" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="phsC" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirPhsC" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="neut" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="dirNeut" bType="Enum" type="dir" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_MV" cdc="MV" desc="测量值">
+		<DA name="mag" bType="Struct" type="CN_AnalogueValue" dchg="true" fc="MX"></DA>
+		<DA name="range" bType="Enum" type="range" dchg="true" fc="MX"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="MX"></DA>
+		<DA name="t" bType="Timestamp" fc="MX"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subMag" bType="Struct" type="CN_AnalogueValue" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="units" bType="Struct" type="CN_units" fc="CF"></DA>
+		<DA name="db" bType="INT32U" fc="CF"></DA>
+		<DA name="zeroDb" bType="INT32U" fc="CF"></DA>
+		<DA name="sVC" bType="Struct" type="CN_ScaledValueConfig" fc="CF"></DA>
+		<DA name="rangeC" bType="Struct" type="CN_RangeConfig" fc="CF"></DA>
+		<DA name="smpRate" bType="INT32U" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_MV_EX" cdc="MV" desc="测量值(扩展)">
+		<DA name="mag" bType="Struct" type="CN_AnalogueValue" dchg="true" dupd="false" qchg="false" fc="MX"></DA>
+		<DA name="q" bType="Quality" dchg="false" dupd="false" qchg="true" fc="MX"></DA>
+		<DA name="t" bType="Timestamp" dchg="false" dupd="false" qchg="false" fc="MX"></DA>
+		<DA name="subEna" bType="BOOLEAN" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="subMag" bType="Struct" type="CN_AnalogueValue" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="units" bType="Struct" type="CN_units" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="db" bType="INT32U" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="zeroDb" bType="INT32U" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="sVC" bType="Struct" type="CN_ScaledValueConfig" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="rangeC" bType="Struct" type="CN_RangeConfig" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="smpRate" bType="INT32U" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="dU" bType="Unicode255" dchg="false" dupd="false" qchg="false" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" dchg="false" dupd="false" qchg="false" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_CMV" cdc="CMV" desc="复数测量值">
+	    <DA name="instCVal" bType="Struct" type="CN_Vector" fc="MX"></DA>
+		<DA name="cVal" bType="Struct" type="CN_Vector" dchg="true" fc="MX"></DA>
+		<DA name="range" bType="Enum" type="range" dchg="true" fc="MX"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="MX"></DA>
+		<DA name="t" bType="Timestamp" fc="MX"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subCVal" bType="Struct" type="CN_Vector" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="units" bType="Struct" type="CN_units" fc="CF"></DA>
+		<DA name="db" bType="INT32U" fc="CF"></DA>
+		<DA name="zeroDb" bType="INT32U" fc="CF"></DA>
+		<DA name="rangeC" bType="Struct" type="CN_RangeConfig" fc="CF"></DA>
+		<DA name="magSVC" bType="Struct" type="CN_ScaledValueConfig" fc="CF"></DA>
+		<DA name="angSVC" bType="Struct" type="CN_ScaledValueConfig" fc="CF"></DA>
+		<DA name="angRef" bType="Enum" type="angidCMV" fc="CF"></DA>
+		<DA name="smpRate" bType="INT32U" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_WYE" cdc="WYE" desc="三相对地">
+		<DA name="angRef" bType="Enum" type="angid" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+		<SDO name="phsA" type="CN_CMV"></SDO>
+		<SDO name="phsB" type="CN_CMV"></SDO>
+		<SDO name="phsC" type="CN_CMV"></SDO>
+		<SDO name="neut" type="CN_CMV"></SDO>
+		<SDO name="net" type="CN_CMV"></SDO>
+		<SDO name="res" type="CN_CMV"></SDO>
+	</DOType>
+	<DOType id="CN_DEL" cdc="DEL" desc="三相系统相对相地测量值">
+		<DA name="angRef" bType="Enum" type="angid" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+		<SDO name="phsAB" type="CN_CMV"></SDO>
+		<SDO name="phsBC" type="CN_CMV"></SDO>
+		<SDO name="phsCA" type="CN_CMV"></SDO>
+	</DOType>
+	<DOType id="CN_SAV" cdc="SAV" desc="采样值">
+		<DA name="instMag" bType="Struct" type="CN_AnalogueValue_I" fc="MX"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="MX"></DA>
+		<DA name="t" bType="Timestamp" fc="MX"></DA>
+		<DA name="units" bType="Struct" type="CN_units" fc="CF"></DA>
+		<DA name="sVC" bType="Struct" type="CN_ScaledValueConfig" fc="CF"></DA>
+		<DA name="min" bType="Struct" type="CN_AnalogueValue_I" fc="CF"></DA>
+		<DA name="max" bType="Struct" type="CN_AnalogueValue_I" fc="CF"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+	</DOType>
+	<DOType id="CN_SPS" cdc="SPS" desc="单点状态">
+		<DA name="stVal" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_SPS_EX" cdc="SPS" desc="单点状态(扩展)">
+		<DA name="stVal" bType="BOOLEAN" dchg="true" dupd="false" qchg="false" fc="ST"></DA>
+		<DA name="q" bType="Quality" dchg="false" dupd="false" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" dchg="false" dupd="false" qchg="false" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="subVal" bType="BOOLEAN" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="dU" bType="Unicode255" dchg="false" dupd="false" qchg="false" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" dchg="false" dupd="false" qchg="false" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_SPC" cdc="SPC" desc="可控的单点">
+	    <DA name="SBO" bType="VisString64" fc="CO"></DA>
+		<DA name="SBOw" bType="Struct" type="CN_SBOw_Oper_SDPC" fc="CO"></DA>
+		<DA name="Oper" bType="Struct" type="CN_SBOw_Oper_SDPC" fc="CO"></DA>
+		<DA name="Cancel" bType="Struct" type="CN_Cancel_SDPC" fc="CO"></DA>
+		<DA name="stVal" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="ctlModel" bType="Enum" type="ctlModel" fc="CF"></DA>
+		<DA name="sboTimeout" bType="INT32U" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="sboClass" bType="Enum" type="sboClass" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_SPC_DC" cdc="SPC" desc="可控的单点(复归)">
+		<DA name="Oper" bType="Struct" type="CN_SBOw_Oper_SDPC" fc="CO"></DA>
+		<DA name="stVal" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="ctlModel" bType="Enum" type="ctlModel" fc="CF"></DA>
+		<DA name="sboTimeout" bType="INT32U" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="sboClass" bType="Enum" type="sboClass" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_SPC_EX" cdc="SPC" desc="可控的单点(扩展)">
+	    <DA name="SBO" bType="VisString64" fc="CO"></DA>
+		<DA name="SBOw" bType="Struct" type="CN_SBOw_Oper_SDPC" dchg="false" dupd="false" qchg="false" fc="CO"></DA>
+		<DA name="Oper" bType="Struct" type="CN_SBOw_Oper_SDPC" dchg="false" dupd="false" qchg="false" fc="CO"></DA>
+		<DA name="Cancel" bType="Struct" type="CN_Cancel_SDPC" dchg="false" dupd="false" qchg="false" fc="CO"></DA>
+		<DA name="stVal" bType="BOOLEAN" dchg="true" dupd="false" qchg="false" fc="ST"></DA>
+		<DA name="q" bType="Quality" dchg="false" dupd="false" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" dchg="false" dupd="false" qchg="false" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="subVal" bType="BOOLEAN" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" dchg="false" dupd="false" qchg="false" fc="SV"></DA>
+		<DA name="pulseConfig" bType="Struct" type="CN_PulseConfig" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="ctlModel" bType="Enum" type="ctlModel" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="sboTimeout" bType="INT32U" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="sboClass" bType="Enum" type="sboClass" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="dU" bType="Unicode255" dchg="false" dupd="false" qchg="false" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" dchg="false" dupd="false" qchg="false" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_DPC" cdc="DPC" desc="可控的双点">
+	    <DA name="SBO" bType="VisString64"  fc="CO" ></DA>
+		<DA name="SBOw" bType="Struct" type="CN_SBOw_Oper_SDPC" fc="CO"></DA>
+		<DA name="Oper" bType="Struct" type="CN_SBOw_Oper_SDPC" fc="CO"></DA>
+		<DA name="Cancel" bType="Struct" type="CN_Cancel_SDPC" fc="CO"></DA>
+		<DA name="stVal" bType="Dbpos" type="Dbpos" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="stSeld" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="Dbpos" type="Dbpos" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="pulseConfig" bType="Struct" type="CN_PulseConfig" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="ctlModel" bType="Enum" type="ctlModel" fc="CF"></DA>
+		<DA name="sboTimeout" bType="INT32U" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="sboClass" bType="Enum" type="sboClass" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_BSC" cdc="BSC" desc="二进制受控步位置">
+	    <DA name="SBO" bType="VisString64" fc="CO"></DA>  
+		<DA name="SBOw" bType="Struct" type="CN_SBOw_Oper_BSC" fc="CO"></DA>
+		<DA name="Oper" bType="Struct" type="CN_SBOw_Oper_BSC" fc="CO"></DA>
+		<DA name="Cancel" bType="Struct" type="CN_Cancel_BSC" fc="CO"></DA>
+		<DA name="valWTr" bType="Struct" type="CN_ValWithTrans" dchg="true" fc="ST"></DA>
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="stSeld" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="Tcmd" type="CN_ValWithTrans" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="persistent" bType="BOOLEAN" fc="CF"></DA>
+		<DA name="ctlModel" bType="Enum" type="ctlModel" fc="CF"></DA>
+		<DA name="sboTimeout" bType="INT32U" fc="CF"></DA>
+		<DA name="sboClass" bType="Enum" type="sboClass" fc="CF"></DA>
+		<DA name="minVal" bType="INT8" fc="CF"></DA>		
+		<DA name="maxVal" bType="INT8" fc="CF"></DA>			
+		<DA name="stepSize" fc="CF" bType="INT8U"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_ISC" cdc="ISC">
+		<DA name="SBO" bType="VisString64" fc="CO"></DA>
+		<DA name="SBOw" bType="Struct" type="CN_SBOw_Oper_ISC" fc="CO"></DA>
+		<DA name="Oper" bType="Struct" type="CN_SBOw_Oper_ISC" fc="CO"></DA>
+		<DA name="Cancel" bType="Struct" type="CN_Cancel_ISC" fc="CO"></DA>			
+		<DA name="valWTr" bType="Struct" type="CN_ValWithTrans" dchg="true" fc="ST"></DA>
+        <DA name="q" bType="Quality" qchg="true" fc="ST"></DA>
+		<DA name="t" bType="Timestamp" fc="ST"></DA>
+		<DA name="stSeld" bType="BOOLEAN" dchg="true" fc="ST"></DA>
+		<DA name="subEna" bType="BOOLEAN" fc="SV"></DA>
+		<DA name="subVal" bType="Tcmd" type="CN_ValWithTrans" fc="SV"></DA>
+		<DA name="subQ" bType="Quality" fc="SV"></DA>
+		<DA name="subID" bType="VisString64" fc="SV"></DA>
+		<DA name="persistent" bType="BOOLEAN" fc="CF"></DA>
+		<DA name="ctlModel" bType="Enum" type="ctlModel" fc="CF"></DA>
+		<DA name="sboTimeout" bType="INT32U" fc="CF"></DA>
+		<DA name="sboClass" bType="Enum" type="sboClass" fc="CF"></DA>
+		<DA name="minVal" bType="INT8" fc="CF"></DA>		
+		<DA name="maxVal" bType="INT8" fc="CF"></DA>			
+		<DA name="stepSize" fc="CF" bType="INT8U"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_APC" cdc="APC">
+	    <DA name="SBO" bType="VisString64" fc="CO"></DA>
+		<DA name="SBOw" bType="Struct" type="CN_SBOw_Oper_APC" fc="CO"></DA>
+		<DA name="Oper" bType="Struct" type="CN_SBOw_Oper_APC" fc="CO"></DA>
+		<DA name="Cancel" bType="Struct" type="CN_Cancel_APC" fc="CO"></DA>						
+		<DA name="setMag" bType="Struct" type="CN_AnalogueValue" fc="SP"></DA>
+		<DA name="origin" bType="Struct" type="CN_Originator" fc="SP"></DA>	
+		<DA name="operTm" bType="Timestamp" fc="SP"></DA>	
+		<DA name="q" bType="Quality" qchg="true" fc="MX"></DA>
+		<DA name="t" bType="Timestamp" fc="MX"></DA>
+		<DA name="ctlModel" bType="Enum" type="ctlModel" fc="CF"></DA>
+		<DA name="units" bType="Struct" type="CN_units" fc="CF"></DA>
+		<DA name="sVC" bType="Struct" type="CN_ScaledValueConfig" fc="CF"></DA>
+		<DA name="minVal" bType="Struct" type="CN_AnalogueValue" fc="CF"></DA>
+		<DA name="maxVal" bType="Struct" type="CN_AnalogueValue" fc="CF"></DA>
+		<DA name="stepSize" bType="Struct" type="CN_AnalogueValue" fc="CF"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_SPG_SG" cdc="SPG" desc="单点定值">
+		<DA name="setVal" bType="BOOLEAN" fc="SG"></DA>			
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_SPG_SG_EX" cdc="SPG" desc="单点定值(扩展)">
+		<DA name="setVal" bType="BOOLEAN" fc="SG"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX" dchg="false" dupd="false" count="0" qchg="false">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_SPG_SP" cdc="SPG" desc="单点定值(取代)">
+		<DA name="setVal" bType="BOOLEAN" fc="SP"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_ING_SG" cdc="ING" desc="整数状态定值">
+		<DA name="setVal" bType="INT32" fc="SG"></DA>			
+		<DA name="minVal" bType="INT32" fc="CF"></DA>
+		<DA name="maxVal" bType="INT32" fc="CF"></DA>
+		<DA name="stepSize" bType="INT32U" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_ING_SG_EX" cdc="ING" desc="整数状态定值(扩展)">
+		<DA name="setVal" bType="INT32" dchg="false" dupd="false" qchg="false" fc="SG"></DA>
+		<DA name="minVal" bType="INT32" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="maxVal" bType="INT32" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="stepSize" bType="INT32U" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="dU" bType="Unicode255" dchg="false" dupd="false" qchg="false" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" dchg="false" dupd="false" qchg="false" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_ING_SP" cdc="ING" desc="整数状态定值(取代)">
+		<DA name="setVal" bType="INT32" fc="SP"></DA>
+		<DA name="minVal" bType="INT32" fc="CF"></DA>
+		<DA name="maxVal" bType="INT32" fc="CF"></DA>
+		<DA name="stepSize" bType="INT32U" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_ASG_SG" cdc="ASG" desc="模拟定值">
+		<DA name="setMag" bType="Struct" type="CN_AnalogueValue" fc="SG"></DA>
+		<DA name="units" bType="Struct" type="CN_units" fc="CF"></DA>
+		<DA name="sVC" bType="Struct" type="CN_ScaledValueConfig" fc="CF"></DA>
+		<DA name="minVal" bType="Struct" type="CN_AnalogueValue" fc="CF"></DA>
+		<DA name="maxVal" bType="Struct" type="CN_AnalogueValue" fc="CF"></DA>
+		<DA name="stepSize" bType="Struct" type="CN_AnalogueValue" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_ASG_SG_EX" cdc="ASG" desc="模拟定值(扩展)">
+		<DA name="setMag" bType="Struct" type="CN_AnalogueValue" dchg="false" dupd="false" qchg="false" fc="SG"></DA>
+		<DA name="units" bType="Struct" type="CN_units" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="sVC" bType="Struct" type="CN_ScaledValueConfig" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="minVal" bType="Struct" type="CN_AnalogueValue" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="maxVal" bType="Struct" type="CN_AnalogueValue" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="stepSize" bType="Struct" type="CN_AnalogueValue" dchg="false" dupd="false" qchg="false" fc="CF"></DA>
+		<DA name="dU" bType="Unicode255" dchg="false" dupd="false" qchg="false" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" dchg="false" dupd="false" qchg="false" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_ASG_SP" cdc="ASG" desc="模拟定值(取代)">
+		<DA name="setMag" bType="Struct" type="CN_AnalogueValue" fc="SP"></DA>
+		<DA name="units" bType="Struct" type="CN_units" fc="CF"></DA>
+		<DA name="sVC" bType="Struct" type="CN_ScaledValueConfig" fc="CF"></DA>
+		<DA name="minVal" bType="Struct" type="CN_AnalogueValue" fc="CF"></DA>
+		<DA name="maxVal" bType="Struct" type="CN_AnalogueValue" fc="CF"></DA>
+		<DA name="stepSize" bType="Struct" type="CN_AnalogueValue" fc="CF"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_STG_SG" cdc="STG" desc="字符串定值">
+		<DA name="setVal" bType="Unicode255" fc="SG"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>			
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_STG_SG_EX" cdc="STG" desc="字符串定值(扩展)">
+		<DA name="setVal" bType="Unicode255" fc="SG"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="cdcNs" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+		<DA name="cdcName" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+		<DA name="dataNs" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_STG_SP" cdc="STG" desc="字符串定值(取代)">
+		<DA name="setVal" bType="Unicode255" fc="SP"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="cdcNs" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+		<DA name="cdcName" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+		<DA name="dataNs" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_STG_SP_EX" cdc="STG" desc="字符串定值(取代扩展)">
+		<DA name="setVal" bType="Unicode255" fc="SP"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="cdcNs" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+		<DA name="cdcName" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+		<DA name="dataNs" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_DPL" cdc="DPL" desc="设备铭牌">
+		<DA name="vendor" bType="VisString255" fc="DC"></DA>
+		<DA name="hwRev" bType="VisString255" fc="DC"></DA>
+		<DA name="swRev" bType="VisString255" fc="DC"></DA>
+		<DA name="serNum" bType="VisString255" fc="DC"></DA>
+		<DA name="model" bType="VisString255" fc="DC"></DA>
+		<DA name="location" bType="VisString255" fc="DC"></DA>					
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>
+	<DOType id="CN_LPL" cdc="LPL" desc="逻辑节点铭牌">
+		<DA name="vendor" bType="VisString255" fc="DC"></DA>
+		<DA name="swRev" bType="VisString255" fc="DC"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="configRev" bType="VisString255" fc="DC"></DA>
+		<DA name="ldNs" bType="VisString255" fc="EX"></DA>
+		<DA name="lnNs" bType="VisString255" fc="EX"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>			
+	</DOType>
+	<DOType id="CN_LPL_EX" cdc="LPL" desc="逻辑节点铭牌(扩展)">
+		<DA name="vendor" bType="VisString255" fc="DC"></DA>
+		<DA name="swRev" bType="VisString255" fc="DC"></DA>
+		<DA name="d" bType="VisString255" fc="DC"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="lnNs" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+		<DA name="dataNs" bType="VisString255" fc="EX">
+			<Val>UK MODEL:2010</Val>
+		</DA>
+	</DOType>
+	<DOType id="CN_LPL_LN0" cdc="LPL" desc="逻辑节点铭牌(LN0)">
+		<DA name="vendor" bType="VisString255" fc="DC" dchg="false" dupd="false" qchg="false"></DA>
+		<DA name="swRev" bType="VisString255" fc="DC" dchg="false" dupd="false" qchg="false"></DA>
+		<DA name="d" bType="VisString255" fc="DC" dchg="false" dupd="false" qchg="false"></DA>
+		<DA name="dU" bType="Unicode255" fc="DC" dchg="false" dupd="false" qchg="false"></DA>
+		<DA name="configRev" bType="VisString255" fc="DC" dchg="false" dupd="false" qchg="false"></DA>
+		<DA name="ldNs" bType="VisString255" fc="EX" dchg="false" dupd="false" qchg="false">
+			<Val>IEC 61850-7-4:2003</Val>
+		</DA>
+	</DOType>		
+	<DOType id="CN_CURVE" cdc="CURVE">
+		<DA name="setCharact" bType="Enum" type="setCharactid" fc="SP"></DA>			
+		<DA name="setParA" bType="FLOAT32" fc="SP"></DA>			
+		<DA name="setParB" bType="FLOAT32" fc="SP"></DA>			
+		<DA name="setParC" bType="FLOAT32" fc="SP"></DA>			
+		<DA name="setParD" bType="FLOAT32" fc="SP"></DA>			
+		<DA name="setParE" bType="FLOAT32" fc="SP"></DA>			
+		<DA name="setParF" bType="FLOAT32" fc="SP"></DA>	
+		<DA name="d" bType="VisString255" fc="DC"></DA>			
+		<DA name="dU"  bType="Unicode255" fc="DC"></DA>			
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>			
+	</DOType>
+	<DOType id="CN_CSD" cdc="CSD">
+		<DA name="xUnit" bType="Struct" type="CN_units"  fc="DC"></DA>		
+		<DA name="xD" bType="VisString255" fc="DC"></DA>			
+		<DA name="yUnit" bType="Struct" type="CN_units"  fc="DC"></DA>			
+		<DA name="yD" bType="VisString255" fc="DC"></DA>			
+		<DA name="numPts" bType="INT16U" fc="DC"></DA>			
+		<DA name="crvPts" bType="Struct" type="CN_Point" count="16"  fc="DC"></DA>			
+		<DA name="d" bType="VisString255" fc="DC"></DA>			
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>			
+		<DA name="cdcNs" bType="VisString255" fc="EX"></DA>			
+		<DA name="cdcName" bType="VisString255" fc="EX"></DA>			
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>			
+	</DOType>
+	<DOType id="CN_SEC" cdc="SEC">
+		<DA name="cnt" bType="INT32U" dchg="true" fc="ST"></DA>				
+		<DA name="sev" bType="Enum" type="sevid" dchg="true" fc="ST"></DA>			
+		<DA name="t"  bType="Timestamp" fc="ST"></DA>			
+		<DA name="addr" bType="Octet64"  fc="ST"></DA>	
+		<DA name="addInfo" bType="VisString64" fc="ST"></DA>	
+		<DA name="d" bType="VisString255" fc="DC"></DA>			
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>			
+	</DOType>		
+	<DOType id="CN_BCR" cdc="BCR">
+		<DA name="actVal"  bType="INT32" dchg="true" fc="ST"></DA>			
+		<DA name="frVal" bType="INT32" dupd="true" fc="ST"></DA>			
+		<DA name="frTm" bType="Timestamp" dupd="true" fc="ST"></DA>			
+		<DA name="q" bType="Quality" qchg="true" fc="ST"></DA>			
+		<DA name="t" bType="Timestamp" fc="ST"></DA>			
+		<DA name="units" bType="Struct" type="CN_units" fc="ST"></DA>			
+		<DA name="pulsQty" bType="FLOAT32" fc="CF"></DA>		
+		<DA name="frEna" bType="BOOLEAN" fc="CF"></DA>			
+		<DA name="strTm" bType="Timestamp" fc="CF"></DA>			
+		<DA name="frPd" bType="INT32" fc="CF"></DA>			
+		<DA name="frRs" bType="BOOLEAN" fc="CF"></DA>			
+		<DA name="d" bType="VisString255" fc="DC"></DA>				
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>			
+	</DOType>
+	<DOType id="SEQ" cdc="SEQ">
+		<SDO name="c1" type="CN_CMV"></SDO>			
+		<SDO name="c2" type="CN_CMV"></SDO>					
+		<SDO name="c3" type="CN_CMV"></SDO>				
+		<DA name="seqT" bType="Enum" type="seqTid" fc="EX"></DA>			
+		<DA name="phsRef" bType="Enum" type="phsid" fc="CF"></DA>		
+		<DA name="d" bType="VisString255" fc="DC"></DA>			
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>			
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>			
+	</DOType>		
+	<DOType id="HMV" cdc="HMV">
+		<DA name="q" bType="Quality" qchg="true" fc="EX"></DA>			
+		<DA name="t" bType="Timestamp" fc="EX"></DA>			
+		<DA name="har" bType="Struct" type="CN_Vector" count="16" dchg="true" dupd="true" fc="EX"></DA>			
+		<DA name="numHar" bType="INT16U" fc="CF"></DA>			
+		<DA name="numCyc" bType="INT16U" fc="CF"></DA>			
+		<DA name="evalTm" bType="INT16U" fc="CF"></DA>		
+		<DA name="units"  bType="Struct" type="CN_units" fc="CF"></DA>			
+		<DA name="smpRate" bType="INT32U" fc="CF"></DA>			
+		<DA name="frequency" bType="FLOAT32" fc="CF"></DA>		
+		<DA name="hvRef" bType="Enum" type="hvid" fc="CF"></DA>			
+		<DA name="rmsCyc" bType="INT16U" fc="CF"></DA>		
+		<DA name="d" bType="VisString255" fc="CF"></DA>			
+		<DA name="dU" bType="Unicode255" fc="CF"></DA>			
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>
+	</DOType>		
+	<DOType id="HWYE" cdc="HWYE">
+		<DA name="q" bType="Quality" qchg="true" fc="MX"></DA>			
+		<DA name="t" bType="Timestamp" fc="MX"></DA>			
+		<DA name="phsAHar" bType="Struct" type="CN_Vector" dchg="true" count="16" dupd="true" fc="MX"></DA>
+		<DA name="phsBHar" bType="Struct" type="CN_Vector" dchg="true" count="16" dupd="true" fc="MX"></DA>
+		<DA name="phsCHar" bType="Struct" type="CN_Vector" dchg="true" count="16" dupd="true" fc="MX"></DA>
+		<DA name="neutHar" bType="Struct" type="CN_Vector" dchg="true" count="16" dupd="true" fc="MX"></DA>
+		<DA name="netHar" bType="Struct" type="CN_Vector" dchg="true" count="16" dupd="true" fc="MX"></DA>
+		<DA name="resHar" bType="Struct" type="CN_Vector" dchg="true" count="16" dupd="true" fc="MX"></DA>
+		<DA name="numHar" bType="INT16U" fc="CF"></DA>			
+		<DA name="numCyc" bType="INT16U" fc="CF"></DA>			
+		<DA name="evalTm" bType="INT16U" fc="CF"></DA>			
+		<DA name="units" bType="Struct" type="CN_units" fc="CF"></DA>			
+		<DA name="angRef" bType="Enum" type="angid" fc="CF"></DA>			
+		<DA name="smpRate" bType="INT32U" fc="CF"></DA>			
+		<DA name="frequency" bType="FLOAT32" fc="CF"></DA>			
+		<DA name="hvRef" bType="Enum" type="hvid" fc="CF"></DA>			
+		<DA name="rmsCyc" bType="INT16U" fc="CF"></DA>			
+		<DA name="d" bType="VisString255" fc="DC"></DA>			
+		<DA name="dU" bType="Unicode255" fc="DC"></DA>
+		<DA name="dataNs" bType="VisString255" fc="EX"></DA>			
+	</DOType>		
+	<DOType id="HDEL" cdc="HDEL">
+		<DA name="q" bType="Quality" qchg="true" fc="MX"></DA>				
+		<DA name="t" bType="Timestamp" fc="MX"></DA>			
+		<DA name="phsABHar" bType="Struct" type="CN_Vector" count="16" dchg="true" qchg="true" fc="MX"></DA>			
+		<DA name="phsBCHar" bType="Struct" type="CN_Vector" count="16" dchg="true" qchg="true" fc="MX"></DA>			
+		<DA name="phsCAHar" bType="Struct" type="CN_Vector" count="16" dchg="true" qchg="true" fc="MX"></DA>			
+		<DA name="numHar" bType="INT16U" fc="CF"></DA>			
+		<DA name="numCyc" bType="INT16U" fc="CF"></DA>			
+		<DA name="evalTm" bType="INT16U" fc="CF"></DA>			
+		<DA name="units" bType="Struct" type="CN_units" fc="CF"></DA>			
+		<DA name="angRef"  bType="Enum" type="angid" fc="CF"></DA>			
+		<DA name="smpRate"  bType="INT32U" fc="CF"></DA>			
+		<DA name="frequency"  bType="FLOAT32" fc="CF"></DA>			
+		<DA name="hvRef"  bType="Enum" type="hvid" fc="CF"></DA>			
+		<DA name="rmsCyc" bType="INT16U" fc="CF"></DA>			
+		<DA name="d" bType="VisString255" fc="CF"></DA>			
+		<DA name="dU" bType="Unicode255" fc="CF"></DA>			
+		<DA name="cdcNs" bType="VisString255" fc="CF"></DA>			
+		<DA name="cdcName" bType="VisString255" fc="CF"></DA>			
+		<DA name="dataNs" bType="VisString255" fc="CF"></DA>			
+	</DOType>
+	<DAType id="CN_RangeConfig">
+		<BDA name="hhLim" bType="Struct" type="CN_AnalogueValue"></BDA>
+		<BDA name="hLim" bType="Struct" type="CN_AnalogueValue"></BDA>
+		<BDA name="lLim" bType="Struct" type="CN_AnalogueValue"></BDA>
+		<BDA name="llLim" bType="Struct" type="CN_AnalogueValue"></BDA>
+		<BDA name="min" bType="Struct" type="CN_AnalogueValue"></BDA>
+		<BDA name="max" bType="Struct" type="CN_AnalogueValue"></BDA>
+	</DAType>
+	<DAType id="CN_Vector">
+		<BDA name="mag" bType="Struct" type="CN_AnalogueValue"></BDA>
+		<BDA name="ang" bType="Struct" type="CN_AnalogueValue"></BDA>
+	</DAType>
+	<DAType id="CN_Point">			
+		<BDA name="xval" bType="FLOAT32"/>			
+		<BDA name="yval" bType="FLOAT32"/>			
+	</DAType>
+	<DAType id="CN_SBOw_Oper_SDPC">
+		<BDA name="ctlVal" bType="BOOLEAN"></BDA>
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+		<BDA name="Check" bType="Check"></BDA>
+	</DAType>
+	<DAType id="CN_Cancel_SDPC">
+		<BDA name="ctlVal" bType="BOOLEAN"></BDA>
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+	</DAType>
+	<DAType id="CN_SBOw_Oper_INC">
+		<BDA name="ctlVal" bType="INT32"></BDA>			
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+		<BDA name="Check" bType="Check"></BDA>
+	</DAType>
+	<DAType id="CN_Cancel_INC">
+		<BDA name="ctlVal" bType="INT32"></BDA>			
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+	</DAType>
+	<DAType id="CN_SBOw_Oper_Mod">
+		<BDA name="ctlVal" bType="Enum" type="Mod"></BDA>
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+		<BDA name="Check" bType="Check"></BDA>
+	</DAType>
+	<DAType id="CN_Cancel_Mod">
+		<BDA name="ctlVal" bType="Enum" type="Mod"></BDA>
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+	</DAType>
+	<DAType id="CN_SBOw_Oper_BSC">
+		<BDA name="ctlVal" bType="Tcmd"></BDA>
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+		<BDA name="Check" bType="Check"></BDA>
+	</DAType>
+	<DAType id="CN_Cancel_BSC">
+		<BDA name="ctlVal" bType="Tcmd"></BDA>
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+	</DAType>
+	<DAType id="CN_SBOw_Oper_ISC">
+		<BDA name="ctlVal" bType="Tcmd"></BDA>
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+		<BDA name="Check" bType="Check"></BDA>
+	</DAType>
+	<DAType id="CN_Cancel_ISC">
+		<BDA name="ctlVal" bType="Tcmd"></BDA>
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+	</DAType>
+	<DAType id="CN_SBOw_Oper_APC">
+		<BDA name="ctlVal" bType="Tcmd"></BDA>
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+		<BDA name="Check" bType="Check"></BDA>
+	</DAType>
+	<DAType id="CN_Cancel_APC">
+		<BDA name="ctlVal" bType="Tcmd"></BDA>
+		<BDA name="origin" bType="Struct" type="CN_Originator"></BDA>
+		<BDA name="ctlNum" bType="INT8U"></BDA>
+		<BDA name="T" bType="Timestamp"></BDA>
+		<BDA name="Test" bType="BOOLEAN"></BDA>
+	</DAType>		
+	<DAType id="CN_ValWithTrans">
+		<BDA name="posVal" bType="INT8"></BDA>
+		<BDA name="transInd" bType="BOOLEAN"></BDA>
+	</DAType>
+	<DAType id="CN_PulseConfig">
+		<BDA name="cmdQual" bType="Enum" type="PulseConfigCmdQual"></BDA>
+		<BDA name="onDur" bType="INT32U"></BDA>
+		<BDA name="offDur" bType="INT32U"></BDA>
+		<BDA name="numPls" bType="INT32U"></BDA>
+	</DAType>
+	<DAType id="CN_AnalogueValue">
+		<BDA name="f" bType="FLOAT32"></BDA>
+		<BDA name="i" bType="INT32"></BDA>
+	</DAType>
+	<DAType id="CN_AnalogueValue_I">
+		<BDA name="i" bType="INT32"></BDA>
+	</DAType>
+	<DAType id="CN_units">
+		<BDA bType="Enum" name="SIUnit" type="SIUnit"></BDA>
+		<BDA bType="Enum" name="multiplier" type="multiplier"></BDA>
+	</DAType>
+	<DAType id="CN_ScaledValueConfig">
+		<BDA name="scaleFactor" bType="FLOAT32"></BDA>
+		<BDA name="offset" bType="FLOAT32"></BDA>
+	</DAType>
+	<DAType id="CN_Originator">
+		<BDA name="orCat" bType="Enum" type="orCategory"></BDA>
+		<BDA name="orIdent" bType="Octet64"></BDA>
+	</DAType>
+	<DAType id="CN_SGCB">		
+		<BDA name="numOfSG" bType="INT8U"/>			
+		<BDA name="actSG" bType="INT8U"/>			
+		<BDA name="editSG" bType="INT8U"/>			
+		<BDA name="cnfEdit" bType="BOOLEAN"/>			
+		<BDA name="lActTim" bType="Timestamp"/>			
+	</DAType>
+	<EnumType id="ctlModel">
+		<EnumVal ord="0">status-only</EnumVal>
+		<EnumVal ord="1">direct-with-normal-security</EnumVal>
+		<EnumVal ord="2">sbo-with-normal-security</EnumVal>
+		<EnumVal ord="3">direct-with-enhanced-security</EnumVal>
+		<EnumVal ord="4">sbo-with-enhanced-security</EnumVal>
+	</EnumType>
+	<EnumType id="sboClass">
+		<EnumVal ord="0">operate-once</EnumVal>
+		<EnumVal ord="1">operate-many</EnumVal>
+	</EnumType>
+	<EnumType id="orCategory">
+		<EnumVal ord="0">not-supported</EnumVal>
+		<EnumVal ord="1">bay-control</EnumVal>
+		<EnumVal ord="2">station-control</EnumVal>
+		<EnumVal ord="3">remote-control</EnumVal>
+		<EnumVal ord="4">automatic-bay</EnumVal>
+		<EnumVal ord="5">automatic-station</EnumVal>
+		<EnumVal ord="6">automatic-remote</EnumVal>
+		<EnumVal ord="7">maintenance</EnumVal>
+		<EnumVal ord="8">process</EnumVal>
+	</EnumType>
+	<EnumType id="dir">
+		<EnumVal ord="0">unknown</EnumVal>
+		<EnumVal ord="1">forward</EnumVal>
+		<EnumVal ord="2">backward</EnumVal>
+		<EnumVal ord="3">both</EnumVal>
+	</EnumType>
+	<EnumType id="range">
+		<EnumVal ord="0">normal</EnumVal>
+		<EnumVal ord="1">high</EnumVal>
+		<EnumVal ord="2">low</EnumVal>
+		<EnumVal ord="3">high-high</EnumVal>
+		<EnumVal ord="4">low-low</EnumVal>
+	</EnumType>
+	<EnumType id="angidCMV">
+		<EnumVal ord="0">V</EnumVal>
+		<EnumVal ord="1">A</EnumVal>
+		<EnumVal ord="2">other</EnumVal>
+	</EnumType>
+	<EnumType id="angid">
+		<EnumVal ord="0">Va</EnumVal>
+		<EnumVal ord="1">Vb</EnumVal>
+		<EnumVal ord="2">Vc</EnumVal>
+		<EnumVal ord="3">Aa</EnumVal>
+		<EnumVal ord="4">Ab</EnumVal>
+		<EnumVal ord="5">Ac</EnumVal>
+		<EnumVal ord="6">Vab</EnumVal>
+		<EnumVal ord="7">Vbc</EnumVal>
+		<EnumVal ord="8">Vca</EnumVal>
+		<EnumVal ord="9">Vother</EnumVal>
+		<EnumVal ord="10">Aother</EnumVal>
+	</EnumType>
+	<EnumType id="multiplier">
+		<EnumVal ord="-24">y</EnumVal>
+		<EnumVal ord="-21">z</EnumVal>
+		<EnumVal ord="-18">a</EnumVal>
+		<EnumVal ord="-15">f</EnumVal>
+		<EnumVal ord="-12">p</EnumVal>
+		<EnumVal ord="-9">n</EnumVal>
+		<EnumVal ord="-6">μ</EnumVal>
+		<EnumVal ord="-3">m</EnumVal>
+		<EnumVal ord="-2">c</EnumVal>
+		<EnumVal ord="-1">d</EnumVal>
+		<EnumVal ord="0"></EnumVal>
+		<EnumVal ord="1">da</EnumVal>
+		<EnumVal ord="2">h</EnumVal>
+		<EnumVal ord="3">k</EnumVal>
+		<EnumVal ord="6">M</EnumVal>
+		<EnumVal ord="9">G</EnumVal>
+		<EnumVal ord="12">T</EnumVal>
+		<EnumVal ord="15">P</EnumVal>
+		<EnumVal ord="18">E</EnumVal>
+		<EnumVal ord="21">Z</EnumVal>
+		<EnumVal ord="24">Y</EnumVal>
+	</EnumType>
+	<EnumType id="SIUnit">
+		<EnumVal ord="1"></EnumVal>
+		<EnumVal ord="2">m</EnumVal>
+		<EnumVal ord="3">kg</EnumVal>
+		<EnumVal ord="4">s</EnumVal>
+		<EnumVal ord="5">A</EnumVal>
+		<EnumVal ord="6">K</EnumVal>
+		<EnumVal ord="7">mol</EnumVal>
+		<EnumVal ord="8">cd</EnumVal>
+		<EnumVal ord="9">deg</EnumVal>
+		<EnumVal ord="10">rad</EnumVal>
+		<EnumVal ord="11">sr</EnumVal>
+		<EnumVal ord="21">Gy</EnumVal>
+		<EnumVal ord="22">q</EnumVal>
+		<EnumVal ord="23">°C</EnumVal>
+		<EnumVal ord="24">Sv</EnumVal>
+		<EnumVal ord="25">F</EnumVal>
+		<EnumVal ord="26">C</EnumVal>
+		<EnumVal ord="27">S</EnumVal>
+		<EnumVal ord="28">H</EnumVal>
+		<EnumVal ord="29">V</EnumVal>
+		<EnumVal ord="30">ohm</EnumVal>
+		<EnumVal ord="31">J</EnumVal>
+		<EnumVal ord="32">N</EnumVal>
+		<EnumVal ord="33">Hz</EnumVal>
+		<EnumVal ord="34">lx</EnumVal>
+		<EnumVal ord="35">Lm</EnumVal>
+		<EnumVal ord="36">Wb</EnumVal>
+		<EnumVal ord="37">T</EnumVal>
+		<EnumVal ord="38">W</EnumVal>
+		<EnumVal ord="39">Pa</EnumVal>
+		<EnumVal ord="41">m²</EnumVal>
+		<EnumVal ord="42">m³</EnumVal>
+		<EnumVal ord="43">m/s</EnumVal>
+		<EnumVal ord="44">m/s²</EnumVal>
+		<EnumVal ord="45">m³/s</EnumVal>
+		<EnumVal ord="46">m/m³</EnumVal>
+		<EnumVal ord="47">M</EnumVal>
+		<EnumVal ord="48">kg/m³</EnumVal>
+		<EnumVal ord="49">m²/s</EnumVal>
+		<EnumVal ord="50">W/m K</EnumVal>
+		<EnumVal ord="51">J/K</EnumVal>
+		<EnumVal ord="52">ppm</EnumVal>
+		<EnumVal ord="53">1/s</EnumVal>
+		<EnumVal ord="54">rad/s</EnumVal>
+		<EnumVal ord="61">VA</EnumVal>
+		<EnumVal ord="62">Watts</EnumVal>
+		<EnumVal ord="63">VAr</EnumVal>
+		<EnumVal ord="64">phi</EnumVal>
+		<EnumVal ord="65">cos(phi)</EnumVal>
+		<EnumVal ord="66">Vs</EnumVal>
+		<EnumVal ord="67">V²</EnumVal>
+		<EnumVal ord="68">As</EnumVal>
+		<EnumVal ord="69">A²</EnumVal>
+		<EnumVal ord="70">A²t</EnumVal>
+		<EnumVal ord="71">VAh</EnumVal>
+		<EnumVal ord="72">Wh</EnumVal>
+		<EnumVal ord="73">VArh</EnumVal>
+		<EnumVal ord="74">V/Hz</EnumVal>
+		<EnumVal ord="75">b/s</EnumVal>
+	</EnumType>
+	<EnumType id="Dbpos">
+		<EnumVal ord="0">intermediate</EnumVal>
+		<EnumVal ord="1">off</EnumVal>
+		<EnumVal ord="2">on</EnumVal>
+		<EnumVal ord="3">bad</EnumVal>
+	</EnumType>
+	<EnumType id="Tcmd">
+		<EnumVal ord="0">stop</EnumVal>
+		<EnumVal ord="1">lower</EnumVal>
+		<EnumVal ord="2">higher</EnumVal>
+		<EnumVal ord="3">reserved</EnumVal>
+	</EnumType>
+	<EnumType id="Beh">
+		<EnumVal ord="1">on</EnumVal>
+		<EnumVal ord="2">blocked</EnumVal>
+		<EnumVal ord="3">test</EnumVal>
+		<EnumVal ord="4">test/blocked</EnumVal>
+		<EnumVal ord="5">off</EnumVal>
+	</EnumType>
+	<EnumType id="Mod">
+		<EnumVal ord="1">on</EnumVal>
+		<EnumVal ord="2">blocked</EnumVal>
+		<EnumVal ord="3">test</EnumVal>
+		<EnumVal ord="4">test/blocked</EnumVal>
+		<EnumVal ord="5">off</EnumVal>
+	</EnumType>
+	<EnumType id="Health">
+		<EnumVal ord="1">Ok</EnumVal>
+		<EnumVal ord="2">Warning</EnumVal>
+		<EnumVal ord="3">Alarm</EnumVal>
+	</EnumType>
+	<EnumType id="AutoRecSt">
+		<EnumVal ord="1">Ready</EnumVal>
+		<EnumVal ord="2">InProgress</EnumVal>
+		<EnumVal ord="3">Successful</EnumVal>
+	</EnumType>
+	<EnumType id="CBOpCap">
+		<EnumVal ord="1">None</EnumVal>
+		<EnumVal ord="2">Open</EnumVal>
+		<EnumVal ord="3">Close-Open</EnumVal>
+		<EnumVal ord="4">Open-Close-Open</EnumVal>
+		<EnumVal ord="5">Close-Open-Close-Open</EnumVal>
+	</EnumType>
+	<EnumType id="ShOpCap">
+		<EnumVal ord="1">None</EnumVal>
+		<EnumVal ord="2">Open</EnumVal>
+		<EnumVal ord="3">Close</EnumVal>
+		<EnumVal ord="4">Open and Close</EnumVal>
+	</EnumType>
+	<EnumType id="SwOpCap">
+		<EnumVal ord="1">None</EnumVal>
+		<EnumVal ord="2">Open</EnumVal>
+		<EnumVal ord="3">Close</EnumVal>
+		<EnumVal ord="4">Open and Close</EnumVal>
+	</EnumType>
+	<EnumType id="SwTyp">
+		<EnumVal ord="1">Load Break</EnumVal>
+		<EnumVal ord="2">Disconnector</EnumVal>
+		<EnumVal ord="3">Earthing Switch</EnumVal>
+		<EnumVal ord="4">High Speed Earthing Switch</EnumVal>
+	</EnumType>
+	<EnumType id="PulseConfigCmdQual">
+		<EnumVal ord="0">pulse</EnumVal>
+		<EnumVal ord="1">persistent</EnumVal>
+	</EnumType>
+	<EnumType id="setCharactid">
+		<EnumVal ord="0"/>
+		<EnumVal ord="1">ANSI Extremly Inverse</EnumVal>
+		<EnumVal ord="2">ANSI Very Inverse</EnumVal>
+		<EnumVal ord="3">ANSI Normal Inverse</EnumVal>
+		<EnumVal ord="4">ANSI Moderate Inverse</EnumVal>
+		<EnumVal ord="5">ANSI Definite Time</EnumVal>
+		<EnumVal ord="6">Long-Time Extremely Inverse</EnumVal>
+		<EnumVal ord="7">Long-Time Very Inverse</EnumVal>
+		<EnumVal ord="8">Long-Time Inverse</EnumVal>
+		<EnumVal ord="9">IEC Normal Inverse</EnumVal>
+		<EnumVal ord="10">IEC Very Inverse</EnumVal>
+		<EnumVal ord="11">IEC Inverse</EnumVal>
+		<EnumVal ord="12">IEC Extremely Inverse</EnumVal>
+		<EnumVal ord="13">IEC Short-Time Inverse</EnumVal>
+		<EnumVal ord="14">IEC Long-Time Inverse</EnumVal>
+		<EnumVal ord="15">IEC Definite Time</EnumVal>
+		<EnumVal ord="16">Reserved</EnumVal>
+	</EnumType>
+	<EnumType id="seqTid">
+		<EnumVal ord="0">pos-neg-zero</EnumVal>
+		<EnumVal ord="1">dir-quad-zero</EnumVal>
+	</EnumType>
+	<EnumType id="phsid">
+		<EnumVal ord="0">A</EnumVal>
+		<EnumVal ord="1">B</EnumVal>
+		<EnumVal ord="2">C</EnumVal>
+	</EnumType>
+	<EnumType id="hvid">
+		<EnumVal ord="0">fundamental</EnumVal>
+		<EnumVal ord="1">rms</EnumVal>
+		<EnumVal ord="2">absolute</EnumVal>
+	</EnumType>
+	<EnumType id="sevid">
+		<EnumVal ord="0">unknown</EnumVal>
+		<EnumVal ord="1">critical</EnumVal>
+		<EnumVal ord="2">major</EnumVal>
+		<EnumVal ord="3">minor</EnumVal>
+		<EnumVal ord="4">warning</EnumVal>
+	</EnumType>
+</DataTypeTemplates>

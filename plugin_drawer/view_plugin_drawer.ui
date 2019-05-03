@@ -6,40 +6,43 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>362</width>
-    <height>316</height>
+    <width>584</width>
+    <height>391</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>view_plugin_drawer</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
+  <layout class="QGridLayout" name="gridLayout">
    <property name="margin">
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QSplitter" name="splitter">
+    <widget class="QSplitter" name="splitter_3">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="gridLayoutWidget">
-      <layout class="QGridLayout" name="gridLayoutCentral"/>
+     <widget class="QSplitter" name="splitter_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QWidget" name="gridLayoutWidget">
+       <layout class="QGridLayout" name="gridLayoutCentral"/>
+      </widget>
+      <widget class="QTableWidget" name="tableWidget_2"/>
      </widget>
-     <widget class="QWidget" name="">
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QTreeWidget" name="treeWidget">
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTableWidget" name="tableWidget"/>
-       </item>
-      </layout>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QTreeWidget" name="treeWidget">
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QTableWidget" name="tableWidget"/>
      </widget>
     </widget>
    </item>
