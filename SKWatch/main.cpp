@@ -1,5 +1,6 @@
 #include "skwatch.h"
 #include "skhead.h"
+#include "..\SKLic\clicense.h"
 
 #ifdef _DEBUG
 #include <vld.h>
@@ -9,6 +10,13 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 	QApplication::setQuitOnLastWindowClosed(false);
+
+	CLicense lic;
+	if(!lic.CheckLicense())
+	{
+		QMessageBox::critical(NULL, "Error", "Licsence error");
+		return 1;
+	}
 
 #ifdef WIN32
 	a.setFont(QFont("Microsoft Yahei", 10));

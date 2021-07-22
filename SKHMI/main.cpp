@@ -1,5 +1,6 @@
 #include <QtGui/QApplication>
 #include "skgui.h"
+#include "..\SKLic\clicense.h"
 
 #ifdef _DEBUG
 #include <vld.h>
@@ -28,6 +29,13 @@ public:
 int main(int argc, char *argv[])
 {
 	GlobalApplication a(argc, argv);
+
+	CLicense lic;
+	if(!lic.CheckLicense())
+	{
+		QMessageBox::critical(NULL, "Error", "Licsence error");
+		return 1;
+	}
 
 #ifdef WIN32
 	a.setFont(QFont("Microsoft Yahei", 10));

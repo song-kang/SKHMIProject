@@ -71,6 +71,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_csystray.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="..\SKLic\clicense.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="skwatch.h">
@@ -101,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_dlgadd.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SKLic\clicense.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
