@@ -31,6 +31,7 @@
 #endif
 
 #include "UnitMgrApplication.h"
+#include "..\SKLic\slicense.h"
 CUnitMgrApplication g_app;
 
 #ifdef WIN32
@@ -39,6 +40,12 @@ CUnitMgrApplication g_app;
 
 int main(int argc, char* argv[])
 {
+	SLicense lic;
+	if(!lic.CheckLicense()) {
+		printf("Licsence error\n");
+		return 1;
+	}
+
 	g_app.SetModuleDesc("单元管理主程序");
 	g_app.SetVersion(MOD_VERSION);
 	g_app.SetApplicationId(SP_UA_APPNO_AGENT);

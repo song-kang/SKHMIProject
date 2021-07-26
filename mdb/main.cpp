@@ -33,6 +33,7 @@
 #endif
 
 #include "MdbApplication.h"
+#include "..\SKLic\slicense.h"
 
 #ifdef _DEBUG
 #include "vld.h"
@@ -40,6 +41,12 @@
 
 int main(int argc, char* argv[])
 {
+	SLicense lic;
+	if(!lic.CheckLicense()) {
+		printf("Licsence error\n");
+		return 1;
+	}
+
 	CMdbApplication g_app;
 	g_app.SetModuleDesc("内存数据库主程序");
 	g_app.SetVersion(MOD_VERSION);

@@ -26,6 +26,9 @@
     <ClCompile Include="plugin.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\SKLic\slicense.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MdbApplication.h">

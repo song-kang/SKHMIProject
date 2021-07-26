@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="GB2312"?>
 <database>
-	<master type="mysql" hostaddr="127.0.0.1" port="3306" user="root" password="9CC1FA3F4D8DEAA4" dbname="skhmi"/>
+	<master type="mysql" hostaddr="127.0.0.1" port="3306" user="root" password="9CC1FA3F4D8DEAA4" dbname="skdb"/>
 	<mdb hostaddr="127.0.0.1" port="1400" user="mdb" password="70FD7FA0142F524D6BE4E6D1FDAB02BD" dbname="ukdb"/>
 </database>

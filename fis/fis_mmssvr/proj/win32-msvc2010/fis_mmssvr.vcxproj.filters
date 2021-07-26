@@ -9,32 +9,30 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="..\..\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="UnitMgrApplication.cpp">
+    <ClCompile Include="..\..\MMSServer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="AgentEx.cpp">
+    <ClCompile Include="..\..\MMSSVRApp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="mcast_founder.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SKLic\slicense.cpp">
+    <ClCompile Include="..\..\..\..\public\UK9010App.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="UnitMgrApplication.h">
+    <ClInclude Include="..\..\MMSServer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="AgentEx.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="mcast_founder.h">
+    <ClInclude Include="..\..\MMSSVRApp.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

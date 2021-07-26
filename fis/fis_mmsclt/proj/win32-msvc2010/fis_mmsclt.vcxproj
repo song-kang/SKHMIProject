@@ -11,20 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C04F074B-54F4-4091-9DDC-ECB407837187}</ProjectGuid>
+    <ProjectGuid>{D5D07814-F6DB-4E0B-9DC3-4A2BD73DEEC5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>sys_unit_agent</RootNamespace>
+    <RootNamespace>fis_mmsclt</RootNamespace>
+    <ProjectName>fis_mmsclt</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -39,12 +40,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <OutDir>..\..\..\..\..\out_debug\bin\</OutDir>
+    <IncludePath>D:\SoftwarePlatform\trunk\common\mmslite-6.0000\SMms;D:\workspace\SoftwarePlatform\common\sp_common;D:\workspace\SoftwarePlatform\sbase\include;D:\workspace\SoftwarePlatform\sbase\include\comm;D:\workspace\SoftwarePlatform\sbase\include\db;D:\workspace\SoftwarePlatform\sbase\include\db\oracle;D:\workspace\SoftwarePlatform\sbase\include\db\mdb;D:\workspace\SoftwarePlatform\sbase\include\db\mysql;D:\workspace\SoftwarePlatform\SSP01\include\ssp_base;D:\workspace\SoftwarePlatform\SSP01\include\ssp_gui;D:\workspace\SoftwarePlatform\SSP01\include\ssp_gui_3d;D:\lib\MySQL Server 5.6\include;C:\Program Files %28x86%29\Visual Leak Detector\include;D:\lib\oci\include;D:\lib\WpdPack\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\SoftwarePlatform\trunk\common\mmslite-6.0000\win32lib;D:\SoftwarePlatform\trunk\common\mmslite-6.0000\out_debug;C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;D:\lib\MySQL Server 5.6\lib;D:\lib\oci\lib;D:\workspace\SoftwarePlatform\sbase\lib\win32;D:\workspace\SoftwarePlatform\SSP01\lib;D:\lib\WpdPack\Lib;D:\workspace\SoftwarePlatform\common\lib\win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\SoftwarePlatform\trunk\common\mmslite-6.0000\SMms;$(IncludePath)</IncludePath>
+    <OutDir>..\..\..\..\..\out\bin\</OutDir>
+    <LibraryPath>D:\SoftwarePlatform\trunk\common\mmslite-6.0000\win32lib;D:\SoftwarePlatform\trunk\common\mmslite-6.0000\out;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -52,14 +56,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\include\SKBase;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sbased.lib;SKBased.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -70,30 +74,37 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\include\SKBase;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>sbase.lib;SKBase.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\SKLic\slicense.cpp" />
-    <ClCompile Include="AgentEx.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="mcast_founder.cpp" />
-    <ClCompile Include="UnitMgrApplication.cpp" />
+    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AgentEx.h" />
-    <ClInclude Include="mcast_founder.h" />
-    <ClInclude Include="UnitMgrApplication.h" />
+    <ClCompile Include="..\..\..\..\public\UK9010App.cpp" />
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\MMSClient.cpp" />
+    <ClCompile Include="..\..\MMSClientMainStation.cpp" />
+    <ClCompile Include="..\..\MMSClientSubStation.cpp" />
+    <ClCompile Include="..\..\MMSClientSubStationNW.cpp" />
+    <ClCompile Include="..\..\MMSCLTApp.cpp" />
+    <ClCompile Include="..\..\NaModel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\MMSClient.h" />
+    <ClInclude Include="..\..\MMSClientMainStation.h" />
+    <ClInclude Include="..\..\MMSClientSubStation.h" />
+    <ClInclude Include="..\..\MMSClientSubStationNW.h" />
+    <ClInclude Include="..\..\MMSCLTApp.h" />
+    <ClInclude Include="..\..\NaModel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

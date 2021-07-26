@@ -10,7 +10,7 @@ bool CPlugin::Load(SString sPluginFile)
 	m_hInstance = LoadLibrary(sPluginFile.data());
 	if(m_hInstance == NULL)
 	{
-		LOGWARN("╪сть╡Е╪Ч%sй╖╟э!",sPluginFile.data());
+		LOGWARN("╪сть╡Е╪Ч%s(%p)й╖╟э,error=%d",sPluginFile.data(),m_hInstance,GetLastError());
 		return false;
 	}
 
