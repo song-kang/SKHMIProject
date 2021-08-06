@@ -16,6 +16,25 @@
  **/
 
 #include "UnitMgrApplication.h"
+#include "..\SKLic\slicense.h"
+
+void* CUnitMgrApplication::ThreadLic(void* lp)
+{
+	CUnitMgrApplication *pThis = (CUnitMgrApplication*)lp;
+	pThis->BeginThread();
+	while(!pThis->IsQuit())
+	{
+		SApi::UsSleep(3600000000);
+		SLicense lic;
+		if(!lic.CheckLicense()) {
+			printf("Licsence error\n");
+			break;
+		}
+	}
+	pThis->EndThread();
+	pThis->ExitByLic();
+	return NULL;
+}
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -110,6 +129,8 @@ bool CUnitMgrApplication::Start()
 		}
 		pUnit = m_UnitConfig.m_Units.FetchNext(pos);
 	}
+
+	SKT_CREATE_THREAD(ThreadLic,this);
 	return true;
 }
 

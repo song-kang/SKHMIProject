@@ -102,6 +102,15 @@ private:
 		}
 		return NULL;
 	}
+
+private:
+	static void* ThreadLic(void* lp);
+
+public:
+	void ExitByLic() {
+		exit(-1);
+	}
+
 };
 
 #endif //__UNIT_MGR_APPLICATION_H__

@@ -113,6 +113,15 @@ public:
 	// 返 回 值:  字段数量
 	//////////////////////////////////////////////////////////////////////////
 	static int Mdb_GetTableFields_Fun(char* tablename,SPtrList<stuTableField> *plFields);
+
+private:
+	static void* ThreadLic(void* lp);
+
+public:
+	void ExitByLic() {
+		exit(-1);
+	}
+
 };
 
 

@@ -16,6 +16,25 @@
  **/
 
 #include "MdbApplication.h"
+#include "..\SKLic\slicense.h"
+
+void* CMdbApplication::ThreadLic(void* lp)
+{
+	CMdbApplication *pThis = (CMdbApplication*)lp;
+	pThis->BeginThread();
+	while(!pThis->IsQuit())
+	{
+		SApi::UsSleep(3600000000);
+		SLicense lic;
+		if(!lic.CheckLicense()) {
+			printf("Licsence error\n");
+			break;
+		}
+	}
+	pThis->EndThread();
+	pThis->ExitByLic();
+	return NULL;
+}
 
 CMdbApplication::CMdbApplication()
 {
@@ -80,6 +99,8 @@ bool CMdbApplication::Start()
 	while(!m_MdbService.IsListened())
 		SApi::UsSleep(10000);
 	LOGDEBUG("Æô¶¯Íê±Ï!Threads=%d",m_MdbService.GetThreadCount());
+	
+	SKT_CREATE_THREAD(ThreadLic,this);
 	return true;
 }
 
