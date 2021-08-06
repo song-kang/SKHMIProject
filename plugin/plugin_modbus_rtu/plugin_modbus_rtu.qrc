@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="database">Resources/database.png</file>
+        <file alias="device">Resources/device.png</file>
+        <file alias="open">Resources/open.png</file>
+        <file alias="save">Resources/save.png</file>
+        <file alias="add">Resources/add.png</file>
+        <file alias="cancel">Resources/cancel.png</file>
+        <file alias="edit">Resources/edit.png</file>
+        <file alias="ok">Resources/ok.png</file>
+    </qresource>
+</RCC>
