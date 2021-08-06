@@ -30,15 +30,15 @@
 #define C_SQL_ASYNC_RUN "/*async*/"
 
 #ifndef DWORD
-# define DWORD uint32_t
+# define DWORD unsigned int
 #endif
 
 #ifndef WORD
-# define WORD uint16_t
+# define WORD unsigned short
 #endif
 
 #ifndef BYTE
-# define BYTE uint8_t
+# define BYTE unsigned char
 #endif
 
 enum eUK9010AppNo

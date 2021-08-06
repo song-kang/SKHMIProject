@@ -335,7 +335,7 @@ bool MMSSVRApp::initScl(std::vector<Ied> &iedList)
 	}
 
 	SXmlConfig xml;
-	if (xml.ReadConfig(cidFile))
+	if (xml.ReadConfig(m_sclFile))
 	{
 		int iedCount = xml.GetChildCount("IED");
 		for (int iedId = 0; iedId < iedCount; ++iedId)

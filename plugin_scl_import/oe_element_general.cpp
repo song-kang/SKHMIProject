@@ -26,6 +26,7 @@ oe_element_general::oe_element_general(view_plugin_scl_import * scl,QList<XmlObj
 	current_val = "NULL";
 	reference_val = "NULL";
 	mms_path = "NULL";
+	isHaveAng = false;
 
 	sclImport = scl;
 	document = list;
@@ -719,7 +720,8 @@ bool oe_element_general::get_mms_path(XmlObject * object)
 		da_name = object->attrib("daName").toStdString();
 		da_name = da_name.replace(".","$");
 	}
-	else if (object->attrib("fc") == "SG" || object->attrib("fc") == "SP")
+	else if (object->attrib("fc") == "SG" || object->attrib("fc") == "SP" ||
+		object->attrib("fc") == "MX" || object->attrib("fc") == "ST")
 	{
 		QString err;
 		QString daName = GetDaName(object,err);
@@ -728,19 +730,19 @@ bool oe_element_general::get_mms_path(XmlObject * object)
 		else
 			LOGWARN("未找到定值FCDA[%s]的DA，错误原因[%s]。",mms.toLocal8Bit().data(),err.toLocal8Bit().data());
 	}
-	else if (object->attrib("fc") == "MX" || object->attrib("fc") == "ST")
-	{
-		QString err;
-		QString daName = GetDaNameByFC(object,object->attrib("fc"),err);
-		if (!daName.isEmpty())
-		{
-			//mms += daName;
-			da_name = daName.toStdString();
-			da_name = da_name.replace(".","$");
-		}
-		else
-			LOGWARN("未找到定值FCDA[%s]的DA，错误原因[%s]。",mms.toLocal8Bit().data(),err.toLocal8Bit().data());
-	}
+	//else if (object->attrib("fc") == "MX" || object->attrib("fc") == "ST")
+	//{
+	//	QString err;
+	//	QString daName = GetDaNameByFC(object,object->attrib("fc"),err);
+	//	if (!daName.isEmpty())
+	//	{
+	//		//mms += daName;
+	//		da_name = daName.toStdString();
+	//		da_name = da_name.replace(".","$");
+	//	}
+	//	else
+	//		LOGWARN("未找到定值FCDA[%s]的DA，错误原因[%s]。",mms.toLocal8Bit().data(),err.toLocal8Bit().data());
+	//}
 
 	mms = mms.replace(".","$");
 

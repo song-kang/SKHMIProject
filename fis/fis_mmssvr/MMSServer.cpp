@@ -1761,7 +1761,7 @@ void MMSServer::InitRunParam()
 
 	// 运行节点
 	std::map<int, std::string> mapNode;
-	sql = "SELECT node_no FROM `t_oe_run_node` where module_name not like 'mst_mmsclt' order by node_no";
+	sql = "SELECT node_no FROM t_oe_run_node WHERE module_name NOT LIKE 'mst_mmsclt' ORDER BY node_no";
 	DB->RetrieveRecordset(sql, rs);
 	for (int row = 0; row < rs.GetRows(); ++row)
 	{
@@ -1949,7 +1949,7 @@ bool Ied::initGeneral(int iedNo)
 
 			if (mms_path.length() > 0 && da_name.length() > 0)
 			{
-				mms_path += "$";
+				//mms_path += "$";
 				mms_path += da_name;
 			}
 			if (mms_path.length() > 0)
